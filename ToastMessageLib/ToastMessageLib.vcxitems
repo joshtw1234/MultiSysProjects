@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{4CDBE5D8-D07E-4EE1-8402-0834280EA596}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)SStringRefWarper.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SToastMsg.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ToastEventHandler.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)SStringRefWarper.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SToastMsg.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ToastEventHandler.cpp" />
+  </ItemGroup>
+</Project>

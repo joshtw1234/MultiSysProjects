@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)IoProtocol.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)IoProtocolPipeClient.h">
+      <Filter>PipeClient</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)LightingEffect.h">
+      <Filter>LightingEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)IoProtocolUsbHid.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)LightingData.h">
+      <Filter>LightingEffect</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="PipeClient">
+      <UniqueIdentifier>{43683bf4-007e-4868-bf3e-04ecfe1790f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LightingEffect">
+      <UniqueIdentifier>{894e3c28-acb5-413d-82d8-af79df12746a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)IoProtocolPipeClient.cpp">
+      <Filter>PipeClient</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)LightingEffect.cpp">
+      <Filter>LightingEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)IoProtocolUsbHid.cpp" />
+  </ItemGroup>
+</Project>

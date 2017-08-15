@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{F9D326AB-AC8E-4E1B-879F-44F8A26F6F4C}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)IoProtocol.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)IoProtocolPipeClient.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)IoProtocolUsbHid.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)LightingData.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)LightingEffect.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)IoProtocolPipeClient.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)IoProtocolUsbHid.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)LightingEffect.cpp" />
+  </ItemGroup>
+</Project>

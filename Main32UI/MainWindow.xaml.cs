@@ -66,10 +66,10 @@ namespace Main32UI
                         continue;
                     }
                     //Check main user control name
-                    if (t.Name != "MainControl")
-                    {
-                        continue;
-                    }
+                    //if (t.Name != "MainControl")
+                    //{
+                    //    continue;
+                    //}
                     IModuleInterface iModule = (IModuleInterface)t.InvokeMember(null,
                                    BindingFlags.DeclaredOnly |
                                    BindingFlags.Public | BindingFlags.NonPublic |
@@ -88,6 +88,7 @@ namespace Main32UI
                         uc.Name = iModule.moduleName;
                         uc.Visibility = Visibility.Hidden;
                         gdModlueUI.Children.Add(uc);
+                        iModule.initialize();
                     }
 
                 }

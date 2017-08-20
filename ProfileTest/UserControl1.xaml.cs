@@ -1,13 +1,6 @@
-﻿using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.IO;
-using System.Threading;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 
 namespace ProfileTest
@@ -27,7 +20,7 @@ namespace ProfileTest
         private void MainControl_Loaded(object sender, RoutedEventArgs e)
         {
             ccProf.Content = new UCGAMEBASE();
-            ccSQL.Content = new UCSQL();
+            //ccSQL.Content = new UCSQL();
         }
       
         #region Module Interface

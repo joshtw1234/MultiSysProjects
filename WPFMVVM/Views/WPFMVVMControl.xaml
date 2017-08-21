@@ -15,5 +15,6 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <local:BottomView x:Name="tBtn" Grid.Row="2"/>
     </Grid>
 </UserControl>

@@ -43,7 +43,7 @@ namespace Main32UI
         void LoadModules()
         {
             //FileInfo fi = new FileInfo()
-            string modulePath = string.Format(@"{0}\Modules\UI\", AppDomain.CurrentDomain.BaseDirectory);
+            string modulePath = string.Format(@"{0}Modules\UI\", AppDomain.CurrentDomain.BaseDirectory);
             string[] strModuleLst = Directory.GetFiles(modulePath, "*.dll", SearchOption.TopDirectoryOnly);
             Assembly plugin;
             Type[] types;

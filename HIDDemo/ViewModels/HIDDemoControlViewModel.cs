@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using HIDDemo.Models;
 
 namespace HIDDemo.ViewModels
 {
     class HIDDemoControlViewModel
     {
+        private IHIDDemoControlModel hidGUIModel;
+        public HIDDemoControlViewModel(IHIDDemoControlModel _model)
+        {
+            hidGUIModel = _model;
+        }
     }
 }

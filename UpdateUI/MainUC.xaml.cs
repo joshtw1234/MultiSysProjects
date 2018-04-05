@@ -295,7 +295,7 @@ namespace UpdateUI
 
         public void initialize()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public bool isPlatformSupported()

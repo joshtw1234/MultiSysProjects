@@ -1,24 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using UtilityUILib;
+using WPFMVVM.Views;
 
 namespace WPFMVVM
 {
     /// <summary>
     /// Interaction logic for WPFMVVMModule.xaml
     /// </summary>
-    public partial class WPFMVVMModule : UserControl, UtilityUILib.IModuleInterface
+    public partial class WPFMVVMModule : UserControl, IModuleInterface
     {
         public WPFMVVMModule()
         {
@@ -60,7 +51,7 @@ namespace WPFMVVM
         public void initialize()
         {
             //throw new NotImplementedException();
-            cntCrl.Content = new WPFMVVM.Views.WPFMVVMControl();
+            cntCrl.Content = new WPFMVVMControl();
         }
 
         public bool isPlatformSupported()

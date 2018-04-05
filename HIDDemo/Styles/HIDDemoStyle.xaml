@@ -4,13 +4,13 @@
     <SolidColorBrush x:Key="DefaultBackgroundColor" Color="Black"/>
 
     <DataTemplate x:Key="HIDOPButton">
-        <Button/>
+        <Button Content="{Binding MenuName}"/>
     </DataTemplate>
     <ItemsPanelTemplate x:Key="HIDOPItemsPanel">
         <StackPanel/>
     </ItemsPanelTemplate>
     <ControlTemplate x:Key="HIDOpreationTemplate" TargetType="ContentControl">
-        <ItemsControl ItemsSource="{Binding HIDOPButtons}" 
+        <ItemsControl ItemsSource="{Binding HIDOPButtonCollection}" 
                       ItemTemplate="{StaticResource HIDOPButton}"
                       ItemsPanel="{StaticResource HIDOPItemsPanel}"/>
     </ControlTemplate>

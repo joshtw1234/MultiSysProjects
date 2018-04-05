@@ -2,7 +2,7 @@
 
 namespace UtilityUILib
 {
-    interface IMenuItem
+    public interface IMenuItem
     {
         /// <summary>
         /// MenuAutomationId is the automation id associated to a particular menu item

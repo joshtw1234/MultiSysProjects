@@ -2,7 +2,7 @@
 
 namespace UtilityUILib
 {
-    class MenuItem : IMenuItem
+    public class MenuItem : IMenuItem
     {
         public string MenuAutomationId { get; set; }
         public string MenuName { get; set; }

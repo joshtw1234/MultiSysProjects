@@ -27,7 +27,9 @@
             <ItemsControl DockPanel.Dock="Right" ItemsSource="{Binding HIDOPButtonCollection}" 
                           ItemTemplate="{StaticResource HIDOPButton}"
                           ItemsPanel="{StaticResource HIDOPItemsPanel}"/>
-            <ContentControl Template="{StaticResource HIDOpreationTemplate}"/>
+            <ItemsControl DockPanel.Dock="Top" ItemsSource="{Binding HIDDisplayCollections}"
+                          ItemTemplate="{StaticResource HIDDisplayTemplate}"
+                          ItemsPanel="{StaticResource HIDDisplayPanel}"/>
         </DockPanel>
     </Grid>
 </UserControl>

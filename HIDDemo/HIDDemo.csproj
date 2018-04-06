@@ -47,7 +47,9 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\HIDDemoControlConstants.cs" />
     <Compile Include="Models\HIDDemoControlModel.cs" />
+    <Compile Include="Models\HIDDisplayItem.cs" />
     <Compile Include="Models\IHIDDemoControlModel.cs" />
     <Compile Include="ViewModels\HIDDemoControlViewModel.cs" />
     <Compile Include="Views\HIDDemoControl.xaml.cs">

@@ -1,15 +1,36 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:HIDDemo.Styles">
+                    xmlns:local="clr-namespace:HIDDemo.Styles"
+                    xmlns:ml="clr-namespace:HIDDemo.Models">
     <SolidColorBrush x:Key="DefaultBackgroundColor" Color="Black"/>
 
+
+
+    <ControlTemplate x:Key="LabelTemplate" TargetType="ContentControl">
+        <Label Content="{Binding MenuName}"/>
+    </ControlTemplate>
+    <Style x:Key="HIDDisplayStyle" TargetType="{x:Type ContentControl}">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding DisplayType}" Value="{x:Static ml:HIDDisplayItemEnum.Lebel}">
+                <Setter Property="Template" Value="{StaticResource LabelTemplate}"/>
+            </DataTrigger>
+            <!--<DataTrigger Binding="{Binding Type}" Value="{x:Static ml:KeyInfoType.KeyDown}">
+                <Setter Property="Template" Value="{DynamicResource KeyUCTemplate}"/>
+            </DataTrigger>-->
+        </Style.Triggers>
+    </Style>
+    
+    <DataTemplate x:Key="HIDDisplayTemplate">
+        <ContentControl Style="{StaticResource HIDDisplayStyle}"/>
+    </DataTemplate>
+    <ItemsPanelTemplate x:Key="HIDDisplayPanel">
+        <StackPanel Orientation="Horizontal"/>
+    </ItemsPanelTemplate>
+    
     <DataTemplate x:Key="HIDOPButton">
         <Button Content="{Binding MenuName}"/>
     </DataTemplate>
     <ItemsPanelTemplate x:Key="HIDOPItemsPanel">
         <StackPanel/>
     </ItemsPanelTemplate>
-    <ControlTemplate x:Key="HIDOpreationTemplate" TargetType="ContentControl">
-        
-    </ControlTemplate>
 </ResourceDictionary>

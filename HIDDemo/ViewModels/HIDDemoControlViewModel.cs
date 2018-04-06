@@ -5,9 +5,10 @@ using UtilityUILib;
 
 namespace HIDDemo.ViewModels
 {
-    class HIDDemoControlViewModel : INotifyPropertyChanged
+    public class HIDDemoControlViewModel : INotifyPropertyChanged
     {
         private IHIDDemoControlModel hidGUIModel;
+
         public HIDDemoControlViewModel(IHIDDemoControlModel _model)
         {
             hidGUIModel = _model;

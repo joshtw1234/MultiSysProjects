@@ -8,7 +8,7 @@ using UtilityUILib;
 
 namespace HIDDemo.Models
 {
-    interface IHIDDemoControlModel
+    public interface IHIDDemoControlModel
     {
         ObservableCollection<IMenuItem> GetHIDOPButtons { get; }
     }

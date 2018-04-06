@@ -10,8 +10,6 @@
         <StackPanel/>
     </ItemsPanelTemplate>
     <ControlTemplate x:Key="HIDOpreationTemplate" TargetType="ContentControl">
-        <ItemsControl ItemsSource="{Binding HIDOPButtonCollection}" 
-                      ItemTemplate="{StaticResource HIDOPButton}"
-                      ItemsPanel="{StaticResource HIDOPItemsPanel}"/>
+        
     </ControlTemplate>
 </ResourceDictionary>

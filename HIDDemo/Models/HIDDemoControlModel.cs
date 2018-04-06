@@ -13,6 +13,10 @@ namespace HIDDemo.Models
                 {
                     new MenuItem
                     {
+                        MenuName = "Browse HID"
+                    },
+                    new MenuItem
+                    {
                         MenuName = "Open HID"
                     },
                     new MenuItem

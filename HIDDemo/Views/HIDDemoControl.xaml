@@ -4,16 +4,30 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:HIDDemo.Views"
+             xmlns:vm="clr-namespace:HIDDemo.ViewModels"
+             xmlns:m="clr-namespace:HIDDemo.Models"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
-        <!--<ResourceDictionary Source="/Styles/HIDDemoStyle.xaml"/>-->
-        <ResourceDictionary Source="pack://application:,,,/HIDDemo;component/Styles/HIDDemoStyle.xaml"/>
+        <ResourceDictionary>
+            <ObjectDataProvider x:Key="myDataSource" ObjectType="{x:Type vm:HIDDemoControlViewModel}">
+                <ObjectDataProvider.ConstructorParameters>
+                    <m:HIDDemoControlModel/>
+                </ObjectDataProvider.ConstructorParameters>
+            </ObjectDataProvider>
+            <ResourceDictionary.MergedDictionaries>
+                <!--<ResourceDictionary Source="/Styles/HIDDemoStyle.xaml"/>-->
+                <ResourceDictionary Source="pack://application:,,,/HIDDemo;component/Styles/HIDDemoStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </UserControl.Resources>
-    <Grid Background="{StaticResource DefaultBackgroundColor}">
+    <Grid Background="{StaticResource DefaultBackgroundColor}"
+          DataContext="{StaticResource myDataSource}">
         <DockPanel>
-            <ContentControl DockPanel.Dock="Right" Template="{StaticResource HIDOpreationTemplate}"/>
-            <Grid/>
+            <ItemsControl DockPanel.Dock="Right" ItemsSource="{Binding HIDOPButtonCollection}" 
+                          ItemTemplate="{StaticResource HIDOPButton}"
+                          ItemsPanel="{StaticResource HIDOPItemsPanel}"/>
+            <ContentControl Template="{StaticResource HIDOpreationTemplate}"/>
         </DockPanel>
     </Grid>
 </UserControl>

@@ -30,6 +30,7 @@
             <ItemsControl DockPanel.Dock="Top" ItemsSource="{Binding HIDDisplayCollections}"
                           ItemTemplate="{StaticResource HIDDisplayTemplate}"
                           ItemsPanel="{StaticResource HIDDisplayPanel}"/>
+            <TextBlock Style="{StaticResource MsgTextBlockStyle}"/>
         </DockPanel>
     </Grid>
 </UserControl>

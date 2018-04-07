@@ -5,18 +5,34 @@
     <SolidColorBrush x:Key="DefaultBackgroundColor" Color="Black"/>
 
 
-
+    <Style x:Key="MsgTextBlockStyle" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Background" Value="Blue"/>
+        <Setter Property="Text" Value="{Binding MenuName}"/>
+    </Style>
+    
+    <Style x:Key="DisplayLabelStyle" TargetType="Label">
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Content" Value="{Binding MenuName}"/>
+    </Style>
+    <Style x:Key="DisplayTextBlockStyle" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Text" Value="{Binding MenuName}"/>
+    </Style>
     <ControlTemplate x:Key="LabelTemplate" TargetType="ContentControl">
-        <Label Content="{Binding MenuName}"/>
+        <Label Style="{StaticResource DisplayLabelStyle}"/>
+    </ControlTemplate>
+    <ControlTemplate x:Key="TextBlockTemplate" TargetType="ContentControl">
+        <TextBlock Style="{StaticResource DisplayTextBlockStyle}"/>
     </ControlTemplate>
     <Style x:Key="HIDDisplayStyle" TargetType="{x:Type ContentControl}">
         <Style.Triggers>
             <DataTrigger Binding="{Binding DisplayType}" Value="{x:Static ml:HIDDisplayItemEnum.Lebel}">
                 <Setter Property="Template" Value="{StaticResource LabelTemplate}"/>
             </DataTrigger>
-            <!--<DataTrigger Binding="{Binding Type}" Value="{x:Static ml:KeyInfoType.KeyDown}">
-                <Setter Property="Template" Value="{DynamicResource KeyUCTemplate}"/>
-            </DataTrigger>-->
+            <DataTrigger Binding="{Binding DisplayType}" Value="{x:Static ml:HIDDisplayItemEnum.TextBlock}">
+                <Setter Property="Template" Value="{DynamicResource TextBlockTemplate}"/>
+            </DataTrigger>
         </Style.Triggers>
     </Style>
     

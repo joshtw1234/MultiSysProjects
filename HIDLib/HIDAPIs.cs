@@ -46,6 +46,7 @@ namespace HIDLib
         /* closes file */
         public static extern bool CloseHandle(IntPtr hObject);
         #endregion
+
         #region hid.dll
         /* The HIDD_ATTRIBUTES structure contains vendor information about a 
          * HIDClass device.*/

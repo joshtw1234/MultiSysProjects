@@ -53,24 +53,36 @@ namespace HIDDemo.ViewModels
             }
         }
 
-        
+        private string messageText;
+        public string MessageText
+        {
+            get
+            {
+                return messageText;
+            }
+            set
+            {
+                messageText = value;
+                onPropertyChanged(this, "MessageText");
+            }
+        }
 
         public HIDDemoControlViewModel(IHIDDemoControlModel _model)
         {
             hidGUIModel = _model;
             hidOPButtonCollection = hidGUIModel.GetHIDOPButtons;
-
             hidDisplayCollections = GetHIDDisplayItems;
         }
-
+        List<HIDInfo> hidInfoLst;
         public ObservableCollection<HIDDisplayInfoItem> GetHIDDisplayItems
         {
             get
             {
-                List<HIDInfo> hidInfoLst = hidGUIModel.GetHIDInfoCollections;
+                hidInfoLst = hidGUIModel.GetHIDInfoCollections;
                 ObservableCollection<HIDDisplayInfoItem> revLst = new ObservableCollection<HIDDisplayInfoItem>();
                 HIDDisplayInfoItem dInfoItem;
                 HIDDisplayItem dItem;
+                int fieldIdx = -1;
                 foreach (HIDInfo hidInfo in hidInfoLst)
                 {
                     dInfoItem = new HIDDisplayInfoItem();
@@ -109,17 +121,23 @@ namespace HIDDemo.ViewModels
                         DisplayType = HIDDisplayItemEnum.TextBlock,
                         MenuName = hidInfo.Manufacturer
                     };
+                    dInfoItem.FieldIdx = ++fieldIdx;
                     dInfoItem.HIDDisplayInfoCollections.Add(dItem);
+                    dInfoItem.OnRadioButtonChecked += DInfoItem_OnRadioButtonChecked1;
                     revLst.Add(dInfoItem);
+                    hidInfo.HIDClose();
                 }
 
                 return revLst;
             }
         }
-    }
 
-    public class HIDDisplayInfoItem
-    {
-        public ObservableCollection<IMenuItem> HIDDisplayInfoCollections { get; set; } = new ObservableCollection<IMenuItem>();
+        private void DInfoItem_OnRadioButtonChecked1(HIDDisplayInfoItem infoItem)
+        {
+            if (infoItem.MenuChecked)
+            {
+                MessageText = $"InfoItem [{infoItem.FieldIdx}] selected";
+            }
+        }
     }
 }

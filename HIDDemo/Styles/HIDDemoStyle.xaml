@@ -80,9 +80,9 @@
     
     <!--#region HID Display info-->
     <Style x:Key="MsgTextBlockStyle" TargetType="TextBlock">
-        <Setter Property="Foreground" Value="White"/>
-        <Setter Property="Background" Value="Blue"/>
-        <Setter Property="Text" Value="{Binding MenuName}"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="Text" Value="{Binding MessageText}"/>
     </Style>
     
     <Style x:Key="DisplayLabelStyle" TargetType="Label">
@@ -177,6 +177,7 @@
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="GroupName" Value="HIDGroups"/>
+        <Setter Property="IsChecked" Value="{Binding RadioBtnChecked, UpdateSourceTrigger=PropertyChanged}"/>
         <Setter Property="Template" Value="{StaticResource HIDDisplayRadioTemplate}"/>
     </Style>
 

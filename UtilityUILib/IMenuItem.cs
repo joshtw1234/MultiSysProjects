@@ -5,10 +5,6 @@ namespace UtilityUILib
     public interface IMenuItem
     {
         /// <summary>
-        /// MenuAutomationId is the automation id associated to a particular menu item
-        /// </summary>
-        string MenuAutomationId { get; set; }
-        /// <summary>
         /// MenuName is the name associated to a particular menu item
         /// </summary>
         string MenuName { get; set; }

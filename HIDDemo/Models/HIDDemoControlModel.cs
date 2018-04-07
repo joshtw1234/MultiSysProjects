@@ -35,7 +35,7 @@ namespace HIDDemo.Models
             {
                 BaseHID bhid = new BaseHID();
                 List<HIDInfo> revLst = new List<HIDInfo>();
-                revLst.AddRange(bhid.Browse());
+                revLst.AddRange(bhid.BrowseHID());
                 return revLst;
             }
         }

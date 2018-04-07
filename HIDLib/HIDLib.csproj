@@ -41,7 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HIDAPIs.cs" />
-    <Compile Include="HIDDev.cs" />
+    <Compile Include="HIDHWDev.cs" />
+    <Compile Include="HIDInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

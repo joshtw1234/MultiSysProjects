@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using HIDLib;
 using UtilityUILib;
 
 namespace HIDDemo.Models
@@ -24,6 +26,17 @@ namespace HIDDemo.Models
                         MenuName = "Close HID"
                     }
                 };
+            }
+        }
+
+        public List<HIDInfo> GetHIDInfoCollections
+        {
+            get
+            {
+                BaseHID bhid = new BaseHID();
+                List<HIDInfo> revLst = new List<HIDInfo>();
+                revLst.AddRange(bhid.Browse());
+                return revLst;
             }
         }
     }

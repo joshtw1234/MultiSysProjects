@@ -1,4 +1,6 @@
 ﻿using HIDDemo.Models;
+using HIDLib;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
@@ -35,9 +37,9 @@ namespace HIDDemo.ViewModels
             }
         }
 
-        private ObservableCollection<IMenuItem> hidDisplayCollections;
+        private ObservableCollection<HIDDisplayInfoItem> hidDisplayCollections;
 
-        public ObservableCollection<IMenuItem> HIDDisplayCollections
+        public ObservableCollection<HIDDisplayInfoItem> HIDDisplayCollections
         {
             get
             {
@@ -51,33 +53,73 @@ namespace HIDDemo.ViewModels
             }
         }
 
+        
+
         public HIDDemoControlViewModel(IHIDDemoControlModel _model)
         {
             hidGUIModel = _model;
             hidOPButtonCollection = hidGUIModel.GetHIDOPButtons;
+
             hidDisplayCollections = GetHIDDisplayItems;
         }
 
-        public ObservableCollection<IMenuItem> GetHIDDisplayItems
+        public ObservableCollection<HIDDisplayInfoItem> GetHIDDisplayItems
         {
             get
             {
-                //hidGUIModel.GetHIDInfoCollections;
-                return new ObservableCollection<IMenuItem>()
+                List<HIDInfo> hidInfoLst = hidGUIModel.GetHIDInfoCollections;
+                ObservableCollection<HIDDisplayInfoItem> revLst = new ObservableCollection<HIDDisplayInfoItem>();
+                HIDDisplayInfoItem dInfoItem;
+                HIDDisplayItem dItem;
+                foreach (HIDInfo hidInfo in hidInfoLst)
                 {
-                    new HIDDisplayItem()
+                    dInfoItem = new HIDDisplayInfoItem();
+                    dItem = new HIDDisplayItem()
                     {
                         DisplayType = HIDDisplayItemEnum.Lebel,
                         MenuName = "PID",
-                        //MenuStyle = (Style)Application.Current.FindResource("DisplayLabelStyle")
-                    },
-                    new HIDDisplayItem()
+                    };
+                    dInfoItem.HIDDisplayInfoCollections.Add(dItem);
+                    dItem = new HIDDisplayItem()
                     {
                         DisplayType = HIDDisplayItemEnum.TextBlock,
-                        MenuName = "PID"
-                    },
-                };
+                        MenuName = hidInfo.Pid.ToString("X4")
+                    };
+                    dInfoItem.HIDDisplayInfoCollections.Add(dItem);
+                    dItem = new HIDDisplayItem()
+                    {
+                        DisplayType = HIDDisplayItemEnum.Lebel,
+                        MenuName = "VID",
+                    };
+                    dInfoItem.HIDDisplayInfoCollections.Add(dItem);
+                    dItem = new HIDDisplayItem()
+                    {
+                        DisplayType = HIDDisplayItemEnum.TextBlock,
+                        MenuName = hidInfo.Vid.ToString("X4")
+                    };
+                    dInfoItem.HIDDisplayInfoCollections.Add(dItem);
+                    dItem = new HIDDisplayItem()
+                    {
+                        DisplayType = HIDDisplayItemEnum.Lebel,
+                        MenuName = "ManuFactor",
+                    };
+                    dInfoItem.HIDDisplayInfoCollections.Add(dItem);
+                    dItem = new HIDDisplayItem()
+                    {
+                        DisplayType = HIDDisplayItemEnum.TextBlock,
+                        MenuName = hidInfo.Manufacturer
+                    };
+                    dInfoItem.HIDDisplayInfoCollections.Add(dItem);
+                    revLst.Add(dInfoItem);
+                }
+
+                return revLst;
             }
         }
+    }
+
+    public class HIDDisplayInfoItem
+    {
+        public ObservableCollection<IMenuItem> HIDDisplayInfoCollections { get; set; } = new ObservableCollection<IMenuItem>();
     }
 }

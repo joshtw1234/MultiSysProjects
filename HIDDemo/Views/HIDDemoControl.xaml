@@ -29,7 +29,7 @@
                           ItemsPanel="{StaticResource HIDOPItemsPanel}"/>
             <ItemsControl DockPanel.Dock="Top" ItemsSource="{Binding HIDDisplayCollections}"
                           ItemTemplate="{StaticResource HIDDisplayTemplate}"
-                          ItemsPanel="{StaticResource HIDDisplayPanel}"/>
+                          ItemsPanel="{StaticResource HIDOPItemsPanel}"/>
             <TextBlock Style="{StaticResource MsgTextBlockStyle}"/>
         </DockPanel>
     </Grid>

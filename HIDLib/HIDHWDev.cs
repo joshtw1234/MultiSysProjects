@@ -9,20 +9,23 @@ using System.IO;
 
 namespace HIDLib
 {
-    public class HIDDev : IDisposable
+    public class HIDHWDev : IDisposable
     {
+        const int HIDBUfferSize = 64;
         /* device handle */
         private IntPtr handle;
+
+        public IntPtr HIDHandel { get { return handle; } }
         /* stream */
         private FileStream _fileStream;
 
-        /* stream */
-        public FileStream fileStream
-        {
-            get { return _fileStream; }
-            /* do not expose this setter */
-            internal set { _fileStream = value; }
-        }
+        ///* stream */
+        //public FileStream fileStream
+        //{
+        //    get { return _fileStream; }
+        //    /* do not expose this setter */
+        //    internal set { _fileStream = value; }
+        //}
 
         /* dispose */
         public void Dispose()
@@ -41,13 +44,13 @@ namespace HIDLib
         }
 
         /* open hid device */
-        public bool Open(HIDInfo dev)
+        public bool Open(string devPath)
         {
             /* safe file handle */
             SafeFileHandle shandle;
 
             /* opens hid device file */
-            handle = HIDAPIs.CreateFile(dev.Path,
+            handle = HIDAPIs.CreateFile(devPath,
                 HIDAPIs.GENERIC_READ | HIDAPIs.GENERIC_WRITE,
                 HIDAPIs.FILE_SHARE_READ | HIDAPIs.FILE_SHARE_WRITE,
                 IntPtr.Zero, HIDAPIs.OPEN_EXISTING, HIDAPIs.FILE_FLAG_OVERLAPPED,
@@ -63,27 +66,10 @@ namespace HIDLib
             shandle = new SafeFileHandle(handle, false);
 
             /* prepare stream - async */
-            _fileStream = new FileStream(shandle, FileAccess.ReadWrite,
-                64, true);
+            _fileStream = new FileStream(shandle, FileAccess.ReadWrite, HIDBUfferSize, true);
 
             /* report status */
             return true;
-        }
-
-        /* close hid device */
-        public void Close()
-        {
-            /* deal with file stream */
-            if (_fileStream != null)
-            {
-                /* close stream */
-                _fileStream.Close();
-                /* get rid of object */
-                _fileStream = null;
-            }
-
-            /* close handle */
-            HIDAPIs.CloseHandle(handle);
         }
 
         /* write record */

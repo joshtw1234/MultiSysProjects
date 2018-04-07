@@ -18,6 +18,7 @@
     <Style x:Key="DisplayTextBlockStyle" TargetType="TextBlock">
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="Text" Value="{Binding MenuName}"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
     </Style>
     <ControlTemplate x:Key="LabelTemplate" TargetType="ContentControl">
         <Label Style="{StaticResource DisplayLabelStyle}"/>
@@ -35,13 +36,20 @@
             </DataTrigger>
         </Style.Triggers>
     </Style>
-    
-    <DataTemplate x:Key="HIDDisplayTemplate">
-        <ContentControl Style="{StaticResource HIDDisplayStyle}"/>
-    </DataTemplate>
     <ItemsPanelTemplate x:Key="HIDDisplayPanel">
         <StackPanel Orientation="Horizontal"/>
     </ItemsPanelTemplate>
+
+    <DataTemplate x:Key="HIDDisplayInfoTemplate">
+        <ContentControl Style="{StaticResource HIDDisplayStyle}"/>
+    </DataTemplate>
+
+    <DataTemplate x:Key="HIDDisplayTemplate">
+        <ItemsControl ItemsSource="{Binding HIDDisplayInfoCollections}"
+                      ItemTemplate="{StaticResource HIDDisplayInfoTemplate}"
+                      ItemsPanel="{StaticResource HIDDisplayPanel}"/>
+    </DataTemplate>
+    
     
     <DataTemplate x:Key="HIDOPButton">
         <Button Content="{Binding MenuName}"/>

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using HIDLib;
 using UtilityUILib;
 
 namespace HIDDemo.Models
@@ -11,5 +8,6 @@ namespace HIDDemo.Models
     public interface IHIDDemoControlModel
     {
         ObservableCollection<IMenuItem> GetHIDOPButtons { get; }
+        List<HIDInfo> GetHIDInfoCollections { get; }
     }
 }

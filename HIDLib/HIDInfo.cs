@@ -11,13 +11,18 @@ namespace HIDLib
     /// </summary>
     public class HIDInfo
     {
+        const int InfomationBuffer = 256;
+
+        /// <summary>
+        /// HID HW Device class
+        /// </summary>
         private HIDHWDev hidHWDev;
 
         IntPtr hidInfoSet;
         /* allocate mem for interface descriptor */
         HIDAPIs.DeviceInterfaceData iface;
         /* device path */
-        public string Path { get; private set; }
+        public string HIDFullPath { get; private set; }
         /* vendor ID */
         public short Vid { get; private set; }
         /* product id */
@@ -28,6 +33,10 @@ namespace HIDLib
         public string Manufacturer { get; private set; }
         /* usb serial number string */
         public string SerialNumber { get; private set; }
+        /// <summary>
+        /// The Compare string for HID Device
+        /// </summary>
+        public string HIDCompareStr { get; private set; }
 
         public HIDInfo(IntPtr _hidInfoSet, HIDAPIs.DeviceInterfaceData _iface, out bool isWork)
         {
@@ -41,7 +50,7 @@ namespace HIDLib
                 Manufacturer = GetManufacturer(hidHWDev.HIDHandel);
                 Product = GetProduct(hidHWDev.HIDHandel);
                 SerialNumber = GetSerialNumber(hidHWDev.HIDHandel);
-                Path = devPath;
+                HIDFullPath = devPath;
                 GetVidPid(hidHWDev.HIDHandel);                
             }
         }
@@ -70,7 +79,7 @@ namespace HIDLib
                 /* fail! */
                 throw new Win32Exception();
             }
-
+            HIDCompareStr = detIface.DevicePath.Split('&')[2];
             /* return device path */
             return detIface.DevicePath;
         }
@@ -148,6 +157,11 @@ namespace HIDLib
             Vid = attr.VendorID; Pid = attr.ProductID;
         }
         #endregion
+
+        public bool HIDOpen()
+        {
+            return hidHWDev.Open(HIDFullPath);
+        }
 
         public void HIDRead(byte[] rData)
         {

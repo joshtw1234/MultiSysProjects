@@ -120,9 +120,21 @@ namespace HIDDemo.ViewModels
                         DisplayType = HIDDisplayItemEnum.TextBlock,
                         MenuName = hidInfo.Manufacturer
                     };
-                    dInfoItem.FieldIdx = ++fieldIdx;
+                    dInfoItem.HIDDisplayInfoCollections.Add(dItem);
+                    dItem = new HIDDisplayItem()
+                    {
+                        DisplayType = HIDDisplayItemEnum.Lebel,
+                        MenuName = "CompareStr",
+                    };
+                    dInfoItem.HIDDisplayInfoCollections.Add(dItem);
+                    dItem = new HIDDisplayItem()
+                    {
+                        DisplayType = HIDDisplayItemEnum.TextBlock,
+                        MenuName = hidInfo.HIDCompareStr
+                    };
                     dInfoItem.HIDDisplayInfoCollections.Add(dItem);
                     dInfoItem.OnRadioButtonChecked += DInfoItem_OnRadioButtonChecked1;
+                    dInfoItem.FieldIdx = ++fieldIdx;
                     revLst.Add(dInfoItem);
                     hidInfo.HIDClose();
                 }

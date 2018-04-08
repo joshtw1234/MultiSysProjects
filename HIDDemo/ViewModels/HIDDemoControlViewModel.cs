@@ -56,8 +56,8 @@ namespace HIDDemo.ViewModels
             }
         }
 
-        private string messageText;
-        public string MessageText
+        private MessageTextDCT messageText;
+        public MessageTextDCT MessageText
         {
             get
             {
@@ -75,6 +75,7 @@ namespace HIDDemo.ViewModels
             hidGUIModel = _model;
             hidOPButtonCollection = GetHIDOPButtons;
             hidDisplayCollections = GetHIDDisplayItems;
+            messageText = hidGUIModel.GetMessageText;
         }
         
         private ObservableCollection<IMenuItem> GetHIDOPButtons
@@ -109,15 +110,15 @@ namespace HIDDemo.ViewModels
 
         private void OnBtnClick(string obj)
         {
-            bool btnCloseStatus = false;
+            bool btnCloseStatus = true;
             if (obj.Equals(HIDDemoControlConstants.OpenHID))
             {
                 hidGUIModel.SetHIDOpen(selectHIDIdx);
-                btnCloseStatus = true;
             }
             if (obj.Equals(HIDDemoControlConstants.CloseHID))
             {
                 hidGUIModel.SetHIDClose(selectHIDIdx);
+                btnCloseStatus = false;
             }
             if (obj.Equals(HIDDemoControlConstants.SendHID))
             {
@@ -152,7 +153,7 @@ namespace HIDDemo.ViewModels
                     dItem = new HIDDisplayItem()
                     {
                         DisplayType = HIDDisplayItemEnum.TextBlock,
-                        MenuName = hidInfo.Pid.ToString("X4")
+                        MenuName = hidInfo.InfoStruct.Pid.ToString("X4")
                     };
                     dInfoItem.HIDDisplayInfoCollections.Add(dItem);
                     dItem = new HIDDisplayItem()
@@ -164,7 +165,7 @@ namespace HIDDemo.ViewModels
                     dItem = new HIDDisplayItem()
                     {
                         DisplayType = HIDDisplayItemEnum.TextBlock,
-                        MenuName = hidInfo.Vid.ToString("X4")
+                        MenuName = hidInfo.InfoStruct.Vid.ToString("X4")
                     };
                     dInfoItem.HIDDisplayInfoCollections.Add(dItem);
                     dItem = new HIDDisplayItem()
@@ -176,7 +177,7 @@ namespace HIDDemo.ViewModels
                     dItem = new HIDDisplayItem()
                     {
                         DisplayType = HIDDisplayItemEnum.TextBlock,
-                        MenuName = hidInfo.Manufacturer
+                        MenuName = hidInfo.InfoStruct.Manufacturer
                     };
                     dInfoItem.HIDDisplayInfoCollections.Add(dItem);
                     dItem = new HIDDisplayItem()
@@ -188,7 +189,7 @@ namespace HIDDemo.ViewModels
                     dItem = new HIDDisplayItem()
                     {
                         DisplayType = HIDDisplayItemEnum.TextBlock,
-                        MenuName = hidInfo.HIDCompareStr
+                        MenuName = hidInfo.InfoStruct.HIDCompareStr
                     };
                     dInfoItem.HIDDisplayInfoCollections.Add(dItem);
                     dInfoItem.OnRadioButtonChecked += DInfoItem_OnRadioButtonChecked1;
@@ -217,7 +218,7 @@ namespace HIDDemo.ViewModels
                 selectHIDIdx = infoItem.FieldIdx;
                 HIDOPButtonDT btnOpen = HIDOPButtonCollection.FirstOrDefault(x=>x.MenuName.Equals(HIDDemoControlConstants.OpenHID)) as HIDOPButtonDT;
                 btnOpen.BtnEnabled = true;
-                MessageText = $"InfoItem [{selectHIDIdx}] selected";
+                MessageText.MsgText += $"\r\nInfoItem [{selectHIDIdx}] selected";
             }
         }
     }
@@ -246,4 +247,6 @@ namespace HIDDemo.ViewModels
             }
         }
     }
+
+    
 }

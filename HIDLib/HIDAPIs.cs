@@ -3,6 +3,7 @@
  *   Class for HID APIs.
  * 
  ******************************************************************************/
+using Microsoft.Win32.SafeHandles;
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -37,14 +38,14 @@ namespace HIDLib
 
         [DllImport("kernel32.dll", SetLastError = true)]
         /* opens files that access usb hid devices */
-        public static extern IntPtr CreateFile(
+        public static extern SafeFileHandle CreateFile(
             [MarshalAs(UnmanagedType.LPStr)] string strName,
             uint nAccess, uint nShareMode, IntPtr lpSecurity,
             uint nCreationFlags, uint nAttributes, IntPtr lpTemplate);
 
         [DllImport("kernel32.dll", SetLastError = true)]
         /* closes file */
-        public static extern bool CloseHandle(IntPtr hObject);
+        public static extern bool CloseHandle(SafeFileHandle hObject);
         #endregion
 
         #region hid.dll
@@ -84,8 +85,21 @@ namespace HIDLib
 
         /* gets serial number string */
         [DllImport("hid.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        internal static extern bool HidD_GetSerialNumberString(IntPtr hDevice,
+        public static extern bool HidD_GetSerialNumberString(IntPtr hDevice,
             StringBuilder buffer, Int32 bufferLength);
+
+        [DllImport("hid.dll", SetLastError = true)]
+        public static extern bool HidD_GetPreparsedData(
+           SafeFileHandle hObject,
+           ref IntPtr PreparsedData);
+
+        [DllImport("hid.dll", SetLastError = true)]
+        public static extern Boolean HidD_FreePreparsedData(ref IntPtr PreparsedData);
+
+        [DllImport("hid.dll", SetLastError = true)]
+        public static extern int HidP_GetCaps(
+            IntPtr pPHIDP_PREPARSED_DATA,					// IN PHIDP_PREPARSED_DATA  PreparsedData,
+            ref HIDP_CAPS myPHIDP_CAPS);				// OUT PHIDP_CAPS  Capabilities
         #endregion
 
         #region setupapi.dll
@@ -146,6 +160,53 @@ namespace HIDLib
         [DllImport("setupapi.dll", SetLastError = true)]
         public static extern bool SetupDiDestroyDeviceInfoList(IntPtr lpInfoSet);
         #endregion
+    }
+
+    // HIDP_CAPS
+    [StructLayout(LayoutKind.Sequential)]
+    public struct HIDP_CAPS
+    {
+        public System.UInt16 Usage;                 // USHORT
+        public System.UInt16 UsagePage;             // USHORT
+        public System.UInt16 InputReportByteLength;
+        public System.UInt16 OutputReportByteLength;
+        public System.UInt16 FeatureReportByteLength;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 17)]
+        public System.UInt16[] Reserved;                // USHORT  Reserved[17];			
+        public System.UInt16 NumberLinkCollectionNodes;
+        public System.UInt16 NumberInputButtonCaps;
+        public System.UInt16 NumberInputValueCaps;
+        public System.UInt16 NumberInputDataIndices;
+        public System.UInt16 NumberOutputButtonCaps;
+        public System.UInt16 NumberOutputValueCaps;
+        public System.UInt16 NumberOutputDataIndices;
+        public System.UInt16 NumberFeatureButtonCaps;
+        public System.UInt16 NumberFeatureValueCaps;
+        public System.UInt16 NumberFeatureDataIndices;
+    }
+
+    public struct HIDInfoStruct
+    {
+        /* device path */
+        public string HIDFullPath { get; set; }
+        /* vendor ID */
+        public short Vid { get; set; }
+        /* product id */
+        public short Pid { get; set; }
+        /* usb product string */
+        public string Product { get; set; }
+        /* usb manufacturer string */
+        public string Manufacturer { get; set; }
+        /* usb serial number string */
+        public string SerialNumber { get; set; }
+
+        /// <summary>
+        /// The Compare string for HID Device
+        /// </summary>
+        public string HIDCompareStr { get; set; }
+
+        public uint OutputBuffSize { get; set; }
+        public uint InputBuffSize { get; set; }
     }
 
 }

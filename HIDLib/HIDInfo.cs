@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32.SafeHandles;
+using System;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -21,37 +22,41 @@ namespace HIDLib
         IntPtr hidInfoSet;
         /* allocate mem for interface descriptor */
         HIDAPIs.DeviceInterfaceData iface;
-        /* device path */
-        public string HIDFullPath { get; private set; }
-        /* vendor ID */
-        public short Vid { get; private set; }
-        /* product id */
-        public short Pid { get; private set; }
-        /* usb product string */
-        public string Product { get; private set; }
-        /* usb manufacturer string */
-        public string Manufacturer { get; private set; }
-        /* usb serial number string */
-        public string SerialNumber { get; private set; }
-        /// <summary>
-        /// The Compare string for HID Device
-        /// </summary>
-        public string HIDCompareStr { get; private set; }
+
+        private HIDInfoStruct infoStruct;
+
+        public HIDInfoStruct InfoStruct
+        {
+            get { return infoStruct; }
+        }
+       
 
         public HIDInfo(IntPtr _hidInfoSet, HIDAPIs.DeviceInterfaceData _iface, out bool isWork)
         {
             hidInfoSet = _hidInfoSet;
-            hidHWDev = new HIDHWDev();
             iface = _iface;
+            //Get HW Path
             string devPath = GetPath(hidInfoSet, ref iface);
-            isWork = hidHWDev.Open(devPath);
+            //Open HID HW
+            hidHWDev = new HIDHWDev(devPath);
+            isWork = hidHWDev.Open();
             if (isWork)
             {
-                Manufacturer = GetManufacturer(hidHWDev.HIDHandel);
-                Product = GetProduct(hidHWDev.HIDHandel);
-                SerialNumber = GetSerialNumber(hidHWDev.HIDHandel);
-                HIDFullPath = devPath;
-                GetVidPid(hidHWDev.HIDHandel);                
+                infoStruct = new HIDInfoStruct()
+                {
+                    Manufacturer = GetManufacturer(hidHWDev.HIDHandel),
+                    Product = GetProduct(hidHWDev.HIDHandel),
+                    SerialNumber = GetSerialNumber(hidHWDev.HIDHandel),
+                    HIDFullPath = devPath,
+                };
+                infoStruct.HIDCompareStr = devPath.Split('&')[2];
+                var hidAttr = GetVidPid(hidHWDev.HIDHandel);
+                infoStruct.Vid = hidAttr.VendorID;
+                infoStruct.Pid = hidAttr.ProductID;
+               
+                infoStruct.OutputBuffSize = hidHWDev.OutputBuffSize;
+                infoStruct.InputBuffSize = hidHWDev.InputBuffSize;
+                
             }
         }
 
@@ -79,13 +84,13 @@ namespace HIDLib
                 /* fail! */
                 throw new Win32Exception();
             }
-            HIDCompareStr = detIface.DevicePath.Split('&')[2];
+            
             /* return device path */
             return detIface.DevicePath;
         }
 
         /* get device manufacturer string */
-        private string GetManufacturer(IntPtr handle)
+        private string GetManufacturer(SafeFileHandle handle)
         {
             /* buffer */
             var s = new StringBuilder(256);
@@ -93,7 +98,7 @@ namespace HIDLib
             string rc = String.Empty;
 
             /* get string */
-            if (HIDAPIs.HidD_GetManufacturerString(handle, s, s.Capacity))
+            if (HIDAPIs.HidD_GetManufacturerString(handle.DangerousGetHandle(), s, s.Capacity))
             {
                 rc = s.ToString();
             }
@@ -103,7 +108,7 @@ namespace HIDLib
         }
 
         /* get device product string */
-        private string GetProduct(IntPtr handle)
+        private string GetProduct(SafeFileHandle handle)
         {
             /* buffer */
             var s = new StringBuilder(256);
@@ -111,7 +116,7 @@ namespace HIDLib
             string rc = String.Empty;
 
             /* get string */
-            if (HIDAPIs.HidD_GetProductString(handle, s, s.Capacity))
+            if (HIDAPIs.HidD_GetProductString(handle.DangerousGetHandle(), s, s.Capacity))
             {
                 rc = s.ToString();
             }
@@ -121,7 +126,7 @@ namespace HIDLib
         }
 
         /* get device product string */
-        private string GetSerialNumber(IntPtr handle)
+        private string GetSerialNumber(SafeFileHandle handle)
         {
             /* buffer */
             var s = new StringBuilder(256);
@@ -129,7 +134,7 @@ namespace HIDLib
             string rc = String.Empty;
 
             /* get string */
-            if (HIDAPIs.HidD_GetSerialNumberString(handle, s, s.Capacity))
+            if (HIDAPIs.HidD_GetSerialNumberString(handle.DangerousGetHandle(), s, s.Capacity))
             {
                 rc = s.ToString();
             }
@@ -139,7 +144,7 @@ namespace HIDLib
         }
 
         /* get vid and pid */
-        private void GetVidPid(IntPtr handle)
+        private HIDAPIs.HiddAttributtes GetVidPid(SafeFileHandle handle)
         {
             /* attributes structure */
             var attr = new HIDAPIs.HiddAttributtes();
@@ -147,25 +152,23 @@ namespace HIDLib
             attr.Size = Marshal.SizeOf(attr);
 
             /* get attributes */
-            if (HIDAPIs.HidD_GetAttributes(handle, ref attr) == false)
+            if (HIDAPIs.HidD_GetAttributes(handle.DangerousGetHandle(), ref attr) == false)
             {
                 /* fail! */
                 throw new Win32Exception();
             }
-
-            /* update vid and pid */
-            Vid = attr.VendorID; Pid = attr.ProductID;
+            return attr;
         }
         #endregion
 
         public bool HIDOpen()
         {
-            return hidHWDev.Open(HIDFullPath);
+            return hidHWDev.Open();
         }
 
-        public void HIDRead(byte[] rData)
+        public byte[] HIDRead()
         {
-            hidHWDev.Read(rData);
+            return hidHWDev.Read();
         }
 
         public bool HIDWrite(byte[] wData)

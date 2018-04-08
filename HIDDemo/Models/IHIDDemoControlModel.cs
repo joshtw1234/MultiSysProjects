@@ -1,15 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+using HIDLib;
 using UtilityUILib;
 
 namespace HIDDemo.Models
 {
-    interface IHIDDemoControlModel
+    public interface IHIDDemoControlModel
     {
-        ObservableCollection<IMenuItem> GetHIDOPButtons { get; }
+        List<HIDInfo> GetHIDInfoCollections { get; }
+        MessageTextDCT GetMessageText { get; }
+
+        void SetHIDOpen(int selectHIDIdx);
+        void SetHIDClose(int selectHIDIdx);
+        void SetHIDSend(int selectHIDIdx, byte[] data);
+    }
+
+    public class MessageTextDCT : MenuItem, INotifyPropertyChanged
+    {
+        #region INotifyPropertyChanged Interface
+        public event PropertyChangedEventHandler PropertyChanged;
+        void onPropertyChanged(object sender, string propertyName)
+        {
+            if (this.PropertyChanged != null)
+            { PropertyChanged(sender, new PropertyChangedEventArgs(propertyName)); }
+        }
+        #endregion
+
+        public string MsgText
+        {
+            get
+            {
+                return MenuName;
+            }
+            set
+            {
+                MenuName = value;
+                onPropertyChanged(this, "MsgText");
+            }
+        }
     }
 }

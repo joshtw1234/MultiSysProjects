@@ -5,10 +5,6 @@ namespace UtilityUILib
     public interface IMenuItem
     {
         /// <summary>
-        /// MenuAutomationId is the automation id associated to a particular menu item
-        /// </summary>
-        string MenuAutomationId { get; set; }
-        /// <summary>
         /// MenuName is the name associated to a particular menu item
         /// </summary>
         string MenuName { get; set; }
@@ -33,6 +29,7 @@ namespace UtilityUILib
         /// on a particular menu item 
         /// </summary>
         //DelegateCommand<string> MenuCommand { get; set; }
+        MyCommond<string> MenuCommand { get; set; }
 
         /// <summary>
         /// MenuStyle is the styling applied to a particular menu item

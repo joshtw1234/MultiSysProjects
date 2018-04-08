@@ -10,9 +10,6 @@ namespace HIDDemo.Views
         public HIDDemoControl()
         {
             InitializeComponent();
-            Models.HIDDemoControlModel hidModel = new Models.HIDDemoControlModel();
-            ViewModels.HIDDemoControlViewModel viewModel = new ViewModels.HIDDemoControlViewModel(hidModel);
-            this.DataContext = viewModel;
         }
     }
 }

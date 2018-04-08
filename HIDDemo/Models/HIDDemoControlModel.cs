@@ -1,25 +1,83 @@
-﻿using System.Collections.ObjectModel;
-using UtilityUILib;
+﻿using System.Collections.Generic;
+using HIDLib;
 
 namespace HIDDemo.Models
 {
     class HIDDemoControlModel : IHIDDemoControlModel
     {
-        public ObservableCollection<IMenuItem> GetHIDOPButtons
+        List<HIDInfo> lstHIDDevs;
+        MessageTextDCT msgText;
+
+        /// <summary>
+        /// Print byte array to string.
+        /// </summary>
+        /// <param name="pData"></param>
+        /// <param name="msg"></param>
+        private void PrintByteToString(byte[] pData, string msg = "")
+        {
+#if DEBUG
+            if (null == pData)
+            {
+                msgText.MsgText += string.Format("\r\nPrintByte Msg {0} Data 0", msg);
+                return;
+            }
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            //
+            foreach (byte bData in pData)
+            {
+                sb.Append(bData.ToString("X2"));
+                sb.Append("|");
+            }
+            msgText.MsgText += ($"\r\n{msg} Data {sb.ToString()}");
+            sb.Clear();
+#endif
+        }
+
+        public List<HIDInfo> GetHIDInfoCollections
         {
             get
             {
-                return new ObservableCollection<IMenuItem>()
+                BaseHID bhid = new BaseHID();
+                lstHIDDevs = new List<HIDInfo>();
+                lstHIDDevs.AddRange(bhid.BrowseHID());
+                return lstHIDDevs;
+            }
+        }
+
+        public MessageTextDCT GetMessageText
+        {
+            get
+            {
+                msgText = new MessageTextDCT()
                 {
-                    new MenuItem
-                    {
-                        MenuName = "Open HID"
-                    },
-                    new MenuItem
-                    {
-                        MenuName = "Close HID"
-                    }
+                   MsgText = "Hello world!!!"
                 };
+                return msgText;
+            }
+        }
+
+        public void SetHIDClose(int selectHIDIdx)
+        {
+            lstHIDDevs[selectHIDIdx].HIDClose();
+        }
+
+        public void SetHIDOpen(int selectHIDIdx)
+        {
+            lstHIDDevs[selectHIDIdx].HIDOpen();
+        }
+
+        public void SetHIDSend(int selectHIDIdx, byte[] data)
+        {
+            byte[] wData = PriMaxKBHID.GetCmdKeyboardLang();
+            PrintByteToString(wData);
+            if (lstHIDDevs[selectHIDIdx].HIDWrite(wData))
+            {
+                byte[] revData = lstHIDDevs[selectHIDIdx].HIDRead();
+                PrintByteToString(revData);
+            }
+            else
+            {
+                msgText.MsgText += "\r\nHID Write Error";
             }
         }
     }

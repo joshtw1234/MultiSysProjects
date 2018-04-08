@@ -17,6 +17,7 @@ namespace HIDLib
         /// HW Full Path
         /// </summary>
         private string HWFullPath;
+        private bool isReadOnly;
         /// <summary>
         /// HID HW Handle
         /// </summary>
@@ -84,9 +85,12 @@ namespace HIDLib
             InputBuffSize = capabilities.InputReportByteLength;
             //Call freePreParsedData to release some stuff
             HIDAPIs.HidD_FreePreparsedData(ref ptrToPreParsedData);
-
-            /* prepare stream - async */
-            _fileStream = new FileStream(HIDHandle, FileAccess.ReadWrite, (int)OutputBuffSize, false);
+            if (OutputBuffSize > 0)
+            {
+                /* prepare stream - async */
+                _fileStream = new FileStream(HIDHandle, FileAccess.ReadWrite, (int)OutputBuffSize, false);
+                isReadOnly = true;
+            }
 
             /* report status */
             return true;
@@ -96,7 +100,7 @@ namespace HIDLib
         public bool Write(byte[] data)
         {
             bool rev = false;
-            if (data.Length > OutputBuffSize)
+            if (!isReadOnly || data.Length >= OutputBuffSize)
             {
                 //Output data can't bigger then buff size.
                 return rev;

@@ -32,43 +32,12 @@ namespace HIDDemo.Models
             /* iterate through all interfaces */
             while (HIDAPIs.SetupDiEnumDeviceInterfaces(hInfoSet, 0, ref gHid, index, ref iface))
             {
-#if true
                 bool isWork = false;
                 HIDInfo hidInfo = new HIDInfo(hInfoSet, iface, out isWork);
                 if (isWork)
                 {
                     info.Add(hidInfo);
                 }
-#else
-                /* vid and pid */
-                short vid, pid;
-
-                /* get device path */
-                var path = GetPath(hInfoSet, ref iface);
-
-                /* open device */
-                var handle = Open(path);
-                /* device is opened? */
-                if (handle != HIDAPIs.INVALID_HANDLE_VALUE)
-                {
-                    /* get device manufacturer string */
-                    var man = GetManufacturer(handle);
-                    /* get product string */
-                    var prod = GetProduct(handle);
-                    /* get serial number */
-                    var serial = GetSerialNumber(handle);
-                    /* get vid and pid */
-                    GetVidPid(handle, out vid, out pid);
-
-                    /* build up a new element */
-                    HIDInfo i = new HIDInfo(prod, serial, man, path, vid, pid);
-                    /* add to list */
-                    info.Add(i);
-
-                    /* close */
-                    Close(handle);
-                }
-#endif
                 /* next, please */
                 index++;
             }

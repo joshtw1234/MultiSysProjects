@@ -75,6 +75,10 @@ namespace HIDDemo.Models
                 byte[] revData = lstHIDDevs[selectHIDIdx].HIDRead();
                 PrintByteToString(revData);
             }
+            else
+            {
+                msgText.MsgText += "\r\nHID Write Error";
+            }
         }
     }
 }

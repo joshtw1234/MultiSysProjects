@@ -23,14 +23,14 @@
     </UserControl.Resources>
     <Grid Background="{StaticResource DefaultBackgroundColor}"
           DataContext="{StaticResource myDataSource}">
-        <DockPanel>
+        <DockPanel Margin="0,0,0,20">
             <ItemsControl DockPanel.Dock="Right" ItemsSource="{Binding HIDOPButtonCollection}" 
                           ItemTemplate="{StaticResource HIDOPButton}"
                           ItemsPanel="{StaticResource HIDOPItemsPanel}"/>
             <ItemsControl DockPanel.Dock="Top" ItemsSource="{Binding HIDDisplayCollections}"
                           ItemTemplate="{StaticResource HIDDisplayTemplate}"
                           ItemsPanel="{StaticResource HIDOPItemsPanel}"/>
-            <TextBlock Style="{StaticResource MsgTextBlockStyle}"/>
+             <TextBox Style="{StaticResource MsgTextBlockStyle}"/>
         </DockPanel>
     </Grid>
 </UserControl>

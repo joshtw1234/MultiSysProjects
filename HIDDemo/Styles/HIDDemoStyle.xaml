@@ -79,12 +79,14 @@
     <!--#endregion-->
     
     <!--#region HID Display info-->
-    <Style x:Key="MsgTextBlockStyle" TargetType="TextBlock">
+    <Style x:Key="MsgTextBlockStyle" TargetType="TextBox">
         <Setter Property="Foreground" Value="Black"/>
         <Setter Property="Background" Value="White"/>
         <Setter Property="Text" Value="{Binding MessageText.MsgText}"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="IsReadOnly" Value="True"/>
     </Style>
     
     <Style x:Key="DisplayLabelStyle" TargetType="Label">

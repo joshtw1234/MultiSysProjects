@@ -11,19 +11,29 @@ namespace HIDLib
 {
     public class HIDHWDev : IDisposable
     {
-        const int HIDBUfferSize = 64;
-       
         /* stream */
         private FileStream _fileStream;
         /// <summary>
         /// HW Full Path
         /// </summary>
         private string HWFullPath;
-        /* device handle */
-        public SafeFileHandle HIDHandel { get; private set; }
+        /// <summary>
+        /// HID HW Handle
+        /// </summary>
+        public SafeFileHandle HIDHandle { get; private set; }
+        /// <summary>
+        /// HID Output buffer Size
+        /// </summary>
         public uint OutputBuffSize { get; private set; }
+        /// <summary>
+        /// HID Input Buffer Size
+        /// </summary>
         public uint InputBuffSize { get; private set; }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="hwPath">The HW Full Path</param>
         public HIDHWDev(string hwPath)
         {
             HWFullPath = hwPath;
@@ -41,10 +51,10 @@ namespace HIDLib
                 _fileStream = null;
             }
 
-            if (!HIDHandel.IsClosed)
+            if (!HIDHandle.IsClosed)
             {
                 /* close handle */
-                HIDAPIs.CloseHandle(HIDHandel);
+                HIDAPIs.CloseHandle(HIDHandle);
             }
         }
 
@@ -52,13 +62,13 @@ namespace HIDLib
         public bool Open()
         {
             /* opens hid device file */
-            HIDHandel = HIDAPIs.CreateFile(HWFullPath,
+            HIDHandle = HIDAPIs.CreateFile(HWFullPath,
                 HIDAPIs.GENERIC_READ | HIDAPIs.GENERIC_WRITE,
                 HIDAPIs.FILE_SHARE_READ | HIDAPIs.FILE_SHARE_WRITE,
                 IntPtr.Zero, HIDAPIs.OPEN_EXISTING, 0, IntPtr.Zero);
 
             /* whops */
-            if (HIDHandel.IsInvalid)
+            if (HIDHandle.IsInvalid)
             {
                 return false;
             }
@@ -66,7 +76,7 @@ namespace HIDLib
             //get capabilites - use getPreParsedData, and getCaps
             //store the reportlengths
             IntPtr ptrToPreParsedData = new IntPtr();
-            bool ppdSucsess = HIDAPIs.HidD_GetPreparsedData(HIDHandel, ref ptrToPreParsedData);
+            bool ppdSucsess = HIDAPIs.HidD_GetPreparsedData(HIDHandle, ref ptrToPreParsedData);
             HIDP_CAPS capabilities = new HIDP_CAPS();
             int hidCapsSucsess = HIDAPIs.HidP_GetCaps(ptrToPreParsedData, ref capabilities);
             //Save buff size
@@ -76,7 +86,7 @@ namespace HIDLib
             HIDAPIs.HidD_FreePreparsedData(ref ptrToPreParsedData);
 
             /* prepare stream - async */
-            _fileStream = new FileStream(HIDHandel, FileAccess.ReadWrite, HIDBUfferSize, false);
+            _fileStream = new FileStream(HIDHandle, FileAccess.ReadWrite, (int)OutputBuffSize, false);
 
             /* report status */
             return true;
@@ -109,26 +119,16 @@ namespace HIDLib
             return rev;
         }
 
-        /* read record */
+        /// <summary>
+        /// Read HID Data
+        /// Note: before call read must call write first.
+        /// </summary>
+        /// <returns>Read backed data</returns>
         public byte[] Read()
         {
-#if true
             byte[] revbyte = new byte[InputBuffSize];
             _fileStream.Read(revbyte, 0, revbyte.Length);
             return revbyte;
-#else
-            /* get number of bytes */
-            int n = 0, bytes = data.Length;
-
-            /* read buffer */
-            while (n != bytes)
-            {
-                /* read data */
-                int rc = _fileStream.Read(data, n, bytes - n);
-                /* update pointers */
-                n += rc;
-            }
-#endif
         }
     }
 }

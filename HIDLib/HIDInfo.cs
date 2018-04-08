@@ -44,13 +44,13 @@ namespace HIDLib
             {
                 infoStruct = new HIDInfoStruct()
                 {
-                    Manufacturer = GetManufacturer(hidHWDev.HIDHandel),
-                    Product = GetProduct(hidHWDev.HIDHandel),
-                    SerialNumber = GetSerialNumber(hidHWDev.HIDHandel),
+                    Manufacturer = GetManufacturer(hidHWDev.HIDHandle),
+                    Product = GetProduct(hidHWDev.HIDHandle),
+                    SerialNumber = GetSerialNumber(hidHWDev.HIDHandle),
                     HIDFullPath = devPath,
                 };
                 infoStruct.HIDCompareStr = devPath.Split('&')[2];
-                var hidAttr = GetVidPid(hidHWDev.HIDHandel);
+                var hidAttr = GetVidPid(hidHWDev.HIDHandle);
                 infoStruct.Vid = hidAttr.VendorID;
                 infoStruct.Pid = hidAttr.ProductID;
                

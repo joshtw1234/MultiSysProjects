@@ -52,6 +52,7 @@
     <Compile Include="Models\HIDDemoControlModel.cs" />
     <Compile Include="Models\HIDDisplayItem.cs" />
     <Compile Include="Models\IHIDDemoControlModel.cs" />
+    <Compile Include="Models\PriMaxKBHID.cs" />
     <Compile Include="ViewModels\HIDDemoControlViewModel.cs" />
     <Compile Include="Views\HIDDemoControl.xaml.cs">
       <DependentUpon>HIDDemoControl.xaml</DependentUpon>

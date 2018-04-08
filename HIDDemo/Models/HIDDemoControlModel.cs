@@ -7,37 +7,34 @@ namespace HIDDemo.Models
 {
     class HIDDemoControlModel : IHIDDemoControlModel
     {
-        public ObservableCollection<IMenuItem> GetHIDOPButtons
-        {
-            get
-            {
-                return new ObservableCollection<IMenuItem>()
-                {
-                    new MenuItem
-                    {
-                        MenuName = "Browse HID"
-                    },
-                    new MenuItem
-                    {
-                        MenuName = "Open HID"
-                    },
-                    new MenuItem
-                    {
-                        MenuName = "Close HID"
-                    }
-                };
-            }
-        }
+        List<HIDInfo> lstHIDDevs;
 
         public List<HIDInfo> GetHIDInfoCollections
         {
             get
             {
                 BaseHID bhid = new BaseHID();
-                List<HIDInfo> revLst = new List<HIDInfo>();
-                revLst.AddRange(bhid.BrowseHID());
-                return revLst;
+                lstHIDDevs = new List<HIDInfo>();
+                lstHIDDevs.AddRange(bhid.BrowseHID());
+                return lstHIDDevs;
             }
+        }
+
+        public void SetHIDClose(int selectHIDIdx)
+        {
+            lstHIDDevs[selectHIDIdx].HIDClose();
+        }
+
+        public void SetHIDOpen(int selectHIDIdx)
+        {
+            lstHIDDevs[selectHIDIdx].HIDOpen();
+        }
+
+        public void SetHIDSend(int selectHIDIdx, byte[] data)
+        {
+
+            lstHIDDevs[selectHIDIdx].HIDWrite(data);
+            lstHIDDevs[selectHIDIdx].HIDRead(data);
         }
     }
 }

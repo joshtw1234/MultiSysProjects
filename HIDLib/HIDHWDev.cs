@@ -39,8 +39,12 @@ namespace HIDLib
                 _fileStream = null;
             }
 
-            /* close handle */
-            HIDAPIs.CloseHandle(handle);
+            if (handle != IntPtr.Zero)
+            {
+                /* close handle */
+                HIDAPIs.CloseHandle(handle);
+                handle = IntPtr.Zero;
+            }
         }
 
         /* open hid device */

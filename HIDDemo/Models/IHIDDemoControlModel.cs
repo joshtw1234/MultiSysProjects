@@ -7,7 +7,10 @@ namespace HIDDemo.Models
 {
     public interface IHIDDemoControlModel
     {
-        ObservableCollection<IMenuItem> GetHIDOPButtons { get; }
         List<HIDInfo> GetHIDInfoCollections { get; }
+
+        void SetHIDOpen(int selectHIDIdx);
+        void SetHIDClose(int selectHIDIdx);
+        void SetHIDSend(int selectHIDIdx, byte[] data);
     }
 }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HIDDemo.Models
+﻿namespace HIDDemo.Models
 {
     public enum HIDDisplayItemEnum
     {
@@ -13,5 +7,9 @@ namespace HIDDemo.Models
     }
     public class HIDDemoControlConstants
     {
+        public const string BrowseHID = "Browse HID";
+        public const string OpenHID = "Open HID";
+        public const string CloseHID = "Close HID";
+        public const string SendHID = "Send HID";
     }
 }

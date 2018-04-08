@@ -1,8 +1,10 @@
 ﻿using HIDDemo.Models;
 using HIDLib;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using UtilityUILib;
 
 namespace HIDDemo.ViewModels
@@ -20,6 +22,8 @@ namespace HIDDemo.ViewModels
         }
         #endregion
 
+
+        private int selectHIDIdx = -1;
         private ObservableCollection<IMenuItem> hidOPButtonCollection;
 
         public ObservableCollection<IMenuItem> HIDOPButtonCollection
@@ -69,15 +73,69 @@ namespace HIDDemo.ViewModels
         public HIDDemoControlViewModel(IHIDDemoControlModel _model)
         {
             hidGUIModel = _model;
-            hidOPButtonCollection = hidGUIModel.GetHIDOPButtons;
+            hidOPButtonCollection = GetHIDOPButtons;
             hidDisplayCollections = GetHIDDisplayItems;
         }
-        List<HIDInfo> hidInfoLst;
-        public ObservableCollection<HIDDisplayInfoItem> GetHIDDisplayItems
+        
+        private ObservableCollection<IMenuItem> GetHIDOPButtons
         {
             get
             {
-                hidInfoLst = hidGUIModel.GetHIDInfoCollections;
+                return new ObservableCollection<IMenuItem>()
+                {
+                    new HIDOPButtonDT
+                    {
+                        MenuName = HIDDemoControlConstants.BrowseHID,
+                        MenuCommand = new MyCommond<string>(OnBtnClick)
+                    },
+                    new HIDOPButtonDT
+                    {
+                        MenuName = HIDDemoControlConstants.OpenHID,
+                        MenuCommand = new MyCommond<string>(OnBtnClick)
+                    },
+                    new HIDOPButtonDT
+                    {
+                        MenuName = HIDDemoControlConstants.CloseHID,
+                        MenuCommand = new MyCommond<string>(OnBtnClick)
+                    },
+                    new HIDOPButtonDT
+                    {
+                        MenuName = HIDDemoControlConstants.SendHID,
+                        MenuCommand = new MyCommond<string>(OnBtnClick)
+                    }
+                };
+            }
+        }
+
+        private void OnBtnClick(string obj)
+        {
+            bool btnCloseStatus = false;
+            if (obj.Equals(HIDDemoControlConstants.OpenHID))
+            {
+                hidGUIModel.SetHIDOpen(selectHIDIdx);
+                btnCloseStatus = true;
+            }
+            if (obj.Equals(HIDDemoControlConstants.CloseHID))
+            {
+                hidGUIModel.SetHIDClose(selectHIDIdx);
+            }
+            if (obj.Equals(HIDDemoControlConstants.SendHID))
+            {
+                byte[] data = new byte[64];
+                hidGUIModel.SetHIDSend(selectHIDIdx, data);
+            }
+            HIDOPButtonDT btnClose = HIDOPButtonCollection.FirstOrDefault(x => x.MenuName.Equals(HIDDemoControlConstants.CloseHID)) as HIDOPButtonDT;
+            HIDOPButtonDT btnOpen = HIDOPButtonCollection.FirstOrDefault(x => x.MenuName.Equals(HIDDemoControlConstants.OpenHID)) as HIDOPButtonDT;
+            HIDOPButtonDT btnSend = HIDOPButtonCollection.FirstOrDefault(x => x.MenuName.Equals(HIDDemoControlConstants.SendHID)) as HIDOPButtonDT;
+            btnClose.BtnEnabled = btnSend.BtnEnabled = btnCloseStatus;
+            btnOpen.BtnEnabled = !btnCloseStatus;
+        }
+
+        private ObservableCollection<HIDDisplayInfoItem> GetHIDDisplayItems
+        {
+            get
+            {
+                List<HIDInfo> hidInfoLst = hidGUIModel.GetHIDInfoCollections;
                 ObservableCollection<HIDDisplayInfoItem> revLst = new ObservableCollection<HIDDisplayInfoItem>();
                 HIDDisplayInfoItem dInfoItem;
                 HIDDisplayItem dItem;
@@ -147,7 +205,44 @@ namespace HIDDemo.ViewModels
         {
             if (infoItem.MenuChecked)
             {
-                MessageText = $"InfoItem [{infoItem.FieldIdx}] selected";
+                if (selectHIDIdx > -1)
+                {
+                    //Close previous HID
+                    hidGUIModel.SetHIDClose(selectHIDIdx);
+                }
+                HIDOPButtonDT btnClose = HIDOPButtonCollection.FirstOrDefault(x => x.MenuName.Equals(HIDDemoControlConstants.CloseHID)) as HIDOPButtonDT;
+                HIDOPButtonDT btnSend = HIDOPButtonCollection.FirstOrDefault(x => x.MenuName.Equals(HIDDemoControlConstants.SendHID)) as HIDOPButtonDT;
+                btnClose.BtnEnabled = btnSend.BtnEnabled = false;
+                //Select new one.
+                selectHIDIdx = infoItem.FieldIdx;
+                HIDOPButtonDT btnOpen = HIDOPButtonCollection.FirstOrDefault(x=>x.MenuName.Equals(HIDDemoControlConstants.OpenHID)) as HIDOPButtonDT;
+                btnOpen.BtnEnabled = true;
+                MessageText = $"InfoItem [{selectHIDIdx}] selected";
+            }
+        }
+    }
+
+    public class HIDOPButtonDT : MenuItem, INotifyPropertyChanged
+    {
+        #region INotifyPropertyChanged Interface
+        public event PropertyChangedEventHandler PropertyChanged;
+        void onPropertyChanged(object sender, string propertyName)
+        {
+            if (this.PropertyChanged != null)
+            { PropertyChanged(sender, new PropertyChangedEventArgs(propertyName)); }
+        }
+        #endregion
+
+        public bool BtnEnabled
+        {
+            get
+            {
+                return MenuEnabled;
+            }
+            set
+            {
+                MenuEnabled = value;
+                onPropertyChanged(this, "BtnEnabled");
             }
         }
     }

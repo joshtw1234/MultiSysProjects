@@ -37,6 +37,7 @@ namespace HIDLib
             iface = _iface;
             //Get HW Path
             string devPath = GetPath(hidInfoSet, ref iface);
+
             //Open HID HW
             hidHWDev = new HIDHWDev(devPath);
             isWork = hidHWDev.Open();
@@ -50,7 +51,15 @@ namespace HIDLib
                     HIDFullPath = devPath,
                 };
                 infoStruct.HIDCompareStr = devPath.Split('&')[2];
-                var hidAttr = GetVidPid(hidHWDev.HIDHandel);
+                HIDAPIs.HiddAttributtes hidAttr = new HIDAPIs.HiddAttributtes();
+                try
+                {
+                    hidAttr = GetVidPid(hidHWDev.HIDHandel);
+                }
+                catch(Exception ex)
+                {
+
+                }
                 infoStruct.Vid = hidAttr.VendorID;
                 infoStruct.Pid = hidAttr.ProductID;
                

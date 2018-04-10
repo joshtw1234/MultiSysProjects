@@ -27,10 +27,12 @@
             <ItemsControl DockPanel.Dock="Right" ItemsSource="{Binding HIDOPButtonCollection}" 
                           ItemTemplate="{StaticResource HIDOPButton}"
                           ItemsPanel="{StaticResource HIDOPItemsPanel}"/>
-            <ItemsControl DockPanel.Dock="Top" ItemsSource="{Binding HIDDisplayCollections}"
+            <ScrollViewer DockPanel.Dock="Top" VerticalScrollBarVisibility="Auto">
+                <ItemsControl ItemsSource="{Binding HIDDisplayCollections}"
                           ItemTemplate="{StaticResource HIDDisplayTemplate}"
                           ItemsPanel="{StaticResource HIDOPItemsPanel}"/>
-             <TextBox Style="{StaticResource MsgTextBlockStyle}"/>
+            </ScrollViewer>
+            <TextBox Style="{StaticResource MsgTextBlockStyle}"/>
         </DockPanel>
     </Grid>
 </UserControl>

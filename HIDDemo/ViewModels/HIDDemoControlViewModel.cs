@@ -171,7 +171,7 @@ namespace HIDDemo.ViewModels
                     dItem = new HIDDisplayItem()
                     {
                         DisplayType = HIDDisplayItemEnum.Lebel,
-                        MenuName = "ManuFactor",
+                        MenuName = "Factor",
                     };
                     dInfoItem.HIDDisplayInfoCollections.Add(dItem);
                     dItem = new HIDDisplayItem()
@@ -183,13 +183,37 @@ namespace HIDDemo.ViewModels
                     dItem = new HIDDisplayItem()
                     {
                         DisplayType = HIDDisplayItemEnum.Lebel,
-                        MenuName = "CompareStr",
+                        MenuName = "CPStr",
                     };
                     dInfoItem.HIDDisplayInfoCollections.Add(dItem);
                     dItem = new HIDDisplayItem()
                     {
                         DisplayType = HIDDisplayItemEnum.TextBlock,
                         MenuName = hidInfo.InfoStruct.HIDCompareStr
+                    };
+                    dInfoItem.HIDDisplayInfoCollections.Add(dItem);
+                    dItem = new HIDDisplayItem()
+                    {
+                        DisplayType = HIDDisplayItemEnum.Lebel,
+                        MenuName = "OBuffSz",
+                    };
+                    dInfoItem.HIDDisplayInfoCollections.Add(dItem);
+                    dItem = new HIDDisplayItem()
+                    {
+                        DisplayType = HIDDisplayItemEnum.TextBlock,
+                        MenuName = hidInfo.InfoStruct.OutputBuffSize.ToString()
+                    };
+                    dInfoItem.HIDDisplayInfoCollections.Add(dItem);
+                    dItem = new HIDDisplayItem()
+                    {
+                        DisplayType = HIDDisplayItemEnum.Lebel,
+                        MenuName = "IBuffSz",
+                    };
+                    dInfoItem.HIDDisplayInfoCollections.Add(dItem);
+                    dItem = new HIDDisplayItem()
+                    {
+                        DisplayType = HIDDisplayItemEnum.TextBlock,
+                        MenuName = hidInfo.InfoStruct.InputBuffSize.ToString()
                     };
                     dInfoItem.HIDDisplayInfoCollections.Add(dItem);
                     dInfoItem.OnRadioButtonChecked += DInfoItem_OnRadioButtonChecked1;

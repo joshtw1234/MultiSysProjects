@@ -27,7 +27,7 @@ namespace Main32UI
         {
             InitializeComponent();
             this.Loaded += MainWindow_Loaded;
-            
+            Utilities.InitializeLogFile(CommonUIConsts.LogUtilityFileName);
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -46,13 +46,23 @@ namespace Main32UI
             string modulePath = string.Format(@"{0}Modules\UI\", AppDomain.CurrentDomain.BaseDirectory);
             string[] strModuleLst = Directory.GetFiles(modulePath, "*.dll", SearchOption.TopDirectoryOnly);
             Assembly plugin;
-            Type[] types;
+            Type[] types = null;
             foreach (string strModule in strModuleLst)
             {
                 //C# load dll method
+                Utilities.Logger(CommonUIConsts.LogUtilityFileName, strModule);
                 plugin = Assembly.LoadFrom(strModule);
-                types = plugin.GetTypes();
-
+                Utilities.Logger(CommonUIConsts.LogUtilityFileName, "0");
+                try
+                {
+                    types = plugin.GetTypes();
+                }
+                catch(Exception ex)
+                {
+                    Utilities.Logger(CommonUIConsts.LogUtilityFileName, $"Error {ex.Message}");
+                    continue;
+                }
+                Utilities.Logger(CommonUIConsts.LogUtilityFileName, "1");
                 foreach (Type t in types)
                 {
                     //Check Module interface
@@ -75,6 +85,7 @@ namespace Main32UI
                                    BindingFlags.Public | BindingFlags.NonPublic |
                                    BindingFlags.Instance | BindingFlags.CreateInstance,
                                    null, null, null);
+                    Utilities.Logger(CommonUIConsts.LogUtilityFileName, "2");
                     //Check module is support and load into memory
                     if (iModule.isPlatformSupported())
                     {
@@ -89,6 +100,7 @@ namespace Main32UI
                         uc.Visibility = Visibility.Hidden;
                         gdModlueUI.Children.Add(uc);
                         iModule.initialize();
+                        Utilities.Logger(CommonUIConsts.LogUtilityFileName, "3");
                     }
 
                 }

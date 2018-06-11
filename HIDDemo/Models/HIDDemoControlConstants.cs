@@ -11,5 +11,6 @@
         public const string OpenHID = "Open HID";
         public const string CloseHID = "Close HID";
         public const string SendHID = "Send HID";
+        public const string HeadSetCMD = "HeadSet";
     }
 }

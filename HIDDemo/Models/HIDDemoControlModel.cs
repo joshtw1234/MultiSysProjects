@@ -68,9 +68,9 @@ namespace HIDDemo.Models
 
         public void SetHIDSend(int selectHIDIdx, byte[] data)
         {
-            byte[] wData = PriMaxKBHID.GetCmdKeyboardLang();
-            PrintByteToString(wData);
-            if (lstHIDDevs[selectHIDIdx].HIDWrite(wData))
+            //byte[] wData = PriMaxKBHID.GetCmdKeyboardLang();
+            PrintByteToString(data);
+            if (lstHIDDevs[selectHIDIdx].HIDWrite(data))
             {
                 byte[] revData = lstHIDDevs[selectHIDIdx].HIDRead();
                 PrintByteToString(revData);

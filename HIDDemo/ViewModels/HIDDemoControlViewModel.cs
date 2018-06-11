@@ -103,6 +103,11 @@ namespace HIDDemo.ViewModels
                     {
                         MenuName = HIDDemoControlConstants.SendHID,
                         MenuCommand = new MyCommond<string>(OnBtnClick)
+                    },
+                    new HIDOPButtonDT
+                    {
+                        MenuName = HIDDemoControlConstants.HeadSetCMD,
+                        MenuCommand = new MyCommond<string>(OnBtnClick)
                     }
                 };
             }
@@ -128,10 +133,20 @@ namespace HIDDemo.ViewModels
                 byte[] data = new byte[64];
                 hidGUIModel.SetHIDSend(selectHIDIdx, data);
             }
+            if (obj.Equals(HIDDemoControlConstants.HeadSetCMD))
+            {
+                byte[] data2 = new byte[15];
+                data2[0] = 0xFF;
+                data2[1] = 0x05;
+                data2[2] = 0x03;
+                hidGUIModel.SetHIDSend(selectHIDIdx, data2);
+            }
+
             HIDOPButtonDT btnClose = HIDOPButtonCollection.FirstOrDefault(x => x.MenuName.Equals(HIDDemoControlConstants.CloseHID)) as HIDOPButtonDT;
             HIDOPButtonDT btnOpen = HIDOPButtonCollection.FirstOrDefault(x => x.MenuName.Equals(HIDDemoControlConstants.OpenHID)) as HIDOPButtonDT;
             HIDOPButtonDT btnSend = HIDOPButtonCollection.FirstOrDefault(x => x.MenuName.Equals(HIDDemoControlConstants.SendHID)) as HIDOPButtonDT;
-            btnClose.BtnEnabled = btnSend.BtnEnabled = btnCloseStatus;
+            HIDOPButtonDT btnHead = HIDOPButtonCollection.FirstOrDefault(x => x.MenuName.Equals(HIDDemoControlConstants.HeadSetCMD)) as HIDOPButtonDT;
+            btnClose.BtnEnabled = btnSend.BtnEnabled = btnHead.BtnEnabled = btnCloseStatus;
             btnOpen.BtnEnabled = !btnCloseStatus;
         }
 

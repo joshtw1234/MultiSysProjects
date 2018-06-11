@@ -86,14 +86,22 @@ namespace HIDLib
         public bool Write(byte[] data)
         {
             bool rev = false;
-            if (data.Length > OutputBuffSize)
+            int cpIdx = 0;
+            if (data[0] != 0x00 && data.Length >= OutputBuffSize)
             {
                 //Output data can't bigger then buff size.
                 return rev;
             }
+            else
+            {
+                if (data[0] != 0x00)
+                {
+                    cpIdx = 1;
+                }
+            }
             byte[] wData = new byte[OutputBuffSize];
             //first byte must be 0
-            Array.Copy(data, 0, wData, 1, data.Length);
+            Array.Copy(data, 0, wData, cpIdx, data.Length);
             try
             {
                 /* write some bytes */

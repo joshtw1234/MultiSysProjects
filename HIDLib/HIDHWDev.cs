@@ -11,7 +11,7 @@ namespace HIDLib
 {
     public class HIDHWDev : IDisposable
     {
-        const int HIDBUfferSize = 64;
+        //const int HIDBUfferSize = 64;
        
         /* stream */
         private FileStream _fileStream;
@@ -63,6 +63,41 @@ namespace HIDLib
                 return false;
             }
 
+            GetHIDDevInfos();
+
+            /* prepare stream - sync buf size should same as output buf */
+            _fileStream = new FileStream(HIDHandel, FileAccess.ReadWrite, (int)OutputBuffSize, false);
+
+            /* report status */
+            return true;
+        }
+
+        public bool OpenAsync()
+        {
+            /* opens hid device file */
+            HIDHandel = HIDAPIs.CreateFile(HWFullPath,
+                HIDAPIs.GENERIC_READ | HIDAPIs.GENERIC_WRITE,
+                HIDAPIs.FILE_SHARE_READ | HIDAPIs.FILE_SHARE_WRITE,
+                IntPtr.Zero, HIDAPIs.OPEN_EXISTING, HIDAPIs.FILE_FLAG_OVERLAPPED, IntPtr.Zero);
+
+            /* whops */
+            if (HIDHandel.IsInvalid)
+            {
+                return false;
+            }
+
+            GetHIDDevInfos();
+
+            /* prepare stream - async buf size should same as output buf */
+            _fileStream = new FileStream(HIDHandel, FileAccess.ReadWrite, (int)OutputBuffSize, true);
+
+            /* report status */
+            return true;
+        }
+
+
+        private void GetHIDDevInfos()
+        {
             //get capabilites - use getPreParsedData, and getCaps
             //store the reportlengths
             IntPtr ptrToPreParsedData = new IntPtr();
@@ -74,34 +109,21 @@ namespace HIDLib
             InputBuffSize = capabilities.InputReportByteLength;
             //Call freePreParsedData to release some stuff
             HIDAPIs.HidD_FreePreparsedData(ref ptrToPreParsedData);
-
-            /* prepare stream - async */
-            _fileStream = new FileStream(HIDHandel, FileAccess.ReadWrite, HIDBUfferSize, false);
-
-            /* report status */
-            return true;
         }
 
         /* write record */
         public bool Write(byte[] data)
         {
             bool rev = false;
-            int cpIdx = 0;
-            if (data[0] != 0x00 && data.Length >= OutputBuffSize)
+            if (data.Length >= OutputBuffSize)
             {
                 //Output data can't bigger then buff size.
                 return rev;
             }
-            else
-            {
-                if (data[0] != 0x00)
-                {
-                    cpIdx = 1;
-                }
-            }
+            
             byte[] wData = new byte[OutputBuffSize];
             //first byte must be 0
-            Array.Copy(data, 0, wData, cpIdx, data.Length);
+            Array.Copy(data, 0, wData, 1, data.Length);
             try
             {
                 /* write some bytes */

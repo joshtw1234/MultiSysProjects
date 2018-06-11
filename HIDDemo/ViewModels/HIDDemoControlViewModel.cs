@@ -131,6 +131,8 @@ namespace HIDDemo.ViewModels
             if (obj.Equals(HIDDemoControlConstants.SendHID))
             {
                 byte[] data = new byte[64];
+                data[0] = 0x80;
+                data[1] = 0x01;
                 hidGUIModel.SetHIDSend(selectHIDIdx, data);
             }
             if (obj.Equals(HIDDemoControlConstants.HeadSetCMD))

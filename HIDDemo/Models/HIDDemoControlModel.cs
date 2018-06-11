@@ -61,9 +61,9 @@ namespace HIDDemo.Models
             lstHIDDevs[selectHIDIdx].HIDClose();
         }
 
-        public void SetHIDOpen(int selectHIDIdx)
+        public bool SetHIDOpen(int selectHIDIdx)
         {
-            lstHIDDevs[selectHIDIdx].HIDOpen();
+            return lstHIDDevs[selectHIDIdx].HIDOpen();
         }
 
         public void SetHIDSend(int selectHIDIdx, byte[] data)

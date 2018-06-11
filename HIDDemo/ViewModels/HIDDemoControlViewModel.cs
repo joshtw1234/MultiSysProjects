@@ -113,7 +113,10 @@ namespace HIDDemo.ViewModels
             bool btnCloseStatus = true;
             if (obj.Equals(HIDDemoControlConstants.OpenHID))
             {
-                hidGUIModel.SetHIDOpen(selectHIDIdx);
+                if (!hidGUIModel.SetHIDOpen(selectHIDIdx))
+                {
+                    btnCloseStatus = false;
+                }
             }
             if (obj.Equals(HIDDemoControlConstants.CloseHID))
             {

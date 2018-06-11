@@ -10,7 +10,7 @@ namespace HIDDemo.Models
         List<HIDInfo> GetHIDInfoCollections { get; }
         MessageTextDCT GetMessageText { get; }
 
-        void SetHIDOpen(int selectHIDIdx);
+        bool SetHIDOpen(int selectHIDIdx);
         void SetHIDClose(int selectHIDIdx);
         void SetHIDSend(int selectHIDIdx, byte[] data);
     }

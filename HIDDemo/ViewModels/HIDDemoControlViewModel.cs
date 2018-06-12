@@ -119,7 +119,7 @@ namespace HIDDemo.ViewModels
         {
             bool btnCloseStatus = true;
             bool isAsync = false;
-            if (hidInfoLst[selectHIDIdx].InfoStruct.Pid == 0x0024)
+            if (hidInfoLst[selectHIDIdx].InfoStruct.Pid == 0x8824)
             {
                 isAsync = true;
             }

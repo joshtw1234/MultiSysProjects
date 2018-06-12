@@ -6,6 +6,7 @@
 using Microsoft.Win32.SafeHandles;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace HIDLib
 {
@@ -36,6 +37,7 @@ namespace HIDLib
             if (_fileStream != null)
             {
                 /* close stream */
+                //_fileStream.Dispose();
                 _fileStream.Close();
                 /* get rid of object */
                 _fileStream = null;
@@ -162,18 +164,22 @@ namespace HIDLib
             wData[0] = 0xff;
             //first byte must be 0
             Array.Copy(data, 0, wData, 1, data.Length);
-            try
+            var revsu = Task.Run(async ()=> 
             {
-                /* write some bytes */
-                _fileStream.WriteAsync(wData, 0, wData.Length);
-                /* flush! */
-                //_fileStream.Flush();
-                rev = true;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"{ex.Message}");
-            }
+                try
+                {
+                    /* write some bytes */
+                    await _fileStream.WriteAsync(wData, 0, wData.Length);
+                    /* flush! */
+                    //_fileStream.Flush();
+                    rev = true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"{ex.Message}");
+                }
+            });
+            revsu.Wait();
             return rev;
         }
 
@@ -182,7 +188,14 @@ namespace HIDLib
         {
 #if true
             byte[] revbyte = new byte[InputBuffSize];
-            _fileStream.Read(revbyte, 0, revbyte.Length);
+            try
+            {
+                _fileStream.Read(revbyte, 0, revbyte.Length);
+            }
+            catch(Exception ex)
+            {
+
+            }
             return revbyte;
 #else
             /* get number of bytes */
@@ -202,8 +215,20 @@ namespace HIDLib
         public byte[] ReadAsync()
         {
 #if true
+            
             byte[] revbyte = new byte[InputBuffSize];
-            _fileStream.ReadAsync(revbyte, 0, revbyte.Length);
+            var revsu = Task.Run(async () =>
+            {
+                try
+                {
+                    await _fileStream.ReadAsync(revbyte, 0, revbyte.Length);
+                }
+                catch (Exception ex)
+                {
+
+                }
+            });
+            revsu.Wait();
             return revbyte;
 #else
             /* get number of bytes */

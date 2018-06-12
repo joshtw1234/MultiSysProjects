@@ -59,7 +59,7 @@ namespace HIDLib
             /* vendor id */
             public Int16 VendorID;
             /* product id */
-            public Int16 ProductID;
+            public UInt16 ProductID;
             /* hid vesion number */
             public Int16 VersionNumber;
         }
@@ -192,7 +192,7 @@ namespace HIDLib
         /* vendor ID */
         public short Vid { get; set; }
         /* product id */
-        public short Pid { get; set; }
+        public uint Pid { get; set; }
         /* usb product string */
         public string Product { get; set; }
         /* usb manufacturer string */

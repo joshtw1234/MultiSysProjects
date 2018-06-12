@@ -10,10 +10,9 @@ namespace HIDDemo.Models
         List<HIDInfo> GetHIDInfoCollections { get; }
         MessageTextDCT GetMessageText { get; }
 
-        bool SetHIDOpen(int selectHIDIdx);
-        bool SetHIDOpenAsync(int selectHIDIdx);
+        bool SetHIDOpen(int selectHIDIdx, bool isAsync);
         void SetHIDClose(int selectHIDIdx);
-        void SetHIDSend(int selectHIDIdx, byte[] data);
+        void SetHIDSend(int selectHIDIdx, byte[] data, bool isAsync);
     }
 
     public class MessageTextDCT : MenuItem, INotifyPropertyChanged

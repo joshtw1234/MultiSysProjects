@@ -149,12 +149,61 @@ namespace HIDLib
             return rev;
         }
 
+        public bool WriteAsync(byte[] data)
+        {
+            bool rev = false;
+            if (data.Length >= OutputBuffSize)
+            {
+                //Output data can't bigger then buff size.
+                return rev;
+            }
+
+            byte[] wData = new byte[OutputBuffSize];
+            wData[0] = 0xff;
+            //first byte must be 0
+            Array.Copy(data, 0, wData, 1, data.Length);
+            try
+            {
+                /* write some bytes */
+                _fileStream.WriteAsync(wData, 0, wData.Length);
+                /* flush! */
+                //_fileStream.Flush();
+                rev = true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"{ex.Message}");
+            }
+            return rev;
+        }
+
         /* read record */
         public byte[] Read()
         {
 #if true
             byte[] revbyte = new byte[InputBuffSize];
             _fileStream.Read(revbyte, 0, revbyte.Length);
+            return revbyte;
+#else
+            /* get number of bytes */
+            int n = 0, bytes = data.Length;
+
+            /* read buffer */
+            while (n != bytes)
+            {
+                /* read data */
+                int rc = _fileStream.Read(data, n, bytes - n);
+                /* update pointers */
+                n += rc;
+            }
+#endif
+        }
+
+        public byte[] ReadAsync()
+        {
+#if true
+            byte[] revbyte = new byte[InputBuffSize];
+            _fileStream.ReadAsync(revbyte, 0, revbyte.Length);
             return revbyte;
 #else
             /* get number of bytes */

@@ -61,29 +61,44 @@ namespace HIDDemo.Models
             lstHIDDevs[selectHIDIdx].HIDClose();
         }
 
-        public bool SetHIDOpen(int selectHIDIdx)
+        public bool SetHIDOpen(int selectHIDIdx, bool isAsync)
         {
+            if (isAsync)
+            {
+                return lstHIDDevs[selectHIDIdx].HIDOpenAsync();
+            }
             return lstHIDDevs[selectHIDIdx].HIDOpen();
         }
 
-        public void SetHIDSend(int selectHIDIdx, byte[] data)
+        public void SetHIDSend(int selectHIDIdx, byte[] data, bool isAsync)
         {
             //byte[] wData = PriMaxKBHID.GetCmdKeyboardLang();
             PrintByteToString(data);
-            if (lstHIDDevs[selectHIDIdx].HIDWrite(data))
+            if (isAsync)
             {
-                byte[] revData = lstHIDDevs[selectHIDIdx].HIDRead();
-                PrintByteToString(revData);
+                if (lstHIDDevs[selectHIDIdx].HIDWriteAsync(data))
+                {
+                    byte[] revData = lstHIDDevs[selectHIDIdx].HIDReadAsync();
+                    PrintByteToString(revData);
+                }
+                else
+                {
+                    msgText.MsgText += "\r\nHID Write Error";
+                }
             }
             else
             {
-                msgText.MsgText += "\r\nHID Write Error";
+                if (lstHIDDevs[selectHIDIdx].HIDWrite(data))
+                {
+                    byte[] revData = lstHIDDevs[selectHIDIdx].HIDRead();
+                    PrintByteToString(revData);
+                }
+                else
+                {
+                    msgText.MsgText += "\r\nHID Write Error";
+                }
             }
         }
 
-        public bool SetHIDOpenAsync(int selectHIDIdx)
-        {
-            return lstHIDDevs[selectHIDIdx].HIDOpenAsync();
-        }
     }
 }

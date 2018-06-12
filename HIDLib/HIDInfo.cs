@@ -189,6 +189,16 @@ namespace HIDLib
             return hidHWDev.Write(wData);
         }
 
+        public byte[] HIDReadAsync()
+        {
+            return hidHWDev.ReadAsync();
+        }
+
+        public bool HIDWriteAsync(byte[] wData)
+        {
+            return hidHWDev.WriteAsync(wData);
+        }
+
         public void HIDClose()
         {
             hidHWDev.Dispose();

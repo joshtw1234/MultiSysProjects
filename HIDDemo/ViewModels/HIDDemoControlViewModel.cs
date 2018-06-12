@@ -118,21 +118,16 @@ namespace HIDDemo.ViewModels
         private void OnBtnClick(string obj)
         {
             bool btnCloseStatus = true;
+            bool isAsync = false;
+            if (hidInfoLst[selectHIDIdx].InfoStruct.Pid == 0x0024)
+            {
+                isAsync = true;
+            }
             if (obj.Equals(HIDDemoControlConstants.OpenHID))
             {
-                if (hidInfoLst[selectHIDIdx].InfoStruct.Pid == 0x0024)
+                if (!hidGUIModel.SetHIDOpen(selectHIDIdx, isAsync))
                 {
-                    if (!hidGUIModel.SetHIDOpenAsync(selectHIDIdx))
-                    {
-                        btnCloseStatus = false;
-                    }
-                }
-                else
-                {
-                    if (!hidGUIModel.SetHIDOpen(selectHIDIdx))
-                    {
-                        btnCloseStatus = false;
-                    }
+                    btnCloseStatus = false;
                 }
             }
             if (obj.Equals(HIDDemoControlConstants.CloseHID))
@@ -145,14 +140,15 @@ namespace HIDDemo.ViewModels
                 byte[] data = new byte[64];
                 data[0] = 0x80;
                 data[1] = 0x01;
-                hidGUIModel.SetHIDSend(selectHIDIdx, data);
+                hidGUIModel.SetHIDSend(selectHIDIdx, data, isAsync);
             }
             if (obj.Equals(HIDDemoControlConstants.HeadSetCMD))
             {
                 byte[] data2 = new byte[15];
+                //data2[0] = 0xFF;
                 data2[0] = 0x05;
-                data2[1] = 0x03;
-                hidGUIModel.SetHIDSend(selectHIDIdx, data2);
+                data2[1] = 0x02;
+                hidGUIModel.SetHIDSend(selectHIDIdx, data2, isAsync);
             }
 
             HIDOPButtonDT btnClose = HIDOPButtonCollection.FirstOrDefault(x => x.MenuName.Equals(HIDDemoControlConstants.CloseHID)) as HIDOPButtonDT;

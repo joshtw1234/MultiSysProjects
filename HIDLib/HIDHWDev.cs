@@ -107,8 +107,8 @@ namespace HIDLib
 
         private void GetHIDDevInfos()
         {
-            //get capabilites - use getPreParsedData, and getCaps
-            //store the reportlengths
+            //get capabilities - use getPreParsedData, and getCaps
+            //store the report lengths
             IntPtr ptrToPreParsedData = new IntPtr();
             bool ppdSucsess = HIDAPIs.HidD_GetPreparsedData(HIDHandel, ref ptrToPreParsedData);
             HIDP_CAPS capabilities = new HIDP_CAPS();
@@ -131,6 +131,7 @@ namespace HIDLib
             }
             
             byte[] wData = new byte[OutputBuffSize];
+            //wData[0] = 0xff;
             //first byte must be 0
             Array.Copy(data, 0, wData, 1, data.Length);
             try

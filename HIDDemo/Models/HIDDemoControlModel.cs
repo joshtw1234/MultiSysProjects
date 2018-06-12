@@ -80,5 +80,10 @@ namespace HIDDemo.Models
                 msgText.MsgText += "\r\nHID Write Error";
             }
         }
+
+        public bool SetHIDOpenAsync(int selectHIDIdx)
+        {
+            return lstHIDDevs[selectHIDIdx].HIDOpenAsync();
+        }
     }
 }

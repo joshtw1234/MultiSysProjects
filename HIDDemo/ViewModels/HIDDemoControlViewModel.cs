@@ -13,6 +13,8 @@ namespace HIDDemo.ViewModels
     {
         private IHIDDemoControlModel hidGUIModel;
 
+        List<HIDInfo> hidInfoLst;
+
         #region INotifyPropertyChanged Interface
         public event PropertyChangedEventHandler PropertyChanged;
         void onPropertyChanged(object sender, string propertyName)
@@ -118,9 +120,19 @@ namespace HIDDemo.ViewModels
             bool btnCloseStatus = true;
             if (obj.Equals(HIDDemoControlConstants.OpenHID))
             {
-                if (!hidGUIModel.SetHIDOpen(selectHIDIdx))
+                if (hidInfoLst[selectHIDIdx].InfoStruct.Pid == 0x0024)
                 {
-                    btnCloseStatus = false;
+                    if (!hidGUIModel.SetHIDOpenAsync(selectHIDIdx))
+                    {
+                        btnCloseStatus = false;
+                    }
+                }
+                else
+                {
+                    if (!hidGUIModel.SetHIDOpen(selectHIDIdx))
+                    {
+                        btnCloseStatus = false;
+                    }
                 }
             }
             if (obj.Equals(HIDDemoControlConstants.CloseHID))
@@ -138,9 +150,8 @@ namespace HIDDemo.ViewModels
             if (obj.Equals(HIDDemoControlConstants.HeadSetCMD))
             {
                 byte[] data2 = new byte[15];
-                data2[0] = 0xFF;
-                data2[1] = 0x05;
-                data2[2] = 0x03;
+                data2[0] = 0x05;
+                data2[1] = 0x03;
                 hidGUIModel.SetHIDSend(selectHIDIdx, data2);
             }
 
@@ -156,7 +167,7 @@ namespace HIDDemo.ViewModels
         {
             get
             {
-                List<HIDInfo> hidInfoLst = hidGUIModel.GetHIDInfoCollections;
+                hidInfoLst = hidGUIModel.GetHIDInfoCollections;
                 ObservableCollection<HIDDisplayInfoItem> revLst = new ObservableCollection<HIDDisplayInfoItem>();
                 HIDDisplayInfoItem dInfoItem;
                 HIDDisplayItem dItem;

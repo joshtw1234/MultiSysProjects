@@ -29,7 +29,6 @@ namespace HIDLib
         {
             get { return infoStruct; }
         }
-       
 
         public HIDInfo(IntPtr _hidInfoSet, HIDAPIs.DeviceInterfaceData _iface, out bool isWork)
         {
@@ -173,6 +172,11 @@ namespace HIDLib
         public bool HIDOpen()
         {
             return hidHWDev.Open();
+        }
+
+        public bool HIDOpenAsync()
+        {
+            return hidHWDev.OpenAsync();
         }
 
         public byte[] HIDRead()

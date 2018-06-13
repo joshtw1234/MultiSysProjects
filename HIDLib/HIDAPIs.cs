@@ -100,6 +100,9 @@ namespace HIDLib
         public static extern int HidP_GetCaps(
             IntPtr pPHIDP_PREPARSED_DATA,					// IN PHIDP_PREPARSED_DATA  PreparsedData,
             ref HIDP_CAPS myPHIDP_CAPS);				// OUT PHIDP_CAPS  Capabilities
+
+        [DllImport("hid.dll")]
+        public static extern bool HidD_SetOutputReport(IntPtr hidDeviceObject, byte[] lpReportBuffer, int reportBufferLength);
         #endregion
 
         #region setupapi.dll

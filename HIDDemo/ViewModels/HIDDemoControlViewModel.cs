@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows.Media;
 using UtilityUILib;
 
 namespace HIDDemo.ViewModels
@@ -144,11 +145,12 @@ namespace HIDDemo.ViewModels
             }
             if (obj.Equals(HIDDemoControlConstants.HeadSetCMD))
             {
-                byte[] data2 = new byte[15];
-                //data2[0] = 0xFF;
-                data2[0] = 0x05;
-                data2[1] = 0x02;
-                hidGUIModel.SetHIDSend(selectHIDIdx, data2, isAsync);
+                SetStaticColor(selectHIDIdx);
+                //byte[] data2 = new byte[15];
+                ////data2[0] = 0xFF;
+                //data2[0] = 0x05;
+                //data2[1] = 0x02;
+                //hidGUIModel.SetHIDSend(selectHIDIdx, data2, isAsync);
             }
 
             HIDOPButtonDT btnClose = HIDOPButtonCollection.FirstOrDefault(x => x.MenuName.Equals(HIDDemoControlConstants.CloseHID)) as HIDOPButtonDT;
@@ -157,6 +159,34 @@ namespace HIDDemo.ViewModels
             HIDOPButtonDT btnHead = HIDOPButtonCollection.FirstOrDefault(x => x.MenuName.Equals(HIDDemoControlConstants.HeadSetCMD)) as HIDOPButtonDT;
             btnClose.BtnEnabled = btnSend.BtnEnabled = btnHead.BtnEnabled = btnCloseStatus;
             btnOpen.BtnEnabled = !btnCloseStatus;
+        }
+
+        private void SetStaticColor(int selectHIDIdx)
+        {
+            byte[] HIDCommandLEDStop = new byte[] { 0xFF, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+            hidGUIModel.SetHIDSend(selectHIDIdx, HIDCommandLEDStop, true);
+            byte[] HIDCommandLEDConfig = new byte[] { 0xFF, 0x03, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+            hidGUIModel.SetHIDSend(selectHIDIdx, HIDCommandLEDConfig, true);
+            byte[] HIDCommandLEDColorArray = new byte[16];
+            HIDCommandLEDColorArray[0] = 0xFF;
+            HIDCommandLEDColorArray[1] = 0x04;
+            HIDCommandLEDColorArray[2] = 0x00;
+            HIDCommandLEDColorArray[3] = 0x04;
+            HIDCommandLEDColorArray[4] = Colors.Green.R;
+            HIDCommandLEDColorArray[5] = Colors.Green.G;
+            HIDCommandLEDColorArray[6] = Colors.Green.B;
+            HIDCommandLEDColorArray[7] = Colors.Red.R;
+            HIDCommandLEDColorArray[8] = Colors.Red.G;
+            HIDCommandLEDColorArray[9] = Colors.Red.B;
+            HIDCommandLEDColorArray[10] = Colors.Blue.R;
+            HIDCommandLEDColorArray[11] = Colors.Blue.G;
+            HIDCommandLEDColorArray[12] = Colors.Blue.B;
+            HIDCommandLEDColorArray[13] = Colors.Green.R;
+            HIDCommandLEDColorArray[14] = Colors.Green.G;
+            HIDCommandLEDColorArray[15] = Colors.Green.B;
+            hidGUIModel.SetHIDSend(selectHIDIdx, HIDCommandLEDColorArray, true);
+            byte[] HIDCommandLEDStart = new byte[] { 0xFF, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+            hidGUIModel.SetHIDSend(selectHIDIdx, HIDCommandLEDStart, true);
         }
 
         private ObservableCollection<HIDDisplayInfoItem> GetHIDDisplayItems

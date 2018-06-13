@@ -78,8 +78,8 @@ namespace HIDDemo.Models
             {
                 if (lstHIDDevs[selectHIDIdx].HIDWriteAsync(data))
                 {
-                    byte[] revData = lstHIDDevs[selectHIDIdx].HIDReadAsync();
-                    PrintByteToString(revData);
+                    //byte[] revData = lstHIDDevs[selectHIDIdx].HIDReadAsync();
+                    //PrintByteToString(revData);
                 }
                 else
                 {

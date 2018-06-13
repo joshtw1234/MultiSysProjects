@@ -154,16 +154,16 @@ namespace HIDLib
         public bool WriteAsync(byte[] data)
         {
             bool rev = false;
-            if (data.Length >= OutputBuffSize)
-            {
-                //Output data can't bigger then buff size.
-                return rev;
-            }
+            //if (data.Length >= OutputBuffSize)
+            //{
+            //    //Output data can't bigger then buff size.
+            //    return rev;
+            //}
 
             byte[] wData = new byte[OutputBuffSize];
-            wData[0] = 0xff;
+            //wData[0] = 0xff;
             //first byte must be 0
-            Array.Copy(data, 0, wData, 1, data.Length);
+            Array.Copy(data, 0, wData, 0, data.Length);
             var revsu = Task.Run(async ()=> 
             {
                 try
@@ -212,6 +212,7 @@ namespace HIDLib
 #endif
         }
 
+
         public byte[] ReadAsync()
         {
 #if true
@@ -221,14 +222,13 @@ namespace HIDLib
             {
                 try
                 {
-                    await _fileStream.ReadAsync(revbyte, 0, revbyte.Length);
+                   return await _fileStream.ReadAsync(revbyte, 0, revbyte.Length);
                 }
                 catch (Exception ex)
                 {
-
+                    return 99;
                 }
-            });
-            revsu.Wait();
+            }).Result;
             return revbyte;
 #else
             /* get number of bytes */

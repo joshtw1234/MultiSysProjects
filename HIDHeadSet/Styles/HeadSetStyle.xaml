@@ -2,4 +2,22 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:HIDHeadSet.Styles">
     <SolidColorBrush x:Key="DefBackground" Color="Green"/>
+
+    <Style x:Key="StyleCheckBox" TargetType="{x:Type CheckBox}"/>
+    <Style x:Key="StyleTitle" TargetType="{x:Type TextBlock}"/>
+
+    <DataTemplate x:Key="SubItemTemplate">
+        <CheckBox Style="{StaticResource StyleCheckBox}"/>
+    </DataTemplate>
+
+    <ItemsPanelTemplate x:Key="MainItemPanel"/>
+    
+    <DataTemplate x:Key="MainItemTemplate">
+        <DockPanel>
+            <TextBlock DockPanel.Dock="Top" Style="{StaticResource StyleTitle}"/>
+            <ItemsControl ItemsSource="{Binding SubItems}"
+                          ItemTemplate="{StaticResource SubItemTemplate}"
+                          ItemsPanel="{StaticResource MainItemPanel}"/>
+        </DockPanel>
+    </DataTemplate>
 </ResourceDictionary>

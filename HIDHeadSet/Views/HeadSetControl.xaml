@@ -20,6 +20,9 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid Background="{StaticResource DefBackground}">
+    <Grid>
+        <ItemsControl ItemsSource="{Binding MainItems}"
+                      ItemTemplate="{StaticResource MainItemTemplate}"
+                      ItemsPanel="{StaticResource MainItemPanel}"/>
     </Grid>
 </UserControl>

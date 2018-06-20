@@ -45,6 +45,53 @@ namespace HIDHeadSet.ViewModels
                         new MenuItem()
                         {
                             MenuName = "Static",
+                            MenuData = "RadioButton",
+                            MenuStyle = headSetResource["StyleLEDRadioBtn"] as Style
+                        },
+                        new MenuItem()
+                        {
+                            MenuName = "Repeat forward",
+                            MenuData = "RadioButton",
+                            MenuStyle = headSetResource["StyleLEDRadioBtn"] as Style
+                        },
+                        new MenuItem()
+                        {
+                            MenuName = "Back and Forth",
+                            MenuData = "RadioButton",
+                            MenuStyle = headSetResource["StyleLEDRadioBtn"] as Style
+                        },
+                        new MenuItem()
+                        {
+                            MenuName = "Lookup Table",
+                            MenuData = "RadioButton",
+                            MenuStyle = headSetResource["StyleLEDRadioBtn"] as Style
+                        }
+                    },
+                    ChildVisble = Visibility.Visible,
+                    ChildItems = new ObservableCollection<IMenuItem>()
+                    {
+                        new MenuItem()
+                        {
+                            MenuName = "Red",
+                            MenuData = "CheckBox",
+                            MenuStyle = headSetResource["StyleCheckBox"] as Style
+                        },
+                        new MenuItem()
+                        {
+                            MenuName = "Blue",
+                            MenuData = "CheckBox",
+                            MenuStyle = headSetResource["StyleCheckBox"] as Style
+                        },
+                        new MenuItem()
+                        {
+                            MenuName = "Green",
+                            MenuData = "CheckBox",
+                            MenuStyle = headSetResource["StyleCheckBox"] as Style
+                        },
+                        new MenuItem()
+                        {
+                            MenuName = "Black",
+                            MenuData = "CheckBox",
                             MenuStyle = headSetResource["StyleCheckBox"] as Style
                         }
                     }
@@ -69,9 +116,29 @@ namespace HIDHeadSet.ViewModels
                         new MenuItem()
                         {
                             MenuName = "Off",
-                            MenuStyle = headSetResource["StyleCheckBox"] as Style
+                            MenuData = "RadioButton",
+                            MenuStyle = headSetResource["StyleFanRadioBtn"] as Style
+                        },
+                        new MenuItem()
+                        {
+                            MenuName = "Light",
+                            MenuData = "RadioButton",
+                            MenuStyle = headSetResource["StyleFanRadioBtn"] as Style
+                        },
+                        new MenuItem()
+                        {
+                            MenuName = "Medium",
+                            MenuData = "RadioButton",
+                            MenuStyle = headSetResource["StyleFanRadioBtn"] as Style
+                        },
+                        new MenuItem()
+                        {
+                            MenuName = "Heavy",
+                            MenuData = "RadioButton",
+                            MenuStyle = headSetResource["StyleFanRadioBtn"] as Style
                         }
-                    }
+                    },
+                    ChildVisble = Visibility.Collapsed
                 }
             };
         }
@@ -95,7 +162,9 @@ namespace HIDHeadSet.ViewModels
 
     class MainItemDC
     {
+        public Visibility ChildVisble { get; set; }
         public ObservableCollection<IMenuItem> TitleStrings { get; set; }
         public ObservableCollection<IMenuItem> SubItems { get; set; }
+        public ObservableCollection<IMenuItem> ChildItems { get; set; }
     }
 }

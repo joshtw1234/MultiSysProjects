@@ -1,38 +1,71 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:HIDHeadSet.Styles">
+                    xmlns:local="clr-namespace:HIDHeadSet.Styles"
+                    xmlns:m="clr-namespace:HIDHeadSet.Models">
     <SolidColorBrush x:Key="DefBackground" Color="Green"/>
 
-    <Style x:Key="StyleCheckBox" TargetType="{x:Type CheckBox}">
+    <Style x:Key="StyleBaseRadioBtn" TargetType="{x:Type RadioButton}">
         <Setter Property="Content" Value="{Binding MenuName}"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontSize" Value="14"/>
         <Setter Property="Foreground" Value="White"/>
     </Style>
 
-    <Style x:Key="StyleTextBlock" TargetType="{x:Type TextBlock}">
+    <Style x:Key="StyleLEDRadioBtn" BasedOn="{StaticResource StyleBaseRadioBtn}" TargetType="{x:Type RadioButton}">
+        <Setter Property="GroupName" Value="LEDMode"/>
+    </Style>
+
+    <Style x:Key="StyleFanRadioBtn" BasedOn="{StaticResource StyleBaseRadioBtn}" TargetType="{x:Type RadioButton}">
+        <Setter Property="GroupName" Value="FanMode"/>
+    </Style>
+
+    <Style x:Key="StyleCheckBox" TargetType="{x:Type CheckBox}">
+        <Setter Property="Content" Value="{Binding MenuName}"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Foreground" Value="White"/>
+    </Style>
+
+    <Style x:Key="StyleBaseTextBlock" TargetType="{x:Type TextBlock}">
         <Setter Property="Text" Value="{Binding MenuName}"/>
         <Setter Property="Foreground" Value="White"/>
     </Style>
 
-    <Style x:Key="StyleTitle" BasedOn="{StaticResource StyleTextBlock}" TargetType="{x:Type TextBlock}">
+    <Style x:Key="StyleTitle" BasedOn="{StaticResource StyleBaseTextBlock}" TargetType="{x:Type TextBlock}">
         <Setter Property="FontSize" Value="24"/>
     </Style>
 
-    <Style x:Key="StyleSubTitle" BasedOn="{StaticResource StyleTextBlock}" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="16"/>
+    <Style x:Key="StyleSubTitle" BasedOn="{StaticResource StyleBaseTextBlock}" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="18"/>
     </Style>
-    
+
+    <ControlTemplate x:Key="SubItemRadioTemplate">
+        <RadioButton Style="{Binding MenuStyle}"/>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="SubItemCbxTemplate">
+        <CheckBox Style="{Binding MenuStyle}"/>
+    </ControlTemplate>
+
+    <Style x:Key="SubItemsContent" TargetType="{x:Type ContentControl}">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding MenuData}" Value="RadioButton">
+                <Setter Property="Template" Value="{StaticResource SubItemRadioTemplate}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MenuData}" Value="CheckBox">
+                <Setter Property="Template" Value="{DynamicResource SubItemCbxTemplate}"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
 
     <DataTemplate x:Key="SubItemTemplate">
-        <CheckBox Style="{Binding MenuStyle}"/>
+        <ContentControl Style="{StaticResource SubItemsContent}"/>
     </DataTemplate>
 
     <DataTemplate x:Key="TitleTemplate">
         <TextBlock Style="{Binding MenuStyle}"/>
     </DataTemplate>
 
-    <ItemsPanelTemplate x:Key="SubItemPanel">
-        <StackPanel/>
+    <ItemsPanelTemplate x:Key="ChildItemPanel">
+        <StackPanel Orientation="Horizontal"/>
     </ItemsPanelTemplate>
     
     <ItemsPanelTemplate x:Key="MainItemPanel">
@@ -47,6 +80,10 @@
             <ItemsControl ItemsSource="{Binding SubItems}"
                           ItemTemplate="{StaticResource SubItemTemplate}"
                           ItemsPanel="{StaticResource MainItemPanel}"/>
+            <ItemsControl Visibility="{Binding ChildVisble}" 
+                          ItemsSource="{Binding ChildItems}"
+                          ItemTemplate="{StaticResource SubItemTemplate}"
+                          ItemsPanel="{StaticResource ChildItemPanel}"/>
         </StackPanel>
     </DataTemplate>
 </ResourceDictionary>

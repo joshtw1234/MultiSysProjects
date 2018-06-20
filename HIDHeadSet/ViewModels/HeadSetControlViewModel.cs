@@ -8,6 +8,10 @@ namespace HIDHeadSet.ViewModels
 {
     class HeadSetControlViewModel : BindAbleBases
     {
+        const string OpenCmd= "Open";
+        const string CloseCmd = "Close";
+        const string SendCmd = "Send";
+
         private IHeadSetModel headSetModel;
         private ResourceDictionary headSetResource;
         public HeadSetControlViewModel(IHeadSetModel _model)
@@ -19,6 +23,51 @@ namespace HIDHeadSet.ViewModels
             };
 
             mainItems = GetMainItems();
+            mainButtons = GetMainButtons();
+        }
+
+        private ObservableCollection<IMenuItem> GetMainButtons()
+        {
+            return new ObservableCollection<IMenuItem>()
+            {
+                new MenuItem()
+                {
+                    MenuName = OpenCmd,
+                    MenuData = OpenCmd,
+                    MenuStyle = headSetResource["StyleMainButton"] as Style,
+                    MenuCommand = new MyCommond<string>(OnButtonClick)
+                },
+                new MenuItem()
+                {
+                    MenuName = CloseCmd,
+                    MenuData = CloseCmd,
+                    MenuStyle = headSetResource["StyleMainButton"] as Style,
+                    MenuCommand = new MyCommond<string>(OnButtonClick)
+                },
+                new MenuItem()
+                {
+                    MenuName = "Send Command",
+                    MenuData = SendCmd,
+                    MenuStyle = headSetResource["StyleMainButton"] as Style,
+                    MenuCommand = new MyCommond<string>(OnButtonClick)
+                }
+            };
+        }
+
+        private void OnButtonClick(string obj)
+        {
+            if (obj.Equals(OpenCmd))
+            {
+
+            }
+            if (obj.Equals(CloseCmd))
+            {
+
+            }
+            if (obj.Equals(SendCmd))
+            {
+
+            }
         }
 
         private ObservableCollection<MainItemDC> GetMainItems()
@@ -158,6 +207,19 @@ namespace HIDHeadSet.ViewModels
             }
         }
 
+        private ObservableCollection<IMenuItem> mainButtons;
+        public ObservableCollection<IMenuItem> MainButtons
+        {
+            get
+            {
+                return mainButtons;
+            }
+            set
+            {
+                mainButtons = value;
+                onPropertyChanged(this, "MainButtons");
+            }
+        }
     }
 
     class MainItemDC

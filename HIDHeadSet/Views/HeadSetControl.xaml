@@ -23,9 +23,13 @@
     <UserControl.DataContext>
         <Binding Source="{StaticResource HeadSetVM}"/>
     </UserControl.DataContext>
-    <Grid>
+    <DockPanel>
+        <ItemsControl DockPanel.Dock="Bottom"
+                      ItemsSource="{Binding MainButtons}"
+                      ItemTemplate="{StaticResource MainButtonTemplate}"
+                      ItemsPanel="{StaticResource ButtonItemPanel}"/>
         <ItemsControl ItemsSource="{Binding MainItems}"
                       ItemTemplate="{StaticResource MainItemTemplate}"
                       ItemsPanel="{StaticResource MainItemPanel}"/>
-    </Grid>
+    </DockPanel>
 </UserControl>

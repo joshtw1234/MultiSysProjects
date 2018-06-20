@@ -4,6 +4,61 @@
                     xmlns:m="clr-namespace:HIDHeadSet.Models">
     <SolidColorBrush x:Key="DefBackground" Color="Green"/>
 
+    <ControlTemplate x:Key="SubItemRadioTemplate">
+        <RadioButton Style="{Binding MenuStyle}"/>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="SubItemCbxTemplate">
+        <CheckBox Style="{Binding MenuStyle}"/>
+    </ControlTemplate>
+
+    <DataTemplate x:Key="MainButtonTemplate">
+        <Button Style="{Binding MenuStyle}"/>
+    </DataTemplate>
+
+    <DataTemplate x:Key="TitleTemplate">
+        <TextBlock Style="{Binding MenuStyle}"/>
+    </DataTemplate>
+
+    <ItemsPanelTemplate x:Key="ChildItemPanel">
+        <StackPanel Orientation="Horizontal"/>
+    </ItemsPanelTemplate>
+    
+    <ItemsPanelTemplate x:Key="MainItemPanel">
+        <StackPanel/>
+    </ItemsPanelTemplate>
+
+    <ItemsPanelTemplate x:Key="ButtonItemPanel">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"/>
+    </ItemsPanelTemplate>
+
+    <DataTemplate x:Key="SubItemTemplate">
+        <ContentControl Style="{DynamicResource SubItemsContent}"/>
+    </DataTemplate>
+
+    <DataTemplate x:Key="MainItemTemplate">
+        <StackPanel>
+            <ItemsControl ItemsSource="{Binding TitleStrings}"
+                          ItemTemplate="{StaticResource TitleTemplate}"
+                          ItemsPanel="{StaticResource MainItemPanel}"/>
+            <ItemsControl ItemsSource="{Binding SubItems}"
+                          ItemTemplate="{StaticResource SubItemTemplate}"
+                          ItemsPanel="{StaticResource MainItemPanel}"/>
+            <ItemsControl Visibility="{Binding ChildVisble}" 
+                          ItemsSource="{Binding ChildItems}"
+                          ItemTemplate="{StaticResource SubItemTemplate}"
+                          ItemsPanel="{StaticResource ChildItemPanel}"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <Style x:Key="StyleMainButton" TargetType="{x:Type Button}">
+        <Setter Property="Content" Value="{Binding MenuName}"/>
+        <Setter Property="Command" Value="{Binding MenuCommand}"/>
+        <Setter Property="CommandParameter" Value="{Binding MenuData}"/>
+        <Setter Property="FontSize" Value="24"/>
+        <Setter Property="Margin" Value="10"/>
+    </Style>
+
     <Style x:Key="StyleBaseRadioBtn" TargetType="{x:Type RadioButton}">
         <Setter Property="Content" Value="{Binding MenuName}"/>
         <Setter Property="FontSize" Value="14"/>
@@ -37,14 +92,6 @@
         <Setter Property="FontSize" Value="18"/>
     </Style>
 
-    <ControlTemplate x:Key="SubItemRadioTemplate">
-        <RadioButton Style="{Binding MenuStyle}"/>
-    </ControlTemplate>
-
-    <ControlTemplate x:Key="SubItemCbxTemplate">
-        <CheckBox Style="{Binding MenuStyle}"/>
-    </ControlTemplate>
-
     <Style x:Key="SubItemsContent" TargetType="{x:Type ContentControl}">
         <Style.Triggers>
             <DataTrigger Binding="{Binding MenuData}" Value="RadioButton">
@@ -55,35 +102,4 @@
             </DataTrigger>
         </Style.Triggers>
     </Style>
-
-    <DataTemplate x:Key="SubItemTemplate">
-        <ContentControl Style="{StaticResource SubItemsContent}"/>
-    </DataTemplate>
-
-    <DataTemplate x:Key="TitleTemplate">
-        <TextBlock Style="{Binding MenuStyle}"/>
-    </DataTemplate>
-
-    <ItemsPanelTemplate x:Key="ChildItemPanel">
-        <StackPanel Orientation="Horizontal"/>
-    </ItemsPanelTemplate>
-    
-    <ItemsPanelTemplate x:Key="MainItemPanel">
-        <StackPanel/>
-    </ItemsPanelTemplate>
-    
-    <DataTemplate x:Key="MainItemTemplate">
-        <StackPanel>
-            <ItemsControl ItemsSource="{Binding TitleStrings}"
-                          ItemTemplate="{StaticResource TitleTemplate}"
-                          ItemsPanel="{StaticResource MainItemPanel}"/>
-            <ItemsControl ItemsSource="{Binding SubItems}"
-                          ItemTemplate="{StaticResource SubItemTemplate}"
-                          ItemsPanel="{StaticResource MainItemPanel}"/>
-            <ItemsControl Visibility="{Binding ChildVisble}" 
-                          ItemsSource="{Binding ChildItems}"
-                          ItemTemplate="{StaticResource SubItemTemplate}"
-                          ItemsPanel="{StaticResource ChildItemPanel}"/>
-        </StackPanel>
-    </DataTemplate>
 </ResourceDictionary>

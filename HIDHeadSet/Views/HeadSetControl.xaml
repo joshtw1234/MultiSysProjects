@@ -20,6 +20,9 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
+    <UserControl.DataContext>
+        <Binding Source="{StaticResource HeadSetVM}"/>
+    </UserControl.DataContext>
     <Grid>
         <ItemsControl ItemsSource="{Binding MainItems}"
                       ItemTemplate="{StaticResource MainItemTemplate}"

@@ -1,6 +1,6 @@
 ﻿namespace HIDHeadSet.Models
 {
-    interface IHeadSetModel
+    public interface IHeadSetModel
     {
     }
 }

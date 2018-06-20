@@ -124,6 +124,7 @@
     <ProjectReference Include="..\UtilityUILib\UtilityUILib.csproj">
       <Project>{DBEBD3F1-85B3-4D9C-B846-C25B511A156A}</Project>
       <Name>UtilityUILib</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

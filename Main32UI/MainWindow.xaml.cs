@@ -91,7 +91,7 @@ namespace Main32UI
                     {
 
                         Button btnModule = new Button();
-                        btnModule.Name = string.Format("btn{0}", iModule.moduleName);
+                        btnModule.Name = $"btn{iModule.moduleName}";
                         btnModule.Content = iModule.moduleName;
                         spModules.Children.Add(btnModule);
                         btnModule.Click += BtnModule_Click;

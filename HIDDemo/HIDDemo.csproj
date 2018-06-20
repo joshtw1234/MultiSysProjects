@@ -119,6 +119,7 @@
     <ProjectReference Include="..\HIDLib\HIDLib.csproj">
       <Project>{e31d692f-431b-42a5-8621-898bce275fe6}</Project>
       <Name>HIDLib</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\UtilityUILib\UtilityUILib.csproj">
       <Project>{DBEBD3F1-85B3-4D9C-B846-C25B511A156A}</Project>

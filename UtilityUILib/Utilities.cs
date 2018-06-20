@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Management;
@@ -236,5 +237,17 @@ namespace UtilityUILib
         /// or if the device is connected to AC power.
         /// </summary>
         public int BatteryFullLifeTime;
+    }
+
+    public class BindAbleBases : INotifyPropertyChanged
+    {
+        #region INotifyPropertyChanged Interface
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void onPropertyChanged(object sender, string propertyName)
+        {
+            if (this.PropertyChanged != null)
+            { PropertyChanged(sender, new PropertyChangedEventArgs(propertyName)); }
+        }
+        #endregion
     }
 }

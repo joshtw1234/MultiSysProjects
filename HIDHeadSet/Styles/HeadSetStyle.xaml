@@ -3,18 +3,30 @@
                     xmlns:local="clr-namespace:HIDHeadSet.Styles">
     <SolidColorBrush x:Key="DefBackground" Color="Green"/>
 
-    <Style x:Key="StyleCheckBox" TargetType="{x:Type CheckBox}"/>
-    <Style x:Key="StyleTitle" TargetType="{x:Type TextBlock}"/>
+    <Style x:Key="StyleCheckBox" TargetType="{x:Type CheckBox}">
+        
+    </Style>
+    <Style x:Key="StyleTitle" TargetType="{x:Type TextBlock}">
+        <Setter Property="Text" Value="{Binding MenuName}"/>
+        <Setter Property="FontSize" Value="24"/>
+        <Setter Property="Foreground" Value="White"/>
+    </Style>
 
     <DataTemplate x:Key="SubItemTemplate">
         <CheckBox Style="{StaticResource StyleCheckBox}"/>
     </DataTemplate>
 
-    <ItemsPanelTemplate x:Key="MainItemPanel"/>
+    <ItemsPanelTemplate x:Key="SubItemPanel">
+        <StackPanel/>
+    </ItemsPanelTemplate>
+    
+    <ItemsPanelTemplate x:Key="MainItemPanel">
+        <DockPanel/>
+    </ItemsPanelTemplate>
     
     <DataTemplate x:Key="MainItemTemplate">
         <DockPanel>
-            <TextBlock DockPanel.Dock="Top" Style="{StaticResource StyleTitle}"/>
+            <TextBlock DockPanel.Dock="Top" DataContext="{Binding TitleString}"  Style="{Binding MenuStyle}"/>
             <ItemsControl ItemsSource="{Binding SubItems}"
                           ItemTemplate="{StaticResource SubItemTemplate}"
                           ItemsPanel="{StaticResource MainItemPanel}"/>

@@ -27,10 +27,50 @@ namespace HIDHeadSet.ViewModels
             {
                 new MainItemDC()
                 {
-                    TitleString = new MenuItem()
+                    TitleStrings = new ObservableCollection<IMenuItem>()
                     {
-                        MenuName = "Hello Word!!22",
+                        new MenuItem()
+                        {
+                        MenuName = "LED Control",
                         MenuStyle = headSetResource["StyleTitle"] as Style
+                        },
+                        new MenuItem()
+                        {
+                        MenuName = "Operation",
+                        MenuStyle = headSetResource["StyleSubTitle"] as Style
+                        }
+                    },
+                    SubItems = new ObservableCollection<IMenuItem>()
+                    {
+                        new MenuItem()
+                        {
+                            MenuName = "Static",
+                            MenuStyle = headSetResource["StyleCheckBox"] as Style
+                        }
+                    }
+                },
+                new MainItemDC()
+                {
+                    TitleStrings = new ObservableCollection<IMenuItem>()
+                    {
+                        new MenuItem()
+                        {
+                        MenuName = "Fan Control",
+                        MenuStyle = headSetResource["StyleTitle"] as Style
+                        },
+                        new MenuItem()
+                        {
+                        MenuName = "Cooling",
+                        MenuStyle = headSetResource["StyleSubTitle"] as Style
+                        }
+                    },
+                    SubItems = new ObservableCollection<IMenuItem>()
+                    {
+                        new MenuItem()
+                        {
+                            MenuName = "Off",
+                            MenuStyle = headSetResource["StyleCheckBox"] as Style
+                        }
                     }
                 }
             };
@@ -55,7 +95,7 @@ namespace HIDHeadSet.ViewModels
 
     class MainItemDC
     {
-        public IMenuItem TitleString { get; set; }
+        public ObservableCollection<IMenuItem> TitleStrings { get; set; }
         public ObservableCollection<IMenuItem> SubItems { get; set; }
     }
 }

@@ -4,16 +4,31 @@
     <SolidColorBrush x:Key="DefBackground" Color="Green"/>
 
     <Style x:Key="StyleCheckBox" TargetType="{x:Type CheckBox}">
-        
-    </Style>
-    <Style x:Key="StyleTitle" TargetType="{x:Type TextBlock}">
-        <Setter Property="Text" Value="{Binding MenuName}"/>
-        <Setter Property="FontSize" Value="24"/>
+        <Setter Property="Content" Value="{Binding MenuName}"/>
+        <Setter Property="FontSize" Value="12"/>
         <Setter Property="Foreground" Value="White"/>
     </Style>
 
+    <Style x:Key="StyleTextBlock" TargetType="{x:Type TextBlock}">
+        <Setter Property="Text" Value="{Binding MenuName}"/>
+        <Setter Property="Foreground" Value="White"/>
+    </Style>
+
+    <Style x:Key="StyleTitle" BasedOn="{StaticResource StyleTextBlock}" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="24"/>
+    </Style>
+
+    <Style x:Key="StyleSubTitle" BasedOn="{StaticResource StyleTextBlock}" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="16"/>
+    </Style>
+    
+
     <DataTemplate x:Key="SubItemTemplate">
-        <CheckBox Style="{StaticResource StyleCheckBox}"/>
+        <CheckBox Style="{Binding MenuStyle}"/>
+    </DataTemplate>
+
+    <DataTemplate x:Key="TitleTemplate">
+        <TextBlock Style="{Binding MenuStyle}"/>
     </DataTemplate>
 
     <ItemsPanelTemplate x:Key="SubItemPanel">
@@ -21,15 +36,17 @@
     </ItemsPanelTemplate>
     
     <ItemsPanelTemplate x:Key="MainItemPanel">
-        <DockPanel/>
+        <StackPanel/>
     </ItemsPanelTemplate>
     
     <DataTemplate x:Key="MainItemTemplate">
-        <DockPanel>
-            <TextBlock DockPanel.Dock="Top" DataContext="{Binding TitleString}"  Style="{Binding MenuStyle}"/>
+        <StackPanel>
+            <ItemsControl ItemsSource="{Binding TitleStrings}"
+                          ItemTemplate="{StaticResource TitleTemplate}"
+                          ItemsPanel="{StaticResource MainItemPanel}"/>
             <ItemsControl ItemsSource="{Binding SubItems}"
                           ItemTemplate="{StaticResource SubItemTemplate}"
                           ItemsPanel="{StaticResource MainItemPanel}"/>
-        </DockPanel>
+        </StackPanel>
     </DataTemplate>
 </ResourceDictionary>

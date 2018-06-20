@@ -12,7 +12,7 @@ namespace HIDLib
 {
     public class HIDHWDev : IDisposable
     {
-        //const int HIDBUfferSize = 64;
+        const int DefBUfferSize = 64;
        
         /* stream */
         private FileStream _fileStream;
@@ -69,11 +69,10 @@ namespace HIDLib
             int bufSize = (int)OutputBuffSize;
             if (bufSize == 0)
             {
-                bufSize = 64;
+                bufSize = DefBUfferSize;
             }
             /* prepare stream - sync buf size should same as output buf */
             _fileStream = new FileStream(HIDHandel, FileAccess.ReadWrite, bufSize, false);
-
             /* report status */
             return true;
         }
@@ -96,16 +95,13 @@ namespace HIDLib
             int bufSize = (int)OutputBuffSize;
             if (bufSize == 0)
             {
-                bufSize = 64;
+                bufSize = DefBUfferSize;
             }
-
             /* prepare stream - async buf size should same as output buf */
             _fileStream = new FileStream(HIDHandel, FileAccess.ReadWrite, bufSize, true);
-
             /* report status */
             return true;
         }
-
 
         private void GetHIDDevInfos()
         {

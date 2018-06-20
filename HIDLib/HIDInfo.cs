@@ -23,11 +23,11 @@ namespace HIDLib
         /* allocate mem for interface descriptor */
         HIDAPIs.DeviceInterfaceData iface;
 
-        private HIDInfoStruct infoStruct;
+        private HIDInfoStruct hidInfoStruct;
 
-        public HIDInfoStruct InfoStruct
+        public HIDInfoStruct HIDInfoStruct
         {
-            get { return infoStruct; }
+            get { return hidInfoStruct; }
         }
 
         public HIDInfo(IntPtr _hidInfoSet, HIDAPIs.DeviceInterfaceData _iface, out bool isWork)
@@ -39,32 +39,32 @@ namespace HIDLib
 
             //Open HID HW
             hidHWDev = new HIDHWDev(devPath);
-            isWork = hidHWDev.Open();
-            if (isWork)
+            isWork = false;
+            if (hidHWDev.Open())
             {
-                infoStruct = new HIDInfoStruct()
+                hidInfoStruct = new HIDInfoStruct()
                 {
                     Manufacturer = GetManufacturer(hidHWDev.HIDHandel),
                     Product = GetProduct(hidHWDev.HIDHandel),
                     SerialNumber = GetSerialNumber(hidHWDev.HIDHandel),
                     HIDFullPath = devPath,
                 };
-                infoStruct.HIDCompareStr = devPath.Split('&')[2];
+                hidInfoStruct.HIDCompareStr = devPath.Split('&')[2];
                 HIDAPIs.HiddAttributtes hidAttr = new HIDAPIs.HiddAttributtes();
                 try
                 {
                     hidAttr = GetVidPid(hidHWDev.HIDHandel);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
 
                 }
-                infoStruct.Vid = hidAttr.VendorID;
-                infoStruct.Pid = hidAttr.ProductID;
-               
-                infoStruct.OutputBuffSize = hidHWDev.OutputBuffSize;
-                infoStruct.InputBuffSize = hidHWDev.InputBuffSize;
-                
+                hidInfoStruct.Vid = hidAttr.VendorID;
+                hidInfoStruct.Pid = hidAttr.ProductID;
+
+                hidInfoStruct.OutputBuffSize = hidHWDev.OutputBuffSize;
+                hidInfoStruct.InputBuffSize = hidHWDev.InputBuffSize;
+                isWork = true;
             }
         }
 

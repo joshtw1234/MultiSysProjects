@@ -120,7 +120,7 @@ namespace HIDDemo.ViewModels
         {
             bool btnCloseStatus = true;
             bool isAsync = false;
-            if (hidInfoLst[selectHIDIdx].InfoStruct.Pid == 0x8824)
+            if (hidInfoLst[selectHIDIdx].HIDInfoStruct.Pid == 0x8824)
             {
                 isAsync = true;
             }
@@ -210,7 +210,7 @@ namespace HIDDemo.ViewModels
                     dItem = new HIDDisplayItem()
                     {
                         DisplayType = HIDDisplayItemEnum.TextBlock,
-                        MenuName = hidInfo.InfoStruct.Pid.ToString("X4")
+                        MenuName = hidInfo.HIDInfoStruct.Pid.ToString("X4")
                     };
                     dInfoItem.HIDDisplayInfoCollections.Add(dItem);
                     dItem = new HIDDisplayItem()
@@ -222,7 +222,7 @@ namespace HIDDemo.ViewModels
                     dItem = new HIDDisplayItem()
                     {
                         DisplayType = HIDDisplayItemEnum.TextBlock,
-                        MenuName = hidInfo.InfoStruct.Vid.ToString("X4")
+                        MenuName = hidInfo.HIDInfoStruct.Vid.ToString("X4")
                     };
                     dInfoItem.HIDDisplayInfoCollections.Add(dItem);
                     dItem = new HIDDisplayItem()
@@ -234,7 +234,7 @@ namespace HIDDemo.ViewModels
                     dItem = new HIDDisplayItem()
                     {
                         DisplayType = HIDDisplayItemEnum.TextBlock,
-                        MenuName = hidInfo.InfoStruct.Manufacturer
+                        MenuName = hidInfo.HIDInfoStruct.Manufacturer
                     };
                     dInfoItem.HIDDisplayInfoCollections.Add(dItem);
                     dItem = new HIDDisplayItem()
@@ -246,7 +246,7 @@ namespace HIDDemo.ViewModels
                     dItem = new HIDDisplayItem()
                     {
                         DisplayType = HIDDisplayItemEnum.TextBlock,
-                        MenuName = hidInfo.InfoStruct.HIDCompareStr
+                        MenuName = hidInfo.HIDInfoStruct.HIDCompareStr
                     };
                     dInfoItem.HIDDisplayInfoCollections.Add(dItem);
                     dInfoItem.OnRadioButtonChecked += DInfoItem_OnRadioButtonChecked1;

@@ -102,4 +102,11 @@
             </DataTrigger>
         </Style.Triggers>
     </Style>
+    <!-- 
+      The Style file is ordered.
+      Use dynamic resource setting or binding could avoid the order.
+      Write process usually as follows:
+      1.Template
+      2.Styles
+    -->
 </ResourceDictionary>

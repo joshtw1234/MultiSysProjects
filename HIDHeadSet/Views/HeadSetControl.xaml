@@ -6,7 +6,10 @@
              xmlns:vm="clr-namespace:HIDHeadSet.ViewModels"
              xmlns:m="clr-namespace:HIDHeadSet.Models"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300" DataContext="{DynamicResource HeadSetVM}">
+    <!--
+    Main Control use resources to set view model and DataContext.
+    -->
     <UserControl.Resources>
         <ResourceDictionary>
             <ObjectDataProvider x:Key="HeadSetVM" ObjectType="{x:Type vm:HeadSetControlViewModel}">
@@ -20,9 +23,6 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <UserControl.DataContext>
-        <Binding Source="{StaticResource HeadSetVM}"/>
-    </UserControl.DataContext>
     <DockPanel>
         <ItemsControl DockPanel.Dock="Bottom"
                       ItemsSource="{Binding MainButtons}"

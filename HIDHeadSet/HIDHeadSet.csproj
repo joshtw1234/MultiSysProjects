@@ -65,6 +65,9 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\HeadSetModel.cs" />
+    <Compile Include="Models\IHeadSetModel.cs" />
+    <Compile Include="ViewModels\HeadSetControlViewModel.cs" />
     <Compile Include="Views\HeadSetControl.xaml.cs">
       <DependentUpon>HeadSetControl.xaml</DependentUpon>
     </Compile>
@@ -76,6 +79,10 @@
       <DependentUpon>HIDHeadSetLib.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Styles\HeadSetStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\HeadSetControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -111,10 +118,6 @@
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-    <Folder Include="Styles\" />
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

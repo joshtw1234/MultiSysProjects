@@ -13,7 +13,8 @@ namespace HIDHeadSet.ViewModels
     {
         const string OpenCmd= "Open";
         const string CloseCmd = "Close";
-        const string SendCmd = "Send";
+        const string LEDCmd = "LED";
+        const string FanCmd = "Fan";
 
         private IHeadSetModel headSetModel;
         private ResourceDictionary headSetResource;
@@ -81,8 +82,16 @@ namespace HIDHeadSet.ViewModels
                 },
                 new MenuItem()
                 {
-                    MenuName = "Send Command",
-                    MenuData = SendCmd,
+                    MenuName = "LED Command",
+                    MenuData = LEDCmd,
+                    MenuStyle = headSetResource["StyleMainButton"] as Style,
+                    MenuEnabled = true,
+                    MenuCommand = new MyCommond<string>(OnButtonClick)
+                },
+                new MenuItem()
+                {
+                    MenuName = "Fan Command",
+                    MenuData = FanCmd,
                     MenuStyle = headSetResource["StyleMainButton"] as Style,
                     MenuEnabled = true,
                     MenuCommand = new MyCommond<string>(OnButtonClick)
@@ -175,25 +184,25 @@ namespace HIDHeadSet.ViewModels
                     {
                         new MenuItem()
                         {
-                            MenuName = FanModes.Off.ToString(),
+                            MenuName = HeadSetFanModes.Off.ToString(),
                             MenuData = "RadioButton",
                             MenuStyle = headSetResource["StyleFanRadioBtn"] as Style
                         },
                         new MenuItem()
                         {
-                            MenuName = FanModes.Light.ToString(),
+                            MenuName = HeadSetFanModes.Light.ToString(),
                             MenuData = "RadioButton",
                             MenuStyle = headSetResource["StyleFanRadioBtn"] as Style
                         },
                         new MenuItem()
                         {
-                            MenuName = FanModes.Medium.ToString(),
+                            MenuName = HeadSetFanModes.Medium.ToString(),
                             MenuData = "RadioButton",
                             MenuStyle = headSetResource["StyleFanRadioBtn"] as Style
                         },
                         new MenuItem()
                         {
-                            MenuName = FanModes.Heavy.ToString(),
+                            MenuName = HeadSetFanModes.Heavy.ToString(),
                             MenuData = "RadioButton",
                             MenuStyle = headSetResource["StyleFanRadioBtn"] as Style
                         }
@@ -212,7 +221,7 @@ namespace HIDHeadSet.ViewModels
             {
                 headSetModel.CloseHID();
             }
-            if (obj.Equals(SendCmd))
+            if (obj.Equals(LEDCmd))
             {
                 //LED Control
                 foreach (var subItem in mainItems[0].SubItems)
@@ -236,6 +245,10 @@ namespace HIDHeadSet.ViewModels
                     }
                     headSetModel.SetColorData(LEDMode, lstBrush, int.Parse(mainItems[0].ColorInterVal.MenuName));
                 }
+                
+            }
+            if (obj.Equals(FanCmd))
+            {
                 //Fan Control
                 foreach (var subItem in mainItems[1].SubItems)
                 {
@@ -247,6 +260,8 @@ namespace HIDHeadSet.ViewModels
                 }
                 if (!string.IsNullOrEmpty(FanMode))
                 {
+                    HeadSetFanModes fMode = (HeadSetFanModes)Enum.Parse(typeof(HeadSetFanModes), FanMode);
+                    headSetModel.SetFanData(fMode);
                 }
             }
         }

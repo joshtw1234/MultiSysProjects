@@ -13,7 +13,6 @@ namespace HIDLib
 {
     public class HIDHWDev : IDisposable
     {
-        const string LogHIDHWDev = @"Logs\OCCUtility.log";
         const int DefBUfferSize = 64;
        
         /* stream */
@@ -127,7 +126,7 @@ namespace HIDLib
             if (data.Length > OutputBuffSize)
             {
                 //Output data can't bigger then buff size.
-                Utilities.Logger(LogHIDHWDev, $"Write Data {data.Length} Out of Buf Size {OutputBuffSize}");
+                Utilities.Logger(HIDAPIs.LogHIDHWDev, $"Write Data {data.Length} Out of Buf Size {OutputBuffSize}");
                 return rev;
             }
             
@@ -144,7 +143,7 @@ namespace HIDLib
             }
             catch (Exception ex)
             {
-                Utilities.Logger(LogHIDHWDev, $"Write Error {ex.Message}");
+                Utilities.Logger(HIDAPIs.LogHIDHWDev, $"Write Error {ex.Message}");
             }
             return rev;
         }
@@ -155,7 +154,7 @@ namespace HIDLib
             if (data.Length > OutputBuffSize)
             {
                 //Output data can't bigger then buff size.
-                Utilities.Logger(LogHIDHWDev, $"WriteAsync Data {data.Length} Out of Buf Size {OutputBuffSize}");
+                Utilities.Logger(HIDAPIs.LogHIDHWDev, $"WriteAsync Data {data.Length} Out of Buf Size {OutputBuffSize}");
                 return rev;
             }
 
@@ -174,7 +173,7 @@ namespace HIDLib
                 }
                 catch (Exception ex)
                 {
-                    Utilities.Logger(LogHIDHWDev, $"WriteAsync Error {ex.Message}");
+                    Utilities.Logger(HIDAPIs.LogHIDHWDev, $"WriteAsync Error {ex.Message}");
                 }
             });
             revsu.Wait();
@@ -192,7 +191,7 @@ namespace HIDLib
             }
             catch(Exception ex)
             {
-
+                Utilities.Logger(HIDAPIs.LogHIDHWDev, $"Read Error {ex.Message}");
             }
             return revbyte;
 #else
@@ -224,6 +223,7 @@ namespace HIDLib
                 }
                 catch (Exception ex)
                 {
+                    Utilities.Logger(HIDAPIs.LogHIDHWDev, $"ReadAsync Error {ex.Message}");
                     return 99;
                 }
             }).Result;

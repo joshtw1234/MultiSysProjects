@@ -3,6 +3,7 @@ using System;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Text;
+using UtilityUILib;
 
 namespace HIDLib
 {
@@ -57,7 +58,7 @@ namespace HIDLib
                 }
                 catch (Exception ex)
                 {
-
+                    Utilities.Logger(HIDAPIs.LogHIDHWDev, $"GetVidPid Error {ex.Message}");
                 }
                 hidInfoStruct.Vid = hidAttr.VendorID;
                 hidInfoStruct.Pid = hidAttr.ProductID;

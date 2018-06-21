@@ -52,7 +52,6 @@ namespace Main32UI
                 //C# load dll method
                 Utilities.Logger(CommonUIConsts.LogUtilityFileName, strModule);
                 plugin = Assembly.LoadFrom(strModule);
-                Utilities.Logger(CommonUIConsts.LogUtilityFileName, "0");
                 try
                 {
                     types = plugin.GetTypes();
@@ -62,7 +61,6 @@ namespace Main32UI
                     Utilities.Logger(CommonUIConsts.LogUtilityFileName, $"Error {ex.Message}");
                     continue;
                 }
-                Utilities.Logger(CommonUIConsts.LogUtilityFileName, "1");
                 foreach (Type t in types)
                 {
                     //Check Module interface

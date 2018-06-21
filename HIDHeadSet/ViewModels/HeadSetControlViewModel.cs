@@ -73,14 +73,6 @@ namespace HIDHeadSet.ViewModels
             {
                 new MenuItem()
                 {
-                    MenuName = OpenCmd,
-                    MenuData = OpenCmd,
-                    MenuStyle = headSetResource["StyleMainButton"] as Style,
-                    MenuEnabled = true,
-                    MenuCommand = new MyCommond<string>(OnButtonClick)
-                },
-                new MenuItem()
-                {
                     MenuName = CloseCmd,
                     MenuData = CloseCmd,
                     MenuStyle = headSetResource["StyleMainButton"] as Style,
@@ -210,10 +202,7 @@ namespace HIDHeadSet.ViewModels
         private void OnButtonClick(string obj)
         {
             string LEDMode = string.Empty;
-            if (obj.Equals(OpenCmd))
-            {
-                headSetModel.OpenHID();
-            }
+            string FanMode = string.Empty;
             if (obj.Equals(CloseCmd))
             {
                 headSetModel.CloseHID();
@@ -229,16 +218,31 @@ namespace HIDHeadSet.ViewModels
                         break;
                     }
                 }
-                //Get Color
-                List<Brush> lstBrush = new List<Brush>();
-                foreach(var childItem in mainItems[0].ChildItems)
+                if (!string.IsNullOrEmpty(LEDMode))
                 {
-                    if (childItem.MenuChecked)
+                    //Get Color
+                    List<Brush> lstBrush = new List<Brush>();
+                    foreach (var childItem in mainItems[0].ChildItems)
                     {
-                        lstBrush.Add((childItem as BrushMenuItem).MenuBrush);
+                        if (childItem.MenuChecked)
+                        {
+                            lstBrush.Add((childItem as BrushMenuItem).MenuBrush);
+                        }
+                    }
+                    headSetModel.SetColorData(LEDMode, lstBrush);
+                }
+                //Fan Control
+                foreach (var subItem in mainItems[1].SubItems)
+                {
+                    if (subItem.MenuChecked)
+                    {
+                        FanMode = subItem.MenuName;
+                        break;
                     }
                 }
-                byte[] sendData = headSetModel.GetColorData(LEDMode, lstBrush);
+                if (!string.IsNullOrEmpty(FanMode))
+                {
+                }
             }
         }
     }

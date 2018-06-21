@@ -17,6 +17,7 @@ namespace HIDLib
     /// </summary>
     public class HIDAPIs
     {
+        public const string LogHIDHWDev = @"Logs\HIDLib.log";
         /* invalid handle value */
         public static IntPtr INVALID_HANDLE_VALUE = new IntPtr(-1);
 

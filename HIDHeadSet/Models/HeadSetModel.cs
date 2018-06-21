@@ -13,12 +13,15 @@ namespace HIDHeadSet.Models
             hidDev.HIDClose();
         }
 
-        public byte[] GetColorData(string ledMode, List<Brush> lstBrush)
+        public byte[] SetColorData(string ledMode, List<Brush> lstBrush)
         {
             byte[] revData = new byte[HeadSetConstants.HeadSetBufferSize];
             if (ledMode.Equals(HeadSetConstants.LEDStatic))
             {
-
+                WriteHID(new BaseHeadSetCmd(HeadSetCmds.LEDOff).ToByteArry());
+                WriteHID(new HeadSetCfg(HeadSetLEDModes.Static).ToByteArry());
+                WriteHID(new HeadSetColor(lstBrush[0]).ToByteArry());
+                WriteHID(new BaseHeadSetCmd(HeadSetCmds.LEDOn).ToByteArry());
             }
             if (ledMode.Equals(HeadSetConstants.LEDRepeatForward))
             {
@@ -44,11 +47,6 @@ namespace HIDHeadSet.Models
                 Utilities.Logger(HeadSetConstants.LogHeadSet, $"{HeadSetConstants.HeadSetPID} {HeadSetConstants.HeadSetVID} not found!");
                 return false;
             }
-            return true;
-        }
-
-        public bool OpenHID()
-        {
             bool rev = hidDev.HIDOpenAsync();
             if (!rev)
             {
@@ -57,7 +55,7 @@ namespace HIDHeadSet.Models
             return rev;
         }
 
-        public bool WriteHID(byte[] data)
+        bool WriteHID(byte[] data)
         {
             bool rev = hidDev.HIDWriteAsync(data);
             if (!rev)

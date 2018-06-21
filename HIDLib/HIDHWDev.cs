@@ -168,7 +168,7 @@ namespace HIDLib
                     /* write some bytes */
                     await _fileStream.WriteAsync(wData, 0, wData.Length);
                     /* flush! */
-                    //_fileStream.Flush();
+                    _fileStream.Flush();
                     rev = true;
                 }
                 catch (Exception ex)

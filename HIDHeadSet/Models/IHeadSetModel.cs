@@ -8,7 +8,7 @@ namespace HIDHeadSet.Models
     {
         bool Initialize();
         void CloseHID();
-        void SetColorData(string ledMode, List<Brush> lstBrush, int colorInterval);
+        void SetColorData(string ledMode, List<Brush> lstBrush, ushort colorInterval);
         void SetFanData(HeadSetFanModes fMode);
     }
 
@@ -88,10 +88,10 @@ namespace HIDHeadSet.Models
 
     class HeadSetCfg: BaseHeadSetCmd
     {
-        short sz = 0;
-        int colorInterval = 0;
+        ushort sz = 0;
+        ushort colorInterval = 0;
         HeadSetLEDModes ledCfgMode;
-        public HeadSetCfg(HeadSetLEDModes ledMode, short arySize = 1, int interVal = 0) : base(HeadSetCmds.LEDCfg)
+        public HeadSetCfg(HeadSetLEDModes ledMode, ushort arySize = 1, ushort interVal = 0) : base(HeadSetCmds.LEDCfg)
         {
             sz = arySize;
             colorInterval = interVal;
@@ -103,8 +103,8 @@ namespace HIDHeadSet.Models
             byte[] rev = base.ToByteArry();
             rev[2] = (byte)ledCfgMode;
             byte[] lenByte = BitConverter.GetBytes(sz);
-            rev[3] = lenByte[1];
-            rev[4] = lenByte[0];
+            rev[3] = lenByte[0];
+            rev[4] = lenByte[1];
             if (ledCfgMode != HeadSetLEDModes.Static && ledCfgMode != HeadSetLEDModes.LookupTable)
             {
                 lenByte = BitConverter.GetBytes(colorInterval);
@@ -119,22 +119,20 @@ namespace HIDHeadSet.Models
     {
         HeadSetLEDModes mode;
         List<Brush> displayColors;
-        public HeadSetColor(HeadSetLEDModes ledMode, List<Brush> lstColors) : base(HeadSetCmds.LEDColorArray)
+        ushort aryOffset;
+        public HeadSetColor(HeadSetLEDModes ledMode, List<Brush> lstColors, ushort offSet=0) : base(HeadSetCmds.LEDColorArray)
         {
             mode = ledMode;
             displayColors = lstColors;
+            aryOffset = offSet;
         }
 
         public override byte[] ToByteArry()
         {
             byte[] rev = base.ToByteArry();
-            if (mode != HeadSetLEDModes.Static)
-            {
-                short cnt = (short)(displayColors.Count-1);
-                byte[] lenByte = BitConverter.GetBytes(cnt);
-                rev[2] = lenByte[0];
-                rev[3] = lenByte[1];
-            }
+            byte[] lenByte = BitConverter.GetBytes(aryOffset);
+            rev[2] = lenByte[0];
+            rev[3] = lenByte[1];
             int colorIdx = 4;
             foreach (SolidColorBrush sosh in displayColors)
             {

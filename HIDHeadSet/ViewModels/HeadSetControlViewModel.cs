@@ -243,7 +243,7 @@ namespace HIDHeadSet.ViewModels
                             lstBrush.Add((childItem as BrushMenuItem).MenuBrush);
                         }
                     }
-                    headSetModel.SetColorData(LEDMode, lstBrush, int.Parse(mainItems[0].ColorInterVal.MenuName));
+                    headSetModel.SetColorData(LEDMode, lstBrush, ushort.Parse(mainItems[0].ColorInterVal.MenuName));
                 }
                 
             }

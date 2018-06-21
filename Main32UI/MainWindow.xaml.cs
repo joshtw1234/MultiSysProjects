@@ -83,7 +83,6 @@ namespace Main32UI
                                    BindingFlags.Public | BindingFlags.NonPublic |
                                    BindingFlags.Instance | BindingFlags.CreateInstance,
                                    null, null, null);
-                    Utilities.Logger(CommonUIConsts.LogUtilityFileName, "2");
                     //Check module is support and load into memory
                     if (iModule.isPlatformSupported())
                     {
@@ -98,7 +97,6 @@ namespace Main32UI
                         uc.Visibility = Visibility.Hidden;
                         gdModlueUI.Children.Add(uc);
                         iModule.initialize();
-                        Utilities.Logger(CommonUIConsts.LogUtilityFileName, "3");
                     }
 
                 }

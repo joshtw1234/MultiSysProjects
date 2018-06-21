@@ -66,7 +66,7 @@ namespace UtilityUILib
         {
             try
             {
-                string strOutput = $"[{DateTime.Now}]={lines}";
+                string strOutput = $"[{DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss.fff")}]={lines}";
                 lock (locker)
                 {
                     using (FileStream file = new FileStream(logPath, FileMode.Append, FileAccess.Write, FileShare.Read))

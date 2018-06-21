@@ -16,11 +16,6 @@ namespace UtilityUILib
         /// </summary>
         public const string LogUtilityFileName = @"Logs\OCCUtility.log";
 
-        /// <summary>
-        /// Log file name
-        /// </summary>
-        public const string LogInstallerFileName = @"Logs\OCCSuperInstaller.log";
-
         #region WMI Constants
         //Root path
         public const string WMICIMRoot = "ROOT\\CIMV2";

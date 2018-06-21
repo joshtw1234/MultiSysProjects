@@ -1,9 +1,15 @@
 ﻿using HIDLib;
+using UtilityUILib;
 
 namespace HIDHeadSet.Models
 {
     class HeadSetModel : IHeadSetModel
     {
+        /// <summary>
+        /// Log file name
+        /// </summary>
+        const string LogHeadSet = @"Logs\HeadSet.log";
+
         const int PID = 0x8824;
         const int VID = 0x0D8C;
         HIDInfo hidDev;
@@ -18,6 +24,7 @@ namespace HIDHeadSet.Models
             hidDev = hidLst.Find(x => x.HIDInfoStruct.Pid == PID && x.HIDInfoStruct.Vid == VID);
             if (hidDev == null)
             {
+                Utilities.Logger(LogHeadSet, $"{PID} {VID} not found!");
                 return false;
             }
             return true;
@@ -25,17 +32,22 @@ namespace HIDHeadSet.Models
 
         public bool OpenHID()
         {
-            return hidDev.HIDOpenAsync();
-        }
-
-        public void ReadHID()
-        {
-            hidDev.HIDReadAsync();
+            bool rev = hidDev.HIDOpenAsync();
+            if (!rev)
+            {
+                Utilities.Logger(LogHeadSet, $"hidDev Open Failed");
+            }
+            return rev;
         }
 
         public bool WriteHID(byte[] data)
         {
-            return hidDev.HIDWriteAsync(data);
+            bool rev = hidDev.HIDWriteAsync(data);
+            if (!rev)
+            {
+                Utilities.Logger(LogHeadSet, $"WriteHID Failed");
+            }
+            return rev;
         }
     }
 }

@@ -6,6 +6,5 @@
         bool OpenHID();
         void CloseHID();
         bool WriteHID(byte[] data);
-        void ReadHID();
     }
 }

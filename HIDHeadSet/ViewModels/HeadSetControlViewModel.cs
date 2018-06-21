@@ -1,7 +1,9 @@
 ﻿using HIDHeadSet.Models;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
+using System.Windows.Media;
 using UtilityUILib;
 
 namespace HIDHeadSet.ViewModels
@@ -24,7 +26,7 @@ namespace HIDHeadSet.ViewModels
 
             mainItems = GetMainItems();
             mainButtons = GetMainButtons();
-            if(!headSetModel.Initialize())
+            if (!headSetModel.Initialize())
             {
                 //Not found HID
                 foreach(var btn in mainButtons)
@@ -97,11 +99,10 @@ namespace HIDHeadSet.ViewModels
 
         private ObservableCollection<MainItemDC> GetMainItems()
         {
-            return new ObservableCollection<MainItemDC>()
+            var rev = new ObservableCollection<MainItemDC>();
+            var m1 = new MainItemDC()
             {
-                new MainItemDC()
-                {
-                    TitleStrings = new ObservableCollection<IMenuItem>()
+                TitleStrings = new ObservableCollection<IMenuItem>()
                     {
                         new MenuItem()
                         {
@@ -114,7 +115,7 @@ namespace HIDHeadSet.ViewModels
                         MenuStyle = headSetResource["StyleSubTitle"] as Style
                         }
                     },
-                    SubItems = new ObservableCollection<IMenuItem>()
+                SubItems = new ObservableCollection<IMenuItem>()
                     {
                         new MenuItem()
                         {
@@ -141,38 +142,52 @@ namespace HIDHeadSet.ViewModels
                             MenuStyle = headSetResource["StyleLEDRadioBtn"] as Style
                         }
                     },
-                    ChildVisble = Visibility.Visible,
-                    ChildItems = new ObservableCollection<IMenuItem>()
-                    {
-                        new MenuItem()
-                        {
-                            MenuName = "Red",
-                            MenuData = "CheckBox",
-                            MenuStyle = headSetResource["StyleCheckBox"] as Style
-                        },
-                        new MenuItem()
-                        {
-                            MenuName = "Blue",
-                            MenuData = "CheckBox",
-                            MenuStyle = headSetResource["StyleCheckBox"] as Style
-                        },
-                        new MenuItem()
-                        {
-                            MenuName = "Green",
-                            MenuData = "CheckBox",
-                            MenuStyle = headSetResource["StyleCheckBox"] as Style
-                        },
-                        new MenuItem()
-                        {
-                            MenuName = "Black",
-                            MenuData = "CheckBox",
-                            MenuStyle = headSetResource["StyleCheckBox"] as Style
-                        }
-                    }
-                },
-                new MainItemDC()
+                ChildVisble = Visibility.Visible,
+                //ChildItems = new ObservableCollection<IMenuItem>()
+                //    {
+                //        new MenuItem()
+                //        {
+                //            MenuName = "Red",
+                //            MenuData = "CheckBox",
+                //            MenuStyle = headSetResource["StyleCheckBox"] as Style
+                //        },
+                //        new MenuItem()
+                //        {
+                //            MenuName = "Blue",
+                //            MenuData = "CheckBox",
+                //            MenuStyle = headSetResource["StyleCheckBox"] as Style
+                //        },
+                //        new MenuItem()
+                //        {
+                //            MenuName = "Green",
+                //            MenuData = "CheckBox",
+                //            MenuStyle = headSetResource["StyleCheckBox"] as Style
+                //        },
+                //        new MenuItem()
+                //        {
+                //            MenuName = "Black",
+                //            MenuData = "CheckBox",
+                //            MenuStyle = headSetResource["StyleCheckBox"] as Style
+                //        }
+                //    }
+            };
+
+            var values = typeof(Brushes).GetProperties().Select(p => new { Name = p.Name, Brush = p.GetValue(null) as Brush }).ToArray();
+            m1.ChildItems = new ObservableCollection<IMenuItem>();
+            foreach(var vv in values)
+            {
+                m1.ChildItems.Add(new BrushMenuItem()
                 {
-                    TitleStrings = new ObservableCollection<IMenuItem>()
+                    MenuName = vv.Name,
+                    MenuBrush = vv.Brush,
+                    MenuData = "CheckBox",
+                    MenuStyle = headSetResource["StyleCheckBox"] as Style
+                });
+            }
+            rev.Add(m1);
+            var m2 = new MainItemDC()
+            {
+                TitleStrings = new ObservableCollection<IMenuItem>()
                     {
                         new MenuItem()
                         {
@@ -185,7 +200,7 @@ namespace HIDHeadSet.ViewModels
                         MenuStyle = headSetResource["StyleSubTitle"] as Style
                         }
                     },
-                    SubItems = new ObservableCollection<IMenuItem>()
+                SubItems = new ObservableCollection<IMenuItem>()
                     {
                         new MenuItem()
                         {
@@ -212,26 +227,41 @@ namespace HIDHeadSet.ViewModels
                             MenuStyle = headSetResource["StyleFanRadioBtn"] as Style
                         }
                     },
-                    ChildVisble = Visibility.Collapsed
-                }
+                ChildVisble = Visibility.Collapsed
             };
+            rev.Add(m2);
+            return rev;
         }
 
         private void OnButtonClick(string obj)
         {
+            string LEDMode = string.Empty;
             if (obj.Equals(OpenCmd))
             {
-
+                headSetModel.OpenHID();
             }
             if (obj.Equals(CloseCmd))
             {
-
+                headSetModel.CloseHID();
             }
             if (obj.Equals(SendCmd))
             {
-
+                //LED Control
+                foreach (var subItem in mainItems[0].SubItems)
+                {
+                    if (subItem.MenuChecked)
+                    {
+                        LEDMode = subItem.MenuName;
+                        break;
+                    }
+                }
             }
         }
+    }
+
+    class BrushMenuItem : MenuItem
+    {
+        public Brush MenuBrush { get; set; }
     }
 
     /// <summary>
@@ -239,6 +269,8 @@ namespace HIDHeadSet.ViewModels
     /// </summary>
     class MainItemDC
     {
+        //Here no need bindable, view could use binding updatesourcetrigger to change the value.
+        //but model can not update UI from here at runtime.
         public Visibility ChildVisble { get; set; }
         public ObservableCollection<IMenuItem> TitleStrings { get; set; }
         public ObservableCollection<IMenuItem> SubItems { get; set; }

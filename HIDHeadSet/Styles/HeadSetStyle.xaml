@@ -44,10 +44,12 @@
             <ItemsControl ItemsSource="{Binding SubItems}"
                           ItemTemplate="{StaticResource SubItemTemplate}"
                           ItemsPanel="{StaticResource MainItemPanel}"/>
-            <ItemsControl Visibility="{Binding ChildVisble}" 
+            <Grid>
+                <ItemsControl Visibility="{Binding ChildVisble}" 
                           ItemsSource="{Binding ChildItems}"
                           ItemTemplate="{StaticResource SubItemTemplate}"
                           ItemsPanel="{StaticResource ChildItemPanel}"/>
+            </Grid>
         </StackPanel>
     </DataTemplate>
 
@@ -62,6 +64,7 @@
 
     <Style x:Key="StyleBaseRadioBtn" TargetType="{x:Type RadioButton}">
         <Setter Property="Content" Value="{Binding MenuName}"/>
+        <Setter Property="IsChecked" Value="{Binding MenuChecked, UpdateSourceTrigger=PropertyChanged}"/>
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="Foreground" Value="White"/>
     </Style>

@@ -1,5 +1,6 @@
 ﻿using HIDHeadSet.Models;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -119,57 +120,30 @@ namespace HIDHeadSet.ViewModels
                     {
                         new MenuItem()
                         {
-                            MenuName = "Static",
+                            MenuName = HeadSetConstants.LEDStatic,
                             MenuData = "RadioButton",
                             MenuStyle = headSetResource["StyleLEDRadioBtn"] as Style
                         },
                         new MenuItem()
                         {
-                            MenuName = "Repeat forward",
+                            MenuName = HeadSetConstants.LEDRepeatForward,
                             MenuData = "RadioButton",
                             MenuStyle = headSetResource["StyleLEDRadioBtn"] as Style
                         },
                         new MenuItem()
                         {
-                            MenuName = "Back and Forth",
+                            MenuName = HeadSetConstants.LEDBackForth,
                             MenuData = "RadioButton",
                             MenuStyle = headSetResource["StyleLEDRadioBtn"] as Style
                         },
                         new MenuItem()
                         {
-                            MenuName = "Lookup Table",
+                            MenuName = HeadSetConstants.LEDLookupTable,
                             MenuData = "RadioButton",
                             MenuStyle = headSetResource["StyleLEDRadioBtn"] as Style
                         }
                     },
                 ChildVisble = Visibility.Visible,
-                //ChildItems = new ObservableCollection<IMenuItem>()
-                //    {
-                //        new MenuItem()
-                //        {
-                //            MenuName = "Red",
-                //            MenuData = "CheckBox",
-                //            MenuStyle = headSetResource["StyleCheckBox"] as Style
-                //        },
-                //        new MenuItem()
-                //        {
-                //            MenuName = "Blue",
-                //            MenuData = "CheckBox",
-                //            MenuStyle = headSetResource["StyleCheckBox"] as Style
-                //        },
-                //        new MenuItem()
-                //        {
-                //            MenuName = "Green",
-                //            MenuData = "CheckBox",
-                //            MenuStyle = headSetResource["StyleCheckBox"] as Style
-                //        },
-                //        new MenuItem()
-                //        {
-                //            MenuName = "Black",
-                //            MenuData = "CheckBox",
-                //            MenuStyle = headSetResource["StyleCheckBox"] as Style
-                //        }
-                //    }
             };
 
             var values = typeof(Brushes).GetProperties().Select(p => new { Name = p.Name, Brush = p.GetValue(null) as Brush }).ToArray();
@@ -204,25 +178,25 @@ namespace HIDHeadSet.ViewModels
                     {
                         new MenuItem()
                         {
-                            MenuName = "Off",
+                            MenuName = FanModes.Off.ToString(),
                             MenuData = "RadioButton",
                             MenuStyle = headSetResource["StyleFanRadioBtn"] as Style
                         },
                         new MenuItem()
                         {
-                            MenuName = "Light",
+                            MenuName = FanModes.Light.ToString(),
                             MenuData = "RadioButton",
                             MenuStyle = headSetResource["StyleFanRadioBtn"] as Style
                         },
                         new MenuItem()
                         {
-                            MenuName = "Medium",
+                            MenuName = FanModes.Medium.ToString(),
                             MenuData = "RadioButton",
                             MenuStyle = headSetResource["StyleFanRadioBtn"] as Style
                         },
                         new MenuItem()
                         {
-                            MenuName = "Heavy",
+                            MenuName = FanModes.Heavy.ToString(),
                             MenuData = "RadioButton",
                             MenuStyle = headSetResource["StyleFanRadioBtn"] as Style
                         }
@@ -255,6 +229,16 @@ namespace HIDHeadSet.ViewModels
                         break;
                     }
                 }
+                //Get Color
+                List<Brush> lstBrush = new List<Brush>();
+                foreach(var childItem in mainItems[0].ChildItems)
+                {
+                    if (childItem.MenuChecked)
+                    {
+                        lstBrush.Add((childItem as BrushMenuItem).MenuBrush);
+                    }
+                }
+                byte[] sendData = headSetModel.GetColorData(LEDMode, lstBrush);
             }
         }
     }

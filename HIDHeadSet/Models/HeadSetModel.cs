@@ -13,29 +13,31 @@ namespace HIDHeadSet.Models
             hidDev.HIDClose();
         }
 
-        public byte[] SetColorData(string ledMode, List<Brush> lstBrush)
+        public void SetColorData(string ledMode, List<Brush> lstBrush)
         {
-            byte[] revData = new byte[HeadSetConstants.HeadSetBufferSize];
+            WriteHID(new BaseHeadSetCmd(HeadSetCmds.LEDOff).ToByteArry());
             if (ledMode.Equals(HeadSetConstants.LEDStatic))
             {
-                WriteHID(new BaseHeadSetCmd(HeadSetCmds.LEDOff).ToByteArry());
+                
                 WriteHID(new HeadSetCfg(HeadSetLEDModes.Static).ToByteArry());
-                WriteHID(new HeadSetColor(lstBrush[0]).ToByteArry());
-                WriteHID(new BaseHeadSetCmd(HeadSetCmds.LEDOn).ToByteArry());
+                WriteHID(new HeadSetColor(HeadSetLEDModes.Static, lstBrush).ToByteArry());
+                
             }
             if (ledMode.Equals(HeadSetConstants.LEDRepeatForward))
             {
-
+                WriteHID(new HeadSetCfg(HeadSetLEDModes.RepeatForward, lstBrush.Count).ToByteArry());
+                WriteHID(new HeadSetColor(HeadSetLEDModes.RepeatForward, lstBrush).ToByteArry());
             }
             if (ledMode.Equals(HeadSetConstants.LEDBackForth))
             {
-
+                WriteHID(new HeadSetCfg(HeadSetLEDModes.BackandForth, lstBrush.Count).ToByteArry());
+                WriteHID(new HeadSetColor(HeadSetLEDModes.BackandForth, lstBrush).ToByteArry());
             }
             if (ledMode.Equals(HeadSetConstants.LEDLookupTable))
             {
 
             }
-            return revData;
+            WriteHID(new BaseHeadSetCmd(HeadSetCmds.LEDOn).ToByteArry());
         }
 
         public bool Initialize()

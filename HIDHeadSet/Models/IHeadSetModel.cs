@@ -8,7 +8,7 @@ namespace HIDHeadSet.Models
     {
         bool Initialize();
         void CloseHID();
-        byte[] SetColorData(string ledMode, List<Brush> lstBrush);
+        void SetColorData(string ledMode, List<Brush> lstBrush);
     }
 
     enum FanModes
@@ -73,10 +73,12 @@ namespace HIDHeadSet.Models
     class HeadSetCfg: BaseHeadSetCmd
     {
         int sz = 0;
+        int colorInterval = 0;
         HeadSetLEDModes ledCfgMode;
-        public HeadSetCfg(HeadSetLEDModes ledMode, int arySize = 1) : base(HeadSetCmds.LEDCfg)
+        public HeadSetCfg(HeadSetLEDModes ledMode, int arySize = 1, int interVal = 50) : base(HeadSetCmds.LEDCfg)
         {
             sz = arySize;
+            colorInterval = interVal;
             ledCfgMode = ledMode;
         }
 
@@ -89,7 +91,9 @@ namespace HIDHeadSet.Models
             rev[4] = lenByte[1];
             if (ledCfgMode != HeadSetLEDModes.Static && ledCfgMode != HeadSetLEDModes.LookupTable)
             {
-                //TODO:add data
+                lenByte = BitConverter.GetBytes(colorInterval);
+                rev[5] = lenByte[0];
+                rev[6] = lenByte[1];
             }
             return rev;
         }
@@ -97,18 +101,32 @@ namespace HIDHeadSet.Models
 
     class HeadSetColor : BaseHeadSetCmd
     {
-        Brush displayColor;
-        public HeadSetColor(Brush color) : base(HeadSetCmds.LEDColorArray)
+        HeadSetLEDModes mode;
+        List<Brush> displayColors;
+        public HeadSetColor(HeadSetLEDModes ledMode, List<Brush> lstColors) : base(HeadSetCmds.LEDColorArray)
         {
-            displayColor = color;
+            mode = ledMode;
+            displayColors = lstColors;
         }
 
         public override byte[] ToByteArry()
         {
             byte[] rev = base.ToByteArry();
-            rev[4] = (displayColor as SolidColorBrush).Color.R;
-            rev[5] = (displayColor as SolidColorBrush).Color.G;
-            rev[6] = (displayColor as SolidColorBrush).Color.B;
+            if (mode != HeadSetLEDModes.Static)
+            {
+                int cnt = displayColors.Count;
+                byte[] lenByte = BitConverter.GetBytes(cnt);
+                rev[2] = lenByte[0];
+                rev[3] = lenByte[1];
+            }
+            int colorIdx = 4;
+            foreach(SolidColorBrush sosh in displayColors)
+            {
+                rev[colorIdx] = sosh.Color.R;
+                rev[++colorIdx] = sosh.Color.G;
+                rev[++colorIdx] = sosh.Color.B;
+                ++colorIdx;
+            }
             return rev;
         }
     }

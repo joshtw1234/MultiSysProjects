@@ -55,6 +55,7 @@
         <Setter Property="Content" Value="{Binding MenuName}"/>
         <Setter Property="Command" Value="{Binding MenuCommand}"/>
         <Setter Property="CommandParameter" Value="{Binding MenuData}"/>
+        <Setter Property="IsEnabled" Value="{Binding MenuEnabled}"/>
         <Setter Property="FontSize" Value="24"/>
         <Setter Property="Margin" Value="10"/>
     </Style>

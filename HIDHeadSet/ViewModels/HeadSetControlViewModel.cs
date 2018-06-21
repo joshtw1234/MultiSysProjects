@@ -24,7 +24,45 @@ namespace HIDHeadSet.ViewModels
 
             mainItems = GetMainItems();
             mainButtons = GetMainButtons();
+            if(!headSetModel.Initialize())
+            {
+                //Not found HID
+                foreach(var btn in mainButtons)
+                {
+                    btn.MenuEnabled = false;
+                }
+            }
         }
+
+        #region Properties
+        private ObservableCollection<MainItemDC> mainItems;
+        public ObservableCollection<MainItemDC> MainItems
+        {
+            get
+            {
+                return mainItems;
+            }
+            set
+            {
+                mainItems = value;
+                onPropertyChanged(this, "HIDOPButtonCollection");
+            }
+        }
+
+        private ObservableCollection<IMenuItem> mainButtons;
+        public ObservableCollection<IMenuItem> MainButtons
+        {
+            get
+            {
+                return mainButtons;
+            }
+            set
+            {
+                mainButtons = value;
+                onPropertyChanged(this, "MainButtons");
+            }
+        }
+        #endregion
 
         private ObservableCollection<IMenuItem> GetMainButtons()
         {
@@ -35,6 +73,7 @@ namespace HIDHeadSet.ViewModels
                     MenuName = OpenCmd,
                     MenuData = OpenCmd,
                     MenuStyle = headSetResource["StyleMainButton"] as Style,
+                    MenuEnabled = true,
                     MenuCommand = new MyCommond<string>(OnButtonClick)
                 },
                 new MenuItem()
@@ -42,6 +81,7 @@ namespace HIDHeadSet.ViewModels
                     MenuName = CloseCmd,
                     MenuData = CloseCmd,
                     MenuStyle = headSetResource["StyleMainButton"] as Style,
+                    MenuEnabled = true,
                     MenuCommand = new MyCommond<string>(OnButtonClick)
                 },
                 new MenuItem()
@@ -49,25 +89,10 @@ namespace HIDHeadSet.ViewModels
                     MenuName = "Send Command",
                     MenuData = SendCmd,
                     MenuStyle = headSetResource["StyleMainButton"] as Style,
+                    MenuEnabled = true,
                     MenuCommand = new MyCommond<string>(OnButtonClick)
                 }
             };
-        }
-
-        private void OnButtonClick(string obj)
-        {
-            if (obj.Equals(OpenCmd))
-            {
-
-            }
-            if (obj.Equals(CloseCmd))
-            {
-
-            }
-            if (obj.Equals(SendCmd))
-            {
-
-            }
         }
 
         private ObservableCollection<MainItemDC> GetMainItems()
@@ -192,36 +217,26 @@ namespace HIDHeadSet.ViewModels
             };
         }
 
-        private ObservableCollection<MainItemDC> mainItems;
-
-        public ObservableCollection<MainItemDC> MainItems
+        private void OnButtonClick(string obj)
         {
-            get
+            if (obj.Equals(OpenCmd))
             {
-                return mainItems;
-            }
-            set
-            {
-                mainItems = value;
-                onPropertyChanged(this, "HIDOPButtonCollection");
-            }
-        }
 
-        private ObservableCollection<IMenuItem> mainButtons;
-        public ObservableCollection<IMenuItem> MainButtons
-        {
-            get
-            {
-                return mainButtons;
             }
-            set
+            if (obj.Equals(CloseCmd))
             {
-                mainButtons = value;
-                onPropertyChanged(this, "MainButtons");
+
+            }
+            if (obj.Equals(SendCmd))
+            {
+
             }
         }
     }
 
+    /// <summary>
+    /// The DataContext of Main items
+    /// </summary>
     class MainItemDC
     {
         public Visibility ChildVisble { get; set; }

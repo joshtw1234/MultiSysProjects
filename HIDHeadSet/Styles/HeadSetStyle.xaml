@@ -21,7 +21,7 @@
     </DataTemplate>
 
     <ItemsPanelTemplate x:Key="ChildItemPanel">
-        <StackPanel Orientation="Horizontal"/>
+        <WrapPanel/>
     </ItemsPanelTemplate>
     
     <ItemsPanelTemplate x:Key="MainItemPanel">
@@ -44,12 +44,10 @@
             <ItemsControl ItemsSource="{Binding SubItems}"
                           ItemTemplate="{StaticResource SubItemTemplate}"
                           ItemsPanel="{StaticResource MainItemPanel}"/>
-            <Grid>
-                <ItemsControl Visibility="{Binding ChildVisble}" 
+            <ItemsControl Visibility="{Binding ChildVisble}" 
                           ItemsSource="{Binding ChildItems}"
                           ItemTemplate="{StaticResource SubItemTemplate}"
                           ItemsPanel="{StaticResource ChildItemPanel}"/>
-            </Grid>
         </StackPanel>
     </DataTemplate>
 

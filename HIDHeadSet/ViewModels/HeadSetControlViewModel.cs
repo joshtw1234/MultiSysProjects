@@ -136,6 +136,11 @@ namespace HIDHeadSet.ViewModels
                         }
                     },
                 ChildVisble = Visibility.Visible,
+                ColorInterVal = new MenuItem()
+                {
+                    MenuName = "100",
+                    MenuStyle = headSetResource["StyleColorInterVal"] as Style
+                }
             };
 
             var values = typeof(Brushes).GetProperties().Select(p => new { Name = p.Name, Brush = p.GetValue(null) as Brush }).ToArray();
@@ -229,7 +234,7 @@ namespace HIDHeadSet.ViewModels
                             lstBrush.Add((childItem as BrushMenuItem).MenuBrush);
                         }
                     }
-                    headSetModel.SetColorData(LEDMode, lstBrush);
+                    headSetModel.SetColorData(LEDMode, lstBrush, int.Parse(mainItems[0].ColorInterVal.MenuName));
                 }
                 //Fan Control
                 foreach (var subItem in mainItems[1].SubItems)
@@ -260,6 +265,7 @@ namespace HIDHeadSet.ViewModels
         //Here no need bindable, view could use binding updatesourcetrigger to change the value.
         //but model can not update UI from here at runtime.
         public Visibility ChildVisble { get; set; }
+        public IMenuItem ColorInterVal { get; set; }
         public ObservableCollection<IMenuItem> TitleStrings { get; set; }
         public ObservableCollection<IMenuItem> SubItems { get; set; }
         public ObservableCollection<IMenuItem> ChildItems { get; set; }

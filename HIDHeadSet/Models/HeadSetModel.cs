@@ -13,7 +13,7 @@ namespace HIDHeadSet.Models
             hidDev.HIDClose();
         }
 
-        public void SetColorData(string ledMode, List<Brush> lstBrush)
+        public void SetColorData(string ledMode, List<Brush> lstBrush, int colorInterval)
         {
             WriteHID(new BaseHeadSetCmd(HeadSetCmds.LEDOff).ToByteArry());
             if (ledMode.Equals(HeadSetConstants.LEDStatic))
@@ -25,12 +25,12 @@ namespace HIDHeadSet.Models
             }
             if (ledMode.Equals(HeadSetConstants.LEDRepeatForward))
             {
-                WriteHID(new HeadSetCfg(HeadSetLEDModes.RepeatForward, lstBrush.Count).ToByteArry());
+                WriteHID(new HeadSetCfg(HeadSetLEDModes.RepeatForward, lstBrush.Count, colorInterval).ToByteArry());
                 WriteHID(new HeadSetColor(HeadSetLEDModes.RepeatForward, lstBrush).ToByteArry());
             }
             if (ledMode.Equals(HeadSetConstants.LEDBackForth))
             {
-                WriteHID(new HeadSetCfg(HeadSetLEDModes.BackandForth, lstBrush.Count).ToByteArry());
+                WriteHID(new HeadSetCfg(HeadSetLEDModes.BackandForth, lstBrush.Count, colorInterval).ToByteArry());
                 WriteHID(new HeadSetColor(HeadSetLEDModes.BackandForth, lstBrush).ToByteArry());
             }
             if (ledMode.Equals(HeadSetConstants.LEDLookupTable))

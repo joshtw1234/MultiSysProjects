@@ -41,9 +41,17 @@
             <ItemsControl ItemsSource="{Binding TitleStrings}"
                           ItemTemplate="{StaticResource TitleTemplate}"
                           ItemsPanel="{StaticResource MainItemPanel}"/>
-            <ItemsControl ItemsSource="{Binding SubItems}"
+            <DockPanel>
+                <ItemsControl DockPanel.Dock="Left" ItemsSource="{Binding SubItems}"
                           ItemTemplate="{StaticResource SubItemTemplate}"
                           ItemsPanel="{StaticResource MainItemPanel}"/>
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Visibility="{Binding ChildVisble}">
+                    <TextBlock Text="Interval" Style="{DynamicResource StyleSubTitle}"/>
+                    <TextBox DataContext="{Binding ColorInterVal}" Style="{Binding MenuStyle}"/>
+                    <TextBlock Text="ms" Style="{DynamicResource StyleSubTitle}"/>
+                </StackPanel>
+                <Grid/>
+            </DockPanel>
             <ItemsControl Visibility="{Binding ChildVisble}" 
                           ItemsSource="{Binding ChildItems}"
                           ItemTemplate="{StaticResource SubItemTemplate}"
@@ -51,6 +59,12 @@
         </StackPanel>
     </DataTemplate>
 
+    <Style x:Key="StyleColorInterVal" TargetType="{x:Type TextBox}">
+        <Setter Property="Text" Value="{Binding MenuName}"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Margin" Value="10,0,10,0"/>
+    </Style>
+    
     <Style x:Key="StyleMainButton" TargetType="{x:Type Button}">
         <Setter Property="Content" Value="{Binding MenuName}"/>
         <Setter Property="Command" Value="{Binding MenuCommand}"/>

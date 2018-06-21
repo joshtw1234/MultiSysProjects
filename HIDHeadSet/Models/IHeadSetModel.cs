@@ -8,7 +8,7 @@ namespace HIDHeadSet.Models
     {
         bool Initialize();
         void CloseHID();
-        void SetColorData(string ledMode, List<Brush> lstBrush);
+        void SetColorData(string ledMode, List<Brush> lstBrush, int colorInterval);
     }
 
     enum FanModes
@@ -126,6 +126,10 @@ namespace HIDHeadSet.Models
                 rev[++colorIdx] = sosh.Color.G;
                 rev[++colorIdx] = sosh.Color.B;
                 ++colorIdx;
+                if (colorIdx >= HeadSetConstants.HeadSetBufferSize)
+                {
+                    break;
+                }
             }
             return rev;
         }

@@ -7,11 +7,13 @@ using Microsoft.Win32.SafeHandles;
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using UtilityUILib;
 
 namespace HIDLib
 {
     public class HIDHWDev : IDisposable
     {
+        const string LogHIDHWDev = @"Logs\OCCUtility.log";
         const int DefBUfferSize = 64;
        
         /* stream */
@@ -122,16 +124,16 @@ namespace HIDLib
         public bool Write(byte[] data)
         {
             bool rev = false;
-            if (data.Length >= OutputBuffSize)
+            if (data.Length > OutputBuffSize)
             {
                 //Output data can't bigger then buff size.
+                Utilities.Logger(LogHIDHWDev, $"Write Data {data.Length} Out of Buf Size {OutputBuffSize}");
                 return rev;
             }
             
             byte[] wData = new byte[OutputBuffSize];
-            //wData[0] = 0xff;
-            //first byte must be 0
-            Array.Copy(data, 0, wData, 1, data.Length);
+            //First byte is Report ID, if no defined should be 0
+            Array.Copy(data, 0, wData, 0, data.Length);
             try
             {
                 /* write some bytes */
@@ -142,7 +144,7 @@ namespace HIDLib
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{ex.Message}");
+                Utilities.Logger(LogHIDHWDev, $"Write Error {ex.Message}");
             }
             return rev;
         }
@@ -150,15 +152,15 @@ namespace HIDLib
         public bool WriteAsync(byte[] data)
         {
             bool rev = false;
-            //if (data.Length >= OutputBuffSize)
-            //{
-            //    //Output data can't bigger then buff size.
-            //    return rev;
-            //}
+            if (data.Length > OutputBuffSize)
+            {
+                //Output data can't bigger then buff size.
+                Utilities.Logger(LogHIDHWDev, $"WriteAsync Data {data.Length} Out of Buf Size {OutputBuffSize}");
+                return rev;
+            }
 
             byte[] wData = new byte[OutputBuffSize];
-            //wData[0] = 0xff;
-            //first byte must be 0
+            //First byte is Report ID, if no defined should be 0
             Array.Copy(data, 0, wData, 0, data.Length);
             var revsu = Task.Run(async ()=> 
             {
@@ -172,7 +174,7 @@ namespace HIDLib
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"{ex.Message}");
+                    Utilities.Logger(LogHIDHWDev, $"WriteAsync Error {ex.Message}");
                 }
             });
             revsu.Wait();

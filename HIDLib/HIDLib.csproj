@@ -63,5 +63,12 @@
     <Compile Include="HIDInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UtilityUILib\UtilityUILib.csproj">
+      <Project>{dbebd3f1-85b3-4d9c-b846-c25b511a156a}</Project>
+      <Name>UtilityUILib</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

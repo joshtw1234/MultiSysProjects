@@ -15,11 +15,42 @@ namespace HIDHeadSet.Models
 
         public void SetFanData(HeadSetFanModes fMode)
         {
+#if true
+            WriteHID(new HPLouieHeadSetCmd(HeadSetCmds.Fan, fMode).ToByteArry());
+#else
             WriteHID(new HeadSetFan(fMode).ToByteArry());
+#endif
         }
 
         public void SetColorData(string ledMode, List<Brush> lstBrush, ushort colorInterval)
         {
+#if true
+            WriteHID(new HPLouieHeadSetCmd(HeadSetCmds.LEDOff).ToByteArry());
+            if (ledMode.Equals(HeadSetConstants.LEDStatic))
+            {
+                WriteHID(new HPLouieHeadSetCmd(HeadSetCmds.LEDCfg, HeadSetLEDModes.Static).ToByteArry());
+                WriteHID(new HPLouieHeadSetCmd(HeadSetCmds.LEDColorArray, HeadSetLEDModes.Static, lstBrush).ToByteArry());
+            }
+            if (ledMode.Equals(HeadSetConstants.LEDRepeatForward))
+            {
+                WriteHID(new HPLouieHeadSetCmd(HeadSetCmds.LEDCfg, HeadSetLEDModes.RepeatForward, (ushort)lstBrush.Count, colorInterval).ToByteArry());
+                SetColorArray(HeadSetLEDModes.RepeatForward, lstBrush);
+            }
+            if (ledMode.Equals(HeadSetConstants.LEDBackForth))
+            {
+                WriteHID(new HPLouieHeadSetCmd(HeadSetCmds.LEDCfg, HeadSetLEDModes.BackandForth, (ushort)lstBrush.Count, colorInterval).ToByteArry());
+                SetColorArray(HeadSetLEDModes.BackandForth, lstBrush);
+            }
+            if (ledMode.Equals(HeadSetConstants.LEDLookupTable))
+            {
+                if (0 == lstBrush.Count % 2)
+                {
+                    WriteHID(new HPLouieHeadSetCmd(HeadSetCmds.LEDCfg, HeadSetLEDModes.LookupTable, (ushort)lstBrush.Count, colorInterval).ToByteArry());
+                    SetColorArray(HeadSetLEDModes.LookupTable, lstBrush);
+                }
+            }
+            WriteHID(new HPLouieHeadSetCmd(HeadSetCmds.LEDOn).ToByteArry());
+#else
             WriteHID(new BaseHeadSetCmd(HeadSetCmds.LEDOff).ToByteArry());
             if (ledMode.Equals(HeadSetConstants.LEDStatic))
             {
@@ -45,6 +76,7 @@ namespace HIDHeadSet.Models
                 }
             }
             WriteHID(new BaseHeadSetCmd(HeadSetCmds.LEDOn).ToByteArry());
+#endif
         }
 
         private void SetColorArray(HeadSetLEDModes ledMode, List<Brush> lstBrush)
@@ -55,13 +87,13 @@ namespace HIDHeadSet.Models
             {
                 newLst.AddRange(lstBrush.GetRange(0, 4));
                 lstBrush.RemoveRange(0, 4);
-                WriteHID(new HeadSetColor(ledMode, newLst, (ushort)(i * 4)).ToByteArry());
+                WriteHID(new HPLouieHeadSetCmd(HeadSetCmds.LEDColorArray, ledMode, newLst, (ushort)(i * 4)).ToByteArry());
                 newLst.Clear();
             }
             if (0 != lstBrush.Count % 4)
             {
                 newLst.AddRange(lstBrush);
-                WriteHID(new HeadSetColor(ledMode, newLst, (ushort)(dvd * 4)).ToByteArry());
+                WriteHID(new HPLouieHeadSetCmd(HeadSetCmds.LEDColorArray, ledMode, newLst, (ushort)(dvd * 4)).ToByteArry());
                 newLst.Clear();
             }
         }

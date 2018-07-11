@@ -19,8 +19,10 @@ namespace HIDHeadSet.Models
         /// </summary>
         public const string LogHeadSet = @"Logs\HeadSet.log";
 
-        public const uint HeadSetPID = 0x8824;
-        public const uint HeadSetVID = 0x0D8C;
+        public const uint HeadSetPIDPro = 0x8824;
+        public const uint HeadSetVIDPro = 0x0D8C;
+        public const uint HeadSetPID = 0x2841;
+        public const uint HeadSetVID = 0x03F0;
         public const uint HeadSetBufferSize = 16;
         public const string LEDStatic = "Static";
         public const string LEDRepeatForward = "Repeat Forward";

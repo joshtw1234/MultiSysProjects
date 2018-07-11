@@ -6,6 +6,7 @@
 using Microsoft.Win32.SafeHandles;
 using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using UtilityUILib;
 
@@ -168,12 +169,13 @@ namespace HIDLib
                     /* write some bytes */
                     await _fileStream.WriteAsync(wData, 0, wData.Length);
                     /* flush! */
-                    _fileStream.Flush();
+                    //_fileStream.Flush();
                     rev = true;
                 }
                 catch (Exception ex)
                 {
-                    Utilities.Logger(HIDAPIs.LogHIDHWDev, $"WriteAsync Error {ex.Message}");
+                    int err = Marshal.GetLastWin32Error();
+                    Utilities.Logger(HIDAPIs.LogHIDHWDev, $"WriteAsync Error {ex.Message} {err}");
                 }
             });
             revsu.Wait();

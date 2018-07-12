@@ -43,11 +43,8 @@ namespace HIDHeadSet.Models
             }
             if (ledMode.Equals(HeadSetConstants.LEDLookupTable))
             {
-                if (0 == lstBrush.Count % 2)
-                {
-                    WriteHID(new HPLouieHeadSetCmd(HeadSetCmds.LEDCfg, HeadSetLEDModes.LookupTable, (ushort)lstBrush.Count, colorInterval).ToByteArry());
-                    SetColorArray(HeadSetLEDModes.LookupTable, lstBrush);
-                }
+                WriteHID(new HPLouieHeadSetCmd(HeadSetCmds.LEDCfg, HeadSetLEDModes.LookupTable, (ushort)lstBrush.Count, colorInterval).ToByteArry());
+                SetColorArray(HeadSetLEDModes.LookupTable, lstBrush);
             }
             WriteHID(new HPLouieHeadSetCmd(HeadSetCmds.LEDOn).ToByteArry());
 #else

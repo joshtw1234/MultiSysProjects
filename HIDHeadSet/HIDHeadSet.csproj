@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\HeadSetModel.cs" />
+    <Compile Include="Models\HPLouieHeadSetCmd.cs" />
     <Compile Include="Models\IHeadSetModel.cs" />
     <Compile Include="ViewModels\HeadSetControlViewModel.cs" />
     <Compile Include="Views\HeadSetControl.xaml.cs">

@@ -16,7 +16,7 @@ namespace HIDHeadSet.Models
         public void SetFanData(HeadSetFanModes fMode)
         {
 #if true
-            WriteHID(new HPLouieHeadSetCmd(HeadSetCmds.Fan, fMode).ToByteArry());
+             WriteHID(new HPLouieHeadSetCmd(HeadSetCmds.Fan, fMode).ToByteArry());
 #else
             WriteHID(new HeadSetFan(fMode).ToByteArry());
 #endif

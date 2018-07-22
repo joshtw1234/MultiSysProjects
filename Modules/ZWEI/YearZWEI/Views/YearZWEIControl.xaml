@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="YearZWEI.Views.YearZWEIControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:YearZWEI.Views"
+             xmlns:vm="clr-namespace:YearZWEI.ViewModels"
+             xmlns:m="clr-namespace:YearZWEI.Models"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" DataContext="{DynamicResource YearZWEIVM}">
+    <!--
+    Main Control use resources to set view model and DataContext.
+    -->
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ObjectDataProvider x:Key="YearZWEIVM" ObjectType="{x:Type vm:YearZWEIControlViewModel}">
+                <ObjectDataProvider.ConstructorParameters>
+                    <m:YearZWEIModel/>
+                </ObjectDataProvider.ConstructorParameters>
+            </ObjectDataProvider>
+            <ResourceDictionary.MergedDictionaries>
+                <!--<ResourceDictionary Source="/Styles/HIDDemoStyle.xaml"/>-->
+                <ResourceDictionary Source="pack://application:,,,/YearZWEI;component/Styles/YearZWEIStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+            
+    </Grid>
+</UserControl>

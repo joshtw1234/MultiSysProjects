@@ -47,6 +47,12 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\IYearZWEIModel.cs" />
+    <Compile Include="Models\YearZWEIModel.cs" />
+    <Compile Include="ViewModels\YearZWEIControlViewModel.cs" />
+    <Compile Include="Views\YearZWEIControl.xaml.cs">
+      <DependentUpon>YearZWEIControl.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainYearZWEI.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -55,6 +61,14 @@
       <DependentUpon>MainYearZWEI.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Styles\YearZWEIStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\YearZWEIControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -86,5 +100,6 @@
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

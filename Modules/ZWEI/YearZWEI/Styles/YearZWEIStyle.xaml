@@ -5,15 +5,21 @@
     <SolidColorBrush x:Key="DefBackground" Color="Green"/>
 
     <ControlTemplate x:Key="StarFieldTemplate" TargetType="{x:Type ContentControl}">
-        <Grid>
-            <TextBlock Style="{Binding MenuStyle}"/>
-        </Grid>
+        <DockPanel Style="{DynamicResource FieldDockStyle}">
+            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
+                <TextBlock Style="{Binding MenuStyle}"/>
+            </StackPanel>
+            <Grid Background="White"/>
+        </DockPanel>
     </ControlTemplate>
 
     <ControlTemplate x:Key="ZWEIDescTemplate" TargetType="{x:Type ContentControl}">
-        <Grid>
-            <TextBlock Style="{Binding MenuStyle}"/>
-        </Grid>
+        <DockPanel Style="{DynamicResource FieldDockStyle}">
+            <StackPanel DockPanel.Dock="Bottom">
+                <TextBlock Style="{Binding MenuStyle}"/>
+            </StackPanel>
+            <Grid/>
+        </DockPanel>
     </ControlTemplate>
 
     <ItemsPanelTemplate x:Key="YZWEIItemsPanel">
@@ -35,17 +41,20 @@
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="FieldDockStyle" TargetType="{x:Type DockPanel}">
+        <Setter Property="Height" Value="100"/>
+    </Style>
+
     <Style x:Key="BaseFieldStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="Text" Value="{Binding MenuData}"/>
+        <Setter Property="FontSize" Value="20"/>
     </Style>
 
     <Style x:Key="StarFieldStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource BaseFieldStyle}">
         <Setter Property="Background" Value="Red"/>
-        <Setter Property="Height" Value="50"/>
-        <Setter Property="FontSize" Value="16"/>
     </Style>
 
     <Style x:Key="DescStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource BaseFieldStyle}">
-        <Setter Property="Background" Value="Green"/>
+        <Setter Property="Background" Value="blue"/>
     </Style>
 </ResourceDictionary>

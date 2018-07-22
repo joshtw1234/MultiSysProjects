@@ -4,4 +4,48 @@
 
     <SolidColorBrush x:Key="DefBackground" Color="Green"/>
 
+    <ControlTemplate x:Key="StarFieldTemplate" TargetType="{x:Type ContentControl}">
+        <Grid>
+            <TextBlock Style="{Binding MenuStyle}"/>
+        </Grid>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="ZWEIDescTemplate" TargetType="{x:Type ContentControl}">
+        <Grid>
+            <TextBlock Style="{Binding MenuStyle}"/>
+        </Grid>
+    </ControlTemplate>
+
+    <ItemsPanelTemplate x:Key="YZWEIItemsPanel">
+        <WrapPanel/>
+    </ItemsPanelTemplate>
+    
+    <DataTemplate x:Key="ZWEIFieldTemplate">
+        <ContentControl Style="{DynamicResource ZWEIFieldStyle}"/>
+    </DataTemplate>
+    
+    <Style x:Key="ZWEIFieldStyle" TargetType="{x:Type ContentControl}">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding MenuData}" Value="StarField">
+                <Setter Property="Template" Value="{StaticResource StarFieldTemplate}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MenuData}" Value="ZWEIDesc">
+                <Setter Property="Template" Value="{DynamicResource ZWEIDescTemplate}"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="BaseFieldStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="Text" Value="{Binding MenuData}"/>
+    </Style>
+
+    <Style x:Key="StarFieldStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource BaseFieldStyle}">
+        <Setter Property="Background" Value="Red"/>
+        <Setter Property="Height" Value="50"/>
+        <Setter Property="FontSize" Value="16"/>
+    </Style>
+
+    <Style x:Key="DescStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource BaseFieldStyle}">
+        <Setter Property="Background" Value="Green"/>
+    </Style>
 </ResourceDictionary>

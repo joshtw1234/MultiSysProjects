@@ -25,6 +25,8 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
-            
+        <ItemsControl ItemTemplate="{StaticResource ZWEIFieldTemplate}"
+                      ItemsSource="{Binding ZWEIFieldItem}"
+                      ItemsPanel="{StaticResource YZWEIItemsPanel}"/>
     </Grid>
 </UserControl>

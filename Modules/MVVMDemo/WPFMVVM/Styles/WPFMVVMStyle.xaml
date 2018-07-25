@@ -4,8 +4,20 @@
     
     <SolidColorBrush x:Key="DefaultBackgroundColor" Color="Red"/>
     <ControlTemplate x:Key="MainContent" TargetType="{x:Type ContentControl}">
-        <Canvas>
-            <Path Stroke="DarkGoldenRod" StrokeThickness="3" Data="M 100,200 C 100,25 400,350 400,175 H 280" />
+        <Canvas Background="Gray">
+            <StackPanel>
+                <Path Stroke="Purple" StrokeThickness="10" 
+                      Data="M 300,300 L 370,330 L 350,400 L 280,370 L 300,295"/>
+                <Path Stroke="Green" StrokeThickness="10" 
+                      Data="M 100,100 L 200,200 C 200,200 205,205 200,210 L 120,300 C 120,300 115,305 110,300 L 20,210 C 20,210 15,205 20,200 L 90,100 C 90,100 95,95 100,100  "/>
+                <Rectangle Width="100" Height="100" Stroke="Black" StrokeThickness="20" RadiusX="20" RadiusY="20">
+                    <Rectangle.LayoutTransform>
+                        <RotateTransform Angle="30"/>
+                    </Rectangle.LayoutTransform>
+                </Rectangle>
+                <Path Stroke="DarkGoldenRod" StrokeThickness="20" Data="M 200,100 L 300,200 C 300,200 310,190 200,100" />
+                <Path Stroke="DarkGoldenRod" StrokeThickness="3" Data="M 100,200 C 100,25 400,350 400,175 H 280" />
+            </StackPanel>
         </Canvas>
     </ControlTemplate>
 </ResourceDictionary>

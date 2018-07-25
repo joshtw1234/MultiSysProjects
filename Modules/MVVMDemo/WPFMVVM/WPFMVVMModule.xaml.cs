@@ -51,7 +51,6 @@ namespace WPFMVVM
         public void initialize()
         {
             //throw new NotImplementedException();
-            cntCrl.Content = new WPFMVVMControl();
         }
 
         public bool isPlatformSupported()

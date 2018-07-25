@@ -1,5 +1,11 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:WPFMVVM.Styles">
+    
     <SolidColorBrush x:Key="DefaultBackgroundColor" Color="Red"/>
+    <ControlTemplate x:Key="MainContent" TargetType="{x:Type ContentControl}">
+        <Canvas>
+            <Path Stroke="DarkGoldenRod" StrokeThickness="3" Data="M 100,200 C 100,25 400,350 400,175 H 280" />
+        </Canvas>
+    </ControlTemplate>
 </ResourceDictionary>

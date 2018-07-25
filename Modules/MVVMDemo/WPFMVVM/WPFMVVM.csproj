@@ -81,13 +81,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="ViewModels\WPFMVVMViewModel.cs" />
-    <Compile Include="Views\BottomView.xaml.cs">
-      <DependentUpon>BottomView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\MiddleView.xaml.cs">
-      <DependentUpon>MiddleView.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="ViewModels\WPFMVVMControlViewModel.cs" />
     <Compile Include="Views\WPFMVVMControl.xaml.cs">
       <DependentUpon>WPFMVVMControl.xaml</DependentUpon>
     </Compile>
@@ -113,14 +107,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Styles\WPFMVVMStyle.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\BottomView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\MiddleView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

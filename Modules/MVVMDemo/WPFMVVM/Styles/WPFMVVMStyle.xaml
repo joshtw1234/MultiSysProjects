@@ -1,22 +1,80 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:WPFMVVM.Styles">
+                    xmlns:local="clr-namespace:WPFMVVM.Styles"
+                    xmlns:svg="http://sharpvectors.codeplex.com/runtime/">
     
     <SolidColorBrush x:Key="DefaultBackgroundColor" Color="Red"/>
+    <SolidColorBrush x:Key="FillBrush" Color="#CCCCFF"/>
+    <SolidColorBrush x:Key="StorkBrush" Color="Black"/>
+
+    <DrawingGroup x:Key="headsetlight" ClipGeometry="M0,0 V228.491 H206.65 V0 H0 Z">
+        <DrawingGroup>
+            <GeometryDrawing>
+                <GeometryDrawing.Brush>
+                    <SolidColorBrush Color="Red" Opacity="1" Transform="1,0,0,1,-109.166,-220.519" />
+                </GeometryDrawing.Brush>
+                <GeometryDrawing.Geometry>
+                    <PathGeometry FillRule="Nonzero" Transform="1,0,0,1,-109.166,-220.519" Figures="M206.65,228.491z M0,0z M240.531,397.566A15.43,15.43,0,0,1,238.196,397.398A18.482,18.482,0,0,1,231.896,395.315C212.34,385.537,193.12,375.255,174.908,364.821A18.363,18.363,0,0,1,171.548,362.553A19.422,19.422,0,0,1,168.524,359.663L165.953,356.706A17.353,17.353,0,0,1,163.819,353.094A22.461,22.461,0,0,1,162.139,349.448A19.288,19.288,0,0,1,161.081,345.668A15.573,15.573,0,0,1,160.681,341.955A13.541,13.541,0,0,1,160.933,338.091C163.856,319.61,167.468,300.791,171.685,282.228A11.945,11.945,0,0,1,172.811,278.868A11.524,11.524,0,0,1,174.611,275.978A11.928,11.928,0,0,1,177.131,273.626A11.46,11.46,0,0,1,180.105,272.064A13.847,13.847,0,0,1,183.347,271.274A13.645,13.645,0,0,1,186.842,271.19A23.856,23.856,0,0,1,193.932,273.324C212.178,282.514,231.28,292.724,250.752,303.717A36.514,36.514,0,0,1,256.852,308.656A38.252,38.252,0,0,1,261.405,314.856A25.454,25.454,0,0,1,264.883,328.885L264.883,329.154C264.362,332.514,263.573,337.202,262.548,342.998L262.229,344.426C259.729,358.891,256.517,374.315,252.737,390.107L252.603,390.507A10.45,10.45,0,0,1,245.883,396.774A17.962,17.962,0,0,1,240.54,397.564z M169.968,353.649L172.368,356.404A14.754,14.754,0,0,0,174.737,358.639A12.045,12.045,0,0,0,177.291,360.319L177.425,360.319C195.57,370.736,214.725,380.967,234.325,390.779A13.759,13.759,0,0,0,239.012,392.325A12.165,12.165,0,0,0,244.472,391.838A5.427,5.427,0,0,0,247.832,388.579C251.579,372.954,254.737,357.733,257.24,343.318L257.559,341.89C258.533,336.295,259.323,331.709,259.844,328.449A21.622,21.622,0,0,0,259.306,322.972A20.6,20.6,0,0,0,257.038,317.344A33.014,33.014,0,0,0,253.174,312.052A31.652,31.652,0,0,0,248.134,307.952C228.863,297.099,209.828,286.917,191.7,277.794A18.482,18.482,0,0,0,186.273,276.114A7.858,7.858,0,0,0,184.207,276.114L183.972,276.114A9.455,9.455,0,0,0,181.805,276.635A6.434,6.434,0,0,0,180.125,277.542A7.694,7.694,0,0,0,178.579,278.936A6.47,6.47,0,0,0,177.47,280.616L177.47,280.801A7.192,7.192,0,0,0,176.748,282.918L176.748,283.086C172.548,301.567,168.948,320.317,166.048,338.781L166.048,338.949A8.282,8.282,0,0,0,165.88,341.449L165.88,341.667A11.978,11.978,0,0,0,166.166,344.422A15.629,15.629,0,0,0,166.989,347.413L167.073,347.613A16.467,16.467,0,0,0,168.4,350.587L168.551,350.906A13.07,13.07,0,0,0,169.895,353.645z" />
+                </GeometryDrawing.Geometry>
+            </GeometryDrawing>
+        </DrawingGroup>
+    </DrawingGroup>
+
+    <DrawingImage x:Key="headsetlight_DrawingImage" Drawing="{StaticResource headsetlight}" />
+    
     <ControlTemplate x:Key="MainContent" TargetType="{x:Type ContentControl}">
         <Canvas Background="Gray">
             <StackPanel>
-                <Path Stroke="Purple" StrokeThickness="10" 
-                      Data="M 300,300 L 380,330 L 360,400 L 280,370 L 300,300" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" />
-                <Path Stroke="Green" StrokeThickness="10" 
-                      Data="M 100,100 L 200,200 C 200,200 205,205 200,210 L 120,300 C 120,300 115,305 110,300 L 20,210 C 20,210 15,205 20,200 L 90,100 C 90,100 95,95 100,100  "/>
-                <Rectangle Width="100" Height="100" Stroke="Black" StrokeThickness="20" RadiusX="20" RadiusY="20">
-                    <Rectangle.LayoutTransform>
-                        <RotateTransform Angle="30"/>
-                    </Rectangle.LayoutTransform>
-                </Rectangle>
-                <Path Stroke="DarkGoldenRod" StrokeThickness="20" Data="M 200,100 L 300,200 C 300,200 310,190 200,100" />
-                <Path Stroke="DarkGoldenRod" StrokeThickness="3" Data="M 300 100 L 500 400 100 400 Z" />
+                <Grid>
+                    <Path Name="Path1" Stroke="Black" StrokeThickness="1" Fill="#CCCCFF">
+                        <Path.Data>
+                            <GeometryGroup FillRule="EvenOdd">
+                                <LineGeometry StartPoint="10,10" EndPoint="50,30" />
+                                <EllipseGeometry Center="40,70" RadiusX="30" RadiusY="30" />
+                                <RectangleGeometry Rect="30,55 100 30" />
+                            </GeometryGroup>
+                        </Path.Data>
+                    </Path>
+                    <Path Name="Path2" Stroke="Red" StrokeThickness="1" Fill="#CCCCFF">
+                        <Path.Data>
+                            <GeometryGroup FillRule="EvenOdd">
+                                <LineGeometry StartPoint="10,10" EndPoint="50,30" />
+                                <EllipseGeometry Center="40,70" RadiusX="30" RadiusY="30" />
+                                <RectangleGeometry Rect="30,55 100 30" />
+                                <GeometryGroup.Transform>
+                                    <TranslateTransform X="50" Y="50"/>
+                                </GeometryGroup.Transform>
+                            </GeometryGroup>
+                        </Path.Data>
+                    </Path>
+                    <Image Stretch="None" Canvas.Left="200">
+                        <Image.Source>
+                            <DrawingImage>
+                                <DrawingImage.Drawing>
+                                    <DrawingGroup>
+                                        <GeometryDrawing Brush="{Binding ElementName=Path1, Path=Fill}" Geometry="{Binding ElementName=Path1, Path=Data}">
+                                            <GeometryDrawing.Pen>
+                                                <Pen Brush="{Binding ElementName=Path1, Path=Stroke}" Thickness="{Binding ElementName=Path1, Path=StrokeThickness}"/>
+                                            </GeometryDrawing.Pen>
+                                        </GeometryDrawing>
+                                        <GeometryDrawing Geometry="{Binding ElementName=Path2, Path=Data}" Brush="{Binding ElementName=Path2, Path=Fill}">
+                                            <GeometryDrawing.Pen>
+                                                <Pen Brush="{Binding ElementName=Path2, Path=Stroke}" Thickness="{Binding ElementName=Path2, Path=StrokeThickness}"/>
+                                            </GeometryDrawing.Pen>
+                                        </GeometryDrawing>
+                                    </DrawingGroup>
+                                </DrawingImage.Drawing>
+                            </DrawingImage>
+                        </Image.Source>
+                    </Image>
+                </Grid>
+                <Grid>
+                    <Image Source="{StaticResource headsetlight_DrawingImage}">
+                        <Image.Effect>
+                            <DropShadowEffect ShadowDepth="0" Color="Red" Opacity="1" BlurRadius="70"/>
+                        </Image.Effect>
+                    </Image>
+                </Grid>
             </StackPanel>
         </Canvas>
     </ControlTemplate>

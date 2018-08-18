@@ -72,7 +72,7 @@ namespace WPFLogicDemo.Models
                 for (int i = 0; i < 30; i++)
                 {
                     Thread.Sleep(500);
-                    messageText.MenuName += $"[{DateTime.Now.ToString("hh:mm:ss.fff")}] {funName} StartTask2 {i} end Thread ID {Thread.CurrentThread.ManagedThreadId}\n";
+                    messageText.MenuName += $"[{DateTime.Now.ToString("hh:mm:ss.fff")}] {funName} StartForLoop {i} end Thread ID {Thread.CurrentThread.ManagedThreadId}\n";
                 }
             });
         }

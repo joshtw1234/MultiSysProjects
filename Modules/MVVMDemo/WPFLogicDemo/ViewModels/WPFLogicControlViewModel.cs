@@ -8,6 +8,8 @@ namespace WPFLogicDemo.ViewModels
 {
     class WPFLogicControlViewModel : BindAbleBases
     {
+        const string ButtonClear = "Clear";
+
         IWPFLogicModel _wpflogicModel;
 
         ResourceDictionary _resDictionary;
@@ -17,7 +19,7 @@ namespace WPFLogicDemo.ViewModels
             _wpflogicModel = wpflogicModel;
             _resDictionary = _wpflogicModel.GetLocalStyle();
             _commonButtonCollection = GetCommonButtons();
-            _messageText = new MenuItem()
+            _messageText = new MessageTextMenuItem()
             {
                 MenuName = "Hello World!!!",
                 MenuStyle = _resDictionary["MessageStyle"] as Style
@@ -30,10 +32,20 @@ namespace WPFLogicDemo.ViewModels
             {
                 new MenuItem()
                 {
-                    MenuName = "Clear",
-                    MenuStyle = _resDictionary["LogicBtnStyle"] as Style
+                    MenuName = ButtonClear,
+                    MenuStyle = _resDictionary["LogicBtnStyle"] as Style,
+                    MenuData = ButtonClear,
+                    MenuCommand = new MyCommond<string>(OnCommonButtonClick)
                 }
             };
+        }
+
+        private void OnCommonButtonClick(string obj)
+        {
+            if (obj.Equals(ButtonClear))
+            {
+                MessageText.MenuName = string.Empty;
+            }
         }
 
         private ObservableCollection<IMenuItem> _commonButtonCollection;
@@ -46,6 +58,7 @@ namespace WPFLogicDemo.ViewModels
 
             set
             {
+                _commonButtonCollection = value;
                 onPropertyChanged(this, "CommonButtonCollection");
             }
         }
@@ -60,6 +73,7 @@ namespace WPFLogicDemo.ViewModels
 
             set
             {
+                _messageText = value;
                 onPropertyChanged(this, "MessageText");
             }
         }

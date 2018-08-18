@@ -8,6 +8,7 @@ namespace WPFLogicDemo.ViewModels
 {
     class WPFLogicControlViewModel : BindAbleBases
     {
+        const string ButtonStart = "Start";
         const string ButtonClear = "Clear";
 
         IWPFLogicModel _wpflogicModel;
@@ -21,7 +22,7 @@ namespace WPFLogicDemo.ViewModels
             _commonButtonCollection = GetCommonButtons();
             _messageText = new MessageTextMenuItem()
             {
-                MenuName = "Hello World!!!",
+                MenuName = "Hello World!!!\n",
                 MenuStyle = _resDictionary["MessageStyle"] as Style
             };
         }
@@ -30,6 +31,13 @@ namespace WPFLogicDemo.ViewModels
         {
             return new ObservableCollection<IMenuItem>()
             {
+                new MenuItem()
+                {
+                    MenuName = ButtonStart,
+                    MenuStyle = _resDictionary["LogicBtnStyle"] as Style,
+                    MenuData = ButtonStart,
+                    MenuCommand = new MyCommond<string>(OnCommonButtonClick)
+                },
                 new MenuItem()
                 {
                     MenuName = ButtonClear,
@@ -45,6 +53,13 @@ namespace WPFLogicDemo.ViewModels
             if (obj.Equals(ButtonClear))
             {
                 MessageText.MenuName = string.Empty;
+            }
+
+            if (obj.Equals(ButtonStart))
+            {
+                //_wpflogicModel.SetAsyncAwaitAooRun(MessageText);
+                //_wpflogicModel.SetAsyncAwaitBooRun(MessageText);
+                _wpflogicModel.SetAsyncAwaitCooRun(MessageText);
             }
         }
 

@@ -17,14 +17,17 @@
                           ItemsSource="{Binding CommonButtonCollection}"
                           ItemsPanel="{StaticResource CommonButtonItemsPanel}"
                           DockPanel.Dock="Bottom"/>
-            <TextBlock DataContext="{Binding MessageText}" Style="{Binding MenuStyle}"/>
-          </DockPanel>
+            <ScrollViewer>
+                <TextBlock DataContext="{Binding MessageText}" Style="{Binding MenuStyle}"/>
+            </ScrollViewer>
+        </DockPanel>
     </ControlTemplate>
 
     <Style x:Key="MessageStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="TextWrapping" Value="Wrap"/>
         <Setter Property="Text" Value="{Binding MenuName}"/>
         <Setter Property="Background" Value="White"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
     </Style>
 
     <Style x:Key="CommonBtnStyle" TargetType="{x:Type Button}">

@@ -57,9 +57,9 @@ namespace WPFLogicDemo.ViewModels
 
             if (obj.Equals(ButtonStart))
             {
-                //_wpflogicModel.SetAsyncAwaitAooRun(MessageText);
-                //_wpflogicModel.SetAsyncAwaitBooRun(MessageText);
-                _wpflogicModel.SetAsyncAwaitCooRun(MessageText);
+                _wpflogicModel.SetAsyncAwaitAooRun(MessageText);
+                _wpflogicModel.SetAsyncAwaitBooRun(MessageText);
+                //_wpflogicModel.SetAsyncAwaitCooRun(MessageText);
             }
         }
 

@@ -45,41 +45,34 @@ namespace WPFLogicDemo.Models
             {
                 messageText.MenuName += $"[{DateTime.Now.ToString("hh:mm:ss.fff")}] Aoo StartTask1 Delay GO Thread ID {Thread.CurrentThread.ManagedThreadId}\n";
                 await Task.Delay(10000);
-                
+                messageText.MenuName += $"[{DateTime.Now.ToString("hh:mm:ss.fff")}] Aoo StartTask1 Delay Done Thread ID {Thread.CurrentThread.ManagedThreadId}\n";
             });
             messageText.MenuName += $"[{DateTime.Now.ToString("hh:mm:ss.fff")}] Aoo StartTask1 end Thread ID {Thread.CurrentThread.ManagedThreadId}\n";
         }
 
         private async Task StartTask2(IMenuItem messageText)
         {
-            await Task.Run(async () => 
-            {
-                await Task.Run(() => 
-                {
-                    for (int i = 0; i < 30; i++)
-                    {
-                        Thread.Sleep(500);
-                        messageText.MenuName += $"[{DateTime.Now.ToString("hh:mm:ss.fff")}] Boo A StartTask2 {i} end Thread ID {Thread.CurrentThread.ManagedThreadId}\n";
-                    }
-                });
+#if false
+            //This will A => B => C
+            await StartForLoop(messageText, "Boo A");
+            await StartForLoop(messageText, "Boo B");
+            await StartForLoop(messageText, "Boo C");
+#else
+            //This is same as StartTask3
+            var resu = StartForLoop(messageText, "Boo A");
+            resu = StartForLoop(messageText, "Boo B");
+            await StartForLoop(messageText, "Boo C");
+#endif
+        }
 
-                await Task.Run(() =>
-                {
-                    for (int i = 0; i < 30; i++)
-                    {
-                        Thread.Sleep(500);
-                        messageText.MenuName += $"[{DateTime.Now.ToString("hh:mm:ss.fff")}] Boo B StartTask2 {i} end Thread ID {Thread.CurrentThread.ManagedThreadId}\n";
-                    }
-                });
-
-            });
-
+        private async Task StartForLoop(IMenuItem messageText, string funName)
+        {
             await Task.Run(() =>
             {
                 for (int i = 0; i < 30; i++)
                 {
                     Thread.Sleep(500);
-                    messageText.MenuName += $"[{DateTime.Now.ToString("hh:mm:ss.fff")}] Boo C StartTask2 {i} end Thread ID {Thread.CurrentThread.ManagedThreadId}\n";
+                    messageText.MenuName += $"[{DateTime.Now.ToString("hh:mm:ss.fff")}] {funName} StartTask2 {i} end Thread ID {Thread.CurrentThread.ManagedThreadId}\n";
                 }
             });
         }

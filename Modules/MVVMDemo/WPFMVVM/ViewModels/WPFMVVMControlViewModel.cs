@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using UtilityUILib;
+﻿using UtilityUILib;
 using WPFMVVM.Models;
 
 namespace WPFMVVM.ViewModels

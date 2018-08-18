@@ -7,7 +7,7 @@
              xmlns:vm="clr-namespace:WPFLogicDemo.ViewModels"
              xmlns:m="clr-namespace:WPFLogicDemo.Models"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" DataContext="{DynamicResource WPFVM}" Background="Green">
+             d:DesignHeight="450" d:DesignWidth="800" DataContext="{DynamicResource WPFVM}">
     <!--
     Main Control use resources to set view model and DataContext.
     -->
@@ -25,6 +25,6 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
-            
+        <ContentControl Template="{StaticResource LogicContentTemplate}"/>
     </Grid>
 </UserControl>

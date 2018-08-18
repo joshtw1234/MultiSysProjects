@@ -8,7 +8,7 @@
     </DataTemplate>
     
     <ItemsPanelTemplate x:Key="CommonButtonItemsPanel">
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,50,20"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,20,20"/>
     </ItemsPanelTemplate>
     
     <ControlTemplate x:Key="LogicContentTemplate" TargetType="{x:Type ContentControl}">
@@ -17,13 +17,14 @@
                           ItemsSource="{Binding CommonButtonCollection}"
                           ItemsPanel="{StaticResource CommonButtonItemsPanel}"
                           DockPanel.Dock="Bottom"/>
-            <TextBlock Style="{Binding MenuStyle}"/>
+            <TextBlock DataContext="{Binding MessageText}" Style="{Binding MenuStyle}"/>
           </DockPanel>
     </ControlTemplate>
 
     <Style x:Key="MessageStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="TextWrapping" Value="Wrap"/>
         <Setter Property="Text" Value="{Binding MenuName}"/>
+        <Setter Property="Background" Value="White"/>
     </Style>
 
     <Style x:Key="CommonBtnStyle" TargetType="{x:Type Button}">

@@ -17,6 +17,11 @@ namespace WPFLogicDemo.ViewModels
             _wpflogicModel = wpflogicModel;
             _resDictionary = _wpflogicModel.GetLocalStyle();
             _commonButtonCollection = GetCommonButtons();
+            _messageText = new MenuItem()
+            {
+                MenuName = "Hello World!!!",
+                MenuStyle = _resDictionary["MessageStyle"] as Style
+            };
         }
 
         private ObservableCollection<IMenuItem> GetCommonButtons()
@@ -42,6 +47,20 @@ namespace WPFLogicDemo.ViewModels
             set
             {
                 onPropertyChanged(this, "CommonButtonCollection");
+            }
+        }
+
+        private IMenuItem _messageText;
+        public IMenuItem MessageText
+        {
+            get
+            {
+                return _messageText;
+            }
+
+            set
+            {
+                onPropertyChanged(this, "MessageText");
             }
         }
     }

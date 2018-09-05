@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Management;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -104,5 +107,83 @@ namespace WPFLogicDemo.Models
                 }
             });
         }
+
+        public ManagementObjectCollection GetProcessOwner(string processName)
+        {
+            string query = "Select * from Win32_Process Where Name = \"" + processName + "\"";
+            ManagementObjectSearcher searcher = new ManagementObjectSearcher(query);
+            return searcher.Get();
+        }
+
+        public void SetKillProcess(IMenuItem messageText)
+        {
+            const string svcHost = "svchost.exe";
+            const string msmpEng = "MsMpEng";
+            const string localService = "LOCAL SERVICE";
+            const string localSystem = "SYSTEM";
+            const string networkService = "NETWORK SERVICE";
+#if false
+
+            var processList = GetProcessOwner(svcHost);
+
+            foreach (ManagementObject obj in processList)
+            {
+                string[] argList = new string[] { string.Empty, string.Empty };
+                int returnVal = Convert.ToInt32(obj.InvokeMethod("GetOwner", argList));
+                if (returnVal == 0)
+                {
+                    // return DOMAIN\user
+                    string owner = argList[1] + "\\" + argList[0];
+                    messageText.MenuName += $"[{DateTime.Now.ToString("hh:mm:ss.fff")}] GetProcessOwner {owner}\n";
+                    if (!owner.Contains(networkService) && !owner.Contains(localSystem) && !owner.Contains(localService))
+                    {
+                        var pId = Convert.ToInt32(obj["ProcessId"]);
+                        var process = Process.GetProcessById(pId);
+                        process.Kill();
+                    }
+                }
+                
+            }
+#else
+            var process = Process.GetProcessesByName(msmpEng);
+            for (int i = 0; i < process.Length; i++)
+            {
+                //if (process[i].ProcessName != "Idle")
+                //{
+                //    IntPtr AnswerBytes;
+                //    IntPtr AnswerCount;
+                //    if (WTSQuerySessionInformationW(WTS_CURRENT_SERVER_HANDLE,
+                //                                    process[i].SessionId,
+                //                                    WTS_UserName,
+                //                                    out AnswerBytes,
+                //                                    out AnswerCount))
+                //    {
+                //        string userName = Marshal.PtrToStringUni(AnswerBytes);
+                //        messageText.MenuName += $"[{DateTime.Now.ToString("hh:mm:ss.fff")}] SetKillProcess {process[i].ProcessName} {userName}\n";
+                //    }
+                //    else
+                //    {
+                //        messageText.MenuName += $"[{DateTime.Now.ToString("hh:mm:ss.fff")}] SetKillProcess Could Access {process[i].ProcessName}\n";
+                //    }
+                //}
+                process[i].Kill();
+            }
+            //bool rev = Utilities.ProcessKiller(svcHost);
+            //messageText.MenuName += $"[{DateTime.Now.ToString("hh:mm:ss.fff")}] SetKillProcess {svcHost} {rev}\n";
+#endif
+
+        }
+        //just use the current TS server context.
+        internal static IntPtr WTS_CURRENT_SERVER_HANDLE = IntPtr.Zero;
+
+        //the User Name is the info we want returned by the query.
+        internal static int WTS_UserName = 5;
+
+        [DllImport("Wtsapi32.dll")]
+        public static extern bool WTSQuerySessionInformationW(IntPtr hServer,
+            int SessionId,
+            int WTSInfoClass,
+            out IntPtr ppBuffer,
+            out IntPtr pBytesReturned);
     }
 }

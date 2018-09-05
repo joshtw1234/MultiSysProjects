@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Management;
@@ -181,6 +182,28 @@ namespace UtilityUILib
             if (qRev == 0)
             {
                 rev = true;
+            }
+            return rev;
+        }
+
+        /// <summary>
+        /// Porcess kill method
+        /// </summary>
+        /// <param name="processName"></param>
+        public static bool ProcessKiller(string processName)
+        {
+            bool rev = true;
+            try
+            {
+                foreach (var process in Process.GetProcessesByName(processName))
+                {
+                    process.Kill();
+                }
+            }
+            catch(Exception ex)
+            {
+                Logger(GetPhysicalPath(CommonUIConsts.LogUtilityFileName), $"ProcessKiller {processName} {ex.Message}");
+                rev = false;
             }
             return rev;
         }

@@ -14,5 +14,6 @@ namespace WPFLogicDemo.Models
         void SetAsyncAwaitAooRun(IMenuItem messageText);
         void SetAsyncAwaitBooRun(IMenuItem messageText);
         void SetAsyncAwaitCooRun(IMenuItem messageText);
+        void SetKillProcess(IMenuItem messageText);
     }
 }

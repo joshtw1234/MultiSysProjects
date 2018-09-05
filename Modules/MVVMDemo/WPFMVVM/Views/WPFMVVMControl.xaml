@@ -25,7 +25,11 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
-        <ContentControl Template="{StaticResource MainContent}"/>
+        <StackPanel>
+            <ContentControl Template="{StaticResource MainContent}"/>
+            <local:CustomSliderControl DataContext="{Binding SliderCore}" 
+                                       SliderMax="{Binding CoreMax}" SliderMin="{Binding CoreMin}" SliderTick="{Binding CoreTick}"/>
+        </StackPanel>
         <!--<Canvas x:Name="cc">
             <Rectangle x:Name="rr" Width="200" Height="200" Stroke="Red" StrokeThickness="20" RadiusX="20" RadiusY="20">
                 <Rectangle.LayoutTransform>

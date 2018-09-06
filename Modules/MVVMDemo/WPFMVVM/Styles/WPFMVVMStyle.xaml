@@ -3,7 +3,6 @@
                     xmlns:local="clr-namespace:WPFMVVM.Styles"
                     xmlns:svg="http://sharpvectors.codeplex.com/runtime/">
     
-    <SolidColorBrush x:Key="DefaultBackgroundColor" Color="Red"/>
     <SolidColorBrush x:Key="FillBrush" Color="#CCCCFF"/>
     <SolidColorBrush x:Key="StorkBrush" Color="Black"/>
 

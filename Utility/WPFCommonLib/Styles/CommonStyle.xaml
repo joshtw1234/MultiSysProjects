@@ -1,0 +1,33 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:WPFCommonLib.Styles">
+
+    <!--#region Slider MSDN Style-->
+    <Style x:Key="RepeatButtonTransparent" TargetType="{x:Type RepeatButton}">
+        <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Focusable" Value="false"/>
+        <Setter Property="IsTabStop" Value="false"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Rectangle Fill="{TemplateBinding Background}" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="SliderMSDNStyle" TargetType="{x:Type Slider}">
+        <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource SliderThumb.Static.Foreground}"/>
+        <Setter Property="Template" Value="{DynamicResource SliderHorizontal}"/>
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Vertical">
+                <Setter Property="Template" Value="{DynamicResource SliderVertical}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <!--#endregion-->
+</ResourceDictionary>

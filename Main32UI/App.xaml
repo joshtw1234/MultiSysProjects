@@ -8,6 +8,9 @@
             <ResourceDictionary.MergedDictionaries>
                 <!--<ResourceDictionary Source="/Styles/HIDDemoStyle.xaml"/>-->
                 <ResourceDictionary Source="pack://application:,,,/WPFCommonLib;component/Styles/CommonConstants.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/WPFCommonLib;component/Styles/CommonStyle.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/WPFCommonLib;component/Styles/CommonControlTemplate.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/WPFCommonLib;component/Styles/CommonDataTemplate.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -55,6 +55,22 @@ namespace WPFMVVM.Views
             get { return (double)GetValue(SliderTickProperty); }
             set { SetValue(SliderTickProperty, value); }
         }
+
+        /// <summary>
+        /// Register Item Source property
+        /// </summary>
+        public static readonly DependencyProperty SliderTitleProperty =
+            DependencyProperty.Register("SliderTitle", typeof(string), typeof(CustomSliderControl), new PropertyMetadata());
+
+        /// <summary>
+        /// The Item Source property.
+        /// </summary>
+        public string SliderTitle
+        {
+            get { return (string)GetValue(SliderTitleProperty); }
+            set { SetValue(SliderTitleProperty, value); }
+        }
+
 #if false
 
         /// <summary>

@@ -8,16 +8,9 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <DockPanel>
-            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
-                <TextBlock/>
-                <Button/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
-                <Button/>
-                <TextBlock/>
-                <Button/>
-            </StackPanel>
-            <Slider VerticalAlignment="Center" Style="{DynamicResource SliderMSDNStyle}"/>
+            <ContentControl DockPanel.Dock="Top" Template="{StaticResource CustomTitleTip}"/>
+            <ContentControl DockPanel.Dock="Bottom" Template="{StaticResource CustomRLButton}"/>
+            <Slider Style="{StaticResource SliderMSDNStyle}"/>
         </DockPanel>
     </Grid>
 </UserControl>

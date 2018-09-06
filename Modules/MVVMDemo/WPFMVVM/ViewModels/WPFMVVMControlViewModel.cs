@@ -20,7 +20,7 @@ namespace WPFMVVM.ViewModels
         }
         public WPFMVVMControlViewModel(IWPFMVVMModel _model)
         {
-            _sliderCore = new SliderDataContext() { CoreMax = 100, CoreMin = 50, CoreTick = 10 };
+            _sliderCore = new SliderDataContext() { CoreMax = 100, CoreMin = 50, CoreTick = 10, CoreTitle = "Custom Title", CoreValue = "50" };
         }
 
     }
@@ -30,5 +30,7 @@ namespace WPFMVVM.ViewModels
         public double CoreMax { get; set; }
         public double CoreMin { get; set; }
         public double CoreTick { get; set; }
+        public string CoreTitle { get; set; }
+        public string CoreValue { get; set; }
     }
 }

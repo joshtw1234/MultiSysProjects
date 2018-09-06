@@ -221,11 +221,26 @@
     </ControlTemplate>
     <!--#endregion-->
 
-    <ControlTemplate x:Key="RLButton" TargetType="{x:Type ContentControl}">
+    <ControlTemplate x:Key="CustomRLButton" TargetType="{x:Type ContentControl}">
         <Grid HorizontalAlignment="Center">
             <Button HorizontalAlignment="Left"/>
-            <TextBlock HorizontalAlignment="Center" Foreground="White" Text="Josh"/>
+            <TextBlock HorizontalAlignment="Center" Foreground="White" Text="{Binding SliderValue}"/>
             <Button HorizontalAlignment="Right"/>
         </Grid>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="CustomTitleTip" TargetType="{x:Type ContentControl}">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Foreground="White" Text="{Binding CoreTitle}"/>
+            <Button/>
+        </StackPanel>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="CustomSliderControl" TargetType="{x:Type ContentControl}">
+        <DockPanel>
+            <ContentControl DockPanel.Dock="Top" Template="{StaticResource CustomTitleTip}"/>
+            <ContentControl DockPanel.Dock="Bottom" Template="{StaticResource CustomRLButton}"/>
+            <Slider Style="{StaticResource SliderMSDNStyle}"/>
+        </DockPanel>
     </ControlTemplate>
 </ResourceDictionary>

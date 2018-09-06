@@ -25,7 +25,12 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
-        <ContentControl Template="{StaticResource RLButton}"/>
+        <StackPanel>
+        <ContentControl Template="{StaticResource CustomSliderControl}"/>
+            <local:CustomSliderControl DataContext="{Binding SliderCore}" SliderMax="{Binding CoreMax}"
+                                       SliderMin="{Binding CoreMin}" SliderTick="{Binding CoreTick}"
+                                       SliderTitle="{Binding CoreTitle}"/>
+        </StackPanel>
         <!--<StackPanel>
             <ContentControl Template="{StaticResource MainContent}"/>
             <local:CustomSliderControl DataContext="{Binding SliderCore}" 

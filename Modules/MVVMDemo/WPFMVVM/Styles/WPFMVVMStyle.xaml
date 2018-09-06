@@ -20,7 +20,7 @@
     </DrawingGroup>
 
     <DrawingImage x:Key="headsetlight_DrawingImage" Drawing="{StaticResource headsetlight}" />
-    
+
     <ControlTemplate x:Key="MainContent" TargetType="{x:Type ContentControl}">
         <Canvas Background="Gray">
             <StackPanel>

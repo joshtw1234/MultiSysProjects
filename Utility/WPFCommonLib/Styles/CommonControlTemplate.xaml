@@ -220,4 +220,12 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
     <!--#endregion-->
+
+    <ControlTemplate x:Key="RLButton" TargetType="{x:Type ContentControl}">
+        <Grid HorizontalAlignment="Center">
+            <Button HorizontalAlignment="Left"/>
+            <TextBlock HorizontalAlignment="Center" Foreground="White" Text="Josh"/>
+            <Button HorizontalAlignment="Right"/>
+        </Grid>
+    </ControlTemplate>
 </ResourceDictionary>

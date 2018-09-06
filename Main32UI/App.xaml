@@ -7,6 +7,8 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <!--<ResourceDictionary Source="/Styles/HIDDemoStyle.xaml"/>-->
+                <!-- Resource Order
+                https://nathan.alner.net/2010/05/07/wpf-style-and-template-resources-ndash-order-matters/-->
                 <ResourceDictionary Source="pack://application:,,,/WPFCommonLib;component/Styles/CommonConstants.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/WPFCommonLib;component/Styles/CommonStyle.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/WPFCommonLib;component/Styles/CommonControlTemplate.xaml"/>

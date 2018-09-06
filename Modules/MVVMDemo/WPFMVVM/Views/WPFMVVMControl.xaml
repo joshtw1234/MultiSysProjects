@@ -25,11 +25,13 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
-        <StackPanel>
+        <ContentControl Template="{StaticResource RLButton}"/>
+        <!--<StackPanel>
             <ContentControl Template="{StaticResource MainContent}"/>
             <local:CustomSliderControl DataContext="{Binding SliderCore}" 
                                        SliderMax="{Binding CoreMax}" SliderMin="{Binding CoreMin}" SliderTick="{Binding CoreTick}"/>
-        </StackPanel>
+            <Button/>
+        </StackPanel>-->
         <!--<Canvas x:Name="cc">
             <Rectangle x:Name="rr" Width="200" Height="200" Stroke="Red" StrokeThickness="20" RadiusX="20" RadiusY="20">
                 <Rectangle.LayoutTransform>

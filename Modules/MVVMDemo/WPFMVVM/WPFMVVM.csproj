@@ -107,6 +107,11 @@
       <Name>UtilityUILib</Name>
       <Private>False</Private>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Utility\WPFCommonLib\WPFCommonLib.csproj">
+      <Project>{e9668a86-45c9-43fd-a477-ff7367084dc8}</Project>
+      <Name>WPFCommonLib</Name>
+      <Private>False</Private>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Styles\WPFMVVMStyle.xaml">

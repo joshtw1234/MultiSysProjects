@@ -66,6 +66,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ViewModels\ICustomSliderViewModel.cs" />
     <Page Include="Styles\CommonConstants.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

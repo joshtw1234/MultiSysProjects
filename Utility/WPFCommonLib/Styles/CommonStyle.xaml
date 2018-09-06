@@ -30,4 +30,18 @@
         </Style.Triggers>
     </Style>
     <!--#endregion-->
+
+    <Style x:Key="CustomSliderStyle" TargetType="{x:Type Slider}" BasedOn="{StaticResource SliderMSDNStyle}">
+        <Setter Property="IsSnapToTickEnabled" Value="True"/>
+        <Setter Property="Value" Value="{Binding CoreValue}"/>
+        <Setter Property="Maximum" Value="{Binding CoreMax}"/>
+        <Setter Property="Minimum" Value="{Binding CoreMin}"/>
+        <Setter Property="TickFrequency" Value="{Binding CoreTick}"/>
+    </Style>
+
+    <Style x:Key="CustomTextBlockStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="24"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Margin" Value="10,0,10,0"/>
+    </Style>
 </ResourceDictionary>

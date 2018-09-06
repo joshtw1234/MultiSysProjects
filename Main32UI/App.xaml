@@ -4,6 +4,11 @@
              xmlns:local="clr-namespace:Main32UI"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!--<ResourceDictionary Source="/Styles/HIDDemoStyle.xaml"/>-->
+                <ResourceDictionary Source="pack://application:,,,/WPFCommonLib;component/Styles/CommonConstants.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

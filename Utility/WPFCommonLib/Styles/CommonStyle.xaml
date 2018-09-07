@@ -33,10 +33,17 @@
 
     <Style x:Key="CustomSliderStyle" TargetType="{x:Type Slider}" BasedOn="{StaticResource SliderMSDNStyle}">
         <Setter Property="IsSnapToTickEnabled" Value="True"/>
+        <Setter Property="IsSelectionRangeEnabled" Value="True"/>
         <Setter Property="Value" Value="{Binding CoreValue}"/>
         <Setter Property="Maximum" Value="{Binding CoreMax}"/>
         <Setter Property="Minimum" Value="{Binding CoreMin}"/>
         <Setter Property="TickFrequency" Value="{Binding CoreTick}"/>
+        <Setter Property="Template" Value="{StaticResource CustomSliderHorizontal}"/>
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Vertical">
+                <Setter Property="Template" Value="{StaticResource SliderVertical}"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style x:Key="CustomTextBlockStyle" TargetType="{x:Type TextBlock}">

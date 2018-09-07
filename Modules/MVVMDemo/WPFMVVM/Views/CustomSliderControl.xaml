@@ -10,7 +10,7 @@
         <DockPanel>
             <ContentControl DockPanel.Dock="Top" Template="{StaticResource CustomTitleTip}"/>
             <ContentControl DockPanel.Dock="Bottom" Template="{StaticResource CustomRLButton}"/>
-            <Slider Style="{StaticResource SliderMSDNStyle}"/>
+            <Slider Style="{StaticResource CustomSliderStyle}"/>
         </DockPanel>
     </Grid>
 </UserControl>

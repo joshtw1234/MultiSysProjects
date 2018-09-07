@@ -77,10 +77,10 @@
                 </Border>
                 <Track x:Name="PART_Track" Grid.Row="1">
                     <Track.DecreaseRepeatButton>
-                        <RepeatButton Command="{x:Static Slider.DecreaseLarge}" Style="{StaticResource RepeatButtonTransparent}"/>
+                        <RepeatButton Command="{x:Static Slider.DecreaseLarge}" Style="{DynamicResource RepeatButtonTransparent}"/>
                     </Track.DecreaseRepeatButton>
                     <Track.IncreaseRepeatButton>
-                        <RepeatButton Command="{x:Static Slider.IncreaseLarge}" Style="{StaticResource RepeatButtonTransparent}"/>
+                        <RepeatButton Command="{x:Static Slider.IncreaseLarge}" Style="{DynamicResource RepeatButtonTransparent}"/>
                     </Track.IncreaseRepeatButton>
                     <Track.Thumb>
                         <Thumb x:Name="Thumb" Focusable="False" Height="18" OverridesDefaultStyle="True" Template="{StaticResource SliderThumbHorizontalDefault}" VerticalAlignment="Center" Width="11"/>
@@ -185,10 +185,10 @@
                 </Border>
                 <Track x:Name="PART_Track" Grid.Column="1">
                     <Track.DecreaseRepeatButton>
-                        <RepeatButton Command="{x:Static Slider.DecreaseLarge}" Style="{StaticResource RepeatButtonTransparent}"/>
+                        <RepeatButton Command="{x:Static Slider.DecreaseLarge}" Style="{DynamicResource RepeatButtonTransparent}"/>
                     </Track.DecreaseRepeatButton>
                     <Track.IncreaseRepeatButton>
-                        <RepeatButton Command="{x:Static Slider.IncreaseLarge}" Style="{StaticResource RepeatButtonTransparent}"/>
+                        <RepeatButton Command="{x:Static Slider.IncreaseLarge}" Style="{DynamicResource RepeatButtonTransparent}"/>
                     </Track.IncreaseRepeatButton>
                     <Track.Thumb>
                         <Thumb x:Name="Thumb" Focusable="False" Height="11" OverridesDefaultStyle="True" Template="{StaticResource SliderThumbVerticalDefault}" VerticalAlignment="Top" Width="18"/>
@@ -225,7 +225,7 @@
     <ControlTemplate x:Key="CustomRLButton" TargetType="{x:Type ContentControl}">
         <Grid HorizontalAlignment="Center">
             <Button HorizontalAlignment="Left"/>
-            <TextBlock HorizontalAlignment="Center" Style="{StaticResource CustomTextBlockStyle}" Text="{Binding CoreValue}"/>
+            <TextBlock HorizontalAlignment="Center" Style="{DynamicResource CustomTextBlockStyle}" Text="{Binding CoreValue}"/>
             <Button HorizontalAlignment="Right"/>
         </Grid>
     </ControlTemplate>
@@ -241,7 +241,7 @@
         <DockPanel>
             <ContentControl DockPanel.Dock="Top" Template="{StaticResource CustomTitleTip}"/>
             <ContentControl DockPanel.Dock="Bottom" Template="{StaticResource CustomRLButton}"/>
-            <Slider Style="{StaticResource CustomSliderStyle}"/>
+            <Slider Style="{DynamicResource CustomSliderStyle}"/>
         </DockPanel>
     </ControlTemplate>
     <!--#endregion-->

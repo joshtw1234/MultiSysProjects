@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Management;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -122,17 +120,24 @@ namespace UtilityUILib
         /// <param name="appName"></param>
         /// <param name="arguments"></param>
         /// <returns></returns>
-        public static int RunProcess(string appName, string arguments)
+        public static int RunProcess(string appName, string arguments, out string procOutput)
         {
-            System.Diagnostics.Process process = new System.Diagnostics.Process();
+            StringBuilder sb = new StringBuilder();
+            procOutput = string.Empty;
+            Process process = new Process();
             process.StartInfo.FileName = appName;
             process.StartInfo.Arguments = arguments;
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.CreateNoWindow = true;
+            process.StartInfo.RedirectStandardOutput = true;
             process.StartInfo.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;
             try
             {
                 process.Start();
+                while (!process.StandardOutput.EndOfStream)
+                {
+                    sb.Append(process.StandardOutput.ReadLine());
+                }
                 process.WaitForExit();
             }
             catch (Exception ex)
@@ -140,6 +145,7 @@ namespace UtilityUILib
                 Logger(GetPhysicalPath(CommonUIConsts.LogUtilityFileName), $"RunProcess \"{ex.Message}\"");
                 return -1;
             }
+            procOutput = sb.ToString();
             return process.ExitCode;
         }
 
@@ -178,7 +184,8 @@ namespace UtilityUILib
         {
             bool rev = false;
             string CmdQueryTaskArgs = $"/query /TN \"{taskScheduleName}\"";
-            int qRev = RunProcess(CommonUIConsts.CmdTasksSchedule, CmdQueryTaskArgs);
+            string revString = string.Empty;
+            int qRev = RunProcess(CommonUIConsts.CmdTasksSchedule, CmdQueryTaskArgs, out revString);
             if (qRev == 0)
             {
                 rev = true;

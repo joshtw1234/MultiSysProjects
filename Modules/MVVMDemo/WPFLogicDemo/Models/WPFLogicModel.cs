@@ -81,6 +81,8 @@ namespace WPFLogicDemo.Models
             });
         }
 
+        const string LogFileName = @"Logs\WPFLogicDemo.log";
+
         protected void SetAsyncAwaitCooRun(IMenuItem messageText)
         {
             messageText.MenuName += $"[{DateTime.Now.ToString("hh:mm:ss.fff")}] Coo start Thread ID {Thread.CurrentThread.ManagedThreadId}\n";
@@ -111,11 +113,11 @@ namespace WPFLogicDemo.Models
 
         protected void SetKillProcess(IMenuItem messageText)
         {
-            const string svcHost = "svchost.exe";
+            //const string svcHost = "svchost.exe";
             const string msmpEng = "MsMpEng";
-            const string localService = "LOCAL SERVICE";
-            const string localSystem = "SYSTEM";
-            const string networkService = "NETWORK SERVICE";
+            //const string localService = "LOCAL SERVICE";
+            //const string localSystem = "SYSTEM";
+            //const string networkService = "NETWORK SERVICE";
 #if false
 
             var processList = GetProcessOwner(svcHost);
@@ -168,9 +170,12 @@ namespace WPFLogicDemo.Models
 
         }
 
-        protected void GetDriverVersion(string v, IMenuItem messageText)
+        protected void GetDriverVersion(string driverArgs, IMenuItem messageText)
         {
-            throw new NotImplementedException();
+            string outString = string.Empty;
+            Utilities.RunProcess("wmic", "PATH Win32_PnpSignedDriver where DeviceName=\"HP Wireless Button Driver\"", out outString);
+            messageText.MenuName = outString;
+            //Utilities.Logger(LogFileName, outString);
         }
 
         //just use the current TS server context.

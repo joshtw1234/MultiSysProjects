@@ -41,9 +41,10 @@ namespace WPFLogicDemo.Models
         {
             if (obj.Equals(ButtonStart))
             {
-                SetAsyncAwaitAooRun(messageText);
-                SetAsyncAwaitBooRun(messageText);
-                SetAsyncAwaitCooRun(messageText);
+                //SetAsyncAwaitAooRun(messageText);
+                //SetAsyncAwaitBooRun(messageText);
+                //SetAsyncAwaitCooRun(messageText);
+                GetDriverVersion(string.Empty, messageText);
             }
             else
             {

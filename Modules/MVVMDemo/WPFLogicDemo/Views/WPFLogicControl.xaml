@@ -15,7 +15,7 @@
         <ResourceDictionary>
             <ObjectDataProvider x:Key="WPFVM" ObjectType="{x:Type vm:WPFLogicControlViewModel}">
                 <ObjectDataProvider.ConstructorParameters>
-                    <m:WPFLogicModel/>
+                    <m:WPFLogicUIModel/>
                 </ObjectDataProvider.ConstructorParameters>
             </ObjectDataProvider>
             <ResourceDictionary.MergedDictionaries>

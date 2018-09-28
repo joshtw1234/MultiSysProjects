@@ -5,13 +5,14 @@ using UtilityUILib;
 
 namespace WPFLogicDemo.Models
 {
-    class WPFLogicUIModel
+    class WPFLogicUIModel : WPFLogicModel, IWPFLogicModel
     {
-        protected const string ButtonStart = "Start";
-        protected const string ButtonClear = "Clear";
+        const string ButtonStart = "Start";
+        const string ButtonClear = "Clear";
 
+        #region UI properties for Binding
         private ResourceDictionary _localDic;
-        protected ResourceDictionary localDic
+        private ResourceDictionary localDic
         {
             get
             {
@@ -26,13 +27,30 @@ namespace WPFLogicDemo.Models
             }
         }
 
+        private IMenuItem messageText;
+        #endregion
+
+
+        #region Commend
         private MyCommond<string> _onCommonButtonClickEvent;
         private MyCommond<string> OnCommonButtonClickEvent => _onCommonButtonClickEvent ?? (_onCommonButtonClickEvent = new MyCommond<string>(OnCommonButtonClick));
-        protected virtual void OnCommonButtonClick(string obj)
+        private void OnCommonButtonClick(string obj)
         {
+            if (obj.Equals(ButtonStart))
+            {
+                SetAsyncAwaitAooRun(messageText);
+                SetAsyncAwaitBooRun(messageText);
+                SetAsyncAwaitCooRun(messageText);
+            }
+            else
+            {
+                messageText.MenuName = string.Empty;
+            }
         }
+        #endregion
 
-        internal ObservableCollection<IMenuItem> GetCommonButtons()
+        #region InterFace
+        public ObservableCollection<IMenuItem> GetCommonButtons()
         {
             return new ObservableCollection<IMenuItem>()
             {
@@ -53,14 +71,16 @@ namespace WPFLogicDemo.Models
             };
         }
 
-        internal IMenuItem GetMessageText()
+        public IMenuItem GetMessageText()
         {
-            return new MessageTextMenuItem()
+            messageText = new MessageTextMenuItem()
             {
                 MenuName = "Hello World!!!\n",
                 MenuStyle = _localDic["MessageStyle"] as Style
             };
+            return messageText;
         }
-       
+        #endregion
+
     }
 }

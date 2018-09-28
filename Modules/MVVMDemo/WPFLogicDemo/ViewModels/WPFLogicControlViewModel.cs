@@ -11,8 +11,8 @@ namespace WPFLogicDemo.ViewModels
         public WPFLogicControlViewModel(IWPFLogicModel wpflogicModel)
         {
             _wpflogicModel = wpflogicModel;
-            CommonButtonCollection = (_wpflogicModel as WPFLogicUIModel).GetCommonButtons();
-            MessageText = (_wpflogicModel as WPFLogicUIModel).GetMessageText();
+            CommonButtonCollection = _wpflogicModel.GetCommonButtons();
+            MessageText = _wpflogicModel.GetMessageText();
         }
 
         public ObservableCollection<IMenuItem> CommonButtonCollection { get; set; }

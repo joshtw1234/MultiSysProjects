@@ -9,35 +9,12 @@ using UtilityUILib;
 
 namespace WPFLogicDemo.Models
 {
-    class WPFLogicModel : WPFLogicUIModel, IWPFLogicModel
+    class WPFLogicModel
     {
-        
-
-        public void SetAsyncAwaitCooRun(IMenuItem messageText)
-        {
-            messageText.MenuName += $"[{DateTime.Now.ToString("hh:mm:ss.fff")}] Coo start Thread ID {Thread.CurrentThread.ManagedThreadId}\n";
-            StartTask3(messageText);
-            messageText.MenuName += $"[{DateTime.Now.ToString("hh:mm:ss.fff")}] Coo end Thread ID {Thread.CurrentThread.ManagedThreadId}\n";
-        }
-
-        public void SetAsyncAwaitBooRun(IMenuItem messageText)
-        {
-            messageText.MenuName += $"[{DateTime.Now.ToString("hh:mm:ss.fff")}] Boo start Thread ID {Thread.CurrentThread.ManagedThreadId}\n";
-            var result = StartTask2(messageText);
-            messageText.MenuName += $"[{DateTime.Now.ToString("hh:mm:ss.fff")}] Boo end Thread ID {Thread.CurrentThread.ManagedThreadId}\n";
-        }
-
-        public void SetAsyncAwaitAooRun(IMenuItem messageText)
-        {
-            messageText.MenuName += $"[{DateTime.Now.ToString("hh:mm:ss.fff")}] Aoo start Thread ID {Thread.CurrentThread.ManagedThreadId}\n";
-            var result = StartTask1(messageText);
-            messageText.MenuName += $"[{DateTime.Now.ToString("hh:mm:ss.fff")}] Aoo end Thread ID {Thread.CurrentThread.ManagedThreadId}\n";
-        }
-
         private async Task StartTask1(IMenuItem messageText)
         {
             messageText.MenuName += $"[{DateTime.Now.ToString("hh:mm:ss.fff")}] Aoo StartTask1 start Thread ID {Thread.CurrentThread.ManagedThreadId}\n";
-            await Task.Run(async () => 
+            await Task.Run(async () =>
             {
                 messageText.MenuName += $"[{DateTime.Now.ToString("hh:mm:ss.fff")}] Aoo StartTask1 Delay GO Thread ID {Thread.CurrentThread.ManagedThreadId}\n";
                 await Task.Delay(10000);
@@ -101,14 +78,35 @@ namespace WPFLogicDemo.Models
             });
         }
 
-        public ManagementObjectCollection GetProcessOwner(string processName)
+        protected void SetAsyncAwaitCooRun(IMenuItem messageText)
+        {
+            messageText.MenuName += $"[{DateTime.Now.ToString("hh:mm:ss.fff")}] Coo start Thread ID {Thread.CurrentThread.ManagedThreadId}\n";
+            StartTask3(messageText);
+            messageText.MenuName += $"[{DateTime.Now.ToString("hh:mm:ss.fff")}] Coo end Thread ID {Thread.CurrentThread.ManagedThreadId}\n";
+        }
+
+        protected void SetAsyncAwaitBooRun(IMenuItem messageText)
+        {
+            messageText.MenuName += $"[{DateTime.Now.ToString("hh:mm:ss.fff")}] Boo start Thread ID {Thread.CurrentThread.ManagedThreadId}\n";
+            var result = StartTask2(messageText);
+            messageText.MenuName += $"[{DateTime.Now.ToString("hh:mm:ss.fff")}] Boo end Thread ID {Thread.CurrentThread.ManagedThreadId}\n";
+        }
+
+        protected void SetAsyncAwaitAooRun(IMenuItem messageText)
+        {
+            messageText.MenuName += $"[{DateTime.Now.ToString("hh:mm:ss.fff")}] Aoo start Thread ID {Thread.CurrentThread.ManagedThreadId}\n";
+            var result = StartTask1(messageText);
+            messageText.MenuName += $"[{DateTime.Now.ToString("hh:mm:ss.fff")}] Aoo end Thread ID {Thread.CurrentThread.ManagedThreadId}\n";
+        }
+
+        protected ManagementObjectCollection GetProcessOwner(string processName)
         {
             string query = "Select * from Win32_Process Where Name = \"" + processName + "\"";
             ManagementObjectSearcher searcher = new ManagementObjectSearcher(query);
             return searcher.Get();
         }
 
-        public void SetKillProcess(IMenuItem messageText)
+        protected void SetKillProcess(IMenuItem messageText)
         {
             const string svcHost = "svchost.exe";
             const string msmpEng = "MsMpEng";
@@ -166,6 +164,12 @@ namespace WPFLogicDemo.Models
 #endif
 
         }
+
+        protected void GetDriverVersion(string v, IMenuItem messageText)
+        {
+            throw new NotImplementedException();
+        }
+
         //just use the current TS server context.
         internal static IntPtr WTS_CURRENT_SERVER_HANDLE = IntPtr.Zero;
 
@@ -179,9 +183,5 @@ namespace WPFLogicDemo.Models
             out IntPtr ppBuffer,
             out IntPtr pBytesReturned);
 
-        public void GetDriverVersion(string v, IMenuItem messageText)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

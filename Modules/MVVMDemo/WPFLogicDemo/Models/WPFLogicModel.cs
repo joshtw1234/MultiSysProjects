@@ -4,11 +4,14 @@ using System.Management;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 using UtilityUILib;
 
 namespace WPFLogicDemo.Models
 {
+    /// <summary>
+    /// Business Logic class.
+    /// For contain Business Logic
+    /// </summary>
     class WPFLogicModel
     {
         private async Task StartTask1(IMenuItem messageText)

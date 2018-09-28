@@ -3,6 +3,9 @@ using UtilityUILib;
 
 namespace WPFLogicDemo.Models
 {
+    /// <summary>
+    /// An Bindable class
+    /// </summary>
     class MessageTextMenuItem : BindAbleBases, IMenuItem
     {
         private string _menuName;

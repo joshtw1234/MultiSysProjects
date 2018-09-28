@@ -5,6 +5,9 @@ using UtilityUILib;
 
 namespace WPFLogicDemo.Models
 {
+    /// <summary>
+    /// GUI Model Class contain GUI properties for Binding
+    /// </summary>
     class WPFLogicUIModel : WPFLogicModel, IWPFLogicModel
     {
         const string ButtonStart = "Start";

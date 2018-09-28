@@ -4,6 +4,11 @@ using WPFLogicDemo.Models;
 
 namespace WPFLogicDemo.ViewModels
 {
+    /// <summary>
+    /// ViewModel no need Bindable class.
+    /// Just Contain properties
+    /// TODO: enhance to use interface for reusable.
+    /// </summary>
     class WPFLogicControlViewModel
     {
         IWPFLogicModel _wpflogicModel;

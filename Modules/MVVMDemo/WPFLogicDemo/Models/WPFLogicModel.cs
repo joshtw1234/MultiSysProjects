@@ -9,16 +9,9 @@ using UtilityUILib;
 
 namespace WPFLogicDemo.Models
 {
-    class WPFLogicModel : IWPFLogicModel
+    class WPFLogicModel : WPFLogicUIModel, IWPFLogicModel
     {
-        public ResourceDictionary GetLocalStyle()
-        {
-            return new ResourceDictionary()
-            {
-                Source = new Uri("pack://application:,,,/WPFLogicDemo;component/Styles/WPFLogicStyle.xaml", UriKind.RelativeOrAbsolute)
-            };
-
-        }
+        
 
         public void SetAsyncAwaitCooRun(IMenuItem messageText)
         {
@@ -185,5 +178,10 @@ namespace WPFLogicDemo.Models
             int WTSInfoClass,
             out IntPtr ppBuffer,
             out IntPtr pBytesReturned);
+
+        public void GetDriverVersion(string v, IMenuItem messageText)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

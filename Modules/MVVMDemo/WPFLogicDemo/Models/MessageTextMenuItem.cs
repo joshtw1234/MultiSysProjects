@@ -1,8 +1,7 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using UtilityUILib;
 
-namespace WPFLogicDemo.ViewModels
+namespace WPFLogicDemo.Models
 {
     class MessageTextMenuItem : BindAbleBases, IMenuItem
     {

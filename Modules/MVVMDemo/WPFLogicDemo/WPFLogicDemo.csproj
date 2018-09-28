@@ -81,7 +81,8 @@
     </Page>
     <Compile Include="Models\IWPFLogicModel.cs" />
     <Compile Include="Models\WPFLogicModel.cs" />
-    <Compile Include="ViewModels\MessageTextMenuItem.cs" />
+    <Compile Include="Models\WPFLogicUIModel.cs" />
+    <Compile Include="Models\MessageTextMenuItem.cs" />
     <Compile Include="ViewModels\WPFLogicControlViewModel.cs" />
     <Compile Include="Views\WPFLogicControl.xaml.cs">
       <DependentUpon>WPFLogicControl.xaml</DependentUpon>

@@ -26,21 +26,22 @@
     </UserControl.Resources>
     <Grid>
         <StackPanel>
-            <ContentControl Template="{StaticResource CustomSliderControl}"/>
-            <ContentControl Template="{StaticResource CustomSliderControl}"/>
-        </StackPanel>
-        <!--<StackPanel>
+            <ContentControl DataContext="{Binding TopSlider}" Template="{StaticResource CustomSliderControl}"/>
+            <ContentControl DataContext="{Binding SecSlider}" Template="{StaticResource CustomSliderControl}"/>
+
+            <!--<StackPanel>
             <ContentControl Template="{StaticResource MainContent}"/>
             <local:CustomSliderControl DataContext="{Binding SliderCore}" 
                                        SliderMax="{Binding CoreMax}" SliderMin="{Binding CoreMin}" SliderTick="{Binding CoreTick}"/>
             <Button/>
         </StackPanel>-->
-        <!--<Canvas x:Name="cc">
-            <Rectangle x:Name="rr" Width="200" Height="200" Stroke="Red" StrokeThickness="20" RadiusX="20" RadiusY="20">
-                <Rectangle.LayoutTransform>
-                    <RotateTransform Angle="20"/>
-                </Rectangle.LayoutTransform>
-            </Rectangle>
-        </Canvas>-->
+            <Canvas x:Name="cc">
+                <Rectangle x:Name="rr" Width="200" Height="200" Stroke="Red" StrokeThickness="20" RadiusX="20" RadiusY="20">
+                    <Rectangle.LayoutTransform>
+                        <RotateTransform Angle="20"/>
+                    </Rectangle.LayoutTransform>
+                </Rectangle>
+            </Canvas>
+        </StackPanel>
     </Grid>
 </UserControl>

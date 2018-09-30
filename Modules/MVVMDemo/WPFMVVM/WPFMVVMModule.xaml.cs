@@ -2,7 +2,6 @@
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using UtilityUILib;
-using WPFMVVM.Views;
 
 namespace WPFMVVM
 {

@@ -172,9 +172,23 @@ namespace WPFLogicDemo.Models
 
         protected void GetDriverVersion(string driverArgs, IMenuItem messageText)
         {
+            const string procName = "wmic";
+            const string driverInArgs = "PATH Win32_PnpSignedDriver where DeviceName=\"HP Wireless Button Driver\"";
+            const string sysName = "SystemName";
+            const string strPatten = "([A-Za-z]+[ ])+|([^ ]+)|([ ]+)[ ]{2}";
+            const int driverVersionIdx = 13;
             string outString = string.Empty;
-            Utilities.RunProcess("wmic", "PATH Win32_PnpSignedDriver where DeviceName=\"HP Wireless Button Driver\"", out outString);
-            messageText.MenuName = outString;
+            Utilities.RunProcess(procName, driverInArgs, out outString);
+            if (string.IsNullOrEmpty(outString))
+            {
+                //No get console out put string.
+                return;
+            }
+            int keyW = outString.IndexOf(sysName);
+            string subStr = outString.Substring(keyW + sysName.Length);
+            System.Text.RegularExpressions.MatchCollection ma = System.Text.RegularExpressions.Regex.Matches(subStr, strPatten);
+            var result = ma[driverVersionIdx];
+            messageText.MenuName = ma[driverVersionIdx].Groups[0].Value;
             //Utilities.Logger(LogFileName, outString);
         }
 

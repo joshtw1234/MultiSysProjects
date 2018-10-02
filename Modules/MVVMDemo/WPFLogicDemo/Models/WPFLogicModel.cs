@@ -28,7 +28,7 @@ namespace WPFLogicDemo.Models
 
         private async Task StartTask2(IMenuItem messageText)
         {
-#if false
+#if true
             //This will A => B => C
             await StartForLoop(messageText, "Boo A");
             await StartForLoop(messageText, "Boo B");
@@ -55,6 +55,7 @@ namespace WPFLogicDemo.Models
 
         private void StartTask3(IMenuItem messageText)
         {
+            messageText.MenuName += $"[{DateTime.Now.ToString("hh:mm:ss.fff")}] StartTask3 {"IN"} end Thread ID {Thread.CurrentThread.ManagedThreadId}\n";
             Task.Run(() =>
             {
                 for (int i = 0; i < 30; i++)
@@ -79,6 +80,7 @@ namespace WPFLogicDemo.Models
                     messageText.MenuName += $"[{DateTime.Now.ToString("hh:mm:ss.fff")}] Coo C StartTask3 {i} end Thread ID {Thread.CurrentThread.ManagedThreadId}\n";
                 }
             });
+            messageText.MenuName += $"[{DateTime.Now.ToString("hh:mm:ss.fff")}] StartTask3 {"Out"} end Thread ID {Thread.CurrentThread.ManagedThreadId}\n";
         }
 
         const string LogFileName = @"Logs\WPFLogicDemo.log";
@@ -170,7 +172,7 @@ namespace WPFLogicDemo.Models
 
         }
 
-        protected void GetDriverVersion(string driverArgs, IMenuItem messageText)
+        protected async Task GetDriverVersion(string driverArgs, IMenuItem messageText)
         {
             const string procName = "wmic";
             const string driverInArgs = "PATH Win32_PnpSignedDriver where DeviceName=\"HP Wireless Button Driver\"";
@@ -178,7 +180,14 @@ namespace WPFLogicDemo.Models
             const string strPatten = "([A-Za-z]+[ ])+|([^ ]+)|([ ]+)[ ]{2}";
             const int driverVersionIdx = 13;
             string outString = string.Empty;
-            Utilities.RunProcess(procName, driverInArgs, out outString);
+            //Utilities.RunProcess(procName, driverInArgs, out outString);
+            var asyncRev = await Utilities.RunProcessAsync(procName, driverInArgs);
+
+            if (asyncRev.ReturnCode != 0)
+            {
+                return;
+            }
+            outString = asyncRev.ConsoleOutput;
             if (string.IsNullOrEmpty(outString))
             {
                 //No get console out put string.
@@ -187,7 +196,6 @@ namespace WPFLogicDemo.Models
             int keyW = outString.IndexOf(sysName);
             string subStr = outString.Substring(keyW + sysName.Length);
             System.Text.RegularExpressions.MatchCollection ma = System.Text.RegularExpressions.Regex.Matches(subStr, strPatten);
-            var result = ma[driverVersionIdx];
             messageText.MenuName = ma[driverVersionIdx].Groups[0].Value;
             //Utilities.Logger(LogFileName, outString);
         }

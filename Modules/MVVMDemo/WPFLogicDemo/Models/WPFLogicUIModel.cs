@@ -44,7 +44,7 @@ namespace WPFLogicDemo.Models
                 //SetAsyncAwaitAooRun(messageText);
                 //SetAsyncAwaitBooRun(messageText);
                 //SetAsyncAwaitCooRun(messageText);
-                GetDriverVersion(string.Empty, messageText);
+                var result = GetDriverVersion(string.Empty, messageText);
             }
             else
             {

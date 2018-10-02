@@ -122,6 +122,7 @@ namespace UtilityUILib
         /// <returns></returns>
         public static int RunProcess(string appName, string arguments, out string procOutput)
         {
+
             StringBuilder sb = new StringBuilder();
             procOutput = string.Empty;
             Process process = new Process();
@@ -147,6 +148,45 @@ namespace UtilityUILib
             }
             procOutput = sb.ToString();
             return process.ExitCode;
+        }
+
+        /// <summary>
+        /// The async method for run process
+        /// </summary>
+        /// <param name="appName"></param>
+        /// <param name="arguments"></param>
+        /// <returns></returns>
+        public static async System.Threading.Tasks.Task<RunProcessResult> RunProcessAsync(string appName, string arguments)
+        {
+            return await System.Threading.Tasks.Task.Run(() => 
+            {
+                RunProcessResult revIn = new RunProcessResult();
+                StringBuilder sb = new StringBuilder();
+                Process process = new Process();
+                process.StartInfo.FileName = appName;
+                process.StartInfo.Arguments = arguments;
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.CreateNoWindow = true;
+                process.StartInfo.RedirectStandardOutput = true;
+                process.StartInfo.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                try
+                {
+                    process.Start();
+                    while (!process.StandardOutput.EndOfStream)
+                    {
+                        sb.Append(process.StandardOutput.ReadLine());
+                    }
+                    process.WaitForExit();
+                }
+                catch (Exception ex)
+                {
+                    Logger(GetPhysicalPath(CommonUIConsts.LogUtilityFileName), $"RunProcess \"{ex.Message}\"");
+                    revIn.ReturnCode = -1;
+                }
+                revIn.ReturnCode = process.ExitCode;
+                revIn.ConsoleOutput = sb.ToString();
+                return revIn;
+            });
         }
 
         /// <summary>
@@ -274,5 +314,11 @@ namespace UtilityUILib
             { PropertyChanged(sender, new PropertyChangedEventArgs(propertyName)); }
         }
         #endregion
+    }
+
+    public class RunProcessResult
+    {
+        public int ReturnCode;
+        public string ConsoleOutput;
     }
 }

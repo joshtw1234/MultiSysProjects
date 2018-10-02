@@ -120,11 +120,10 @@ namespace UtilityUILib
         /// <param name="appName"></param>
         /// <param name="arguments"></param>
         /// <returns></returns>
-        public static int RunProcess(string appName, string arguments, out string procOutput)
+        public static RunProcessResult RunProcess(string appName, string arguments)
         {
-
+            RunProcessResult revIn = new RunProcessResult();
             StringBuilder sb = new StringBuilder();
-            procOutput = string.Empty;
             Process process = new Process();
             process.StartInfo.FileName = appName;
             process.StartInfo.Arguments = arguments;
@@ -144,10 +143,12 @@ namespace UtilityUILib
             catch (Exception ex)
             {
                 Logger(GetPhysicalPath(CommonUIConsts.LogUtilityFileName), $"RunProcess \"{ex.Message}\"");
-                return -1;
+                revIn.ReturnCode = -1;
+                return revIn;
             }
-            procOutput = sb.ToString();
-            return process.ExitCode;
+            revIn.ConsoleOutput = sb.ToString();
+            revIn.ReturnCode = process.ExitCode;
+            return revIn;
         }
 
         /// <summary>
@@ -182,6 +183,7 @@ namespace UtilityUILib
                 {
                     Logger(GetPhysicalPath(CommonUIConsts.LogUtilityFileName), $"RunProcess \"{ex.Message}\"");
                     revIn.ReturnCode = -1;
+                    return revIn;
                 }
                 revIn.ReturnCode = process.ExitCode;
                 revIn.ConsoleOutput = sb.ToString();
@@ -225,8 +227,8 @@ namespace UtilityUILib
             bool rev = false;
             string CmdQueryTaskArgs = $"/query /TN \"{taskScheduleName}\"";
             string revString = string.Empty;
-            int qRev = RunProcess(CommonUIConsts.CmdTasksSchedule, CmdQueryTaskArgs, out revString);
-            if (qRev == 0)
+            var qRev = RunProcess(CommonUIConsts.CmdTasksSchedule, CmdQueryTaskArgs);
+            if (qRev.ReturnCode == 0)
             {
                 rev = true;
             }

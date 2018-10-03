@@ -31,6 +31,8 @@ namespace WPFLogicDemo.Models
         }
 
         private IMenuItem messageText;
+
+        private IMenuItem textInput;
         #endregion
 
 
@@ -44,7 +46,7 @@ namespace WPFLogicDemo.Models
                 //SetAsyncAwaitAooRun(messageText);
                 //SetAsyncAwaitBooRun(messageText);
                 //SetAsyncAwaitCooRun(messageText);
-                var result = GetDriverVersion(string.Empty, messageText);
+                var revResult = GetDriverVersion(textInput.MenuName, messageText);
             }
             else
             {
@@ -83,6 +85,15 @@ namespace WPFLogicDemo.Models
                 MenuStyle = _localDic["MessageStyle"] as Style
             };
             return messageText;
+        }
+
+        public IMenuItem GetTextInput()
+        {
+            textInput = new MessageTextMenuItem()
+            {
+                MenuName = "Input Argus here"
+            };
+            return textInput;
         }
         #endregion
 

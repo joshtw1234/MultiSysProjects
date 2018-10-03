@@ -17,6 +17,7 @@
                           ItemsSource="{Binding CommonButtonCollection}"
                           ItemsPanel="{StaticResource CommonButtonItemsPanel}"
                           DockPanel.Dock="Bottom"/>
+            <TextBox DockPanel.Dock="Bottom" DataContext="{Binding TextInput}" Text="{Binding MenuName}"/>
             <ScrollViewer>
                 <TextBlock DataContext="{Binding MessageText}" Style="{Binding MenuStyle}"/>
             </ScrollViewer>

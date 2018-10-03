@@ -175,22 +175,26 @@ namespace WPFLogicDemo.Models
         protected async Task GetDriverVersion(string driverArgs, IMenuItem messageText)
         {
             const string procName = "wmic";
-            const string driverInArgs = "PATH Win32_PnpSignedDriver where DeviceName=\"HP Wireless Button Driver\"";
             const string sysName = "SystemName";
+            
             const string strPatten = "([A-Za-z]+[ ])+|([^ ]+)|([ ]+)[ ]{2}";
             const int driverVersionIdx = 13;
+            //HP Wireless Button Driver
+            string driverFullArgs = $"PATH Win32_PnpSignedDriver where DeviceName=\"{driverArgs}\"";
             string outString = string.Empty;
             //Utilities.RunProcess(procName, driverInArgs, out outString);
-            var asyncRev = await Utilities.RunProcessAsync(procName, driverInArgs);
+            var asyncRev = await Utilities.RunProcessAsync(procName, driverFullArgs);
 
             if (asyncRev.ReturnCode != 0)
             {
+                messageText.MenuName = $"WMIC return error {asyncRev.ReturnCode}";
                 return;
             }
             outString = asyncRev.ConsoleOutput;
             if (string.IsNullOrEmpty(outString))
             {
                 //No get console out put string.
+                messageText.MenuName = $"WMIC output error {asyncRev.ReturnCode}";
                 return;
             }
             int keyW = outString.IndexOf(sysName);

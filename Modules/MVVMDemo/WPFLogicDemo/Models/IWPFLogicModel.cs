@@ -10,5 +10,6 @@ namespace WPFLogicDemo.Models
     {
         ObservableCollection<IMenuItem> GetCommonButtons();
         IMenuItem GetMessageText();
+        IMenuItem GetTextInput();
     }
 }

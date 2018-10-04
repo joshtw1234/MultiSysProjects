@@ -134,10 +134,7 @@ namespace UtilityUILib
             try
             {
                 process.Start();
-                while (!process.StandardOutput.EndOfStream)
-                {
-                    sb.Append(process.StandardOutput.ReadLine());
-                }
+                sb.Append(process.StandardOutput.ReadToEnd());
                 process.WaitForExit();
             }
             catch (Exception ex)
@@ -157,38 +154,45 @@ namespace UtilityUILib
         /// <param name="appName"></param>
         /// <param name="arguments"></param>
         /// <returns></returns>
-        public static async System.Threading.Tasks.Task<RunProcessResult> RunProcessAsync(string appName, string arguments)
+        public static RunProcessResult RunProcessAsync(string appName, string arguments)
         {
-            return await System.Threading.Tasks.Task.Run(() => 
+            RunProcessResult revIn = new RunProcessResult();
+            StringBuilder sb = new StringBuilder();
+            Process process = new Process();
+            process.StartInfo.FileName = appName;
+            process.StartInfo.Arguments = arguments;
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.CreateNoWindow = true;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;
+#if false
+            process.Start();
+            //process.BeginOutputReadLine();
+            var ssOut = process.StandardOutput.ReadToEnd();
+            sb.Append(ssOut);
+            //process.WaitForExit();
+#else
+            try
             {
-                RunProcessResult revIn = new RunProcessResult();
-                StringBuilder sb = new StringBuilder();
-                Process process = new Process();
-                process.StartInfo.FileName = appName;
-                process.StartInfo.Arguments = arguments;
-                process.StartInfo.UseShellExecute = false;
-                process.StartInfo.CreateNoWindow = true;
-                process.StartInfo.RedirectStandardOutput = true;
-                process.StartInfo.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;
-                try
-                {
-                    process.Start();
-                    while (!process.StandardOutput.EndOfStream)
-                    {
-                        sb.Append(process.StandardOutput.ReadLine());
-                    }
-                    process.WaitForExit();
-                }
-                catch (Exception ex)
-                {
-                    Logger(GetPhysicalPath(CommonUIConsts.LogUtilityFileName), $"RunProcess \"{ex.Message}\"");
-                    revIn.ReturnCode = -1;
-                    return revIn;
-                }
-                revIn.ReturnCode = process.ExitCode;
-                revIn.ConsoleOutput = sb.ToString();
+                process.Start();
+                var ssOut = process.StandardOutput.ReadToEnd();
+                sb.Append(ssOut);
+                //var ssOut = await process.StandardOutput.ReadToEndAsync();
+                //sb.Append(ssOut);
+                //process.WaitForExit();
+                //process.Close();
+            }
+            catch (Exception ex)
+            {
+                Logger(GetPhysicalPath(CommonUIConsts.LogUtilityFileName), $"RunProcess \"{ex.Message}\"");
+                revIn.ReturnCode = -1;
                 return revIn;
-            });
+            }
+#endif
+
+            revIn.ReturnCode = process.ExitCode;
+            revIn.ConsoleOutput = sb.ToString();
+            return revIn;
         }
 
         /// <summary>

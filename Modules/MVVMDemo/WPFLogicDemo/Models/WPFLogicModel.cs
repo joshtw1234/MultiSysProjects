@@ -172,35 +172,36 @@ namespace WPFLogicDemo.Models
 
         }
 
-        protected async Task GetDriverVersion(string driverArgs, IMenuItem messageText)
+        protected bool GetDriverVersion(string driverArgs, IMenuItem messageText)
         {
             const string procName = "wmic";
             const string sysName = "SystemName";
-            
-            const string strPatten = "([A-Za-z]+[ ])+|([^ ]+)|([ ]+)[ ]{2}";
+            char[] trimData = new char[] { '\r', '\n' };
+            const string strPatten = "([A-Za-z.]+[ ])+|([^ ]+)|([ ]+)[ ]{2}";
             const int driverVersionIdx = 13;
-            //HP Wireless Button Driver
+            //driverArgs = "HP Wireless Button Driver";
             string driverFullArgs = $"PATH Win32_PnpSignedDriver where DeviceName=\"{driverArgs}\"";
             string outString = string.Empty;
             //Utilities.RunProcess(procName, driverInArgs, out outString);
-            var asyncRev = await Utilities.RunProcessAsync(procName, driverFullArgs);
-
-            if (asyncRev.ReturnCode != 0)
+            var runRev = Utilities.RunProcessAsync(procName, driverFullArgs);
+            if (runRev.ReturnCode != 0)
             {
-                messageText.MenuName = $"WMIC return error {asyncRev.ReturnCode}";
-                return;
+                messageText.MenuName = $"WMIC return error {runRev.ReturnCode}";
+                return false;
             }
-            outString = asyncRev.ConsoleOutput;
+            outString = runRev.ConsoleOutput.Replace('\r', ' ');
+            outString = outString.Replace('\n', ' ');
             if (string.IsNullOrEmpty(outString))
             {
                 //No get console out put string.
-                messageText.MenuName = $"WMIC output error {asyncRev.ReturnCode}";
-                return;
+                messageText.MenuName = $"WMIC output error {runRev.ReturnCode}";
+                return false;
             }
             int keyW = outString.IndexOf(sysName);
             string subStr = outString.Substring(keyW + sysName.Length);
             System.Text.RegularExpressions.MatchCollection ma = System.Text.RegularExpressions.Regex.Matches(subStr, strPatten);
             messageText.MenuName = ma[driverVersionIdx].Groups[0].Value;
+            return true;
             //Utilities.Logger(LogFileName, outString);
         }
 

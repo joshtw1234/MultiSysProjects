@@ -47,6 +47,7 @@ namespace WPFLogicDemo.Models
                 //SetAsyncAwaitBooRun(messageText);
                 //SetAsyncAwaitCooRun(messageText);
                 var revResult = GetDriverVersion(textInput.MenuName, messageText);
+                messageText.MenuName += $"\n{revResult}";
             }
             else
             {

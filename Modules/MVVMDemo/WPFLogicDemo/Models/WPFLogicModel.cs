@@ -198,6 +198,10 @@ namespace WPFLogicDemo.Models
                 return false;
             }
             int keyW = outString.IndexOf(sysName);
+            if (0>keyW)
+            {
+                return false;
+            }
             string subStr = outString.Substring(keyW + sysName.Length);
             System.Text.RegularExpressions.MatchCollection ma = System.Text.RegularExpressions.Regex.Matches(subStr, strPatten);
             messageText.MenuName = ma[driverVersionIdx].Groups[0].Value;

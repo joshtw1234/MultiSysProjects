@@ -25,6 +25,14 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
-        <ContentControl Template="{StaticResource LogicContentTemplate}"/>
+        <DockPanel>
+            <ItemsControl DockPanel.Dock="Top" ItemsSource="{Binding PageItemsSource}"
+                      ItemTemplate="{StaticResource PageButtonTemplate}"
+                      ItemsPanel="{StaticResource CommonButtonItemsPanel}"/>
+            <Grid>
+                <ContentControl Template="{StaticResource STOCKContentTemplate}"/>
+                <ContentControl Template="{StaticResource LogicContentTemplate}"/>
+            </Grid>
+        </DockPanel>
     </Grid>
 </UserControl>

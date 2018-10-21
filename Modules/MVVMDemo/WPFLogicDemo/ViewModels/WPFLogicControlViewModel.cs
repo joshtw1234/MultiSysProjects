@@ -16,15 +16,18 @@ namespace WPFLogicDemo.ViewModels
         public WPFLogicControlViewModel(IWPFLogicModel wpflogicModel)
         {
             _wpflogicModel = wpflogicModel;
-            CommonButtonCollection = _wpflogicModel.GetCommonButtons();
-            MessageText = _wpflogicModel.GetMessageText();
-            TextInput = _wpflogicModel.GetTextInput();
+            PageItemsSource = _wpflogicModel.GetPageItemsSource();
+            LogicContentVM = _wpflogicModel.GetLogicContentVM();
+            STOCKContentVM = _wpflogicModel.GetSTOCKContentVM();
         }
 
-        public ObservableCollection<IMenuItem> CommonButtonCollection { get; set; }
+        public ObservableCollection<IMenuItem> PageItemsSource { get; set; }
 
-        public IMenuItem MessageText { get; set; }
+        public LogicContentData LogicContentVM { get; set; }
 
-        public IMenuItem TextInput { get; set; }
+        public STOCKContentData STOCKContentVM { get; set; }
+
     }
+
+    
 }

@@ -79,7 +79,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="Models\BaseContentData.cs" />
     <Compile Include="Models\IWPFLogicModel.cs" />
+    <Compile Include="Models\LogicContentData.cs" />
+    <Compile Include="Models\STOCKContentData.cs" />
     <Compile Include="Models\WPFLogicModel.cs" />
     <Compile Include="Models\WPFLogicUIModel.cs" />
     <Compile Include="Models\MessageTextMenuItem.cs" />

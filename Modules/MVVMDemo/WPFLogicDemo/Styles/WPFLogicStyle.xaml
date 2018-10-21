@@ -1,8 +1,11 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:WPFLogicDemo.Styles">
-
-
+    
+    <DataTemplate x:Key="PageButtonTemplate">
+        <Button Style="{Binding MenuStyle}"/>
+    </DataTemplate>
+    
     <DataTemplate x:Key="CommonButtonTemplate">
         <Button Style="{Binding MenuStyle}"/>
     </DataTemplate>
@@ -10,9 +13,19 @@
     <ItemsPanelTemplate x:Key="CommonButtonItemsPanel">
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,20,20"/>
     </ItemsPanelTemplate>
+
+    <ControlTemplate x:Key="STOCKContentTemplate" TargetType="{x:Type ContentControl}">
+        <DockPanel DataContext="{Binding STOCKContentVM}" Visibility="{Binding ContentVisibility}">
+            <ItemsControl ItemTemplate="{StaticResource CommonButtonTemplate}"
+                          ItemsSource="{Binding STOCKButtonCollection}"
+                          ItemsPanel="{StaticResource CommonButtonItemsPanel}"
+                          DockPanel.Dock="Top"/>
+            <Grid Background="Red"/>
+        </DockPanel>
+    </ControlTemplate>
     
     <ControlTemplate x:Key="LogicContentTemplate" TargetType="{x:Type ContentControl}">
-        <DockPanel>
+        <DockPanel DataContext="{Binding LogicContentVM}" Visibility="{Binding ContentVisibility}" Background="Black">
             <ItemsControl ItemTemplate="{StaticResource CommonButtonTemplate}"
                           ItemsSource="{Binding CommonButtonCollection}"
                           ItemsPanel="{StaticResource CommonButtonItemsPanel}"
@@ -37,7 +50,7 @@
         <Setter Property="CommandParameter" Value="{Binding MenuData}"/>
     </Style>
     <Style x:Key="LogicBtnStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource CommonBtnStyle}">
-        <Setter Property="Height" Value="30"/>
-        <Setter Property="Width" Value="50"/>
+        <Setter Property="MinHeight" Value="30"/>
+        <Setter Property="MinWidth" Value="50"/>
     </Style>
 </ResourceDictionary>

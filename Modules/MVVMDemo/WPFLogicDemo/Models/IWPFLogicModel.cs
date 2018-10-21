@@ -8,8 +8,8 @@ namespace WPFLogicDemo.Models
     /// </summary>
     interface IWPFLogicModel
     {
-        ObservableCollection<IMenuItem> GetCommonButtons();
-        IMenuItem GetMessageText();
-        IMenuItem GetTextInput();
+        ObservableCollection<IMenuItem> GetPageItemsSource();
+        LogicContentData GetLogicContentVM();
+        STOCKContentData GetSTOCKContentVM();
     }
 }

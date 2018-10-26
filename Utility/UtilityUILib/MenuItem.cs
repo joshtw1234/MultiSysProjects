@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 
@@ -45,6 +46,18 @@ namespace UtilityUILib
         {
             _action((T)parameter);
         }
+    }
+
+    public class BindAbleBases : INotifyPropertyChanged
+    {
+        #region INotifyPropertyChanged Interface
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void onPropertyChanged(object sender, string propertyName)
+        {
+            if (this.PropertyChanged != null)
+            { PropertyChanged(sender, new PropertyChangedEventArgs(propertyName)); }
+        }
+        #endregion
     }
 
 }

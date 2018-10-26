@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Management;
@@ -310,17 +309,7 @@ namespace UtilityUILib
         public int BatteryFullLifeTime;
     }
 
-    public class BindAbleBases : INotifyPropertyChanged
-    {
-        #region INotifyPropertyChanged Interface
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void onPropertyChanged(object sender, string propertyName)
-        {
-            if (this.PropertyChanged != null)
-            { PropertyChanged(sender, new PropertyChangedEventArgs(propertyName)); }
-        }
-        #endregion
-    }
+   
 
     public class RunProcessResult
     {

@@ -2,10 +2,12 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:CmediaSDKTestApp.Styles">
 
-    <BooleanToVisibilityConverter x:Key="BoolToVis" />
+    <SolidColorBrush x:Key="DefaultBackground" Color="#212121" />
+    <SolidColorBrush x:Key="DefaultForeground" Color="White"/>
+    <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
 
     <DataTemplate x:Key="MicContentPageTemplate">
-        <ContentControl Style="{Binding MenuStyle}" Visibility="{Binding MenuVisibility, Converter={StaticResource BoolToVis}}"/>
+        <ContentControl Style="{Binding MenuStyle}" Visibility="{Binding MenuVisibility, Converter={StaticResource BoolToVisibility}}"/>
     </DataTemplate>
 
     <ItemsPanelTemplate x:Key="PagePanelTemplate">
@@ -20,26 +22,35 @@
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"/>
     </ItemsPanelTemplate>
 
+    <Style x:Key="BaseTextBlock" TargetType="{x:Type TextBlock}">
+        <Setter Property="Text" Value="{Binding MenuName}"/>
+        <Setter Property="Foreground" Value="{StaticResource DefaultForeground}"/>
+        <Setter Property="Background" Value="{StaticResource DefaultBackground}"/>
+        <Setter Property="FontSize" Value="24"/>
+    </Style>
+
     <Style x:Key="BaseButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Foreground" Value="{StaticResource DefaultForeground}"/>
+        <Setter Property="Background" Value="{StaticResource DefaultBackground}"/>
         <Setter Property="Content" Value="{Binding MenuName}"/>
         <Setter Property="Command" Value="{Binding MenuCommand}"/>
         <Setter Property="CommandParameter" Value="{Binding MenuData}"/>
     </Style>
 
     <Style x:Key="BaseContentPageStyle" TargetType="{x:Type ContentControl}">
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate>
-                    <TextBlock Text="{Binding MenuName}"/>
+                    <TextBlock Style="{StaticResource BaseTextBlock}"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
     <Style x:Key="EQContentPageStyle" TargetType="{x:Type ContentControl}" BasedOn="{StaticResource BaseContentPageStyle}">
-        <Setter Property="FontSize" Value="24"/>
-        <Setter Property="HorizontalAlignment" Value="Center"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
+        
     </Style>
            
 </ResourceDictionary>

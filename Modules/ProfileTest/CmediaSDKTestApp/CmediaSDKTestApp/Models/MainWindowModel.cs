@@ -145,7 +145,7 @@ namespace CmediaSDKTestApp.Models
                     new BasePageContentViewModel()
                     {
                         MenuName = ButtonStrings.Equaliser.ToString(),
-                        MenuStyle = localDic["BaseContentPageStyle"] as Style,
+                        MenuStyle = localDic["EQContentPageStyle"] as Style,
                         MenuVisibility = true,
                     },
                     new BasePageContentViewModel()

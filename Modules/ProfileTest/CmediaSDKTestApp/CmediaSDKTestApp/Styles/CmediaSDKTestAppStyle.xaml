@@ -25,13 +25,7 @@
     <Style x:Key="BaseContentPageStyle" TargetType="{x:Type ContentControl}">
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate>
-                    <TextBlock Style="{StaticResource BaseTextBlock}"/>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Template" Value="{StaticResource BaseContentPageTemplate}"/>
     </Style>
     
     <Style x:Key="EQContentPageStyle" TargetType="{x:Type ContentControl}" BasedOn="{StaticResource BaseContentPageStyle}">
@@ -39,7 +33,45 @@
     </Style>
 
     <Style x:Key="MICContentPageStyle" TargetType="{x:Type ContentControl}" BasedOn="{StaticResource BaseContentPageStyle}">
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
         <Setter Property="Template" Value="{StaticResource MICControlTemplate}"/>
     </Style>
 
+    <Style x:Key="ArrowButton" TargetType="{x:Type Button}">
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Foreground" Value="{StaticResource BrownishGreyColor}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource BrownishGreyColor}"/>
+        <Setter Property="IsEnabled" Value="{Binding MenuEnabled}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Polygon x:Name="arrow" Points="0,8 8,16 12,14 6,8 12,2 8,0" StrokeThickness="0" Fill="{StaticResource DefaultForeground}" />
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Fill" TargetName="arrow" Value="#424242"/>
+                            <!--<Setter Property="BorderBrush" TargetName="border" Value="#212121"/>-->
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="HorizSlider" TargetType="{x:Type Slider}">
+        <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false"/>
+        <Setter Property="AutoToolTipPlacement" Value="TopLeft"/>
+        <Setter Property="IsMoveToPointEnabled" Value="True"/>
+        <Setter Property="IsSelectionRangeEnabled" Value="True"/>
+        <Setter Property="IsSnapToTickEnabled" Value="True"/>
+        <Setter Property="AutoToolTipPrecision" Value="1"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource SliderThumb.Static.Foreground}"/>
+        <Setter Property="Template" Value="{StaticResource SliderHorizontal}"/>
+    </Style>
 </ResourceDictionary>

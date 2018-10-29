@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace CmediaSDKTestApp.Models
 {
-    class BasePageContentViewModel : BindAbleBases, IMenuItem
+    public class BasePageContentViewModel : BindAbleBases, IMenuItem
     {
         public string MenuName { get; set; }
         public string MenuImage { get; set; }

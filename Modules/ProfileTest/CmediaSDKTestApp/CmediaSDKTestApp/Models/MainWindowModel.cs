@@ -149,10 +149,34 @@ namespace CmediaSDKTestApp.Models
                         MenuVisibility = true,
                         MenuImage = "/CmediaSDKTestApp;component/Assets/TestAsset1.jpg"
                     },
-                    new BasePageContentViewModel()
+                    new HorzSliderControlViewModel()
                     {
                         MenuName = ButtonStrings.Microphone.ToString(),
                         MenuStyle = localDic["MICContentPageStyle"] as Style,
+                        SliderValueStr = new MenuItem()
+                        {
+                            MenuName = "100",
+                        },
+                        SlideUnitStr = new  MenuItem()
+                        {
+                            MenuName = "v",
+                        },
+                        SliderTitle = new MenuItem()
+                        {
+                            MenuName = "Slider Title",
+                        },
+                        SliderMaximum = new MenuItem()
+                        {
+                            MenuName = "200"
+                        },
+                        SliderMinimum = new MenuItem()
+                        {
+                            MenuName = "0"
+                        },
+                        SliderTickFrequency = new MenuItem()
+                        {
+                            MenuName = "5"
+                        }
                     },
                     new BasePageContentViewModel()
                     {

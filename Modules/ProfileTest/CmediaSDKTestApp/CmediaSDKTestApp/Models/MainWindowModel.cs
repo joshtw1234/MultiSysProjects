@@ -147,6 +147,7 @@ namespace CmediaSDKTestApp.Models
                         MenuName = ButtonStrings.Equaliser.ToString(),
                         MenuStyle = localDic["EQContentPageStyle"] as Style,
                         MenuVisibility = true,
+                        MenuImage = "/CmediaSDKTestApp;component/Assets/TestAsset1.jpg"
                     },
                     new BasePageContentViewModel()
                     {

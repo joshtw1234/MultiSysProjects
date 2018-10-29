@@ -152,7 +152,7 @@ namespace CmediaSDKTestApp.Models
                     new BasePageContentViewModel()
                     {
                         MenuName = ButtonStrings.Microphone.ToString(),
-                        MenuStyle = localDic["BaseContentPageStyle"] as Style,
+                        MenuStyle = localDic["MICContentPageStyle"] as Style,
                     },
                     new BasePageContentViewModel()
                     {

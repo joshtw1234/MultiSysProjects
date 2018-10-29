@@ -1,0 +1,36 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:CmediaSDKTestApp.Styles">
+
+    <SolidColorBrush x:Key="DefaultBackground" Color="#212121"/>
+    <SolidColorBrush x:Key="DefaultForeground" Color="White"/>
+    <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
+
+    <DataTemplate x:Key="MicContentPageTemplate">
+        <ContentControl Style="{Binding MenuStyle}" Visibility="{Binding MenuVisibility, Converter={StaticResource BoolToVisibility}}"/>
+    </DataTemplate>
+
+    <ItemsPanelTemplate x:Key="PagePanelTemplate">
+        <Grid/>
+    </ItemsPanelTemplate>
+
+    <DataTemplate x:Key="ButtonTemplate">
+        <Button Style="{Binding MenuStyle}"/>
+    </DataTemplate>
+
+    <ItemsPanelTemplate x:Key="ButtonPanelTemplate">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"/>
+    </ItemsPanelTemplate>
+
+    <ControlTemplate x:Key="EQControlTemplate" TargetType="{x:Type ContentControl}">
+        <Grid>
+            <Image Source="{Binding MenuImage}" Stretch="Fill"/>
+        </Grid>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="MICControlTemplate" TargetType="{x:Type ContentControl}">
+        <Grid>
+            <Image Source="{Binding MenuImage}" Stretch="Fill"/>
+        </Grid>
+    </ControlTemplate>
+</ResourceDictionary>

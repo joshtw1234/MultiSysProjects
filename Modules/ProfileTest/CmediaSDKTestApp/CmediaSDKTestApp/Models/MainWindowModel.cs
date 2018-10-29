@@ -27,7 +27,7 @@ namespace CmediaSDKTestApp.Models
                 {
                     _localDic = new ResourceDictionary()
                     {
-                        Source = new Uri("pack://application:,,,/CmediaSDKTestApp;component/Styles/MultiAccessoryTestStyle.xaml", UriKind.RelativeOrAbsolute)
+                        Source = new Uri("pack://application:,,,/CmediaSDKTestApp;component/Styles/CmediaSDKTestAppStyle.xaml", UriKind.RelativeOrAbsolute)
                     };
                 }
                 return _localDic;

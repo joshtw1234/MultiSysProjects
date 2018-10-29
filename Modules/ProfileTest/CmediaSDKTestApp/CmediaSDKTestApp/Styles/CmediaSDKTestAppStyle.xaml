@@ -50,7 +50,13 @@
         </Setter>
     </Style>
     <Style x:Key="EQContentPageStyle" TargetType="{x:Type ContentControl}" BasedOn="{StaticResource BaseContentPageStyle}">
-        
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <TextBlock Style="{StaticResource BaseTextBlock}"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
            
 </ResourceDictionary>

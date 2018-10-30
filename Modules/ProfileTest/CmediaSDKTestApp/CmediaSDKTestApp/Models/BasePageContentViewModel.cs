@@ -4,7 +4,7 @@ using System.Windows;
 
 namespace CmediaSDKTestApp.Models
 {
-    public class BasePageContentViewModel : BindAbleBases, IMenuItem
+    class BasePageContentViewModel : BindAbleBases, IMenuItem
     {
         public string MenuName { get; set; }
         public string MenuImage { get; set; }
@@ -18,7 +18,7 @@ namespace CmediaSDKTestApp.Models
         public bool MenuVisibility { get { return _menuVisibility; } set { _menuVisibility = value; onPropertyChanged(this, "MenuVisibility"); } }
     }
 
-    public class MicPageContentViewModel : BasePageContentViewModel
+    class MicPageContentViewModel : BasePageContentViewModel
     {
         public ObservableCollection<IMenuItem> SliderControls { get; set; }
     }

@@ -87,9 +87,20 @@ namespace CmediaSDKTestApp.Models
             }
 #endif
             #endregion
-#if true
+            OMEN_PropertyControl(jackInfo, BaseCmediaSDK.CMI_DefaultDeviceControl);
+            OMEN_PropertyControl(jackInfo, BaseCmediaSDK.CMI_Enable_KEYSHIFT_GFX);
+            byte[] setByte = new byte[BaseCmediaSDK.CMI_BUFFER_SIZE];
+            OMEN_PropertyControl(jackInfo, BaseCmediaSDK.CMI_DefaultDeviceControl, CMI_DriverRW.Write, setByte);
+        }
+
+        private void OMEN_PropertyControl(CMI_JackDeviceInfo jackInfo, string propertyName, CMI_DriverRW readWrite = CMI_DriverRW.Read, byte[] setData = null)
+        {
             // Allocate a Cmedia standard Array.
             byte[] devBvalue = new byte[BaseCmediaSDK.CMI_BUFFER_SIZE];
+            if (readWrite == CMI_DriverRW.Write)
+            {
+                devBvalue = setData;
+            }
             // Allocate a memory buffer (that can be accessed and modified by unmanaged code)
             // to store values from the devBvalue array.
             IntPtr pdevValue = Marshal.AllocCoTaskMem(Marshal.SizeOf(typeof(byte)) * devBvalue.Length);
@@ -114,9 +125,9 @@ namespace CmediaSDKTestApp.Models
             // Call the CMI_PropertyControl() API.
             // The CMI_PropertyControl() API will not
             // change the value of devValue. 
-            int rev = NativeMethods.CMI_PropertyControl(jackInfo.m_devInfo, BaseCmediaSDK.CMI_DefaultDeviceControl, devValue, devExtraValue, BaseCmediaSDK.CMI_DRIVER_READ);
+            int rev = NativeMethods.CMI_PropertyControl(jackInfo.m_devInfo, propertyName, devValue, devExtraValue, readWrite);
             _micPage.DisplayText.MenuName += $"\nCMI_PropertyControl return {rev}";
-            if (0==rev)
+            if (0 == rev)
             {
                 // We must now find a way to dereference the memory address
                 // contained inside devValue.
@@ -135,43 +146,10 @@ namespace CmediaSDKTestApp.Models
                 // to NewByteArray.
                 Marshal.Copy(revPtr[0], NewByteArray, 0, NewByteArray.Length);
                 string revData = System.Text.Encoding.ASCII.GetString(NewByteArray).TrimEnd('\0');
-                _micPage.DisplayText.MenuName += $"\n{BaseCmediaSDK.CMI_DefaultDeviceControl} Get OK {revData}";
+                _micPage.DisplayText.MenuName += $"\n{propertyName} {readWrite} OK {revData}";
             }
             gchDevValue.Free();
             gch.Free();
-
-
-
-
-#else
-            IntPtr[] devValue = new IntPtr[BaseCmediaSDK.CMI_BUFFER_SIZE];
-            IntPtr[] devExtraValue = new IntPtr[BaseCmediaSDK.CMI_BUFFER_SIZE];
-
-            int rev = NativeMethods.CMI_PropertyControl(jackInfo.m_devInfo, BaseCmediaSDK.CMI_DefaultDeviceControl, ref devValue, ref devExtraValue, BaseCmediaSDK.CMI_DRIVER_READ);
-            _micPage.DisplayText.MenuName += $"\nCMI_PropertyControl return {rev}";
-            if (0== rev)
-            {
-                IntPtr revIntptr = new IntPtr(1024);
-                Marshal.Copy(devValue, 0, revIntptr, 1);
-                int[] revInt = new int[BaseCmediaSDK.CMI_BUFFER_SIZE];
-                Marshal.Copy(revIntptr, revInt, 0, revInt.Length);
-
-            }
-            IntPtr[] dev2Value = new IntPtr[1024];
-            IntPtr[] dev2ExtraValue = new IntPtr[1024];
-            rev = NativeMethods.CMI_PropertyControl(jackInfo.m_devInfo, BaseCmediaSDK.CMI_Enable_KEYSHIFT_GFX, ref dev2Value, ref dev2ExtraValue, BaseCmediaSDK.CMI_DRIVER_READ);
-            _micPage.DisplayText.MenuName += $"\nCMI_PropertyControl return {rev}";
-#endif
-        }
-
-        private static IntPtr GetBytePointerOfPointer(int buffSize)
-        {
-            byte[] devValue = new byte[buffSize];
-            IntPtr pUnmanagedIntegerArray = Marshal.AllocCoTaskMem(Marshal.SizeOf(typeof(byte)) * devValue.Length);
-            Marshal.Copy(devValue, 0, pUnmanagedIntegerArray, devValue.Length);
-            GCHandle gch = GCHandle.Alloc(pUnmanagedIntegerArray, GCHandleType.Pinned);
-            IntPtr ppUnmanagedIntegerArray = gch.AddrOfPinnedObject();
-            return ppUnmanagedIntegerArray;
         }
 
         private ObservableCollection<IMenuItem> _contentpages;

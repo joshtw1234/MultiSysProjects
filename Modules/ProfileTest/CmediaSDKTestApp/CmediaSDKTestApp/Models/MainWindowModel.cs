@@ -46,6 +46,10 @@ namespace CmediaSDKTestApp.Models
                 
                 msg = "Device not found!!";
             }
+            else
+            {
+
+            }
             var micPageContent = _contentpages.FirstOrDefault(x => x.MenuName.Equals(ButtonStrings.Microphone.ToString()));
             (micPageContent as MicPageContentModel).DisplayText.MenuName = msg;
         }

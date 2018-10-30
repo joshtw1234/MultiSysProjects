@@ -7,6 +7,6 @@ namespace CmediaSDKTestApp.Models
     {
         ObservableCollection<IMenuItem> GetPageButtons { get; }
         ObservableCollection<IMenuItem> GetCommonButtons { get; }
-        ObservableCollection<BasePageContentViewModel> GetContentPages { get; }
+        ObservableCollection<IMenuItem> GetContentPages { get; }
     }
 }

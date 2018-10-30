@@ -10,7 +10,7 @@ namespace CmediaSDKTestApp.ViewModels
 
         public ObservableCollection<IMenuItem> PageButtons { get; set; }
         public ObservableCollection<IMenuItem> CommonButtons { get; set; }
-        public ObservableCollection<BasePageContentViewModel> ContentPages { get; set; }
+        public ObservableCollection<IMenuItem> ContentPages { get; set; }
 
         public MainWindowViewModel(IMainWindowModel model)
         {
@@ -18,6 +18,8 @@ namespace CmediaSDKTestApp.ViewModels
             PageButtons = _model.GetPageButtons;
             CommonButtons = _model.GetCommonButtons;
             ContentPages = _model.GetContentPages;
+
+            (_model as MainWindowModel).ModelInitialize();
         }
     }
 }

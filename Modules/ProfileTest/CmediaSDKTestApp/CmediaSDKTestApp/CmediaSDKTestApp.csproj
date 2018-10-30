@@ -98,6 +98,7 @@
     <Compile Include="BaseModels\MenuItem.cs" />
     <Compile Include="Models\BaseCmediaSDK.cs" />
     <Compile Include="Models\BasePageContentViewModel.cs" />
+    <Compile Include="Models\BindAbleMenuItem.cs" />
     <Compile Include="Models\HorzSliderControlViewModel.cs" />
     <Compile Include="Models\IMainWindowModel.cs" />
     <Compile Include="Models\MainWindowModel.cs" />

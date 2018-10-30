@@ -34,7 +34,23 @@ namespace CmediaSDKTestApp.Models
             }
         }
 
-        private ObservableCollection<BasePageContentViewModel> _contentpages;
+        internal void ModelInitialize()
+        {
+            string msg = "Found Device";
+            uint devCount = 0;
+            int rev = BaseCmediaSDK.CMI_ConfLibInit();
+            rev = BaseCmediaSDK.CMI_CreateDeviceList();
+            rev = BaseCmediaSDK.CMI_GetDeviceCount(DeviceType.Render, ref devCount);
+            if (0 == devCount)
+            {
+                
+                msg = "Device not found!!";
+            }
+            var micPageContent = _contentpages.FirstOrDefault(x => x.MenuName.Equals(ButtonStrings.Microphone.ToString()));
+            (micPageContent as MicPageContentModel).DisplayText.MenuName = msg;
+        }
+
+        private ObservableCollection<IMenuItem> _contentpages;
 
         private MyCommond<string> _onCommonButtonClickEvent;
         private MyCommond<string> OnCommonButtonClickEvent => _onCommonButtonClickEvent ?? (_onCommonButtonClickEvent = new MyCommond<string>(OnCommonButtonClick));
@@ -136,23 +152,27 @@ namespace CmediaSDKTestApp.Models
             }
         }
 
-        public ObservableCollection<BasePageContentViewModel> GetContentPages
+        public ObservableCollection<IMenuItem> GetContentPages
         {
             get
             {
-                return _contentpages = new ObservableCollection<BasePageContentViewModel>()
+                return _contentpages = new ObservableCollection<IMenuItem>()
                 {
-                    new BasePageContentViewModel()
+                    new BasePageContentModel()
                     {
                         MenuName = ButtonStrings.Equaliser.ToString(),
                         MenuStyle = localDic["EQContentPageStyle"] as Style,
                         MenuVisibility = true,
                         MenuImage = "/CmediaSDKTestApp;component/Assets/TestAsset1.jpg"
                     },
-                    new MicPageContentViewModel()
+                    new MicPageContentModel()
                     {
                         MenuName = ButtonStrings.Microphone.ToString(),
                         MenuStyle = localDic["MICContentPageStyle"] as Style,
+                        DisplayText = new BindAbleMenuItem()
+                        {
+                            MenuName = "Message here"
+                        },
                         SliderControls = new ObservableCollection<IMenuItem>()
                         {
                             new HorzSliderControlViewModel()
@@ -239,12 +259,12 @@ namespace CmediaSDKTestApp.Models
                         }
                         
                     },
-                    new BasePageContentViewModel()
+                    new BasePageContentModel()
                     {
                         MenuName = ButtonStrings.Lighting.ToString(),
                         MenuStyle = localDic["BaseContentPageStyle"] as Style,
                     },
-                    new BasePageContentViewModel()
+                    new BasePageContentModel()
                     {
                         MenuName = ButtonStrings.Cooling.ToString(),
                         MenuStyle = localDic["BaseContentPageStyle"] as Style,

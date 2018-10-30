@@ -84,11 +84,12 @@
     </DataTemplate>
 
     <ControlTemplate x:Key="MICControlTemplate" TargetType="{x:Type ContentControl}">
-        <Grid>
-            <ItemsControl ItemsSource="{Binding SliderControls}"
+        <DockPanel>
+            <ItemsControl DockPanel.Dock="Bottom" ItemsSource="{Binding SliderControls}"
                       ItemTemplate="{StaticResource SliderControlTemplate}"
                       ItemsPanel="{StaticResource StackVerticalPanelTemplate}"/>
-        </Grid>
+            <TextBlock  Text="{Binding DisplayText.MenuName}" Style="{DynamicResource BaseTextBlock}"/>
+        </DockPanel>
     </ControlTemplate>
 
     <!--#region Slider Control Style-->

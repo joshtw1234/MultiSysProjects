@@ -29,6 +29,11 @@
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"/>
     </ItemsPanelTemplate>
 
+    <ItemsPanelTemplate x:Key="StackVerticalPanelTemplate">
+        <StackPanel/>
+    </ItemsPanelTemplate>
+
+
     <ControlTemplate x:Key="BaseContentPageTemplate" TargetType="{x:Type ContentControl}">
         <TextBlock Style="{DynamicResource BaseTextBlock}"/>
     </ControlTemplate>
@@ -41,7 +46,7 @@
         <TextBlock DataContext="{Binding SliderValueStr}" Style="{DynamicResource BaseTextBlock}"/>
     </ControlTemplate>
 
-    <ControlTemplate x:Key="MICControlTemplate" TargetType="{x:Type ContentControl}">
+    <DataTemplate x:Key="SliderControlTemplate">
         <StackPanel>
             <DockPanel>
                 <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
@@ -76,6 +81,14 @@
                 </i:Interaction.Triggers>
             </Slider>
         </StackPanel>
+    </DataTemplate>
+
+    <ControlTemplate x:Key="MICControlTemplate" TargetType="{x:Type ContentControl}">
+        <Grid>
+            <ItemsControl ItemsSource="{Binding SliderControls}"
+                      ItemTemplate="{StaticResource SliderControlTemplate}"
+                      ItemsPanel="{StaticResource StackVerticalPanelTemplate}"/>
+        </Grid>
     </ControlTemplate>
 
     <!--#region Slider Control Style-->

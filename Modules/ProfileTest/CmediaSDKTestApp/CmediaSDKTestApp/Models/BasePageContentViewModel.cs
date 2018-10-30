@@ -1,4 +1,5 @@
 ﻿using CmediaSDKTestApp.BaseModels;
+using System.Collections.ObjectModel;
 using System.Windows;
 
 namespace CmediaSDKTestApp.Models
@@ -15,5 +16,10 @@ namespace CmediaSDKTestApp.Models
         public bool MenuChecked { get; set; }
         private bool _menuVisibility;
         public bool MenuVisibility { get { return _menuVisibility; } set { _menuVisibility = value; onPropertyChanged(this, "MenuVisibility"); } }
+    }
+
+    public class MicPageContentViewModel : BasePageContentViewModel
+    {
+        public ObservableCollection<IMenuItem> SliderControls { get; set; }
     }
 }

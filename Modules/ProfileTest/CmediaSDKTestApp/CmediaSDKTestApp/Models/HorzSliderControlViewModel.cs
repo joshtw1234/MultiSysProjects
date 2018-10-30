@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 
 namespace CmediaSDKTestApp.Models
 {
-    public class HorzSliderControlViewModel : BasePageContentViewModel
+    public class HorzSliderControlViewModel : MenuItem
     {
         public IMenuItem Btn_Left { get; set; }
         public IMenuItem SliderValueStr { get; set; }

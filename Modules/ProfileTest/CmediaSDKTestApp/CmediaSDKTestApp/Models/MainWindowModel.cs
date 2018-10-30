@@ -149,34 +149,95 @@ namespace CmediaSDKTestApp.Models
                         MenuVisibility = true,
                         MenuImage = "/CmediaSDKTestApp;component/Assets/TestAsset1.jpg"
                     },
-                    new HorzSliderControlViewModel()
+                    new MicPageContentViewModel()
                     {
                         MenuName = ButtonStrings.Microphone.ToString(),
                         MenuStyle = localDic["MICContentPageStyle"] as Style,
-                        SliderValueStr = new MenuItem()
+                        SliderControls = new ObservableCollection<IMenuItem>()
                         {
-                            MenuName = "100",
-                        },
-                        SlideUnitStr = new  MenuItem()
-                        {
-                            MenuName = "v",
-                        },
-                        SliderTitle = new MenuItem()
-                        {
-                            MenuName = "Slider Title",
-                        },
-                        SliderMaximum = new MenuItem()
-                        {
-                            MenuName = "200"
-                        },
-                        SliderMinimum = new MenuItem()
-                        {
-                            MenuName = "0"
-                        },
-                        SliderTickFrequency = new MenuItem()
-                        {
-                            MenuName = "5"
+                            new HorzSliderControlViewModel()
+                            {
+                                SliderValueStr = new MenuItem()
+                                {
+                                    MenuName = "100",
+                                },
+                                SlideUnitStr = new  MenuItem()
+                                {
+                                    MenuName = "v",
+                                },
+                                SliderTitle = new MenuItem()
+                                {
+                                    MenuName = "Slider Title",
+                                },
+                                SliderMaximum = new MenuItem()
+                                {
+                                    MenuName = "200"
+                                },
+                                SliderMinimum = new MenuItem()
+                                {
+                                    MenuName = "0"
+                                },
+                                SliderTickFrequency = new MenuItem()
+                                {
+                                    MenuName = "5"
+                                }
+                            },
+                            new HorzSliderControlViewModel()
+                            {
+                                SliderValueStr = new MenuItem()
+                                {
+                                    MenuName = "100",
+                                },
+                                SlideUnitStr = new  MenuItem()
+                                {
+                                    MenuName = "v",
+                                },
+                                SliderTitle = new MenuItem()
+                                {
+                                    MenuName = "Slider Title",
+                                },
+                                SliderMaximum = new MenuItem()
+                                {
+                                    MenuName = "200"
+                                },
+                                SliderMinimum = new MenuItem()
+                                {
+                                    MenuName = "0"
+                                },
+                                SliderTickFrequency = new MenuItem()
+                                {
+                                    MenuName = "5"
+                                }
+                            },
+                            new HorzSliderControlViewModel()
+                            {
+                                SliderValueStr = new MenuItem()
+                                {
+                                    MenuName = "100",
+                                },
+                                SlideUnitStr = new  MenuItem()
+                                {
+                                    MenuName = "v",
+                                },
+                                SliderTitle = new MenuItem()
+                                {
+                                    MenuName = "Slider Title",
+                                },
+                                SliderMaximum = new MenuItem()
+                                {
+                                    MenuName = "200"
+                                },
+                                SliderMinimum = new MenuItem()
+                                {
+                                    MenuName = "0"
+                                },
+                                SliderTickFrequency = new MenuItem()
+                                {
+                                    MenuName = "5"
+                                }
+                            }
                         }
+                        
                     },
                     new BasePageContentViewModel()
                     {

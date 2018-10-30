@@ -68,7 +68,7 @@ namespace CmediaSDKTestApp.Models
                 };
                 InitialCMIDriver(jackInfo);
             }
-            _micPage.DisplayText.MenuName = msg;
+            _micPage.DisplayText.MenuName += $"\n{msg}";
         }
 
         private void InitialCMIDriver(CMI_JackDeviceInfo jackInfo)
@@ -87,14 +87,91 @@ namespace CmediaSDKTestApp.Models
             }
 #endif
             #endregion
-            object[] devValue = new object[NativeMethods.CMI_BUFFER_SIZE];
-            object[] devExtraValue = new object[NativeMethods.CMI_BUFFER_SIZE];
+#if true
+            // Allocate a Cmedia standard Array.
+            byte[] devBvalue = new byte[BaseCmediaSDK.CMI_BUFFER_SIZE];
+            // Allocate a memory buffer (that can be accessed and modified by unmanaged code)
+            // to store values from the devBvalue array.
+            IntPtr pdevValue = Marshal.AllocCoTaskMem(Marshal.SizeOf(typeof(byte)) * devBvalue.Length);
 
-            int rev = NativeMethods.CMI_PropertyControl(jackInfo.m_devInfo, NativeMethods.CMI_DefaultDeviceControl, ref devValue, ref devExtraValue, NativeMethods.CMI_DRIVER_READ);
-            uint errLL = NativeMethods.GetLastError();
+            // Copy values from devBvalue to this buffer (i.e. pdevValue).
+            Marshal.Copy(devBvalue, 0, pdevValue, devBvalue.Length);
+
+            // Allocate a GCHandle in order to allocate an IntPtr
+            // that stores the memory address of pdevValue.
+            GCHandle gchDevValue = GCHandle.Alloc(pdevValue, GCHandleType.Pinned);
+            // Use GCHandle.AddrOfPinnedObject() to obtain a pointer 
+            // to a pointer to the byte array of pdevValue.
+            // It is devValue that will be passed to the API.
+            IntPtr devValue = gchDevValue.AddrOfPinnedObject();
+
+            byte[] devExtraBvalue = new byte[BaseCmediaSDK.CMI_BUFFER_SIZE];
+            IntPtr pdevExtraVlue = Marshal.AllocCoTaskMem(Marshal.SizeOf(typeof(byte)) * devExtraBvalue.Length);
+            Marshal.Copy(devExtraBvalue, 0, pdevExtraVlue, devExtraBvalue.Length);
+            GCHandle gch = GCHandle.Alloc(pdevExtraVlue, GCHandleType.Pinned);
+            IntPtr devExtraValue = gch.AddrOfPinnedObject();
+
+            // Call the CMI_PropertyControl() API.
+            // The CMI_PropertyControl() API will not
+            // change the value of devValue. 
+            int rev = NativeMethods.CMI_PropertyControl(jackInfo.m_devInfo, BaseCmediaSDK.CMI_DefaultDeviceControl, devValue, devExtraValue, BaseCmediaSDK.CMI_DRIVER_READ);
             _micPage.DisplayText.MenuName += $"\nCMI_PropertyControl return {rev}";
-            _micPage.DisplayText.MenuName += $"\nCMI_PropertyControl LastError {errLL}";
+            if (0==rev)
+            {
+                // We must now find a way to dereference the memory address
+                // contained inside devValue.
 
+                // Declare an array (of one single value) of IntPtr.
+                IntPtr[] revPtr = new IntPtr[1];
+                // Copy the value contained inside devValue
+                // to revPtr.
+                Marshal.Copy(devValue, revPtr, 0, 1);
+
+                // Allocate a new byte array to be filled with 
+                // values from the array pointed to by revPtr[0]
+                byte[] NewByteArray = new byte[BaseCmediaSDK.CMI_BUFFER_SIZE];
+
+                // Copy the byte array values pointed to by revPtr[0]
+                // to NewByteArray.
+                Marshal.Copy(revPtr[0], NewByteArray, 0, NewByteArray.Length);
+                string revData = System.Text.Encoding.ASCII.GetString(NewByteArray).TrimEnd('\0');
+                _micPage.DisplayText.MenuName += $"\n{BaseCmediaSDK.CMI_DefaultDeviceControl} Get OK {revData}";
+            }
+            gchDevValue.Free();
+            gch.Free();
+
+
+
+
+#else
+            IntPtr[] devValue = new IntPtr[BaseCmediaSDK.CMI_BUFFER_SIZE];
+            IntPtr[] devExtraValue = new IntPtr[BaseCmediaSDK.CMI_BUFFER_SIZE];
+
+            int rev = NativeMethods.CMI_PropertyControl(jackInfo.m_devInfo, BaseCmediaSDK.CMI_DefaultDeviceControl, ref devValue, ref devExtraValue, BaseCmediaSDK.CMI_DRIVER_READ);
+            _micPage.DisplayText.MenuName += $"\nCMI_PropertyControl return {rev}";
+            if (0== rev)
+            {
+                IntPtr revIntptr = new IntPtr(1024);
+                Marshal.Copy(devValue, 0, revIntptr, 1);
+                int[] revInt = new int[BaseCmediaSDK.CMI_BUFFER_SIZE];
+                Marshal.Copy(revIntptr, revInt, 0, revInt.Length);
+
+            }
+            IntPtr[] dev2Value = new IntPtr[1024];
+            IntPtr[] dev2ExtraValue = new IntPtr[1024];
+            rev = NativeMethods.CMI_PropertyControl(jackInfo.m_devInfo, BaseCmediaSDK.CMI_Enable_KEYSHIFT_GFX, ref dev2Value, ref dev2ExtraValue, BaseCmediaSDK.CMI_DRIVER_READ);
+            _micPage.DisplayText.MenuName += $"\nCMI_PropertyControl return {rev}";
+#endif
+        }
+
+        private static IntPtr GetBytePointerOfPointer(int buffSize)
+        {
+            byte[] devValue = new byte[buffSize];
+            IntPtr pUnmanagedIntegerArray = Marshal.AllocCoTaskMem(Marshal.SizeOf(typeof(byte)) * devValue.Length);
+            Marshal.Copy(devValue, 0, pUnmanagedIntegerArray, devValue.Length);
+            GCHandle gch = GCHandle.Alloc(pUnmanagedIntegerArray, GCHandleType.Pinned);
+            IntPtr ppUnmanagedIntegerArray = gch.AddrOfPinnedObject();
+            return ppUnmanagedIntegerArray;
         }
 
         private ObservableCollection<IMenuItem> _contentpages;

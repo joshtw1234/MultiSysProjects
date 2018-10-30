@@ -40,11 +40,17 @@ namespace CmediaSDKTestApp.Models
         [DllImport(_cmediaDllPath, EntryPoint = "GetDeviceById")]
         public static extern int CMI_GetDeviceById(CMI_DeviceType type, int id, out CMI_DEVICEINFO deviceInfo);
 
-        [DllImport(_cmediaDllPath, EntryPoint = "PropertyControl", SetLastError = true)]
+        [DllImport(_cmediaDllPath, EntryPoint = "PropertyControl", CharSet= CharSet.Auto, SetLastError = true)]
         //public static extern int CMI_PropertyControl(CMI_DEVICEINFO info, [MarshalAs(UnmanagedType.LPWStr)]string propertyName, ref IntPtr value, ref IntPtr extraData, byte RorW);
-        public static extern int CMI_PropertyControl(CMI_DEVICEINFO info, string propertyName, ref object[] value, ref object[] extraData, byte driverIO);
+        //public static extern int CMI_PropertyControl(CMI_DEVICEINFO info, string propertyName, ref IntPtr[] value, ref IntPtr[] extraData, byte driverIO);
+        public static extern int CMI_PropertyControl(CMI_DEVICEINFO info, string propertyName, IntPtr value, IntPtr extraData, byte driverIO);
         #endregion
 
+
+    }
+
+    class BaseCmediaSDK
+    {
         public const string CMI_DefaultDeviceControl = "DefaultDeviceControl";
         #region Mic features
         public const byte CMI_DRIVER_READ = 0;
@@ -74,9 +80,9 @@ namespace CmediaSDKTestApp.Models
         public CMI_DEVICEINFO m_devInfo;       // reference to DEVICEINFO
 
         // function attributes
-        public int m_dwCMediaDSP0;       // CMedia DSP function tables
-        public int m_dwThirdPartyDSP0;   // Third-Party DSP function tables
-        public int m_dwExtraStreamFunc;  // Extra stream function tables
+        public int m_dwCMediaDSP0 { get; set; }      // CMedia DSP function tables
+        public int m_dwThirdPartyDSP0 { get; set; }    // Third-Party DSP function tables
+        public int m_dwExtraStreamFunc { get; set; }   // Extra stream function tables
     }
 
     enum CMI_DeviceState

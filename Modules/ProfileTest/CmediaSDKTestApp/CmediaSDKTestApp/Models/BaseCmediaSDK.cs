@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace CmediaSDKTestApp.Models
 {
-    class BaseCmediaSDK
+    class NativeMethods
     {
 #if CMEDIA
         CMI_Init = (LPConfLibInit) GetProcAddress(hAudioDriver, "ConfLibInit");
@@ -19,6 +19,10 @@ namespace CmediaSDKTestApp.Models
         CMI_StopTestSound = (LPStopTestSound) GetProcAddress(hAudioDriver, "StopTestSound");
         CMI_CloseTestSound = (LPCloseTestSound) GetProcAddress(hAudioDriver, "CloseTestSound");
 #endif
+        [DllImport("kernel32.dll")]
+        public static extern uint GetLastError();
+
+        #region SDK Import functions
         const string _cmediaDllPath = @"osConfLib.dll";
 
         [DllImport(_cmediaDllPath, EntryPoint = "ConfLibInit")]
@@ -31,24 +35,51 @@ namespace CmediaSDKTestApp.Models
         public static extern int CMI_CreateDeviceList();
 
         [DllImport(_cmediaDllPath, EntryPoint = "GetDeviceCount")]
-        public static extern int CMI_GetDeviceCount(DeviceType type, ref uint DevCount);
+        public static extern int CMI_GetDeviceCount(CMI_DeviceType type, ref uint DevCount);
 
         [DllImport(_cmediaDllPath, EntryPoint = "GetDeviceById")]
-        public static extern int CMI_GetDeviceById(int type, int id, out DEVICEINFO deviceInfo);
+        public static extern int CMI_GetDeviceById(CMI_DeviceType type, int id, out CMI_DEVICEINFO deviceInfo);
 
-        [DllImport(_cmediaDllPath, EntryPoint = "PropertyControl")]
-        public static extern int CMI_PropertyControl(DEVICEINFO info, [MarshalAs(UnmanagedType.LPWStr)]string propertyName, ref IntPtr value, ref IntPtr extraData, byte RorW);
+        [DllImport(_cmediaDllPath, EntryPoint = "PropertyControl", SetLastError = true)]
+        //public static extern int CMI_PropertyControl(CMI_DEVICEINFO info, [MarshalAs(UnmanagedType.LPWStr)]string propertyName, ref IntPtr value, ref IntPtr extraData, byte RorW);
+        public static extern int CMI_PropertyControl(CMI_DEVICEINFO info, string propertyName, ref object[] value, ref object[] extraData, byte driverIO);
+        #endregion
+
+        public const string CMI_DefaultDeviceControl = "DefaultDeviceControl";
+        #region Mic features
+        public const byte CMI_DRIVER_READ = 0;
+        public const byte CMI_DRIVER_WRITE = 1;
+        public const int CMI_BUFFER_SIZE = 1024;
+        public const string CMI_Enable_KEYSHIFT_GFX = "Enable_KEYSHIFT_GFX";
+        public const string CMI_KEYSHIFT_LEVEL = "KEYSHIFT_LEVEL";
+        public const string CMI_Enable_VOCALCANCEL_GFX = "Enable_VOCALCANCEL_GFX";
+        public const string CMI_VOCALCANCEL_LEVEL = "VOCALCANCEL_LEVEL";
+        public const string CMI_Enable_MICECHO = "Enable_MICECHO";
+        public const string CMI_MICECHO_Level = "MICECHO_Level";
+        public const string CMI_Enable_MAGICVOICE = "Enable_MAGICVOICE";
+        public const string CMI_MagicVoice_Selection = "MagicVoice_Selection";
+        #endregion
     }
 
-    struct DEVICEINFO
+    struct CMI_DEVICEINFO
     {
-        int id;
-        JackType JackType;
-        DataFlow DataFlow;
-        DeviceState DeviceState;
+        public int id;
+        public CMI_JackType JackType;
+        public CMI_DataFlow DataFlow;
+        public CMI_DeviceState DeviceState;
     }
 
-    enum DeviceState
+    class CMI_JackDeviceInfo
+    {
+        public CMI_DEVICEINFO m_devInfo;       // reference to DEVICEINFO
+
+        // function attributes
+        public int m_dwCMediaDSP0;       // CMedia DSP function tables
+        public int m_dwThirdPartyDSP0;   // Third-Party DSP function tables
+        public int m_dwExtraStreamFunc;  // Extra stream function tables
+    }
+
+    enum CMI_DeviceState
     {
         UnknowState = 0,
         Active,
@@ -57,7 +88,7 @@ namespace CmediaSDKTestApp.Models
         Unplugged
     }
 
-    enum JackType
+    enum CMI_JackType
     {
         UnknowJack = 0,
         JackSpeaker,
@@ -74,7 +105,7 @@ namespace CmediaSDKTestApp.Models
         JackSpeakerQuarter
     }
 
-    enum DataFlow
+    enum CMI_DataFlow
     {
         eRender,
         eCapture,
@@ -82,7 +113,7 @@ namespace CmediaSDKTestApp.Models
         DATAFLOW_enum_count
     }
 
-    enum DeviceType
+    enum CMI_DeviceType
     {
         Render = 0,
         Capture

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows;
 using CmediaSDKTestApp.BaseModels;
 
@@ -34,24 +35,66 @@ namespace CmediaSDKTestApp.Models
             }
         }
 
+        MicPageContentModel _micPage;
+
         internal void ModelInitialize()
         {
+            CMI_DEVICEINFO devInfo;
+            CMI_JackDeviceInfo jackInfo = new CMI_JackDeviceInfo();
             string msg = "Found Device";
             uint devCount = 0;
-            int rev = BaseCmediaSDK.CMI_ConfLibInit();
-            rev = BaseCmediaSDK.CMI_CreateDeviceList();
-            rev = BaseCmediaSDK.CMI_GetDeviceCount(DeviceType.Render, ref devCount);
+            int rev = NativeMethods.CMI_ConfLibInit();
+            rev = NativeMethods.CMI_CreateDeviceList();
+            rev = NativeMethods.CMI_GetDeviceCount(CMI_DeviceType.Render, ref devCount);
             if (0 == devCount)
             {
-                
                 msg = "Device not found!!";
             }
             else
             {
-
+                for(int i = 0; i < devCount; i++)
+                {
+                    rev = NativeMethods.CMI_GetDeviceById(CMI_DeviceType.Render, i, out devInfo);
+                    switch(devInfo.DeviceState)
+                    {
+                        case CMI_DeviceState.Active:
+                            jackInfo.m_devInfo = devInfo;
+                            msg += $" JackType [{jackInfo.m_devInfo.JackType}]";
+                            break;
+                        default:
+                            msg = $"Device State {devInfo.DeviceState}";
+                            break;
+                    }
+                };
+                InitialCMIDriver(jackInfo);
             }
-            var micPageContent = _contentpages.FirstOrDefault(x => x.MenuName.Equals(ButtonStrings.Microphone.ToString()));
-            (micPageContent as MicPageContentModel).DisplayText.MenuName = msg;
+            _micPage.DisplayText.MenuName = msg;
+        }
+
+        private void InitialCMIDriver(CMI_JackDeviceInfo jackInfo)
+        {
+            #region SDK sample code
+#if false
+            throw new NotImplementedException();
+            memset(m_pGetValueBuffer, 0, STATIC_BUFFER_SIZE);
+            nResult = CMI_PropertyControl(g_JackDevRender.m_devInfo, _T("Enable_KEYSHIFT_GFX"), (void**)&m_pGetValueBuffer, NULL, DRIVER_READ_FLAG);
+            if (nResult != 0)
+            {
+                memset(m_pSetValueBuffer, 0, STATIC_BUFFER_SIZE);
+                DWORD dwValue = 0;
+                memcpy(m_pSetValueBuffer, &dwValue, sizeof(DWORD));
+                nResult = CMI_PropertyControl(g_JackDevRender.m_devInfo, _T("Enable_KEYSHIFT_GFX"), (void**)&m_pSetValueBuffer, NULL, DRIVER_WRITE_FLAG);
+            }
+#endif
+            #endregion
+            object[] devValue = new object[NativeMethods.CMI_BUFFER_SIZE];
+            object[] devExtraValue = new object[NativeMethods.CMI_BUFFER_SIZE];
+
+            int rev = NativeMethods.CMI_PropertyControl(jackInfo.m_devInfo, NativeMethods.CMI_DefaultDeviceControl, ref devValue, ref devExtraValue, NativeMethods.CMI_DRIVER_READ);
+            uint errLL = NativeMethods.GetLastError();
+            _micPage.DisplayText.MenuName += $"\nCMI_PropertyControl return {rev}";
+            _micPage.DisplayText.MenuName += $"\nCMI_PropertyControl LastError {errLL}";
+
         }
 
         private ObservableCollection<IMenuItem> _contentpages;
@@ -160,24 +203,15 @@ namespace CmediaSDKTestApp.Models
         {
             get
             {
-                return _contentpages = new ObservableCollection<IMenuItem>()
+                _micPage = new MicPageContentModel()
                 {
-                    new BasePageContentModel()
+                    MenuName = ButtonStrings.Microphone.ToString(),
+                    MenuStyle = localDic["MICContentPageStyle"] as Style,
+                    DisplayText = new BindAbleMenuItem()
                     {
-                        MenuName = ButtonStrings.Equaliser.ToString(),
-                        MenuStyle = localDic["EQContentPageStyle"] as Style,
-                        MenuVisibility = true,
-                        MenuImage = "/CmediaSDKTestApp;component/Assets/TestAsset1.jpg"
+                        MenuName = "Message here"
                     },
-                    new MicPageContentModel()
-                    {
-                        MenuName = ButtonStrings.Microphone.ToString(),
-                        MenuStyle = localDic["MICContentPageStyle"] as Style,
-                        DisplayText = new BindAbleMenuItem()
-                        {
-                            MenuName = "Message here"
-                        },
-                        SliderControls = new ObservableCollection<IMenuItem>()
+                    SliderControls = new ObservableCollection<IMenuItem>()
                         {
                             new HorzSliderControlViewModel()
                             {
@@ -261,7 +295,16 @@ namespace CmediaSDKTestApp.Models
                                 }
                             }
                         }
-                        
+
+                };
+                _contentpages = new ObservableCollection<IMenuItem>()
+                {
+                    new BasePageContentModel()
+                    {
+                        MenuName = ButtonStrings.Equaliser.ToString(),
+                        MenuStyle = localDic["EQContentPageStyle"] as Style,
+                        MenuVisibility = true,
+                        MenuImage = "/CmediaSDKTestApp;component/Assets/TestAsset1.jpg"
                     },
                     new BasePageContentModel()
                     {
@@ -274,6 +317,8 @@ namespace CmediaSDKTestApp.Models
                         MenuStyle = localDic["BaseContentPageStyle"] as Style,
                     },
                 };
+                _contentpages.Add(_micPage);
+                return _contentpages;
             }
         }
     }

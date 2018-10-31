@@ -93,29 +93,13 @@ namespace CmediaSDKTestApp.Models
 #endif
             #endregion
             ZazuRWData rwData = new ZazuRWData() { JackInfo = jackInfo, PropertyName = CMI_FunctinoPoint.DefaultDeviceControl, ReadWrite = CMI_DriverRW.Read, WriteData = null };
-            var rev = await BaseCmediaSDK.OMEN_PropertyControl(rwData);
-            _micPage.DisplayText.MenuName += $"{rev.RevMessage}";
-            rwData.PropertyName = CMI_FunctinoPoint.GetDeviceFriendlyName;
-            rev = await BaseCmediaSDK.OMEN_PropertyControl(rwData);
-            _micPage.DisplayText.MenuName += $"{rev.RevMessage}";
-            rwData.PropertyName = CMI_FunctinoPoint.GetExtraInfo;
-            rev = await BaseCmediaSDK.OMEN_PropertyControl(rwData);
-            _micPage.DisplayText.MenuName += $"{rev.RevMessage}";
-            rwData.PropertyName = CMI_FunctinoPoint.GetDriverVer;
-            rev = await BaseCmediaSDK.OMEN_PropertyControl(rwData);
-            _micPage.DisplayText.MenuName += $"{rev.RevMessage}";
-            rwData.PropertyName = CMI_FunctinoPoint.GetFirmwareVer;
-            rev = await BaseCmediaSDK.OMEN_PropertyControl(rwData);
-            _micPage.DisplayText.MenuName += $"{rev.RevMessage}";
-            rwData.PropertyName = CMI_FunctinoPoint.GetDirectXVer;
-            rev = await BaseCmediaSDK.OMEN_PropertyControl(rwData);
-            _micPage.DisplayText.MenuName += $"{rev.RevMessage}";
-            rwData.PropertyName = CMI_FunctinoPoint.Enable_KEYSHIFT_GFX;
-            rev = await BaseCmediaSDK.OMEN_PropertyControl(rwData);
-            _micPage.DisplayText.MenuName += $"{rev.RevMessage}";
-            rwData.PropertyName = CMI_FunctinoPoint.Enable_MICECHO;
-            rev = await BaseCmediaSDK.OMEN_PropertyControl(rwData);
-            _micPage.DisplayText.MenuName += $"{rev.RevMessage}";
+            OMENREVData rev = null;
+            for(CMI_FunctinoPoint i = CMI_FunctinoPoint.DefaultDeviceControl; i<= CMI_FunctinoPoint.MagicVoice_Selection; i++)
+            {
+                rwData.PropertyName = i;
+                rev = await BaseCmediaSDK.OMEN_PropertyControl(rwData);
+                _micPage.DisplayText.MenuName += $"{rev.RevMessage}";
+            }
             byte[] setByte = new byte[BaseCmediaSDK.CMI_BUFFER_SIZE];
             //OMEN_PropertyControl(jackInfo, BaseCmediaSDK.CMI_DefaultDeviceControl, CMI_DriverRW.Write, setByte);
         }

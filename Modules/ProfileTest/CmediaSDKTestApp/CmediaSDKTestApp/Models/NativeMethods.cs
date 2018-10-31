@@ -110,7 +110,7 @@ namespace CmediaSDKTestApp.Models
                 // The CMI_PropertyControl() API will not
                 // change the value of devValue. 
                 int revCode = NativeMethods.CMI_PropertyControl(rwData.JackInfo.m_devInfo, rwData.PropertyName.ToString(), devValue, devExtraValue, rwData.ReadWrite);
-                string revString = $"\nCMI_PropertyControl {rwData.PropertyName} {rwData.ReadWrite} return {revCode}";
+                string revString = $"\nCMI_PropertyControl [{rwData.PropertyName}] {rwData.ReadWrite} return {revCode}";
                 if (0 == revCode)
                 {
                     // We must now find a way to dereference the memory address
@@ -130,7 +130,7 @@ namespace CmediaSDKTestApp.Models
                     // to NewByteArray.
                     Marshal.Copy(revPtr[0], NewByteArray, 0, NewByteArray.Length);
                     string revData = System.Text.Encoding.ASCII.GetString(NewByteArray).Replace('\0', ' ').Trim();
-                    revString = $"\nCMI_PropertyControl {rwData.PropertyName} {rwData.ReadWrite} return {revCode} Get Data [{revData}]";
+                    revString = $"\nCMI_PropertyControl [{rwData.PropertyName} {rwData.ReadWrite}] return {revCode} Get Data [{revData}]";
                 }
                 gchDevValue.Free();
                 gch.Free();

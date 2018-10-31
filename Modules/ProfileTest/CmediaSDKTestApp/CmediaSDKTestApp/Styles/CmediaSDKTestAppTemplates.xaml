@@ -85,9 +85,9 @@
 
     <ControlTemplate x:Key="MICControlTemplate" TargetType="{x:Type ContentControl}">
         <DockPanel>
-            <ItemsControl DockPanel.Dock="Bottom" ItemsSource="{Binding SliderControls}"
+            <!--<ItemsControl DockPanel.Dock="Bottom" ItemsSource="{Binding SliderControls}"
                       ItemTemplate="{StaticResource SliderControlTemplate}"
-                      ItemsPanel="{StaticResource StackVerticalPanelTemplate}"/>
+                      ItemsPanel="{StaticResource StackVerticalPanelTemplate}"/>-->
             <ScrollViewer>
                 <TextBlock  Text="{Binding DisplayText.MenuName}" Style="{DynamicResource BaseTextBlock}"/>
             </ScrollViewer>

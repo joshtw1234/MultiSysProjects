@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 namespace CmediaSDKTestApp.Models
 {
@@ -49,7 +50,16 @@ namespace CmediaSDKTestApp.Models
 
     class BaseCmediaSDK
     {
+        #region CMI Device
         public const string CMI_DefaultDeviceControl = "DefaultDeviceControl";
+        public const string CMI_GetDeviceFriendlyName = "GetDeviceFriendlyName";
+        public const string CMI_GetDeviceID = "GetDeviceID";
+        public const string CMI_GetExtraInfo = "GetExtraInfo";
+        public const string CMI_GetFirmwareVer = "GetFirmwareVer";
+        public const string CMI_GetDriverVer = "GetDriverVer";
+        public const string CMI_GetDirectXVer = "GetDirectXVer";
+        #endregion
+
         #region Mic features
         public const int CMI_BUFFER_SIZE = 1024;
         public const string CMI_Enable_KEYSHIFT_GFX = "Enable_KEYSHIFT_GFX";
@@ -61,6 +71,85 @@ namespace CmediaSDKTestApp.Models
         public const string CMI_Enable_MAGICVOICE = "Enable_MAGICVOICE";
         public const string CMI_MagicVoice_Selection = "MagicVoice_Selection";
         #endregion
+
+        public static async Task<OMENREVData> OMEN_PropertyControl(ZazuRWData rwData)
+        {
+            return await Task.Run(() =>
+            {
+                // Allocate a Cmedia standard Array.
+                byte[] devBvalue = new byte[CMI_BUFFER_SIZE];
+                if (rwData.ReadWrite == CMI_DriverRW.Write)
+                {
+                    devBvalue = rwData.WriteData;
+                }
+                // Allocate a memory buffer (that can be accessed and modified by unmanaged code)
+                // to store values from the devBvalue array.
+                IntPtr pdevValue = Marshal.AllocCoTaskMem(Marshal.SizeOf(typeof(byte)) * devBvalue.Length);
+
+                // Copy values from devBvalue to this buffer (i.e. pdevValue).
+                Marshal.Copy(devBvalue, 0, pdevValue, devBvalue.Length);
+
+                // Allocate a GCHandle in order to allocate an IntPtr
+                // that stores the memory address of pdevValue.
+                GCHandle gchDevValue = GCHandle.Alloc(pdevValue, GCHandleType.Pinned);
+                // Use GCHandle.AddrOfPinnedObject() to obtain a pointer 
+                // to a pointer to the byte array of pdevValue.
+                // It is devValue that will be passed to the API.
+                IntPtr devValue = gchDevValue.AddrOfPinnedObject();
+
+                byte[] devExtraBvalue = new byte[BaseCmediaSDK.CMI_BUFFER_SIZE];
+                IntPtr pdevExtraVlue = Marshal.AllocCoTaskMem(Marshal.SizeOf(typeof(byte)) * devExtraBvalue.Length);
+                Marshal.Copy(devExtraBvalue, 0, pdevExtraVlue, devExtraBvalue.Length);
+                GCHandle gch = GCHandle.Alloc(pdevExtraVlue, GCHandleType.Pinned);
+                IntPtr devExtraValue = gch.AddrOfPinnedObject();
+
+                // Call the CMI_PropertyControl() API.
+                // The CMI_PropertyControl() API will not
+                // change the value of devValue. 
+                int revCode = NativeMethods.CMI_PropertyControl(rwData.JackInfo.m_devInfo, rwData.PropertyName, devValue, devExtraValue, rwData.ReadWrite);
+                string revString = $"\nCMI_PropertyControl {rwData.PropertyName} {rwData.ReadWrite} return {revCode}";
+                if (0 == revCode)
+                {
+                    // We must now find a way to dereference the memory address
+                    // contained inside devValue.
+
+                    // Declare an array (of one single value) of IntPtr.
+                    IntPtr[] revPtr = new IntPtr[1];
+                    // Copy the value contained inside devValue
+                    // to revPtr.
+                    Marshal.Copy(devValue, revPtr, 0, 1);
+
+                    // Allocate a new byte array to be filled with 
+                    // values from the array pointed to by revPtr[0]
+                    byte[] NewByteArray = new byte[BaseCmediaSDK.CMI_BUFFER_SIZE];
+
+                    // Copy the byte array values pointed to by revPtr[0]
+                    // to NewByteArray.
+                    Marshal.Copy(revPtr[0], NewByteArray, 0, NewByteArray.Length);
+                    string revData = System.Text.Encoding.ASCII.GetString(NewByteArray).Replace('\0', ' ').Trim();
+                    revString = $"\nCMI_PropertyControl {rwData.PropertyName} {rwData.ReadWrite} return {revCode} Get Data [{revData}]";
+                }
+                gchDevValue.Free();
+                gch.Free();
+                OMENREVData rev = new OMENREVData() { RevCode = revCode, RevMessage = revString };
+                return rev;
+            });
+
+        }
+    }
+
+    class OMENREVData
+    {
+        public int RevCode;
+        public string RevMessage;
+    }
+
+    class ZazuRWData
+    {
+        public CMI_JackDeviceInfo JackInfo;
+        public string PropertyName;
+        public CMI_DriverRW ReadWrite;
+        public byte[] WriteData;
     }
 
     struct CMI_DEVICEINFO

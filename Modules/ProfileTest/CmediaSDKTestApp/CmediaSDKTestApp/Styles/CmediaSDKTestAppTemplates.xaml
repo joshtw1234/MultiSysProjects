@@ -88,7 +88,9 @@
             <ItemsControl DockPanel.Dock="Bottom" ItemsSource="{Binding SliderControls}"
                       ItemTemplate="{StaticResource SliderControlTemplate}"
                       ItemsPanel="{StaticResource StackVerticalPanelTemplate}"/>
-            <TextBlock  Text="{Binding DisplayText.MenuName}" Style="{DynamicResource BaseTextBlock}"/>
+            <ScrollViewer>
+                <TextBlock  Text="{Binding DisplayText.MenuName}" Style="{DynamicResource BaseTextBlock}"/>
+            </ScrollViewer>
         </DockPanel>
     </ControlTemplate>
 

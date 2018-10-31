@@ -47,30 +47,33 @@ namespace CmediaSDKTestApp.Models
 
 
     }
-
-    class BaseCmediaSDK
+    enum CMI_FunctinoPoint
     {
         #region CMI Device
-        public const string CMI_DefaultDeviceControl = "DefaultDeviceControl";
-        public const string CMI_GetDeviceFriendlyName = "GetDeviceFriendlyName";
-        public const string CMI_GetDeviceID = "GetDeviceID";
-        public const string CMI_GetExtraInfo = "GetExtraInfo";
-        public const string CMI_GetFirmwareVer = "GetFirmwareVer";
-        public const string CMI_GetDriverVer = "GetDriverVer";
-        public const string CMI_GetDirectXVer = "GetDirectXVer";
+        DefaultDeviceControl,
+        GetDeviceFriendlyName,
+        GetDeviceID,
+        GetExtraInfo,
+        GetFirmwareVer,
+        GetDriverVer,
+        GetDirectXVer,
         #endregion
 
         #region Mic features
-        public const int CMI_BUFFER_SIZE = 1024;
-        public const string CMI_Enable_KEYSHIFT_GFX = "Enable_KEYSHIFT_GFX";
-        public const string CMI_KEYSHIFT_LEVEL = "KEYSHIFT_LEVEL";
-        public const string CMI_Enable_VOCALCANCEL_GFX = "Enable_VOCALCANCEL_GFX";
-        public const string CMI_VOCALCANCEL_LEVEL = "VOCALCANCEL_LEVEL";
-        public const string CMI_Enable_MICECHO = "Enable_MICECHO";
-        public const string CMI_MICECHO_Level = "MICECHO_Level";
-        public const string CMI_Enable_MAGICVOICE = "Enable_MAGICVOICE";
-        public const string CMI_MagicVoice_Selection = "MagicVoice_Selection";
+        Enable_KEYSHIFT_GFX,
+        KEYSHIFT_LEVEL,
+        Enable_VOCALCANCEL_GFX,
+        VOCALCANCEL_LEVEL,
+        Enable_MICECHO,
+        MICECHO_Level,
+        Enable_MAGICVOICE,
+        MagicVoice_Selection,
         #endregion
+    }
+
+    class BaseCmediaSDK
+    {
+        public const int CMI_BUFFER_SIZE = 1024;
 
         public static async Task<OMENREVData> OMEN_PropertyControl(ZazuRWData rwData)
         {
@@ -106,7 +109,7 @@ namespace CmediaSDKTestApp.Models
                 // Call the CMI_PropertyControl() API.
                 // The CMI_PropertyControl() API will not
                 // change the value of devValue. 
-                int revCode = NativeMethods.CMI_PropertyControl(rwData.JackInfo.m_devInfo, rwData.PropertyName, devValue, devExtraValue, rwData.ReadWrite);
+                int revCode = NativeMethods.CMI_PropertyControl(rwData.JackInfo.m_devInfo, rwData.PropertyName.ToString(), devValue, devExtraValue, rwData.ReadWrite);
                 string revString = $"\nCMI_PropertyControl {rwData.PropertyName} {rwData.ReadWrite} return {revCode}";
                 if (0 == revCode)
                 {
@@ -147,7 +150,7 @@ namespace CmediaSDKTestApp.Models
     class ZazuRWData
     {
         public CMI_JackDeviceInfo JackInfo;
-        public string PropertyName;
+        public CMI_FunctinoPoint PropertyName;
         public CMI_DriverRW ReadWrite;
         public byte[] WriteData;
     }

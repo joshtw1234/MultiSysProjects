@@ -35,6 +35,7 @@ namespace CmediaSDKTestApp.Models
         }
 
         MicPageContentModel _micPage;
+        CmediaSDKCallback _cmediaSDKCallback;
 
         internal void ModelInitialize()
         {
@@ -66,9 +67,17 @@ namespace CmediaSDKTestApp.Models
                     }
                 };
                 InitialGetCMIDriverData(jackInfo);
+                _cmediaSDKCallback = OnCmediaSDKCallback;
+                rev = NativeMethods.CMI_RegisterCallbackFunction(_cmediaSDKCallback, IntPtr.Zero);
+                msg += $"\nRegisterCallback return {rev}";
             }
             _micPage.DisplayText.MenuName += $"\n{msg}";
             Application.Current.MainWindow.Closing += MainWindow_Closing;
+        }
+
+        private void OnCmediaSDKCallback(int type, int id, int componentType, ulong eventId)
+        {
+            //throw new NotImplementedException();
         }
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)

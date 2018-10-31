@@ -43,17 +43,30 @@ namespace CmediaSDKTestApp.Models
 
         [DllImport(_cmediaDllPath, EntryPoint = "PropertyControl", CharSet= CharSet.Auto, SetLastError = true)]
         public static extern int CMI_PropertyControl(CMI_DEVICEINFO info, string propertyName, IntPtr value, IntPtr extraData, CMI_DriverRW driverRW);
+
+        [DllImport(_cmediaDllPath, EntryPoint = "RegisterCallbackFunction", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern int CMI_RegisterCallbackFunction([MarshalAs(UnmanagedType.FunctionPtr)] CmediaSDKCallback callbackPointer, IntPtr wndHandle);
         #endregion
 
 
     }
+
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    public delegate void CmediaSDKCallback(int type, int id, int componentType, ulong eventId);
+
     enum CMI_FunctinoPoint
     {
         #region CMI Device
         DefaultDeviceControl,
+        AmplifierControl,
+        EndpointEnableControl,
+        EXControl,
+        GetSupportFeature,
         GetDeviceFriendlyName,
         GetDeviceID,
         GetExtraInfo,
+        GetSymbolicLink,
+        GetAudioCodecName,
         GetFirmwareVer,
         GetDriverVer,
         GetDirectXVer,

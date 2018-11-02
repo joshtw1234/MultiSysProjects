@@ -15,7 +15,10 @@ namespace WPFLogicDemo
         }
 
         #region Module Interface
-        public string interfaceVersion => throw new System.NotImplementedException();
+        public string interfaceVersion
+        {
+            get { return string.Empty; }
+        }
 
         public string moduleName
         {

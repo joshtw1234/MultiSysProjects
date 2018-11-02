@@ -217,12 +217,17 @@ namespace WPFLogicDemo.Models
         //the User Name is the info we want returned by the query.
         internal static int WTS_UserName = 5;
 
+        
+
+    }
+
+    class NativeMethods
+    {
         [DllImport("Wtsapi32.dll")]
         public static extern bool WTSQuerySessionInformationW(IntPtr hServer,
             int SessionId,
             int WTSInfoClass,
             out IntPtr ppBuffer,
             out IntPtr pBytesReturned);
-
     }
 }

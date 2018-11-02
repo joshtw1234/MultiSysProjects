@@ -83,11 +83,15 @@
         </StackPanel>
     </DataTemplate>
 
+    <DataTemplate x:Key="MicButtonsTemplate">
+        <ToggleButton Style="{Binding MenuStyle}"/>
+    </DataTemplate>
+
     <ControlTemplate x:Key="MICControlTemplate" TargetType="{x:Type ContentControl}">
         <DockPanel>
-            <!--<ItemsControl DockPanel.Dock="Bottom" ItemsSource="{Binding SliderControls}"
-                      ItemTemplate="{StaticResource SliderControlTemplate}"
-                      ItemsPanel="{StaticResource StackVerticalPanelTemplate}"/>-->
+            <ItemsControl DockPanel.Dock="Bottom" ItemsSource="{Binding SliderControls}"
+                      ItemTemplate="{StaticResource MicButtonsTemplate}"
+                      ItemsPanel="{StaticResource ButtonPanelTemplate}"/>
             <ScrollViewer>
                 <TextBlock  Text="{Binding DisplayText.MenuName}" Style="{DynamicResource BaseTextBlock}"/>
             </ScrollViewer>

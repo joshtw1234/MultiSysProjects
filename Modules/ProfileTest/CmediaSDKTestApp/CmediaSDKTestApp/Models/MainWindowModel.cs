@@ -15,7 +15,9 @@ namespace CmediaSDKTestApp.Models
             Lighting,
             Cooling,
             Cancle,
-            Apply
+            Apply,
+            EnableMagic,
+            EnableEcho
         }
 
         private ResourceDictionary _localDic;
@@ -36,19 +38,21 @@ namespace CmediaSDKTestApp.Models
 
         MicPageContentModel _micPage;
         CmediaSDKCallback _cmediaSDKCallback;
+        CMI_JackDeviceInfo _cmediaJackInfoRender, _cmediajackInfoCapture;
 
         internal void ModelInitialize()
         {
             CMI_DEVICEINFO devInfo;
-            CMI_JackDeviceInfo jackInfo = new CMI_JackDeviceInfo();
-            string msg = "Found Device";
+            _cmediaJackInfoRender = new CMI_JackDeviceInfo();
+            _cmediajackInfoCapture = new CMI_JackDeviceInfo();
+            string msg = "Found Device ";
             uint devCount = 0;
             int rev = NativeMethods.CMI_ConfLibInit();
             rev = NativeMethods.CMI_CreateDeviceList();
             rev = NativeMethods.CMI_GetDeviceCount(CMI_DeviceType.Render, ref devCount);
             if (0 == devCount)
             {
-                msg = "Device not found!!";
+                msg = "Render Device not found!!";
             }
             else
             {
@@ -58,20 +62,46 @@ namespace CmediaSDKTestApp.Models
                     switch(devInfo.DeviceState)
                     {
                         case CMI_DeviceState.Active:
-                            jackInfo.m_devInfo = devInfo;
-                            msg += $" JackType [{jackInfo.m_devInfo.JackType}]";
+                            _cmediaJackInfoRender.m_devInfo = devInfo;
+                            msg += $"JackInfo Render JackType [{_cmediaJackInfoRender.m_devInfo.JackType}]";
                             break;
                         default:
                             msg = $"Device State {devInfo.DeviceState}";
                             break;
                     }
                 };
-                InitialGetCMIDriverData(jackInfo);
+                //InitialGetCMIDriverData(_cmediaJackInfoRender);
                 _cmediaSDKCallback = OnCmediaSDKCallback;
                 rev = NativeMethods.CMI_RegisterCallbackFunction(_cmediaSDKCallback, IntPtr.Zero);
                 msg += $"\nRegisterCallback return {rev}";
             }
             _micPage.DisplayText.MenuName += $"\n{msg}";
+            msg = "Found Device ";
+            rev = NativeMethods.CMI_GetDeviceCount(CMI_DeviceType.Capture, ref devCount);
+            if (0 == devCount)
+            {
+                msg = "Capture Device not found!!";
+            }
+            else
+            {
+                for (int i = 0; i < devCount; i++)
+                {
+                    rev = NativeMethods.CMI_GetDeviceById(CMI_DeviceType.Capture, i, out devInfo);
+                    switch (devInfo.DeviceState)
+                    {
+                        case CMI_DeviceState.Active:
+                            _cmediajackInfoCapture.m_devInfo = devInfo;
+                            msg += $"JackInfo Capture JackType [{_cmediajackInfoCapture.m_devInfo.JackType}]";
+                            break;
+                        default:
+                            msg = $"Device State {devInfo.DeviceState}";
+                            break;
+                    }
+                };
+                InitialCaptureDevice(_cmediajackInfoCapture, CMI_FunctinoPoint.Enable_MICECHO);
+            }
+            _micPage.DisplayText.MenuName += $"\n{msg}";
+
             Application.Current.MainWindow.Closing += MainWindow_Closing;
         }
 
@@ -85,7 +115,28 @@ namespace CmediaSDKTestApp.Models
             int rev = NativeMethods.CMI_ConfLibUnInit();
         }
 
-        private async void InitialGetCMIDriverData(CMI_JackDeviceInfo jackInfo)
+        private void InitialCaptureDevice(CMI_JackDeviceInfo jackInfo, CMI_FunctinoPoint funPoint)
+        {
+            var rwData = new ZazuRWData() { JackInfo = jackInfo, PropertyName = funPoint, ReadWrite = CMI_DriverRW.Read, WriteData = null };
+            OMENREVData rev = BaseCmediaSDK.OMEN_PropertyControl(rwData);
+            _micPage.DisplayText.MenuName += $"{rev.RevMessage}";
+            rwData.ReadWrite = CMI_DriverRW.Write;
+            uint setData = 0;
+            if (int.Parse(rev.RevValue) == 0)
+            {
+                setData = 1;
+            }
+            rwData.WriteData = BitConverter.GetBytes(setData);
+            rev = BaseCmediaSDK.OMEN_PropertyControl(rwData);
+            _micPage.DisplayText.MenuName += $"{rev.RevMessage}";
+
+            //rwData.ReadWrite = CMI_DriverRW.Read;
+            //rev = BaseCmediaSDK.OMEN_PropertyControl(rwData);
+            //_micPage.DisplayText.MenuName += $"{rev.RevMessage}";
+
+        }
+
+        private void InitialGetCMIDriverData(CMI_JackDeviceInfo jackInfo)
         {
             #region SDK sample code
 #if false
@@ -101,12 +152,14 @@ namespace CmediaSDKTestApp.Models
             }
 #endif
             #endregion
-            ZazuRWData rwData = new ZazuRWData() { JackInfo = jackInfo, PropertyName = CMI_FunctinoPoint.DefaultDeviceControl, ReadWrite = CMI_DriverRW.Read, WriteData = null };
+            ZazuRWData rwData = null;
             OMENREVData rev = null;
-            for(CMI_FunctinoPoint i = CMI_FunctinoPoint.DefaultDeviceControl; i<= CMI_FunctinoPoint.MagicVoice_Selection; i++)
+            int buffSize = 0;
+
+            for (CMI_FunctinoPoint i = CMI_FunctinoPoint.DefaultDeviceControl; i <= CMI_FunctinoPoint.GetDriverVer; i++)
             {
-                rwData.PropertyName = i;
-                rev = await BaseCmediaSDK.OMEN_PropertyControl(rwData);
+                rwData = new ZazuRWData() { JackInfo = jackInfo, PropertyName = i, ReadWrite = CMI_DriverRW.Read, WriteData = null };
+                rev = BaseCmediaSDK.OMEN_PropertyControl(rwData);
                 _micPage.DisplayText.MenuName += $"{rev.RevMessage}";
             }
             byte[] setByte = new byte[BaseCmediaSDK.CMI_BUFFER_SIZE];
@@ -150,6 +203,13 @@ namespace CmediaSDKTestApp.Models
                 case ButtonStrings.Apply:
                     break;
                 case ButtonStrings.Cancle:
+                    _micPage.DisplayText.MenuName = string.Empty;
+                    break;
+                case ButtonStrings.EnableMagic:
+                    InitialCaptureDevice(_cmediajackInfoCapture, CMI_FunctinoPoint.Enable_MAGICVOICE);
+                    break;
+                case ButtonStrings.EnableEcho:
+                    InitialCaptureDevice(_cmediajackInfoCapture, CMI_FunctinoPoint.Enable_MICECHO);
                     break;
             }
         }
@@ -228,9 +288,26 @@ namespace CmediaSDKTestApp.Models
                     {
                         MenuName = "Message here"
                     },
+                    
                     SliderControls = new ObservableCollection<IMenuItem>()
+                    {
+#if true
+                        new BindAbleMenuItem()
                         {
-                            new HorzSliderControlViewModel()
+                            MenuName = "Enable Magic",
+                            MenuStyle = localDic["BaseToggleButton"] as Style,
+                            MenuData = ButtonStrings.EnableMagic.ToString(),
+                            MenuCommand = OnCommonButtonClickEvent
+                        },
+                        new BindAbleMenuItem()
+                        {
+                            MenuName = "Enable ECHO",
+                            MenuStyle = localDic["BaseToggleButton"] as Style,
+                            MenuData = ButtonStrings.EnableEcho.ToString(),
+                            MenuCommand = OnCommonButtonClickEvent
+                        },
+#else
+                        new HorzSliderControlViewModel()
                             {
                                 SliderValueStr = new MenuItem()
                                 {
@@ -311,7 +388,8 @@ namespace CmediaSDKTestApp.Models
                                     MenuName = "5"
                                 }
                             }
-                        }
+#endif
+                    }
 
                 };
                 _contentpages = new ObservableCollection<IMenuItem>()

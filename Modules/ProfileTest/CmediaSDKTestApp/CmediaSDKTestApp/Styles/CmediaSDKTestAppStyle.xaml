@@ -76,4 +76,10 @@
         <Setter Property="Foreground" Value="{StaticResource SliderThumb.Static.Foreground}"/>
         <Setter Property="Template" Value="{StaticResource SliderHorizontal}"/>
     </Style>
+
+    <Style x:Key="BaseToggleButton" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Content" Value="{Binding MenuName}"/>
+        <Setter Property="Command" Value="{Binding MenuCommand}"/>
+        <Setter Property="CommandParameter" Value="{Binding MenuData}"/>
+    </Style>
 </ResourceDictionary>

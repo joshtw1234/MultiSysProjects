@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 
 namespace CmediaSDKTestApp.Models
 {
@@ -124,73 +123,6 @@ namespace CmediaSDKTestApp.Models
 
     }
 
-    class BaseCmediaSDK
-    {
-        public const int CMI_BUFFER_SIZE = 1024;
-
-        public static OMENREVData OMEN_PropertyControl(ZazuRWData rwData)
-        {
-            // Allocate a Cmedia standard Array.
-            byte[] devBvalue = new byte[CMI_BUFFER_SIZE];
-            if (rwData.ReadWrite == CMI_DriverRW.Write)
-            {
-                devBvalue = rwData.WriteData;
-            }
-            // Allocate a memory buffer (that can be accessed and modified by unmanaged code)
-            // to store values from the devBvalue array.
-            IntPtr pdevValue = Marshal.AllocCoTaskMem(Marshal.SizeOf(typeof(byte)) * CMI_BUFFER_SIZE);
-
-            // Copy values from devBvalue to this buffer (i.e. pdevValue).
-            Marshal.Copy(devBvalue, 0, pdevValue, devBvalue.Length);
-
-            // Allocate a GCHandle in order to allocate an IntPtr
-            // that stores the memory address of pdevValue.
-            GCHandle gchDevValue = GCHandle.Alloc(pdevValue, GCHandleType.Pinned);
-            // Use GCHandle.AddrOfPinnedObject() to obtain a pointer 
-            // to a pointer to the byte array of pdevValue.
-            // It is devValue that will be passed to the API.
-            IntPtr devValue = gchDevValue.AddrOfPinnedObject();
-
-            byte[] devExtraBvalue = new byte[CMI_BUFFER_SIZE];
-            IntPtr pdevExtraVlue = Marshal.AllocCoTaskMem(Marshal.SizeOf(typeof(byte)) * CMI_BUFFER_SIZE);
-            Marshal.Copy(devExtraBvalue, 0, pdevExtraVlue, devExtraBvalue.Length);
-            GCHandle gch = GCHandle.Alloc(pdevExtraVlue, GCHandleType.Pinned);
-            IntPtr devExtraValue = gch.AddrOfPinnedObject();
-
-            // Call the CMI_PropertyControl() API.
-            // The CMI_PropertyControl() API will not
-            // change the value of devValue. 
-            int revCode = NativeMethods.CMI_PropertyControl(rwData.JackInfo.m_devInfo, rwData.RenderPropertyName.ToString(), devValue, devExtraValue, rwData.ReadWrite);
-            string revString = $"\nCMI_PropertyControl [{rwData.RenderPropertyName}] {rwData.ReadWrite} return {revCode}";
-            string revData = string.Empty;
-            if (0 == revCode)
-            {
-                // We must now find a way to dereference the memory address
-                // contained inside devValue.
-
-                // Declare an array (of one single value) of IntPtr.
-                IntPtr[] revPtr = new IntPtr[1];
-                // Copy the value contained inside devValue
-                // to revPtr.
-                Marshal.Copy(devValue, revPtr, 0, 1);
-
-                // Allocate a new byte array to be filled with 
-                // values from the array pointed to by revPtr[0]
-                byte[] NewByteArray = new byte[BaseCmediaSDK.CMI_BUFFER_SIZE];
-
-                // Copy the byte array values pointed to by revPtr[0]
-                // to NewByteArray.
-                Marshal.Copy(revPtr[0], NewByteArray, 0, NewByteArray.Length);
-                revData = System.Text.Encoding.UTF8.GetString(NewByteArray).Replace('\0', ' ').Trim();
-                revString = $"\nCMI_PropertyControl [{rwData.RenderPropertyName} {rwData.ReadWrite}] return {revCode} Get Data [{revData}]";
-            }
-            gchDevValue.Free();
-            gch.Free();
-            OMENREVData rev = new OMENREVData() { RevCode = revCode, RevValue = revData, RevMessage = revString };
-            return rev;
-        }
-    }
-
     class OMENREVData
     {
         public int RevCode;
@@ -201,6 +133,7 @@ namespace CmediaSDKTestApp.Models
     class ZazuRWData
     {
         public CMI_JackDeviceInfo JackInfo;
+        public CMI_DeviceType DeviceType;
         public CmediaRenderFunctionPoint RenderPropertyName;
         public CmediaCaptureFunctionPoint CapturePropertyName;
         public CMI_DriverRW ReadWrite;

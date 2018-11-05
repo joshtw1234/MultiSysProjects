@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows;
 using CmediaSDKTestApp.BaseModels;
 
@@ -27,57 +26,6 @@ namespace CmediaSDKTestApp.Models
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             int rev = NativeMethods.CMI_ConfLibUnInit();
-        }
-
-        private void InitialCaptureDevice(CMI_JackDeviceInfo jackInfo, CmediaCaptureFunctionPoint funPoint)
-        {
-            var rwData = new ZazuRWData() { JackInfo = jackInfo, CapturePropertyName = funPoint, ReadWrite = CMI_DriverRW.Read, WriteData = null };
-            OMENREVData rev = BaseCmediaSDK.OMEN_PropertyControl(rwData);
-            _micPage.DisplayText.MenuName += $"{rev.RevMessage}";
-            rwData.ReadWrite = CMI_DriverRW.Write;
-            uint setData = 0;
-            if (int.Parse(rev.RevValue) == 0)
-            {
-                setData = 1;
-            }
-            rwData.WriteData = BitConverter.GetBytes(setData);
-            rev = BaseCmediaSDK.OMEN_PropertyControl(rwData);
-            _micPage.DisplayText.MenuName += $"{rev.RevMessage}";
-
-            //rwData.ReadWrite = CMI_DriverRW.Read;
-            //rev = BaseCmediaSDK.OMEN_PropertyControl(rwData);
-            //_micPage.DisplayText.MenuName += $"{rev.RevMessage}";
-
-        }
-
-        private void InitialGetCMIDriverData(CMI_JackDeviceInfo jackInfo)
-        {
-            #region SDK sample code
-#if false
-            throw new NotImplementedException();
-            memset(m_pGetValueBuffer, 0, STATIC_BUFFER_SIZE);
-            nResult = CMI_PropertyControl(g_JackDevRender.m_devInfo, _T("Enable_KEYSHIFT_GFX"), (void**)&m_pGetValueBuffer, NULL, DRIVER_READ_FLAG);
-            if (nResult != 0)
-            {
-                memset(m_pSetValueBuffer, 0, STATIC_BUFFER_SIZE);
-                DWORD dwValue = 0;
-                memcpy(m_pSetValueBuffer, &dwValue, sizeof(DWORD));
-                nResult = CMI_PropertyControl(g_JackDevRender.m_devInfo, _T("Enable_KEYSHIFT_GFX"), (void**)&m_pSetValueBuffer, NULL, DRIVER_WRITE_FLAG);
-            }
-#endif
-            #endregion
-            ZazuRWData rwData = null;
-            OMENREVData rev = null;
-            int buffSize = 0;
-
-            for (CmediaRenderFunctionPoint i = CmediaRenderFunctionPoint.DefaultDeviceControl; i <= CmediaRenderFunctionPoint.GetDriverVer; i++)
-            {
-                rwData = new ZazuRWData() { JackInfo = jackInfo, RenderPropertyName = i, ReadWrite = CMI_DriverRW.Read, WriteData = null };
-                rev = BaseCmediaSDK.OMEN_PropertyControl(rwData);
-                _micPage.DisplayText.MenuName += $"{rev.RevMessage}";
-            }
-            byte[] setByte = new byte[BaseCmediaSDK.CMI_BUFFER_SIZE];
-            //OMEN_PropertyControl(jackInfo, BaseCmediaSDK.CMI_DefaultDeviceControl, CMI_DriverRW.Write, setByte);
         }
 
         public ObservableCollection<IMenuItem> GetPageButtons

@@ -66,7 +66,7 @@ namespace CmediaSDKTestApp.Models
         GetAudioCodecName,
         GetFirmwareVer,
         GetDriverVer,
-        GetDirectXVer,//This not work in multi thread environment
+        //GetDirectXVer,//This will took long time then others.
         #endregion
 
         #region Volume Control

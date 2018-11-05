@@ -6,20 +6,8 @@ using CmediaSDKTestApp.BaseModels;
 
 namespace CmediaSDKTestApp.Models
 {
-    class MainWindowModel : IMainWindowModel
+    class MainWindowModel : MainWindowLogicModel, IMainWindowModel
     {
-        enum ButtonStrings
-        {
-            Equaliser,
-            Microphone,
-            Lighting,
-            Cooling,
-            Cancle,
-            Apply,
-            EnableMagic,
-            EnableEcho
-        }
-
         private ResourceDictionary _localDic;
         private ResourceDictionary localDic
         {
@@ -34,80 +22,6 @@ namespace CmediaSDKTestApp.Models
                 }
                 return _localDic;
             }
-        }
-
-        MicPageContentModel _micPage;
-        CmediaSDKCallback _cmediaSDKCallback;
-        CMI_JackDeviceInfo _cmediaJackInfoRender, _cmediajackInfoCapture;
-
-        internal void ModelInitialize()
-        {
-            CMI_DEVICEINFO devInfo;
-            _cmediaJackInfoRender = new CMI_JackDeviceInfo();
-            _cmediajackInfoCapture = new CMI_JackDeviceInfo();
-            string msg = "Found Device ";
-            uint devCount = 0;
-            int rev = NativeMethods.CMI_ConfLibInit();
-            rev = NativeMethods.CMI_CreateDeviceList();
-            rev = NativeMethods.CMI_GetDeviceCount(CMI_DeviceType.Render, ref devCount);
-            if (0 == devCount)
-            {
-                msg = "Render Device not found!!";
-            }
-            else
-            {
-                for(int i = 0; i < devCount; i++)
-                {
-                    rev = NativeMethods.CMI_GetDeviceById(CMI_DeviceType.Render, i, out devInfo);
-                    switch(devInfo.DeviceState)
-                    {
-                        case CMI_DeviceState.Active:
-                            _cmediaJackInfoRender.m_devInfo = devInfo;
-                            msg += $"JackInfo Render JackType [{_cmediaJackInfoRender.m_devInfo.JackType}]";
-                            break;
-                        default:
-                            msg = $"Device State {devInfo.DeviceState}";
-                            break;
-                    }
-                };
-                //InitialGetCMIDriverData(_cmediaJackInfoRender);
-                _cmediaSDKCallback = OnCmediaSDKCallback;
-                rev = NativeMethods.CMI_RegisterCallbackFunction(_cmediaSDKCallback, IntPtr.Zero);
-                msg += $"\nRegisterCallback return {rev}";
-            }
-            _micPage.DisplayText.MenuName += $"\n{msg}";
-            msg = "Found Device ";
-            rev = NativeMethods.CMI_GetDeviceCount(CMI_DeviceType.Capture, ref devCount);
-            if (0 == devCount)
-            {
-                msg = "Capture Device not found!!";
-            }
-            else
-            {
-                for (int i = 0; i < devCount; i++)
-                {
-                    rev = NativeMethods.CMI_GetDeviceById(CMI_DeviceType.Capture, i, out devInfo);
-                    switch (devInfo.DeviceState)
-                    {
-                        case CMI_DeviceState.Active:
-                            _cmediajackInfoCapture.m_devInfo = devInfo;
-                            msg += $"JackInfo Capture JackType [{_cmediajackInfoCapture.m_devInfo.JackType}]";
-                            break;
-                        default:
-                            msg = $"Device State {devInfo.DeviceState}";
-                            break;
-                    }
-                };
-                InitialCaptureDevice(_cmediajackInfoCapture, CmediaCaptureFunctionPoint.Enable_MICECHO);
-            }
-            _micPage.DisplayText.MenuName += $"\n{msg}";
-
-            Application.Current.MainWindow.Closing += MainWindow_Closing;
-        }
-
-        private void OnCmediaSDKCallback(int type, int id, int componentType, ulong eventId)
-        {
-            //throw new NotImplementedException();
         }
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -164,54 +78,6 @@ namespace CmediaSDKTestApp.Models
             }
             byte[] setByte = new byte[BaseCmediaSDK.CMI_BUFFER_SIZE];
             //OMEN_PropertyControl(jackInfo, BaseCmediaSDK.CMI_DefaultDeviceControl, CMI_DriverRW.Write, setByte);
-        }
-
-
-        private ObservableCollection<IMenuItem> _contentpages;
-
-        private MyCommond<string> _onCommonButtonClickEvent;
-        private MyCommond<string> OnCommonButtonClickEvent => _onCommonButtonClickEvent ?? (_onCommonButtonClickEvent = new MyCommond<string>(OnCommonButtonClick));
-        private MyCommond<string> _onPageButtonClickEvent;
-        private MyCommond<string> OnPageButtonClickEvent => _onPageButtonClickEvent ?? (_onPageButtonClickEvent = new MyCommond<string>(OnPageButtonClick));
-
-        private void OnPageButtonClick(string obj)
-        {
-            var btn = (ButtonStrings)Enum.Parse(typeof(ButtonStrings), obj);
-            foreach(IMenuItem page in _contentpages)
-            {
-                page.MenuVisibility = false;
-            }
-            _contentpages.FirstOrDefault(x => x.MenuName.Equals(obj)).MenuVisibility = true;
-            switch (btn)
-            {
-                case ButtonStrings.Microphone:
-                    break;
-                case ButtonStrings.Equaliser:
-                    break;
-                case ButtonStrings.Lighting:
-                    break;
-                case ButtonStrings.Cooling:
-                    break;
-            }
-        }
-
-        private void OnCommonButtonClick(string obj)
-        {
-            var btn = (ButtonStrings)Enum.Parse(typeof(ButtonStrings), obj);
-            switch(btn)
-            {
-                case ButtonStrings.Apply:
-                    break;
-                case ButtonStrings.Cancle:
-                    _micPage.DisplayText.MenuName = string.Empty;
-                    break;
-                case ButtonStrings.EnableMagic:
-                    InitialCaptureDevice(_cmediajackInfoCapture, CmediaCaptureFunctionPoint.Enable_MAGICVOICE);
-                    break;
-                case ButtonStrings.EnableEcho:
-                    InitialCaptureDevice(_cmediajackInfoCapture, CmediaCaptureFunctionPoint.Enable_MICECHO);
-                    break;
-            }
         }
 
         public ObservableCollection<IMenuItem> GetPageButtons
@@ -415,6 +281,13 @@ namespace CmediaSDKTestApp.Models
                 _contentpages.Add(_micPage);
                 return _contentpages;
             }
+        }
+
+        public void ModelInitialize()
+        {
+            var rev = CmediaSDKHelper.Instance.Initialize(_micPage.DisplayText);
+
+            Application.Current.MainWindow.Closing += MainWindow_Closing;
         }
     }
 }

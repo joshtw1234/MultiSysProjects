@@ -19,7 +19,7 @@ namespace CmediaSDKTestApp.ViewModels
             CommonButtons = _model.GetCommonButtons;
             ContentPages = _model.GetContentPages;
 
-            (_model as MainWindowModel).ModelInitialize();
+            _model.ModelInitialize();
         }
     }
 }

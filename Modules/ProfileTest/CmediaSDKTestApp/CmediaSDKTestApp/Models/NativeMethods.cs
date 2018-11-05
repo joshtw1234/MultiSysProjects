@@ -47,8 +47,6 @@ namespace CmediaSDKTestApp.Models
         [DllImport(_cmediaDllPath, EntryPoint = "RegisterCallbackFunction", CharSet = CharSet.Auto, SetLastError = true)]
         public static extern int CMI_RegisterCallbackFunction([MarshalAs(UnmanagedType.FunctionPtr)] CmediaSDKCallback callbackPointer, IntPtr wndHandle);
         #endregion
-
-
     }
 
     [UnmanagedFunctionPointer(CallingConvention.StdCall)]

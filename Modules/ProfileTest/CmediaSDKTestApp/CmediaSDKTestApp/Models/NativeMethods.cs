@@ -54,13 +54,13 @@ namespace CmediaSDKTestApp.Models
     [UnmanagedFunctionPointer(CallingConvention.StdCall)]
     public delegate void CmediaSDKCallback(int type, int id, int componentType, ulong eventId);
 
-    enum CMI_FunctinoPoint
+    enum CmediaRenderFunctionPoint
     {
         #region CMI Device
-        DefaultDeviceControl,
+        DefaultDeviceControl,//With write will set device to default
         AmplifierControl,
-        EndpointEnableControl,
-        EXControl,
+        EndpointEnableControl,//Get or Set device states, 1 is enable, 0 is disable
+        EXControl,//EX switch device.
         GetSupportFeature,
         GetDeviceFriendlyName,
         GetDeviceID,
@@ -69,7 +69,33 @@ namespace CmediaSDKTestApp.Models
         GetAudioCodecName,
         GetFirmwareVer,
         GetDriverVer,
-        GetDirectXVer,
+        GetDirectXVer,//This not work in multi thread environment
+        #endregion
+
+        #region Volume Control
+        VolumeControl,
+        MuteControl,
+        VolumeScalarControl,//set -1 get master volume scalar,you can get other channel volume scalar
+        GetMaxVol,//The unit of Value is dB. 
+        GetMinVol,//The unit of Value is dB. 
+        GetVolStep,
+        #endregion
+
+        #region EQ & EM
+        Enable_EQ_GFX,
+        EQ_Slider1,
+        EQ_Slider2,
+        EQ_Slider3,
+        EQ_Slider4,
+        EQ_Slider5,
+        EQ_Slider6,
+        EQ_Slider7,
+        EQ_Slider8,
+        EQ_Slider9,
+        EQ_Slider10,
+        Enable_RFX_GFX,
+        RFX_ENVIRONMENT,
+        RFX_ROOMSIZE,
         #endregion
 
         #region Mic features
@@ -77,11 +103,27 @@ namespace CmediaSDKTestApp.Models
         KEYSHIFT_LEVEL,
         Enable_VOCALCANCEL_GFX,
         VOCALCANCEL_LEVEL,
+        #endregion
+    }
+
+    enum CmediaCaptureFunctionPoint
+    {
+        #region MIC device.
         Enable_MICECHO,
         MICECHO_Level,
         Enable_MAGICVOICE,
         MagicVoice_Selection,
         #endregion
+
+        #region AA Volume Control
+        AAVolumeControl,
+        AAMuteControl,
+        AAVolumeScalarControl,
+        GetAAMaxVol,
+        GetAAMinVol,
+        GetAAVolStep,
+        #endregion
+
     }
 
     class BaseCmediaSDK
@@ -120,8 +162,8 @@ namespace CmediaSDKTestApp.Models
             // Call the CMI_PropertyControl() API.
             // The CMI_PropertyControl() API will not
             // change the value of devValue. 
-            int revCode = NativeMethods.CMI_PropertyControl(rwData.JackInfo.m_devInfo, rwData.PropertyName.ToString(), devValue, devExtraValue, rwData.ReadWrite);
-            string revString = $"\nCMI_PropertyControl [{rwData.PropertyName}] {rwData.ReadWrite} return {revCode}";
+            int revCode = NativeMethods.CMI_PropertyControl(rwData.JackInfo.m_devInfo, rwData.RenderPropertyName.ToString(), devValue, devExtraValue, rwData.ReadWrite);
+            string revString = $"\nCMI_PropertyControl [{rwData.RenderPropertyName}] {rwData.ReadWrite} return {revCode}";
             string revData = string.Empty;
             if (0 == revCode)
             {
@@ -142,7 +184,7 @@ namespace CmediaSDKTestApp.Models
                 // to NewByteArray.
                 Marshal.Copy(revPtr[0], NewByteArray, 0, NewByteArray.Length);
                 revData = System.Text.Encoding.UTF8.GetString(NewByteArray).Replace('\0', ' ').Trim();
-                revString = $"\nCMI_PropertyControl [{rwData.PropertyName} {rwData.ReadWrite}] return {revCode} Get Data [{revData}]";
+                revString = $"\nCMI_PropertyControl [{rwData.RenderPropertyName} {rwData.ReadWrite}] return {revCode} Get Data [{revData}]";
             }
             gchDevValue.Free();
             gch.Free();
@@ -161,7 +203,8 @@ namespace CmediaSDKTestApp.Models
     class ZazuRWData
     {
         public CMI_JackDeviceInfo JackInfo;
-        public CMI_FunctinoPoint PropertyName;
+        public CmediaRenderFunctionPoint RenderPropertyName;
+        public CmediaCaptureFunctionPoint CapturePropertyName;
         public CMI_DriverRW ReadWrite;
         public byte[] WriteData;
     }

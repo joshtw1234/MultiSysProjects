@@ -98,7 +98,7 @@ namespace CmediaSDKTestApp.Models
                             break;
                     }
                 };
-                InitialCaptureDevice(_cmediajackInfoCapture, CMI_FunctinoPoint.Enable_MICECHO);
+                InitialCaptureDevice(_cmediajackInfoCapture, CmediaCaptureFunctionPoint.Enable_MICECHO);
             }
             _micPage.DisplayText.MenuName += $"\n{msg}";
 
@@ -115,9 +115,9 @@ namespace CmediaSDKTestApp.Models
             int rev = NativeMethods.CMI_ConfLibUnInit();
         }
 
-        private void InitialCaptureDevice(CMI_JackDeviceInfo jackInfo, CMI_FunctinoPoint funPoint)
+        private void InitialCaptureDevice(CMI_JackDeviceInfo jackInfo, CmediaCaptureFunctionPoint funPoint)
         {
-            var rwData = new ZazuRWData() { JackInfo = jackInfo, PropertyName = funPoint, ReadWrite = CMI_DriverRW.Read, WriteData = null };
+            var rwData = new ZazuRWData() { JackInfo = jackInfo, CapturePropertyName = funPoint, ReadWrite = CMI_DriverRW.Read, WriteData = null };
             OMENREVData rev = BaseCmediaSDK.OMEN_PropertyControl(rwData);
             _micPage.DisplayText.MenuName += $"{rev.RevMessage}";
             rwData.ReadWrite = CMI_DriverRW.Write;
@@ -156,9 +156,9 @@ namespace CmediaSDKTestApp.Models
             OMENREVData rev = null;
             int buffSize = 0;
 
-            for (CMI_FunctinoPoint i = CMI_FunctinoPoint.DefaultDeviceControl; i <= CMI_FunctinoPoint.GetDriverVer; i++)
+            for (CmediaRenderFunctionPoint i = CmediaRenderFunctionPoint.DefaultDeviceControl; i <= CmediaRenderFunctionPoint.GetDriverVer; i++)
             {
-                rwData = new ZazuRWData() { JackInfo = jackInfo, PropertyName = i, ReadWrite = CMI_DriverRW.Read, WriteData = null };
+                rwData = new ZazuRWData() { JackInfo = jackInfo, RenderPropertyName = i, ReadWrite = CMI_DriverRW.Read, WriteData = null };
                 rev = BaseCmediaSDK.OMEN_PropertyControl(rwData);
                 _micPage.DisplayText.MenuName += $"{rev.RevMessage}";
             }
@@ -206,10 +206,10 @@ namespace CmediaSDKTestApp.Models
                     _micPage.DisplayText.MenuName = string.Empty;
                     break;
                 case ButtonStrings.EnableMagic:
-                    InitialCaptureDevice(_cmediajackInfoCapture, CMI_FunctinoPoint.Enable_MAGICVOICE);
+                    InitialCaptureDevice(_cmediajackInfoCapture, CmediaCaptureFunctionPoint.Enable_MAGICVOICE);
                     break;
                 case ButtonStrings.EnableEcho:
-                    InitialCaptureDevice(_cmediajackInfoCapture, CMI_FunctinoPoint.Enable_MICECHO);
+                    InitialCaptureDevice(_cmediajackInfoCapture, CmediaCaptureFunctionPoint.Enable_MICECHO);
                     break;
             }
         }

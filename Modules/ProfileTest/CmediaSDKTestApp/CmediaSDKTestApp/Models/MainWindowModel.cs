@@ -249,13 +249,10 @@ namespace CmediaSDKTestApp.Models
                 //revOMEN = await CmediaSDKHelper.GetSurroundAsync(HPSurroundCommand.XEAR_SURR_HP_ROOM);
                 
             });
-            int cRev = CmediaSDKHelper.RegisterSDKCallbackFunction(OnCmediaSDKCallBack);
-            if (cRev != 0)
-            {
-                _micPage.DisplayText.MenuName += "\nSDK CallBack failed";
-                return;
-            }
+            CmediaSDKHelper.RegisterSDKCallbackFunction(OnCmediaSDKCallBack);
             Application.Current.MainWindow.Closing += MainWindow_Closing;
+            _micPage.DisplayText.MenuName += $"\nCmediaRenderFunctionPoint get {Enum.GetNames(typeof(CmediaRenderFunctionPoint)).Length}";
+            _micPage.DisplayText.MenuName += $"\nCmediaCaptureFunctionPoint get {Enum.GetNames(typeof(CmediaCaptureFunctionPoint)).Length}";
         }
 
         private void OnCmediaSDKCallBack(int type, int id, int componentType, ulong eventId)

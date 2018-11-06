@@ -117,7 +117,6 @@ namespace CmediaSDKTestApp.Models
         Enable_VOICECLARITY_LFX,
         VOICECLARITY_LEVEL,
         VOICECLARITY_NOISESUPP_LEVEL,
-
         #endregion
     }
 

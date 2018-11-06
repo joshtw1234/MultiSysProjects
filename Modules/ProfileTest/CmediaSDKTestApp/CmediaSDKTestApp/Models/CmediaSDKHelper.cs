@@ -54,9 +54,10 @@ namespace CmediaSDKTestApp.Models
             });
         }
 
-        public static int RegisterSDKCallbackFunction(CmediaSDKCallback callBack)
+        public static void RegisterSDKCallbackFunction(CmediaSDKCallback callBack)
         {
-            return CmediaSDKService.Instance.RegisterSDKCallBackFunction(callBack);
+            //Return value is useless.
+            CmediaSDKService.Instance.RegisterSDKCallBackFunction(callBack);
         }
     }
 }

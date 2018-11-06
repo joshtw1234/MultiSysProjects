@@ -55,6 +55,10 @@ namespace CmediaSDKTestApp.Models
             IntPtr devValue = gchDevValue.AddrOfPinnedObject();
 
             byte[] devExtraBvalue = new byte[CMI_BUFFER_SIZE];
+            if (rwData.ReadWrite == CMI_DriverRW.Write)
+            {
+                devExtraBvalue = rwData.WriteExtraData;
+            }
             IntPtr pdevExtraVlue = Marshal.AllocCoTaskMem(Marshal.SizeOf(typeof(byte)) * CMI_BUFFER_SIZE);
             Marshal.Copy(devExtraBvalue, 0, pdevExtraVlue, devExtraBvalue.Length);
             GCHandle gch = GCHandle.Alloc(pdevExtraVlue, GCHandleType.Pinned);
@@ -136,7 +140,7 @@ namespace CmediaSDKTestApp.Models
                 case CMI_DataFlow.eRender:
                     for (CmediaRenderFunctionPoint i = CmediaRenderFunctionPoint.DefaultDeviceControl; i <= CmediaRenderFunctionPoint.VOCALCANCEL_LEVEL; i++)
                     {
-                        rwData = new ZazuRWData() { JackInfo = jackDevice, ApiPropertyName = i.ToString(), ReadWrite = CMI_DriverRW.Read, WriteData = null };
+                        rwData = new ZazuRWData() { JackInfo = jackDevice, ApiPropertyName = i.ToString(), ReadWrite = CMI_DriverRW.Read };
                         rev = OMEN_PropertyControl(rwData);
                         DisplayMessage.MenuName += $"{rev.RevMessage}";
                     }
@@ -144,7 +148,7 @@ namespace CmediaSDKTestApp.Models
                 case CMI_DataFlow.eCapture:
                     for (CmediaCaptureFunctionPoint i = CmediaCaptureFunctionPoint.Enable_MICECHO; i <= CmediaCaptureFunctionPoint.GetAAVolStep; i++)
                     {
-                        rwData = new ZazuRWData() { JackInfo = jackDevice, ApiPropertyName = i.ToString(), ReadWrite = CMI_DriverRW.Read, WriteData = null };
+                        rwData = new ZazuRWData() { JackInfo = jackDevice, ApiPropertyName = i.ToString(), ReadWrite = CMI_DriverRW.Read };
                         rev = OMEN_PropertyControl(rwData);
                         DisplayMessage.MenuName += $"{rev.RevMessage}";
                     }
@@ -153,7 +157,7 @@ namespace CmediaSDKTestApp.Models
             return rev;
         }
 
-        public OMENREVData GetSetJackDeviceData(CMI_DriverRW readWrite, string apiName, byte[] setValue = null)
+        public OMENREVData GetSetJackDeviceData(CMI_DriverRW readWrite, string apiName, byte[] setValue = null, byte[] setExtraValue = null)
         {
             OMENREVData revData = new OMENREVData() { RevCode = -1, RevMessage = $"API Name [{apiName}] not Correct!" };
             CMI_DataFlow deviceType = CMI_DataFlow.eRender;
@@ -188,7 +192,7 @@ namespace CmediaSDKTestApp.Models
                     jackInfo = _cmediajackInfoCapture;
                     break;
             }
-            rwData = new ZazuRWData() { JackInfo = jackInfo, ApiPropertyName = apiName, ReadWrite = readWrite, WriteData = setValue };
+            rwData = new ZazuRWData() { JackInfo = jackInfo, ApiPropertyName = apiName, ReadWrite = readWrite, WriteData = setValue, WriteExtraData = setExtraValue };
             revData = OMEN_PropertyControl(rwData);
             DisplayMessage.MenuName += $"{revData.RevMessage}";
             return revData;

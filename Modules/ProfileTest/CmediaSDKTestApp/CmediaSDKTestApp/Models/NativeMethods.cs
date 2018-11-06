@@ -111,10 +111,11 @@ namespace CmediaSDKTestApp.Models
 
     }
 
-    class OMENClientData
+    struct OMENClientData
     {
         public string ApiName;
         public byte[] WriteValue;
+        public byte[] WriteExtraValue;
     }
 
     class OMENREVData
@@ -130,6 +131,7 @@ namespace CmediaSDKTestApp.Models
         public string ApiPropertyName;
         public CMI_DriverRW ReadWrite;
         public byte[] WriteData;
+        public byte[] WriteExtraData;
     }
 
     #region 7.1 Surround

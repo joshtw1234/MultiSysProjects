@@ -101,6 +101,8 @@ namespace CmediaSDKTestApp.Models
         Enable_VOCALCANCEL_GFX,
         VOCALCANCEL_LEVEL,
         #endregion
+
+        DRIVER_PROPERTY_VIRTUAL_SURROUND_CONTROL,
     }
 
     enum CmediaCaptureFunctionPoint
@@ -139,6 +141,34 @@ namespace CmediaSDKTestApp.Models
         public CMI_DriverRW ReadWrite;
         public byte[] WriteData;
     }
+
+    #region 7.1 Surround
+    enum HPSurroundCommand
+    {
+        XEAR_SURR_HP_ENABLE,
+        XEAR_SURR_HP_ROOM,
+        XEAR_SURR_HP_MODE
+    }
+    enum HPSurroundValueType
+    {
+        ValueType_LONG = 0,
+        ValueType_FLOAT = 1
+    };
+    enum HPSurround
+    {
+        KSPROPERTY_VIRTUALSURROUND_GETGUID = 1,
+        KSPROPERTY_VIRTUALSURROUND_GETNUMOFPARAMELEMENT = 2,
+        KSPROPERTY_VIRTUALSURROUND_GETPARAMRANGE = 3,
+        KSPROPERTY_VIRTUALSURROUND_PARAMSVALUE = 4
+    };
+
+    struct REGISTER_OPERATION
+    {
+        public int Operation;
+        public int Feature;
+        public int ValueType;
+    };
+    #endregion
 
     struct CMI_DEVICEINFO
     {

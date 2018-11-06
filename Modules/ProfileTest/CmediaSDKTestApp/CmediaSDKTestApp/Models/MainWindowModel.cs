@@ -233,7 +233,7 @@ namespace CmediaSDKTestApp.Models
 
         public void ModelInitialize()
         {
-            var rev = CmediaSDKHelper.Instance.Initialize(_micPage.DisplayText);
+            var rev = CmediaSDKService.Instance.Initialize(_micPage.DisplayText);
 
             Application.Current.MainWindow.Closing += MainWindow_Closing;
         }

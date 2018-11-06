@@ -96,7 +96,7 @@
     </Compile>
     <Compile Include="BaseModels\IMenuItem.cs" />
     <Compile Include="BaseModels\MenuItem.cs" />
-    <Compile Include="Models\CmediaSDKHelper.cs" />
+    <Compile Include="Models\CmediaSDKService.cs" />
     <Compile Include="Models\MainWindowLogicModel.cs" />
     <Compile Include="Models\NativeMethods.cs" />
     <Compile Include="Models\BasePageContentViewModel.cs" />

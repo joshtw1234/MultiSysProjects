@@ -1,11 +1,10 @@
 ﻿using CmediaSDKTestApp.BaseModels;
 using System;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 
 namespace CmediaSDKTestApp.Models
 {
-    sealed class CmediaSDKHelper
+    sealed class CmediaSDKService
     {
         private CmediaSDKCallback _cmediaSDKCallback;
         private CMI_JackDeviceInfo _cmediaJackInfoRender;
@@ -17,15 +16,15 @@ namespace CmediaSDKTestApp.Models
             //throw new NotImplementedException();
         }
 
-        private static CmediaSDKHelper _instance;
+        private static CmediaSDKService _instance;
         /// <summary>
         /// Gets the instance.
         /// </summary>
-        public static CmediaSDKHelper Instance
+        public static CmediaSDKService Instance
         {
             get
             {
-                return _instance ?? (_instance = new CmediaSDKHelper());
+                return _instance ?? (_instance = new CmediaSDKService());
             }
         }
 
@@ -33,7 +32,7 @@ namespace CmediaSDKTestApp.Models
         /// Private constructor.
         /// Please use instance to get functions
         /// </summary>
-        private CmediaSDKHelper() { }
+        private CmediaSDKService() { }
 
         private const int CMI_BUFFER_SIZE = 1024;
 

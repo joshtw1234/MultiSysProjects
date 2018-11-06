@@ -235,7 +235,6 @@ namespace CmediaSDKTestApp.Models
         {
             var rev = CmediaSDKHelper.InitializeSDKAsync(_micPage.DisplayText);
             int cRev = CmediaSDKHelper.RegisterSDKCallbackFunction(OnCmediaSDKCallBack);
-            cRev = CmediaSDKHelper.RegisterSDKCallbackFunction(OnCmediaSDKCallBack2);
 
             Application.Current.MainWindow.Closing += MainWindow_Closing;
         }
@@ -243,11 +242,6 @@ namespace CmediaSDKTestApp.Models
         private void OnCmediaSDKCallBack(int type, int id, int componentType, ulong eventId)
         {
             _micPage.DisplayText.MenuName += $"\n OnCmediaSDKCallBack {type} {id} {componentType} {eventId}";
-        }
-
-        private void OnCmediaSDKCallBack2(int type, int id, int componentType, ulong eventId)
-        {
-            _micPage.DisplayText.MenuName += $"\n OnCmediaSDKCallBack2 {type} {id} {componentType} {eventId}";
         }
     }
 }

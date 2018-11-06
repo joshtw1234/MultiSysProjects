@@ -23,7 +23,7 @@ namespace CmediaSDKTestApp.Models
             });
         }
 
-        public static async Task<OMENREVData> GetJackDeviceDataAsync(CMI_DeviceType deviceType, string apiName)
+        public static async Task<OMENREVData> GetJackDeviceDataAsync(CMI_DataFlow deviceType, string apiName)
         {
             return await Task.Run(() => 
             {
@@ -31,7 +31,7 @@ namespace CmediaSDKTestApp.Models
             });
         }
 
-        public static async Task<OMENREVData> SetJackDeviceDataAsync(CMI_DeviceType deviceType, string apiName, byte[] setValue)
+        public static async Task<OMENREVData> SetJackDeviceDataAsync(CMI_DataFlow deviceType, string apiName, byte[] setValue)
         {
             return await Task.Run(() =>
             {

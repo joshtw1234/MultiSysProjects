@@ -21,10 +21,10 @@ namespace CmediaSDKTestApp.Models
         public static extern int CMI_CreateDeviceList();
 
         [DllImport(_cmediaDllPath, EntryPoint = "GetDeviceCount")]
-        public static extern int CMI_GetDeviceCount(CMI_DeviceType type, ref uint DevCount);
+        public static extern int CMI_GetDeviceCount(CMI_DataFlow type, ref uint DevCount);
 
         [DllImport(_cmediaDllPath, EntryPoint = "GetDeviceById")]
-        public static extern int CMI_GetDeviceById(CMI_DeviceType type, int id, out CMI_DEVICEINFO deviceInfo);
+        public static extern int CMI_GetDeviceById(CMI_DataFlow type, int id, out CMI_DEVICEINFO deviceInfo);
 
         [DllImport(_cmediaDllPath, EntryPoint = "PropertyControl", CharSet= CharSet.Auto, CallingConvention = CallingConvention.StdCall, ExactSpelling = true, SetLastError = true)]
         public static extern int CMI_PropertyControl(CMI_DEVICEINFO info, string propertyName, IntPtr value, IntPtr extraData, CMI_DriverRW driverRW);
@@ -121,9 +121,7 @@ namespace CmediaSDKTestApp.Models
     class ZazuRWData
     {
         public CMI_JackDeviceInfo JackInfo;
-        public CMI_DeviceType DeviceType;
-        public CmediaRenderFunctionPoint RenderPropertyName;
-        public CmediaCaptureFunctionPoint CapturePropertyName;
+        public string ApiPropertyName;
         public CMI_DriverRW ReadWrite;
         public byte[] WriteData;
     }
@@ -206,12 +204,6 @@ namespace CmediaSDKTestApp.Models
         eCapture,
         eAll,
         DATAFLOW_enum_count
-    }
-
-    enum CMI_DeviceType
-    {
-        Render = 0,
-        Capture
     }
 
     enum CMI_DriverRW

@@ -25,7 +25,7 @@ namespace CmediaSDKTestApp.Models
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            int rev = NativeMethods.CMI_ConfLibUnInit();
+            var rev = CmediaSDKHelper.UnInitializeSDKAsync();
         }
 
         public ObservableCollection<IMenuItem> GetPageButtons
@@ -233,7 +233,7 @@ namespace CmediaSDKTestApp.Models
 
         public void ModelInitialize()
         {
-            var rev = CmediaSDKService.Instance.Initialize(_micPage.DisplayText);
+            var rev = CmediaSDKHelper.InitializeSDKAsync(_micPage.DisplayText);
 
             Application.Current.MainWindow.Closing += MainWindow_Closing;
         }

@@ -210,6 +210,7 @@ namespace CmediaSDKTestApp.Models
             DisplayMessage = logMessag;
             int rev = NativeMethods.CMI_ConfLibInit();
             rev = NativeMethods.CMI_CreateDeviceList();
+#if false
             //Get Render device
             _cmediaJackInfoRender = GetJackDevice(CMI_DeviceType.Render);
             //Get Capture device
@@ -223,7 +224,13 @@ namespace CmediaSDKTestApp.Models
 
             GetJackDeviceData(CMI_DeviceType.Render, CmediaRenderFunctionPoint.DefaultDeviceControl.ToString());
             GetJackDeviceData(CMI_DeviceType.Capture, CmediaCaptureFunctionPoint.MagicVoice_Selection.ToString());
+#endif
             return rev;
+        }
+
+        public int Unitialize()
+        {
+            return NativeMethods.CMI_ConfLibUnInit();
         }
     }
 }

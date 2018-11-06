@@ -26,7 +26,7 @@ namespace CmediaSDKTestApp.Models
         {
             return await Task.Run(() =>
             {
-                return CmediaSDKService.Instance.GetSetJackDeviceData(CMI_DriverRW.Read, omenData.ApiName, omenData.WriteValue);
+                return CmediaSDKService.Instance.GetSetJackDeviceData(CMI_DriverRW.Read, omenData);
             });
         }
 
@@ -34,7 +34,23 @@ namespace CmediaSDKTestApp.Models
         {
             return await Task.Run(() =>
             {
-                return CmediaSDKService.Instance.GetSetJackDeviceData(CMI_DriverRW.Write, omenData.ApiName, omenData.WriteValue);
+                return CmediaSDKService.Instance.GetSetJackDeviceData(CMI_DriverRW.Write, omenData);
+            });
+        }
+
+        public static async Task<OMENREVData> GetSurroundAsync(HPSurroundCommand hpcommand)
+        {
+            return await Task.Run(() =>
+            {
+                return CmediaSDKService.Instance.GetSetSurround(CMI_DriverRW.Read, hpcommand);
+            });
+        }
+
+        public static async Task<OMENREVData> SetSurroundAsync(HPSurroundCommand hpcommand)
+        {
+            return await Task.Run(() =>
+            {
+                return CmediaSDKService.Instance.GetSetSurround(CMI_DriverRW.Write, hpcommand);
             });
         }
 

@@ -55,7 +55,7 @@ namespace CmediaSDKTestApp.Models
             IntPtr devValue = gchDevValue.AddrOfPinnedObject();
 
             byte[] devExtraBvalue = new byte[CMI_BUFFER_SIZE];
-            if (rwData.ReadWrite == CMI_DriverRW.Write)
+            if (rwData.ReadWrite == CMI_DriverRW.Write || rwData.IsWriteExtra)
             {
                 devExtraBvalue = rwData.WriteExtraData;
             }
@@ -157,17 +157,17 @@ namespace CmediaSDKTestApp.Models
             return rev;
         }
 
-        public OMENREVData GetSetJackDeviceData(CMI_DriverRW readWrite, string apiName, byte[] setValue = null, byte[] setExtraValue = null)
+        public OMENREVData GetSetJackDeviceData(CMI_DriverRW readWrite, OMENClientData clientData)
         {
-            OMENREVData revData = new OMENREVData() { RevCode = -1, RevMessage = $"API Name [{apiName}] not Correct!" };
+            OMENREVData revData = new OMENREVData() { RevCode = -1, RevMessage = $"API Name [{clientData.ApiName}] not Correct!" };
             CMI_DataFlow deviceType = CMI_DataFlow.eRender;
             CmediaRenderFunctionPoint renderAPI;
             CmediaCaptureFunctionPoint captureAPI;
-            if (Enum.TryParse(apiName, out renderAPI))
+            if (Enum.TryParse(clientData.ApiName, out renderAPI))
             {
                 deviceType = CMI_DataFlow.eRender;
             }
-            else if (Enum.TryParse(apiName, out captureAPI))
+            else if (Enum.TryParse(clientData.ApiName, out captureAPI))
             {
                 deviceType = CMI_DataFlow.eCapture;
             }
@@ -175,7 +175,8 @@ namespace CmediaSDKTestApp.Models
             {
                 return revData;
             }
-            if (readWrite == CMI_DriverRW.Write && setValue == null)
+            if (readWrite == CMI_DriverRW.Write && 
+                clientData.WriteValue == null && clientData.WriteExtraValue == null)
             {
                 revData.RevMessage = "SetValue Can't be Null";
                 return revData;
@@ -192,7 +193,37 @@ namespace CmediaSDKTestApp.Models
                     jackInfo = _cmediajackInfoCapture;
                     break;
             }
-            rwData = new ZazuRWData() { JackInfo = jackInfo, ApiPropertyName = apiName, ReadWrite = readWrite, WriteData = setValue, WriteExtraData = setExtraValue };
+            rwData = new ZazuRWData() { JackInfo = jackInfo, ApiPropertyName = clientData.ApiName, ReadWrite = readWrite, WriteData = clientData.WriteValue, WriteExtraData = clientData.WriteExtraValue };
+            revData = OMEN_PropertyControl(rwData);
+            DisplayMessage.MenuName += $"{revData.RevMessage}";
+            return revData;
+        }
+
+        public OMENREVData GetSetSurround(CMI_DriverRW readWrite, HPSurroundCommand hpCommand)
+        {
+            OMENREVData revData = new OMENREVData() { RevCode = -1, RevMessage = $"[{hpCommand}] not Correct!" };
+            ZazuRWData rwData = null;
+            REGISTER_OPERATION regop = new REGISTER_OPERATION();
+            switch (hpCommand)
+            {
+                case HPSurroundCommand.XEAR_SURR_HP_ENABLE:
+                    regop.Operation = HPSurroundFunction.KSPROPERTY_VIRTUALSURROUND_PARAMSVALUE;
+                    regop.Feature = HPSurroundCommand.XEAR_SURR_HP_ENABLE;
+                    regop.ValueType = HPSurroundValueType.ValueType_LONG;
+                    break;
+                case HPSurroundCommand.XEAR_SURR_HP_MODE:
+                    regop.Operation = HPSurroundFunction.KSPROPERTY_VIRTUALSURROUND_PARAMSVALUE;
+                    regop.Feature = HPSurroundCommand.XEAR_SURR_HP_MODE;
+                    regop.ValueType = HPSurroundValueType.ValueType_LONG;
+                    break;
+                case HPSurroundCommand.XEAR_SURR_HP_ROOM:
+                    regop.Operation = HPSurroundFunction.KSPROPERTY_VIRTUALSURROUND_PARAMSVALUE;
+                    regop.Feature = HPSurroundCommand.XEAR_SURR_HP_ROOM;
+                    regop.ValueType = HPSurroundValueType.ValueType_LONG;
+                    break;
+            }
+            rwData = new ZazuRWData() { JackInfo = _cmediaJackInfoRender, ApiPropertyName = CmediaRenderFunctionPoint.VirtualSurroundEffectControl.ToString(),
+                ReadWrite = readWrite, WriteData = null, IsWriteExtra = true, WriteExtraData = regop.ToBytes() };
             revData = OMEN_PropertyControl(rwData);
             DisplayMessage.MenuName += $"{revData.RevMessage}";
             return revData;

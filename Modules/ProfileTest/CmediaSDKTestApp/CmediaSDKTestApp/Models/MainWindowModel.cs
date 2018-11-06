@@ -239,6 +239,9 @@ namespace CmediaSDKTestApp.Models
                 var rev = await CmediaSDKHelper.InitializeSDKAsync(_micPage.DisplayText);
                 var revOMEN = await CmediaSDKHelper.GetJackDeviceDataAsync(new OMENClientData() { ApiName = CmediaRenderFunctionPoint.DefaultDeviceControl.ToString() });
                 revOMEN = await CmediaSDKHelper.GetJackDeviceDataAsync(new OMENClientData() { ApiName = CmediaRenderFunctionPoint.GetDriverVer.ToString() });
+                revOMEN = await CmediaSDKHelper.GetSurroundAsync(HPSurroundCommand.XEAR_SURR_HP_ENABLE);
+                revOMEN = await CmediaSDKHelper.GetSurroundAsync(HPSurroundCommand.XEAR_SURR_HP_MODE);
+                revOMEN = await CmediaSDKHelper.GetSurroundAsync(HPSurroundCommand.XEAR_SURR_HP_ROOM);
             });
             
             int cRev = CmediaSDKHelper.RegisterSDKCallbackFunction(OnCmediaSDKCallBack);

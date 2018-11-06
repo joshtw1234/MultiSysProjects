@@ -88,7 +88,7 @@ namespace CmediaSDKTestApp.Models
         VOCALCANCEL_LEVEL,
         #endregion
 
-        DRIVER_PROPERTY_VIRTUAL_SURROUND_CONTROL,
+        VirtualSurroundEffectControl,
     }
 
     enum CmediaCaptureFunctionPoint
@@ -131,35 +131,73 @@ namespace CmediaSDKTestApp.Models
         public string ApiPropertyName;
         public CMI_DriverRW ReadWrite;
         public byte[] WriteData;
+        public bool IsWriteExtra;
         public byte[] WriteExtraData;
     }
 
     #region 7.1 Surround
     enum HPSurroundCommand
     {
-        XEAR_SURR_HP_ENABLE,
+        XEAR_SURR_HP_ENABLE = -1,
         XEAR_SURR_HP_ROOM,
-        XEAR_SURR_HP_MODE
+        XEAR_SURR_HP_MODE,
+        XEAR_SURR_HP_TOP
     }
     enum HPSurroundValueType
     {
         ValueType_LONG = 0,
         ValueType_FLOAT = 1
-    };
-    enum HPSurround
+    }
+    enum HPSurroundFunction
     {
         KSPROPERTY_VIRTUALSURROUND_GETGUID = 1,
         KSPROPERTY_VIRTUALSURROUND_GETNUMOFPARAMELEMENT = 2,
         KSPROPERTY_VIRTUALSURROUND_GETPARAMRANGE = 3,
         KSPROPERTY_VIRTUALSURROUND_PARAMSVALUE = 4
-    };
+    }
 
+    struct REGISTER_OPERATION2
+    {
+        public HPSurroundFunction Operation;
+        public HPSurroundCommand Feature;
+        public HPSurroundValueType ValueType;
+        public byte[] ToBytes()
+        {
+            byte[] bytes = new byte[Marshal.SizeOf(typeof(REGISTER_OPERATION))];
+            GCHandle pinStructure = GCHandle.Alloc(this, GCHandleType.Pinned);
+            try
+            {
+                Marshal.Copy(pinStructure.AddrOfPinnedObject(), bytes, 0, bytes.Length);
+                return bytes;
+            }
+            finally
+            {
+                pinStructure.Free();
+            }
+        }
+    }
+
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
     struct REGISTER_OPERATION
     {
-        public int Operation;
-        public int Feature;
-        public int ValueType;
-    };
+        public HPSurroundFunction Operation;
+        public HPSurroundCommand Feature;
+        public HPSurroundValueType ValueType;
+        public byte[] ToBytes()
+        {
+            byte[] bytes = new byte[Marshal.SizeOf(typeof(REGISTER_OPERATION))];
+            GCHandle pinStructure = GCHandle.Alloc(this, GCHandleType.Pinned);
+            try
+            {
+                Marshal.Copy(pinStructure.AddrOfPinnedObject(), bytes, 0, bytes.Length);
+                return bytes;
+            }
+            finally
+            {
+                pinStructure.Free();
+            }
+        }
+    }
     #endregion
 
     struct CMI_DEVICEINFO

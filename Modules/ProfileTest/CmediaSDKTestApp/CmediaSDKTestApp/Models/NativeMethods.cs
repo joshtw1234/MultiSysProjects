@@ -88,7 +88,37 @@ namespace CmediaSDKTestApp.Models
         VOCALCANCEL_LEVEL,
         #endregion
 
+        #region 7.1 surround
         VirtualSurroundEffectControl,
+        #endregion
+
+        #region Bass & HWEQ
+        Enable_BM_GFX,
+        BM_Slider_Frequency,
+        BM_Slider_BassLevel,
+        BM_LargeSpeaker,
+        SpeakerDelay_C,
+        SpeakerDelay_S,
+        SpeakerDelay_B,
+        HWEQBassControl,
+        HWEQTrebleControl,
+        #endregion
+
+        #region Smart Bass & Volume
+        Enable_ADAPTIVEVOLUME_GFX,
+        ADAPTIVEVOLUME_LEVEL,
+        ADAPTIVEVOLUME_MODE,
+        Enable_VIRTUALBASS_LFX,
+        VIRTUALBASS_Level,
+        VIRTUALBASS_CutOffFrequency,
+        VIRTUALBASS_Mode,
+        Enable_AUDIOBRILLIANT_LFX,
+        AUDIOBRILLIANT_LEVEL,
+        Enable_VOICECLARITY_LFX,
+        VOICECLARITY_LEVEL,
+        VOICECLARITY_NOISESUPP_LEVEL,
+
+        #endregion
     }
 
     enum CmediaCaptureFunctionPoint

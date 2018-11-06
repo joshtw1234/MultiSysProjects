@@ -138,7 +138,7 @@ namespace CmediaSDKTestApp.Models
             switch (deviceType)
             {
                 case CMI_DataFlow.eRender:
-                    for (CmediaRenderFunctionPoint i = CmediaRenderFunctionPoint.DefaultDeviceControl; i <= CmediaRenderFunctionPoint.VOCALCANCEL_LEVEL; i++)
+                    for (CmediaRenderFunctionPoint i = CmediaRenderFunctionPoint.DefaultDeviceControl; i <= CmediaRenderFunctionPoint.VOICECLARITY_NOISESUPP_LEVEL; i++)
                     {
                         rwData = new ZazuRWData() { JackInfo = jackDevice, ApiPropertyName = i.ToString(), ReadWrite = CMI_DriverRW.Read };
                         rev = OMEN_PropertyControl(rwData);
@@ -237,12 +237,14 @@ namespace CmediaSDKTestApp.Models
 
             //Get Render device
             _cmediaJackInfoRender = GetJackDevice(CMI_DataFlow.eRender);
+            if (_cmediaJackInfoRender == null) return -1;
             //Get Capture device
             _cmediajackInfoCapture = GetJackDevice(CMI_DataFlow.eCapture);
-
+            if (_cmediajackInfoCapture == null) return -1;
+            var revData = GetJackDeviceInfoDemo(CMI_DataFlow.eRender, _cmediaJackInfoRender);
             DisplayMessage.MenuName += $"\nSDK Initialize return {rev}";
 #if false
-             var revData = GetJackDeviceInfoDemo(CMI_DataFlow.eRender, _cmediaJackInfoRender);
+             
             revData = GetJackDeviceInfoDemo(CMI_DataFlow.eCapture, _cmediajackInfoCapture);
 
             GetJackDeviceData(CMI_DeviceType.Render, CmediaRenderFunctionPoint.DefaultDeviceControl.ToString());

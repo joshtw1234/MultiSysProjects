@@ -237,15 +237,24 @@ namespace CmediaSDKTestApp.Models
             Task.Factory.StartNew(async () => 
             {
                 var rev = await CmediaSDKHelper.InitializeSDKAsync(_micPage.DisplayText);
-                var revOMEN = await CmediaSDKHelper.GetJackDeviceDataAsync(new OMENClientData() { ApiName = CmediaRenderFunctionPoint.DefaultDeviceControl.ToString() });
-                revOMEN = await CmediaSDKHelper.GetJackDeviceDataAsync(new OMENClientData() { ApiName = CmediaRenderFunctionPoint.GetDriverVer.ToString() });
-                revOMEN = await CmediaSDKHelper.GetSurroundAsync(HPSurroundCommand.XEAR_SURR_HP_ENABLE);
-                revOMEN = await CmediaSDKHelper.GetSurroundAsync(HPSurroundCommand.XEAR_SURR_HP_MODE);
-                revOMEN = await CmediaSDKHelper.GetSurroundAsync(HPSurroundCommand.XEAR_SURR_HP_ROOM);
+                if (rev != 0)
+                {
+                    _micPage.DisplayText.MenuName += "\nSDK initial failed";
+                    return;
+                }
+                //var revOMEN = await CmediaSDKHelper.GetJackDeviceDataAsync(new OMENClientData() { ApiName = CmediaRenderFunctionPoint.DefaultDeviceControl.ToString() });
+                //revOMEN = await CmediaSDKHelper.GetJackDeviceDataAsync(new OMENClientData() { ApiName = CmediaRenderFunctionPoint.GetDriverVer.ToString() });
+                //revOMEN = await CmediaSDKHelper.GetSurroundAsync(HPSurroundCommand.XEAR_SURR_HP_ENABLE);
+                //revOMEN = await CmediaSDKHelper.GetSurroundAsync(HPSurroundCommand.XEAR_SURR_HP_MODE);
+                //revOMEN = await CmediaSDKHelper.GetSurroundAsync(HPSurroundCommand.XEAR_SURR_HP_ROOM);
+                
             });
-            
             int cRev = CmediaSDKHelper.RegisterSDKCallbackFunction(OnCmediaSDKCallBack);
-
+            if (cRev != 0)
+            {
+                _micPage.DisplayText.MenuName += "\nSDK CallBack failed";
+                return;
+            }
             Application.Current.MainWindow.Closing += MainWindow_Closing;
         }
 

@@ -234,8 +234,14 @@ namespace CmediaSDKTestApp.Models
         public void ModelInitialize()
         {
             var rev = CmediaSDKHelper.InitializeSDKAsync(_micPage.DisplayText);
+            int cRev = CmediaSDKHelper.RegisterSDKCallbackFunction(OnCmediaSDKCallBack);
 
             Application.Current.MainWindow.Closing += MainWindow_Closing;
+        }
+
+        private void OnCmediaSDKCallBack(int type, int id, int componentType, ulong eventId)
+        {
+            //throw new NotImplementedException();
         }
     }
 }

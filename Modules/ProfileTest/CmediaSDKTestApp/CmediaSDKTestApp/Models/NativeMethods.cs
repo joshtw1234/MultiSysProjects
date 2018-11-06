@@ -5,20 +5,6 @@ namespace CmediaSDKTestApp.Models
 {
     class NativeMethods
     {
-#if CMEDIA
-        CMI_Init = (LPConfLibInit) GetProcAddress(hAudioDriver, "ConfLibInit");
-        CMI_GetDeviceById = (LPGetDeviceById) GetProcAddress(hAudioDriver, "GetDeviceById");
-        CMI_PropertyControl = (LPPropertyControl) GetProcAddress(hAudioDriver, "PropertyControl");
-        CMI_RegisterCallbackFunction = (LPRegisterCallbackFunction) GetProcAddress(hAudioDriver, "RegisterCallbackFunction");
-        CMI_GetDeviceCount = (LPGetDeviceCount) GetProcAddress(hAudioDriver, "GetDeviceCount");
-        CMI_CreateDeviceList = (LPCreateDeviceList) GetProcAddress(hAudioDriver, "CreateDeviceList");
-        CMI_ConfLibUnInit = (LPConfLibUnInit) GetProcAddress(hAudioDriver, "ConfLibUnInit");
-        CMI_ShowAsioPanel = (LPShowAsioPanel) GetProcAddress(hAudioDriver, "ShowAsioPanel");
-
-        CMI_PlayTestSound = (LPPlayTestSound) GetProcAddress(hAudioDriver, "PlayTestSound");
-        CMI_StopTestSound = (LPStopTestSound) GetProcAddress(hAudioDriver, "StopTestSound");
-        CMI_CloseTestSound = (LPCloseTestSound) GetProcAddress(hAudioDriver, "CloseTestSound");
-#endif
         [DllImport("kernel32.dll")]
         public static extern uint GetLastError();
 

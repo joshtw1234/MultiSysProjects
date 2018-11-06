@@ -210,15 +210,17 @@ namespace CmediaSDKTestApp.Models
             DisplayMessage = logMessag;
             int rev = NativeMethods.CMI_ConfLibInit();
             rev = NativeMethods.CMI_CreateDeviceList();
-#if false
+
             //Get Render device
             _cmediaJackInfoRender = GetJackDevice(CMI_DeviceType.Render);
             //Get Capture device
             _cmediajackInfoCapture = GetJackDevice(CMI_DeviceType.Capture);
+
             //Register SDK callback
-            _cmediaSDKCallback = OnCmediaSDKCallback;
-            rev = NativeMethods.CMI_RegisterCallbackFunction(_cmediaSDKCallback, IntPtr.Zero);
-            DisplayMessage.MenuName += $"\nRegisterCallback return {rev}";
+            //_cmediaSDKCallback = OnCmediaSDKCallback;
+            //rev = NativeMethods.CMI_RegisterCallbackFunction(_cmediaSDKCallback, IntPtr.Zero);
+            DisplayMessage.MenuName += $"\nSDK Initialize return {rev}";
+#if false
             var revData = GetJackDeviceInfoDemo(CMI_DeviceType.Render, _cmediaJackInfoRender);
             revData = GetJackDeviceInfoDemo(CMI_DeviceType.Capture, _cmediajackInfoCapture);
 
@@ -231,6 +233,12 @@ namespace CmediaSDKTestApp.Models
         public int Unitialize()
         {
             return NativeMethods.CMI_ConfLibUnInit();
+        }
+
+        public int RegisterSDKCallBackFunction(CmediaSDKCallback callBack)
+        {
+            _cmediaSDKCallback = callBack;
+            return NativeMethods.CMI_RegisterCallbackFunction(_cmediaSDKCallback, IntPtr.Zero);
         }
     }
 }

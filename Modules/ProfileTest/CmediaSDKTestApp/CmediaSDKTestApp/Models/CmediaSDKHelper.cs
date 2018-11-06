@@ -1,4 +1,5 @@
 ﻿using CmediaSDKTestApp.BaseModels;
+using System;
 using System.Threading.Tasks;
 
 namespace CmediaSDKTestApp.Models
@@ -36,6 +37,11 @@ namespace CmediaSDKTestApp.Models
             {
                 return CmediaSDKService.Instance.SetJackDeviceData(deviceType, apiName, setValue);
             });
+        }
+
+        public static int RegisterSDKCallbackFunction(CmediaSDKCallback callBack)
+        {
+            return CmediaSDKService.Instance.RegisterSDKCallBackFunction(callBack);
         }
     }
 }

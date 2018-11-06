@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 namespace CmediaSDKTestApp.Models
 {
-    sealed class CmediaSDKService
+    sealed class CmediaSDKService : IDisposable
     {
         private CmediaSDKCallback _cmediaSDKCallback;
         private CMI_JackDeviceInfo _cmediaJackInfoRender;
@@ -232,13 +232,20 @@ namespace CmediaSDKTestApp.Models
 
         public int Unitialize()
         {
-            return NativeMethods.CMI_ConfLibUnInit();
+           return NativeMethods.CMI_ConfLibUnInit();
         }
 
         public int RegisterSDKCallBackFunction(CmediaSDKCallback callBack)
         {
             _cmediaSDKCallback += callBack;
             return NativeMethods.CMI_RegisterCallbackFunction(_cmediaSDKCallback, IntPtr.Zero);
+        }
+
+        public void Dispose()
+        {
+            _cmediaSDKCallback = null;
+            _cmediaJackInfoRender = null;
+            _cmediajackInfoCapture = null;
         }
     }
 }

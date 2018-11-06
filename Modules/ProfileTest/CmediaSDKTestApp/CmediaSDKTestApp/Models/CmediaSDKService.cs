@@ -59,7 +59,7 @@ namespace CmediaSDKTestApp.Models
             // It is devValue that will be passed to the API.
             IntPtr devValue = gchDevValue.AddrOfPinnedObject();
 
-            byte[] devExtraBvalue = new byte[1];
+            byte[] devExtraBvalue = new byte[CMI_BUFFER_SIZE];
             IntPtr pdevExtraVlue = Marshal.AllocCoTaskMem(Marshal.SizeOf(typeof(byte)) * CMI_BUFFER_SIZE);
             Marshal.Copy(devExtraBvalue, 0, pdevExtraVlue, devExtraBvalue.Length);
             GCHandle gch = GCHandle.Alloc(pdevExtraVlue, GCHandleType.Pinned);
@@ -158,7 +158,7 @@ namespace CmediaSDKTestApp.Models
             return rev;
         }
 
-        public OMENREVData GetJackDeviceData(CMI_DataFlow deviceType, string apiName)
+        public OMENREVData GetSetJackDeviceData(CMI_DataFlow deviceType, CMI_DriverRW readWrite, string apiName, byte[] setValue = null)
         {
             OMENREVData revData = new OMENREVData() { RevCode = -1, RevMessage = "API Name error" };
             ZazuRWData rwData = null;
@@ -172,16 +172,9 @@ namespace CmediaSDKTestApp.Models
                     jackInfo = _cmediajackInfoCapture;
                     break;
             }
-            rwData = new ZazuRWData() { JackInfo = jackInfo, ApiPropertyName = apiName, ReadWrite = CMI_DriverRW.Read, WriteData = null };
+            rwData = new ZazuRWData() { JackInfo = jackInfo, ApiPropertyName = apiName, ReadWrite = readWrite, WriteData = setValue };
             revData = OMEN_PropertyControl(rwData);
             DisplayMessage.MenuName += $"{revData.RevMessage}";
-            return revData;
-        }
-
-        public OMENREVData SetJackDeviceData(CMI_DataFlow deviceType, string apiName, byte[] setValue)
-        {
-            OMENREVData revData = new OMENREVData() { RevCode = -1, RevMessage = "API Name error" };
-            //TODO: Add Set logic.
             return revData;
         }
 
@@ -200,9 +193,9 @@ namespace CmediaSDKTestApp.Models
             //_cmediaSDKCallback = OnCmediaSDKCallback;
             //rev = NativeMethods.CMI_RegisterCallbackFunction(_cmediaSDKCallback, IntPtr.Zero);
             DisplayMessage.MenuName += $"\nSDK Initialize return {rev}";
+            //var revData = GetJackDeviceInfoDemo(CMI_DataFlow.eRender, _cmediaJackInfoRender);
+            //revData = GetJackDeviceInfoDemo(CMI_DataFlow.eCapture, _cmediajackInfoCapture);
 #if false
-            var revData = GetJackDeviceInfoDemo(CMI_DeviceType.Render, _cmediaJackInfoRender);
-            revData = GetJackDeviceInfoDemo(CMI_DeviceType.Capture, _cmediajackInfoCapture);
 
             GetJackDeviceData(CMI_DeviceType.Render, CmediaRenderFunctionPoint.DefaultDeviceControl.ToString());
             GetJackDeviceData(CMI_DeviceType.Capture, CmediaCaptureFunctionPoint.MagicVoice_Selection.ToString());

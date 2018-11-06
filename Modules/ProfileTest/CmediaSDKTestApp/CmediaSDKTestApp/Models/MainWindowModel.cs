@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows;
 using CmediaSDKTestApp.BaseModels;
 
@@ -233,7 +234,17 @@ namespace CmediaSDKTestApp.Models
 
         public void ModelInitialize()
         {
-            var rev = CmediaSDKHelper.InitializeSDKAsync(_micPage.DisplayText);
+            Task.Factory.StartNew(async () => 
+            {
+                var rev = await CmediaSDKHelper.InitializeSDKAsync(_micPage.DisplayText);
+                var revOMEN = await CmediaSDKHelper.GetSetJackDeviceDataAsync(CMI_DataFlow.eRender, CMI_DriverRW.Read, CmediaRenderFunctionPoint.GetDriverVer.ToString());
+                revOMEN = await CmediaSDKHelper.GetSetJackDeviceDataAsync(CMI_DataFlow.eRender, CMI_DriverRW.Read, CmediaRenderFunctionPoint.DefaultDeviceControl.ToString());
+                if (revOMEN.RevCode !=0)
+                {
+                    revOMEN = await CmediaSDKHelper.GetSetJackDeviceDataAsync(CMI_DataFlow.eRender, CMI_DriverRW.Write, CmediaRenderFunctionPoint.DefaultDeviceControl.ToString(), BitConverter.GetBytes(0));
+                }
+            });
+            
             int cRev = CmediaSDKHelper.RegisterSDKCallbackFunction(OnCmediaSDKCallBack);
 
             Application.Current.MainWindow.Closing += MainWindow_Closing;

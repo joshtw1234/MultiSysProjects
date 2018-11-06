@@ -23,19 +23,11 @@ namespace CmediaSDKTestApp.Models
             });
         }
 
-        public static async Task<OMENREVData> GetJackDeviceDataAsync(CMI_DataFlow deviceType, string apiName)
-        {
-            return await Task.Run(() => 
-            {
-                return CmediaSDKService.Instance.GetJackDeviceData(deviceType, apiName);
-            });
-        }
-
-        public static async Task<OMENREVData> SetJackDeviceDataAsync(CMI_DataFlow deviceType, string apiName, byte[] setValue)
+        public static async Task<OMENREVData> GetSetJackDeviceDataAsync(CMI_DataFlow deviceType, CMI_DriverRW readWrite, string apiName, byte[] setValue = null)
         {
             return await Task.Run(() =>
             {
-                return CmediaSDKService.Instance.SetJackDeviceData(deviceType, apiName, setValue);
+                return CmediaSDKService.Instance.GetSetJackDeviceData(deviceType, readWrite, apiName, setValue);
             });
         }
 

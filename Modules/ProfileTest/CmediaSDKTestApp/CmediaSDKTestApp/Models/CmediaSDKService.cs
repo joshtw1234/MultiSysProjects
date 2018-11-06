@@ -69,7 +69,7 @@ namespace CmediaSDKTestApp.Models
             // change the value of devValue. 
             int revCode = NativeMethods.CMI_PropertyControl(rwData.JackInfo.m_devInfo, rwData.ApiPropertyName, devValue, devExtraValue, rwData.ReadWrite);
             string revString = $"\nCMI_PropertyControl [{rwData.JackInfo.m_devInfo.DataFlow}] [{rwData.ApiPropertyName}] {rwData.ReadWrite} return {revCode}";
-            string revData = string.Empty;
+            string revData = string.Empty, revExraData = string.Empty;
             if (0 == revCode)
             {
                 // We must now find a way to dereference the memory address
@@ -90,6 +90,13 @@ namespace CmediaSDKTestApp.Models
                 Marshal.Copy(revPtr[0], NewByteArray, 0, NewByteArray.Length);
                 revData = System.Text.Encoding.UTF8.GetString(NewByteArray).Replace('\0', ' ').Trim();
                 revString = $"\nCMI_PropertyControl [{rwData.JackInfo.m_devInfo.DataFlow}] [{rwData.ApiPropertyName} {rwData.ReadWrite}] return {revCode} Get Data [{revData}]";
+
+                IntPtr[] revExraPtr = new IntPtr[1];
+                Marshal.Copy(devExtraValue, revExraPtr, 0, 1);
+                byte[] NewExtraByteArray = new byte[CMI_BUFFER_SIZE];
+                Marshal.Copy(revExraPtr[0], NewExtraByteArray, 0, NewExtraByteArray.Length);
+                revExraData = System.Text.Encoding.UTF8.GetString(NewExtraByteArray).Replace('\0', ' ').Trim();
+                revString += $" Extra [{revExraData}]";
             }
             gchDevValue.Free();
             gch.Free();

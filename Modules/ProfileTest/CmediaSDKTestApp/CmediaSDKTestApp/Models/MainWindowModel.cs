@@ -237,12 +237,8 @@ namespace CmediaSDKTestApp.Models
             Task.Factory.StartNew(async () => 
             {
                 var rev = await CmediaSDKHelper.InitializeSDKAsync(_micPage.DisplayText);
-                var revOMEN = await CmediaSDKHelper.GetSetJackDeviceDataAsync(CMI_DataFlow.eRender, CMI_DriverRW.Read, CmediaRenderFunctionPoint.GetDriverVer.ToString());
-                revOMEN = await CmediaSDKHelper.GetSetJackDeviceDataAsync(CMI_DataFlow.eRender, CMI_DriverRW.Read, CmediaRenderFunctionPoint.DefaultDeviceControl.ToString());
-                if (revOMEN.RevCode !=0)
-                {
-                    revOMEN = await CmediaSDKHelper.GetSetJackDeviceDataAsync(CMI_DataFlow.eRender, CMI_DriverRW.Write, CmediaRenderFunctionPoint.DefaultDeviceControl.ToString(), BitConverter.GetBytes(0));
-                }
+                var revOMEN = await CmediaSDKHelper.GetJackDeviceDataAsync(new OMENClientData() { ApiName = CmediaRenderFunctionPoint.DefaultDeviceControl.ToString() });
+                revOMEN = await CmediaSDKHelper.GetJackDeviceDataAsync(new OMENClientData() { ApiName = CmediaRenderFunctionPoint.GetDriverVer.ToString() });
             });
             
             int cRev = CmediaSDKHelper.RegisterSDKCallbackFunction(OnCmediaSDKCallBack);

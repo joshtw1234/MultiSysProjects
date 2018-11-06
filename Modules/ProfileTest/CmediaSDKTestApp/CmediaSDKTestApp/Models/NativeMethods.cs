@@ -111,6 +111,12 @@ namespace CmediaSDKTestApp.Models
 
     }
 
+    class OMENClientData
+    {
+        public string ApiName;
+        public byte[] WriteValue;
+    }
+
     class OMENREVData
     {
         public int RevCode;

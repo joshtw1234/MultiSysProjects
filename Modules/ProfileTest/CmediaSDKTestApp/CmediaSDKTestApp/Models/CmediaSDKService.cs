@@ -100,7 +100,7 @@ namespace CmediaSDKTestApp.Models
             }
             gchDevValue.Free();
             gch.Free();
-            OMENREVData rev = new OMENREVData() { RevCode = revCode, RevValue = revData, RevMessage = revString };
+            OMENREVData rev = new OMENREVData() { RevCode = revCode, RevValue = revData, RevExtraValue = revExraData, RevMessage = revString };
             return rev;
         }
 

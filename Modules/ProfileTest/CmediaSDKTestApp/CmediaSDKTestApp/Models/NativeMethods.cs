@@ -153,6 +153,7 @@ namespace CmediaSDKTestApp.Models
         public int RevCode;
         public string RevValue;
         public string RevMessage;
+        public string RevExtraValue;
     }
 
     class ZazuRWData

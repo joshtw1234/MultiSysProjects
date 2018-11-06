@@ -237,7 +237,7 @@ namespace CmediaSDKTestApp.Models
 
         public int RegisterSDKCallBackFunction(CmediaSDKCallback callBack)
         {
-            _cmediaSDKCallback = callBack;
+            _cmediaSDKCallback += callBack;
             return NativeMethods.CMI_RegisterCallbackFunction(_cmediaSDKCallback, IntPtr.Zero);
         }
     }

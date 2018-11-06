@@ -21,13 +21,13 @@ namespace CmediaSDKTestApp.Models
         public static extern int CMI_CreateDeviceList();
 
         [DllImport(_cmediaDllPath, EntryPoint = "GetDeviceCount")]
-        public static extern int CMI_GetDeviceCount(CMI_DataFlow type, ref uint DevCount);
+        public static extern int CMI_GetDeviceCount(CmediaDataFlow type, ref uint DevCount);
 
         [DllImport(_cmediaDllPath, EntryPoint = "GetDeviceById")]
-        public static extern int CMI_GetDeviceById(CMI_DataFlow type, int id, out CMI_DEVICEINFO deviceInfo);
+        public static extern int CMI_GetDeviceById(CmediaDataFlow type, int id, out CmediaDeviceInfo deviceInfo);
 
         [DllImport(_cmediaDllPath, EntryPoint = "PropertyControl", CharSet= CharSet.Auto, CallingConvention = CallingConvention.StdCall, ExactSpelling = true, SetLastError = true)]
-        public static extern int CMI_PropertyControl(CMI_DEVICEINFO info, string propertyName, IntPtr value, IntPtr extraData, CMI_DriverRW driverRW);
+        public static extern int CMI_PropertyControl(CmediaDeviceInfo info, string propertyName, IntPtr value, IntPtr extraData, CmediaDriverReadWrite driverRW);
 
         [DllImport(_cmediaDllPath, EntryPoint = "RegisterCallbackFunction", CharSet = CharSet.Auto, SetLastError = true)]
         public static extern int CMI_RegisterCallbackFunction([MarshalAs(UnmanagedType.FunctionPtr)] CmediaSDKCallback callbackPointer, IntPtr wndHandle);
@@ -143,27 +143,27 @@ namespace CmediaSDKTestApp.Models
 
     struct OMENClientData
     {
-        public string ApiName;
-        public byte[] WriteValue;
-        public byte[] WriteExtraValue;
+        public string ApiName { get; set; }
+        public byte[] WriteValue { get; set; }
+        public byte[] WriteExtraValue { get; set; }
     }
 
     class OMENREVData
     {
-        public int RevCode;
-        public string RevValue;
-        public string RevMessage;
-        public string RevExtraValue;
+        public int RevCode { get; set; }
+        public string RevValue { get; set; }
+        public string RevMessage { get; set; }
+        public string RevExtraValue { get; set; }
     }
 
-    class ZazuRWData
+    class ZazuReadWriteData
     {
-        public CMI_JackDeviceInfo JackInfo;
-        public string ApiPropertyName;
-        public CMI_DriverRW ReadWrite;
-        public byte[] WriteData;
-        public bool IsWriteExtra;
-        public byte[] WriteExtraData;
+        public CmediaJackDeviceInfo JackInfo { get; set; }
+        public string ApiPropertyName { get; set; }
+        public CmediaDriverReadWrite ReadWrite { get; set; }
+        public byte[] WriteData { get; set; }
+        public bool IsWriteExtra { get; set; }
+        public byte[] WriteExtraData { get; set; }
     }
 
     #region 7.1 Surround
@@ -187,36 +187,15 @@ namespace CmediaSDKTestApp.Models
         KSPROPERTY_VIRTUALSURROUND_PARAMSVALUE = 4
     }
 
-    struct REGISTER_OPERATION2
-    {
-        public HPSurroundFunction Operation;
-        public HPSurroundCommand Feature;
-        public HPSurroundValueType ValueType;
-        public byte[] ToBytes()
-        {
-            byte[] bytes = new byte[Marshal.SizeOf(typeof(REGISTER_OPERATION))];
-            GCHandle pinStructure = GCHandle.Alloc(this, GCHandleType.Pinned);
-            try
-            {
-                Marshal.Copy(pinStructure.AddrOfPinnedObject(), bytes, 0, bytes.Length);
-                return bytes;
-            }
-            finally
-            {
-                pinStructure.Free();
-            }
-        }
-    }
-
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    struct REGISTER_OPERATION
+    struct CmediaRegisterOperation
     {
         public HPSurroundFunction Operation;
         public HPSurroundCommand Feature;
         public HPSurroundValueType ValueType;
         public byte[] ToBytes()
         {
-            byte[] bytes = new byte[Marshal.SizeOf(typeof(REGISTER_OPERATION))];
+            byte[] bytes = new byte[Marshal.SizeOf(typeof(CmediaRegisterOperation))];
             GCHandle pinStructure = GCHandle.Alloc(this, GCHandleType.Pinned);
             try
             {
@@ -231,17 +210,17 @@ namespace CmediaSDKTestApp.Models
     }
     #endregion
 
-    struct CMI_DEVICEINFO
+    struct CmediaDeviceInfo
     {
         public int id;
-        public CMI_JackType JackType;
-        public CMI_DataFlow DataFlow;
-        public CMI_DeviceState DeviceState;
+        public CmediaJackType JackType;
+        public CmediaDataFlow DataFlow;
+        public CmediaDeviceState DeviceState;
     }
 
-    class CMI_JackDeviceInfo
+    class CmediaJackDeviceInfo
     {
-        public CMI_DEVICEINFO m_devInfo;       // reference to DEVICEINFO
+        public CmediaDeviceInfo m_devInfo;       // reference to DEVICEINFO
 
         // function attributes
         public int m_dwCMediaDSP0 { get; set; }      // CMedia DSP function tables
@@ -249,7 +228,7 @@ namespace CmediaSDKTestApp.Models
         public int m_dwExtraStreamFunc { get; set; }   // Extra stream function tables
     }
 
-    enum CMI_DeviceState
+    enum CmediaDeviceState
     {
         UnknowState = 0,
         Active,
@@ -258,7 +237,7 @@ namespace CmediaSDKTestApp.Models
         Unplugged
     }
 
-    enum CMI_JackType
+    enum CmediaJackType
     {
         UnknowJack = 0,
         JackSpeaker,
@@ -275,7 +254,7 @@ namespace CmediaSDKTestApp.Models
         JackSpeakerQuarter
     }
 
-    enum CMI_DataFlow
+    enum CmediaDataFlow
     {
         eRender,
         eCapture,
@@ -283,7 +262,7 @@ namespace CmediaSDKTestApp.Models
         DATAFLOW_enum_count
     }
 
-    enum CMI_DriverRW
+    enum CmediaDriverReadWrite
     {
         Read,
         Write

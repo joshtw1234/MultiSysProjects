@@ -189,7 +189,11 @@ namespace CmediaSDKTestApp.Models
             {
                 jackInfo = _cmediajackInfoCapture;
             }
-            rwData = new ZazuReadWriteStructure() { JackInfo = jackInfo, ApiPropertyName = clientData.ApiName, ReadWrite = readWrite, WriteData = clientData.SetExtraValueToByteArray(), WriteExtraData = clientData.SetExtraValueToByteArray() };
+            rwData = new ZazuReadWriteStructure() { JackInfo = jackInfo, ApiPropertyName = clientData.ApiName, ReadWrite = readWrite, WriteData = clientData.SetValueToByteArray(), WriteExtraData = clientData.SetExtraValueToByteArray() };
+            if (clientData.SetValue != null || clientData.SetExtraValue !=null)
+            {
+                rwData.IsWriteExtra = true;
+            }
             revData = OMEN_PropertyControl(rwData);
             DisplayMessage.MenuName += $"{revData.RevMessage}";
             return revData;

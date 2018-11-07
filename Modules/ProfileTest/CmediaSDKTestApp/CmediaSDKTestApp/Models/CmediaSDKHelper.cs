@@ -1,6 +1,5 @@
 ﻿using CmediaSDKTestApp.BaseModels;
 using System;
-using System.Threading.Tasks;
 
 namespace CmediaSDKTestApp.Models
 {
@@ -52,9 +51,21 @@ namespace CmediaSDKTestApp.Models
             rev = CmediaSDKService.Instance.GetSetJackDeviceData(cmediaDataFlow, CmediaDriverReadWrite.Read, new OMENClientData() { ApiName = CmediaAPIFunctionPoint.MuteControl.ToString() });
             if (rev.RevCode != 0) return null;
             volumeControl.IsMuted = Convert.ToBoolean(int.Parse(rev.RevValue));
-            rev = CmediaSDKService.Instance.GetSetJackDeviceData(cmediaDataFlow, CmediaDriverReadWrite.Read, new OMENClientData() { ApiName = CmediaAPIFunctionPoint.VolumeControl.ToString() });
+            //Get Channel data
+            volumeControl.ChannelValues = new System.Collections.Generic.List<OMENChannelControlSturcture>();
+            
+            rev = CmediaSDKService.Instance.GetSetJackDeviceData(cmediaDataFlow, CmediaDriverReadWrite.Read, new OMENClientData() { ApiName = CmediaAPIFunctionPoint.VolumeControl.ToString(), SetValue = null, SetExtraValue = OMENChannel.Master });
             if (rev.RevCode != 0) return null;
-            volumeControl.ChannelValue = new OMENChannelControlSturcture() { ChannelValue = double.Parse(rev.RevValue), ChannelIndex = string.IsNullOrEmpty(rev.RevExtraValue) ? 0.0 : double.Parse(rev.RevExtraValue) };
+            OMENChannelControlSturcture channel = new OMENChannelControlSturcture() { ChannelValue = double.Parse(rev.RevValue), ChannelIndex = OMENChannel.Master };
+            volumeControl.ChannelValues.Add(channel);
+            rev = CmediaSDKService.Instance.GetSetJackDeviceData(cmediaDataFlow, CmediaDriverReadWrite.Read, new OMENClientData() { ApiName = CmediaAPIFunctionPoint.VolumeControl.ToString(), SetValue = null, SetExtraValue = OMENChannel.FrontLeft });
+            if (rev.RevCode != 0) return null;
+            channel = new OMENChannelControlSturcture() { ChannelValue = double.Parse(rev.RevValue), ChannelIndex = OMENChannel.FrontLeft };
+            volumeControl.ChannelValues.Add(channel);
+            rev = CmediaSDKService.Instance.GetSetJackDeviceData(cmediaDataFlow, CmediaDriverReadWrite.Read, new OMENClientData() { ApiName = CmediaAPIFunctionPoint.VolumeControl.ToString(), SetValue = null, SetExtraValue = OMENChannel.FrontRight });
+            if (rev.RevCode != 0) return null;
+            channel = new OMENChannelControlSturcture() { ChannelValue = double.Parse(rev.RevValue), ChannelIndex = OMENChannel.FrontRight };
+            volumeControl.ChannelValues.Add(channel);
 
             return volumeControl;
         }

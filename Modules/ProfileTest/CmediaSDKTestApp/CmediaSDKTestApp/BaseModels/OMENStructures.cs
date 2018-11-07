@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
@@ -16,21 +17,43 @@ namespace CmediaSDKTestApp.BaseModels
         public object SetExtraValue { get; set; }
         public byte[] SetValueToByteArray()
         {
-            if (SetValue == null || !SetValue.GetType().Name.Equals(BuildInName))
+            if (SetValue == null)
             {
                 return null;
             }
-
+            if (SetValue.GetType().Namespace.Equals(BuildInName))
+            {
+                //Build in types
+                if (SetValue is int)
+                {
+                    return BitConverter.GetBytes((int)SetValue);
+                }
+            }
+            if (SetValue is OMENChannel)
+            {
+                return BitConverter.GetBytes((int)SetExtraValue);
+            }
             return ObjectToByteArray(SetValue);
         }
 
         public byte[] SetExtraValueToByteArray()
         {
-            if (SetExtraValue == null || !SetExtraValue.GetType().Name.Equals(BuildInName))
+            if (SetExtraValue == null)
             {
                 return null;
             }
-
+            if (SetExtraValue.GetType().Namespace.Equals(BuildInName))
+            {
+                //Build in types
+                if (SetExtraValue is int)
+                {
+                    return BitConverter.GetBytes((int)SetExtraValue);
+                }
+            }
+            if (SetExtraValue is OMENChannel)
+            {
+                return BitConverter.GetBytes((int)SetExtraValue);
+            }
             return ObjectToByteArray(SetExtraValue);
         }
 
@@ -38,9 +61,11 @@ namespace CmediaSDKTestApp.BaseModels
         {
             if (obj == null) return null;
             BinaryFormatter bf = new BinaryFormatter();
-            MemoryStream ms = new MemoryStream();
-            bf.Serialize(ms, obj);
-            return ms.ToArray();
+            using (MemoryStream ms = new MemoryStream())
+            {
+                bf.Serialize(ms, obj);
+                return ms.ToArray();
+            }
         }
     }
 
@@ -52,10 +77,17 @@ namespace CmediaSDKTestApp.BaseModels
         public string RevExtraValue { get; set; }
     }
 
+    enum OMENChannel
+    {
+        Master = -1,
+        FrontLeft,
+        FrontRight
+    }
+
     struct OMENChannelControlSturcture
     {
-        public double ChannelIndex;
-        public double ChannelValue;
+        public OMENChannel ChannelIndex { get; set; }
+        public double ChannelValue { get; set; }
     }
     class OMENVolumeControlStructure
     {
@@ -64,7 +96,7 @@ namespace CmediaSDKTestApp.BaseModels
         public double StepValue { get; set; }
         public double ScalarValue { get; set; }
         public bool IsMuted { get; set; }
-        public OMENChannelControlSturcture ChannelValue { get; set; }
+        public List<OMENChannelControlSturcture> ChannelValues { get; set; }
     }
 
     enum OMENDataFlow

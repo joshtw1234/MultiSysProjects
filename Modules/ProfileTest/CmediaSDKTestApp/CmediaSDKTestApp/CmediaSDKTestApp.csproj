@@ -100,7 +100,7 @@
     <Compile Include="Models\CmediaSDKHelper.cs" />
     <Compile Include="Models\CmediaSDKService.cs" />
     <Compile Include="Models\MainWindowLogicModel.cs" />
-    <Compile Include="Models\NativeMethods.cs" />
+    <Compile Include="BaseModels\NativeMethods.cs" />
     <Compile Include="Models\BasePageContentViewModel.cs" />
     <Compile Include="Models\BindAbleMenuItem.cs" />
     <Compile Include="Models\HorzSliderControlViewModel.cs" />

@@ -2,14 +2,14 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace CmediaSDKTestApp.Models
+namespace CmediaSDKTestApp.BaseModels
 {
     class NativeMethods
     {
         [DllImport("kernel32.dll")]
         public static extern uint GetLastError();
 
-        #region SDK Import functions
+        #region Cmedia SDK Import functions
         const string _cmediaDllPath = @"osConfLib.dll";
 
         [DllImport(_cmediaDllPath, EntryPoint = "ConfLibInit")]

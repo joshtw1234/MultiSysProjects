@@ -31,7 +31,7 @@ namespace CmediaSDKTestApp.Models
 
         private const int CMI_BUFFER_SIZE = 1024;
 
-        private OMENREVData OMEN_PropertyControl(ZazuReadWriteData rwData)
+        private OMENREVData OMEN_PropertyControl(ZazuReadWriteStructure rwData)
         {
             // Allocate a Cmedia standard Array.
             byte[] devBvalue = new byte[CMI_BUFFER_SIZE];
@@ -140,14 +140,14 @@ namespace CmediaSDKTestApp.Models
 
         private OMENREVData GetJackDeviceInfoDemo(CmediaDataFlow deviceType, CmediaJackDeviceInfo jackDevice)
         {
-            ZazuReadWriteData rwData = null;
+            ZazuReadWriteStructure rwData = null;
             OMENREVData rev = null;
             switch (deviceType)
             {
                 case CmediaDataFlow.eRender:
                     for (CmediaRenderFunctionPoint i = CmediaRenderFunctionPoint.DefaultDeviceControl; i <= CmediaRenderFunctionPoint.VOICECLARITY_NOISESUPP_LEVEL; i++)
                     {
-                        rwData = new ZazuReadWriteData() { JackInfo = jackDevice, ApiPropertyName = i.ToString(), ReadWrite = CmediaDriverReadWrite.Read };
+                        rwData = new ZazuReadWriteStructure() { JackInfo = jackDevice, ApiPropertyName = i.ToString(), ReadWrite = CmediaDriverReadWrite.Read };
                         rev = OMEN_PropertyControl(rwData);
                         DisplayMessage.MenuName += $"{rev.RevMessage}";
                     }
@@ -155,7 +155,7 @@ namespace CmediaSDKTestApp.Models
                 case CmediaDataFlow.eCapture:
                     for (CmediaCaptureFunctionPoint i = CmediaCaptureFunctionPoint.Enable_MICECHO; i <= CmediaCaptureFunctionPoint.GetAAVolStep; i++)
                     {
-                        rwData = new ZazuReadWriteData() { JackInfo = jackDevice, ApiPropertyName = i.ToString(), ReadWrite = CmediaDriverReadWrite.Read };
+                        rwData = new ZazuReadWriteStructure() { JackInfo = jackDevice, ApiPropertyName = i.ToString(), ReadWrite = CmediaDriverReadWrite.Read };
                         rev = OMEN_PropertyControl(rwData);
                         DisplayMessage.MenuName += $"{rev.RevMessage}";
                     }
@@ -189,7 +189,7 @@ namespace CmediaSDKTestApp.Models
                 return revData;
             }
             
-            ZazuReadWriteData rwData = null;
+            ZazuReadWriteStructure rwData = null;
             CmediaJackDeviceInfo jackInfo = null;
             switch (deviceType)
             {
@@ -200,7 +200,7 @@ namespace CmediaSDKTestApp.Models
                     jackInfo = _cmediajackInfoCapture;
                     break;
             }
-            rwData = new ZazuReadWriteData() { JackInfo = jackInfo, ApiPropertyName = clientData.ApiName, ReadWrite = readWrite, WriteData = clientData.WriteValue, WriteExtraData = clientData.WriteExtraValue };
+            rwData = new ZazuReadWriteStructure() { JackInfo = jackInfo, ApiPropertyName = clientData.ApiName, ReadWrite = readWrite, WriteData = clientData.WriteValue, WriteExtraData = clientData.WriteExtraValue };
             revData = OMEN_PropertyControl(rwData);
             DisplayMessage.MenuName += $"{revData.RevMessage}";
             return revData;
@@ -209,7 +209,7 @@ namespace CmediaSDKTestApp.Models
         public OMENREVData GetSetSurround(CmediaDriverReadWrite readWrite, HPSurroundCommand hpCommand)
         {
             OMENREVData revData = new OMENREVData() { RevCode = -1, RevMessage = $"[{hpCommand}] not Correct!" };
-            ZazuReadWriteData rwData = null;
+            ZazuReadWriteStructure rwData = null;
             CmediaRegisterOperation regop = new CmediaRegisterOperation();
             switch (hpCommand)
             {
@@ -229,7 +229,7 @@ namespace CmediaSDKTestApp.Models
                     regop.ValueType = HPSurroundValueType.ValueType_LONG;
                     break;
             }
-            rwData = new ZazuReadWriteData() { JackInfo = _cmediaJackInfoRender, ApiPropertyName = CmediaRenderFunctionPoint.VirtualSurroundEffectControl.ToString(),
+            rwData = new ZazuReadWriteStructure() { JackInfo = _cmediaJackInfoRender, ApiPropertyName = CmediaRenderFunctionPoint.VirtualSurroundEffectControl.ToString(),
                 ReadWrite = readWrite, WriteData = null, IsWriteExtra = true, WriteExtraData = regop.ToBytes() };
             revData = OMEN_PropertyControl(rwData);
             DisplayMessage.MenuName += $"{revData.RevMessage}";

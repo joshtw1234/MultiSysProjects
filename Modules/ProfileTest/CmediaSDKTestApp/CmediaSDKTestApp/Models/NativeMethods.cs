@@ -42,7 +42,7 @@ namespace CmediaSDKTestApp.Models
         public byte[] WriteExtraValue { get; set; }
     }
 
-    class OMENREVData
+    struct OMENREVData
     {
         public int RevCode { get; set; }
         public string RevValue { get; set; }

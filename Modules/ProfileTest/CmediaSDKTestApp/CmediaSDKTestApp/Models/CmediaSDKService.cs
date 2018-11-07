@@ -141,7 +141,7 @@ namespace CmediaSDKTestApp.Models
         private OMENREVData GetJackDeviceInfoDemo(CmediaDataFlow deviceType, CmediaJackDeviceInfo jackDevice)
         {
             ZazuReadWriteStructure rwData = null;
-            OMENREVData rev = null;
+            OMENREVData rev = new OMENREVData() { RevCode = -1, RevMessage = $"jackDevice type [{jackDevice.m_devInfo.DataFlow}]" }; ;
             switch (deviceType)
             {
                 case CmediaDataFlow.eRender:

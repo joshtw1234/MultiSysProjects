@@ -116,10 +116,20 @@ namespace CmediaSDKTestApp.BaseModels
     #endregion
 
     #region Cmedia Function Point
-    enum CmediaRenderFunctionPoint
+    /// <summary>
+    /// The Cmedia SDK API function names
+    /// Use string type to call SDK API
+    /// </summary>
+    enum CmediaAPIFunctionPoint
     {
         #region CMI Device
-        DefaultDeviceControl,//With write will set device to default
+        /// <summary>
+        /// Get or Set Default Device Control
+        /// Get 0 is default
+        /// Set 1 is default
+        /// Render/Capture
+        /// </summary>
+        DefaultDeviceControl,
         AmplifierControl,
         EndpointEnableControl,//Get or Set device states, 1 is enable, 0 is disable
         EXControl,//EX switch device.
@@ -197,10 +207,8 @@ namespace CmediaSDKTestApp.BaseModels
         VOICECLARITY_LEVEL,
         VOICECLARITY_NOISESUPP_LEVEL,
         #endregion
-    }
 
-    enum CmediaCaptureFunctionPoint
-    {
+        //Below API is Capture only
         #region MIC device.
         Enable_MICECHO,
         MICECHO_Level,
@@ -214,9 +222,8 @@ namespace CmediaSDKTestApp.BaseModels
         AAVolumeScalarControl,
         GetAAMaxVol,
         GetAAMinVol,
-        GetAAVolStep,
+        GetAAVolStep
         #endregion
-
     }
 
     [UnmanagedFunctionPointer(CallingConvention.StdCall)]

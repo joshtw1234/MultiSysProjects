@@ -251,8 +251,7 @@ namespace CmediaSDKTestApp.Models
             });
             CmediaSDKHelper.RegisterSDKCallbackFunction(OnCmediaSDKCallBack);
             Application.Current.MainWindow.Closing += MainWindow_Closing;
-            _micPage.DisplayText.MenuName += $"\nCmediaRenderFunctionPoint get {Enum.GetNames(typeof(CmediaRenderFunctionPoint)).Length}";
-            _micPage.DisplayText.MenuName += $"\nCmediaCaptureFunctionPoint get {Enum.GetNames(typeof(CmediaCaptureFunctionPoint)).Length}";
+            _micPage.DisplayText.MenuName += $"\nCmediaRenderFunctionPoint get {Enum.GetNames(typeof(CmediaAPIFunctionPoint)).Length}";
         }
 
         private void OnCmediaSDKCallBack(int type, int id, int componentType, ulong eventId)

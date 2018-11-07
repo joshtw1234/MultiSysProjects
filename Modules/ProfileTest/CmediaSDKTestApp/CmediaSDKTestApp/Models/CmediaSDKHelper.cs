@@ -42,7 +42,7 @@ namespace CmediaSDKTestApp.Models
         {
             return await Task.Run(() =>
             {
-                return CmediaSDKService.Instance.GetSetSurround(CmediaDriverReadWrite.Read, hpcommand);
+                return CmediaSDKService.Instance.GetSetSurroundData(CmediaDriverReadWrite.Read, hpcommand);
             });
         }
 
@@ -50,7 +50,7 @@ namespace CmediaSDKTestApp.Models
         {
             return await Task.Run(() =>
             {
-                return CmediaSDKService.Instance.GetSetSurround(CmediaDriverReadWrite.Write, hpcommand);
+                return CmediaSDKService.Instance.GetSetSurroundData(CmediaDriverReadWrite.Write, hpcommand);
             });
         }
 

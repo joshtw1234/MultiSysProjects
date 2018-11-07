@@ -1,5 +1,4 @@
-﻿using CmediaSDKTestApp.BaseModels;
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 
 namespace CmediaSDKTestApp.BaseModels
@@ -33,20 +32,5 @@ namespace CmediaSDKTestApp.BaseModels
         [DllImport(_cmediaDllPath, EntryPoint = "RegisterCallbackFunction", CharSet = CharSet.Auto, SetLastError = true)]
         public static extern int CMI_RegisterCallbackFunction([MarshalAs(UnmanagedType.FunctionPtr)] CmediaSDKCallback callbackPointer, IntPtr wndHandle);
         #endregion
-    }
-   
-    struct OMENClientData
-    {
-        public string ApiName { get; set; }
-        public byte[] WriteValue { get; set; }
-        public byte[] WriteExtraValue { get; set; }
-    }
-
-    struct OMENREVData
-    {
-        public int RevCode { get; set; }
-        public string RevValue { get; set; }
-        public string RevMessage { get; set; }
-        public string RevExtraValue { get; set; }
     }
 }

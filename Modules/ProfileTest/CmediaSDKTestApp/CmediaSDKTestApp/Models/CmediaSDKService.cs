@@ -4,6 +4,9 @@ using System.Runtime.InteropServices;
 
 namespace CmediaSDKTestApp.Models
 {
+    /// <summary>
+    /// Implement Cmedia SDK sample code as service
+    /// </summary>
     sealed class CmediaSDKService : IDisposable
     {
         private CmediaSDKCallback _cmediaSDKCallback;
@@ -88,14 +91,14 @@ namespace CmediaSDKTestApp.Models
                 // Copy the byte array values pointed to by revPtr[0]
                 // to NewByteArray.
                 Marshal.Copy(revPtr[0], NewByteArray, 0, NewByteArray.Length);
-                revData = System.Text.Encoding.UTF8.GetString(NewByteArray).Replace('\0', ' ').Trim();
+                revData = System.Text.Encoding.ASCII.GetString(NewByteArray).Replace("\0", "");
                 revString = $"\nCMI_PropertyControl [{rwData.JackInfo.m_devInfo.DataFlow}] [{rwData.ApiPropertyName} {rwData.ReadWrite}] return {revCode} Get Data [{revData}]";
 
                 IntPtr[] revExraPtr = new IntPtr[1];
                 Marshal.Copy(devExtraValue, revExraPtr, 0, 1);
                 byte[] NewExtraByteArray = new byte[CMEDIABUFFERSIZE];
                 Marshal.Copy(revExraPtr[0], NewExtraByteArray, 0, NewExtraByteArray.Length);
-                revExraData = System.Text.Encoding.UTF8.GetString(NewExtraByteArray).Replace('\0', ' ').Trim();
+                revExraData = System.Text.Encoding.ASCII.GetString(NewExtraByteArray).Replace("\0", "");
                 revString += $" Extra [{revExraData}]";
             }
             gchDevValue.Free();
@@ -164,7 +167,7 @@ namespace CmediaSDKTestApp.Models
             return rev;
         }
 
-        public OMENREVData GetSetJackDeviceData(CmediaDriverReadWrite readWrite, OMENClientData clientData)
+        public OMENREVData GetSetJackDeviceData(CmediaDataFlow dataFlow, CmediaDriverReadWrite readWrite, OMENClientData clientData)
         {
             OMENREVData revData = new OMENREVData() { RevCode = -1, RevMessage = $"API Name [{clientData.ApiName}] not Correct!" };
             CmediaAPIFunctionPoint sdkAPI;
@@ -173,7 +176,7 @@ namespace CmediaSDKTestApp.Models
                 return revData;
             }
             if (readWrite == CmediaDriverReadWrite.Write && 
-                clientData.WriteValue == null && clientData.WriteExtraValue == null)
+                clientData.SetValue == null && clientData.SetExtraValue == null)
             {
                 revData.RevMessage = "SetValue Can't be Null";
                 return revData;
@@ -182,11 +185,11 @@ namespace CmediaSDKTestApp.Models
             ZazuReadWriteStructure rwData = null;
             CmediaJackDeviceInfo jackInfo = null;
             jackInfo = _cmediaJackInfoRender;
-            if (sdkAPI > CmediaAPIFunctionPoint.VOICECLARITY_NOISESUPP_LEVEL)
+            if (dataFlow == CmediaDataFlow.eCapture || sdkAPI > CmediaAPIFunctionPoint.VOICECLARITY_NOISESUPP_LEVEL)
             {
                 jackInfo = _cmediajackInfoCapture;
             }
-            rwData = new ZazuReadWriteStructure() { JackInfo = jackInfo, ApiPropertyName = clientData.ApiName, ReadWrite = readWrite, WriteData = clientData.WriteValue, WriteExtraData = clientData.WriteExtraValue };
+            rwData = new ZazuReadWriteStructure() { JackInfo = jackInfo, ApiPropertyName = clientData.ApiName, ReadWrite = readWrite, WriteData = clientData.SetExtraValueToByteArray(), WriteExtraData = clientData.SetExtraValueToByteArray() };
             revData = OMEN_PropertyControl(rwData);
             DisplayMessage.MenuName += $"{revData.RevMessage}";
             return revData;

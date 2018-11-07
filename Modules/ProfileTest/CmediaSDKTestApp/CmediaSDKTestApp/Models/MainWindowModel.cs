@@ -26,7 +26,7 @@ namespace CmediaSDKTestApp.Models
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            var rev = CmediaSDKHelper.UnInitializeSDKAsync();
+            var rev = ZazuHelper.UnInitializeSDKAsync();
         }
 
         public ObservableCollection<IMenuItem> GetPageButtons
@@ -234,22 +234,26 @@ namespace CmediaSDKTestApp.Models
 
         public void ModelInitialize()
         {
+            OMENVolumeControlStructure omenVolume = null;
             Task.Factory.StartNew(async () => 
             {
-                var rev = await CmediaSDKHelper.InitializeSDKAsync(_micPage.DisplayText);
+                var rev = await ZazuHelper.InitializeSDKAsync(_micPage.DisplayText);
                 if (rev != 0)
                 {
                     _micPage.DisplayText.MenuName += "\nSDK initial failed";
                     return;
                 }
-                //var revOMEN = await CmediaSDKHelper.GetJackDeviceDataAsync(new OMENClientData() { ApiName = CmediaRenderFunctionPoint.DefaultDeviceControl.ToString() });
+                omenVolume = await ZazuHelper.GetVolumeControl(OMENDataFlow.Render);
+                _micPage.DisplayText.MenuName += $"\nOmenVolume get [{omenVolume.MaxValue}] [{omenVolume.MinValue}] [{omenVolume.ScalarValue}] [{omenVolume.IsMuted}]";
+                //revOMEN = await CmediaSDKHelper.SetJackDeviceDataAsync(new OMENClientData() { ApiName = CmediaAPIFunctionPoint.DefaultDeviceControl.ToString(), SetValue= 0 });
+                //revOMEN = await CmediaSDKHelper.GetJackDeviceDataAsync(new OMENClientData() { ApiName = CmediaAPIFunctionPoint.DefaultDeviceControl.ToString() });
                 //revOMEN = await CmediaSDKHelper.GetJackDeviceDataAsync(new OMENClientData() { ApiName = CmediaRenderFunctionPoint.GetDriverVer.ToString() });
                 //revOMEN = await CmediaSDKHelper.GetSurroundAsync(HPSurroundCommand.XEAR_SURR_HP_ENABLE);
                 //revOMEN = await CmediaSDKHelper.GetSurroundAsync(HPSurroundCommand.XEAR_SURR_HP_MODE);
                 //revOMEN = await CmediaSDKHelper.GetSurroundAsync(HPSurroundCommand.XEAR_SURR_HP_ROOM);
-                
+
             });
-            CmediaSDKHelper.RegisterSDKCallbackFunction(OnCmediaSDKCallBack);
+            ZazuHelper.RegisterSDKCallbackFunction(OnCmediaSDKCallBack);
             Application.Current.MainWindow.Closing += MainWindow_Closing;
             _micPage.DisplayText.MenuName += $"\nCmediaRenderFunctionPoint get {Enum.GetNames(typeof(CmediaAPIFunctionPoint)).Length}";
         }

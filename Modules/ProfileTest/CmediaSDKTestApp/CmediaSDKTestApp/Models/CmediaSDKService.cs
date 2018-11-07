@@ -252,7 +252,8 @@ namespace CmediaSDKTestApp.Models
             DisplayMessage.MenuName += $"\nSDK Initialize return {rev}";
 #if DEMO
             var revData = GetJackDeviceInfoDemo(CmediaDataFlow.eRender, _cmediaJackInfoRender);
-            revData = GetJackDeviceInfoDemo(CmediaDataFlow.eCapture, _cmediajackInfoCapture);
+            //revData = GetJackDeviceInfoDemo(CmediaDataFlow.eCapture, _cmediajackInfoCapture);
+            //revData = GetJackDeviceInfoDemo(CmediaDataFlow.eRender, _cmediajackInfoCapture);
 #endif
             return rev;
         }

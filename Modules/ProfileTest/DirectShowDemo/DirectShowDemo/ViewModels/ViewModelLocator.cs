@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Windows;
 
-namespace DirectShowDemo.Models
+namespace DirectShowDemo.ViewModels
 {
     public class ViewModelLocator
     {

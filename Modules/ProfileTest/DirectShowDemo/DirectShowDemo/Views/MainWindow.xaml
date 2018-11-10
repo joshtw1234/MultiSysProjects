@@ -17,13 +17,6 @@
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
-        <DockPanel>
-            <ItemsControl DockPanel.Dock="Bottom" ItemsSource="{Binding CommonButtons}"
-                      ItemTemplate="{StaticResource ButtonTemplate}"
-                      ItemsPanel="{StaticResource ButtonPanelTemplate}"/>
-            <ScrollViewer>
-                <TextBlock DataContext="{Binding DisplayMenuItem}" Style="{Binding MenuStyle}"/>
-            </ScrollViewer>
-        </DockPanel>
+       
     </Grid>
 </Window>

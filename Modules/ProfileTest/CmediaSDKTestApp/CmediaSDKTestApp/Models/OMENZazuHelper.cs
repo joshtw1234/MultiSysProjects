@@ -6,7 +6,7 @@ namespace CmediaSDKTestApp.Models
     /// <summary>
     /// The Client API for OMEN
     /// </summary>
-    class ZazuHelper
+    class OMENZazuHelper
     {
         public static async Task<int> InitializeSDKAsync(IMenuItem displayMessage)
         {

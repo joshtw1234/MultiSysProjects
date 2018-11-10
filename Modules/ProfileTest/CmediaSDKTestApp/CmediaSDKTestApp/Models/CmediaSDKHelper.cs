@@ -70,5 +70,11 @@ namespace CmediaSDKTestApp.Models
             return volumeControl;
         }
 
+        internal static bool SetVolumeControl(OMENDataFlow renderCapture, OMENChannelControlSturcture volumeData)
+        {
+            bool rev = false;
+            return rev;
+        }
+
     }
 }

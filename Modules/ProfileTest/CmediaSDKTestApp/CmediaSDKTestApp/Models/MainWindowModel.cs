@@ -26,7 +26,7 @@ namespace CmediaSDKTestApp.Models
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            var rev = ZazuHelper.UnInitializeSDKAsync();
+            var rev = OMENZazuHelper.UnInitializeSDKAsync();
         }
 
         public ObservableCollection<IMenuItem> GetPageButtons
@@ -227,15 +227,15 @@ namespace CmediaSDKTestApp.Models
             
             Task.Factory.StartNew(async () => 
             {
-                var rev = await ZazuHelper.InitializeSDKAsync(_micPage.DisplayText);
+                var rev = await OMENZazuHelper.InitializeSDKAsync(_micPage.DisplayText);
                 if (rev != 0)
                 {
                     _micPage.DisplayText.MenuName += "\nSDK initial failed";
                     return;
                 }
-                _audioVolumeControl = await ZazuHelper.GetAudioVolumeControl();
+                _audioVolumeControl = await OMENZazuHelper.GetAudioVolumeControl();
                 _micPage.DisplayText.MenuName += $"\nAudioVolumeControl get [{_audioVolumeControl.MaxValue}] [{_audioVolumeControl.MinValue}] [{_audioVolumeControl.ScalarValue}] [{_audioVolumeControl.IsMuted}]";
-                _microphoneVolumeControl = await ZazuHelper.GetMicrophoneVolumeControl();
+                _microphoneVolumeControl = await OMENZazuHelper.GetMicrophoneVolumeControl();
                 _micPage.DisplayText.MenuName += $"\nMicrophoneVolumeControl get [{_microphoneVolumeControl.MaxValue}] [{_microphoneVolumeControl.MinValue}] [{_microphoneVolumeControl.ScalarValue}] [{_microphoneVolumeControl.IsMuted}]";
                 SliderInitialize();
                 //revOMEN = await CmediaSDKHelper.SetJackDeviceDataAsync(new OMENClientData() { ApiName = CmediaAPIFunctionPoint.DefaultDeviceControl.ToString(), SetValue= 0 });
@@ -246,7 +246,7 @@ namespace CmediaSDKTestApp.Models
                 //revOMEN = await CmediaSDKHelper.GetSurroundAsync(HPSurroundCommand.XEAR_SURR_HP_ROOM);
 
             });
-            ZazuHelper.RegisterSDKCallbackFunction(OnCmediaSDKCallBack);
+            OMENZazuHelper.RegisterSDKCallbackFunction(OnCmediaSDKCallBack);
             Application.Current.MainWindow.Closing += MainWindow_Closing;
             _micPage.DisplayText.MenuName += $"\nCmediaRenderFunctionPoint get {Enum.GetNames(typeof(CmediaAPIFunctionPoint)).Length}";
         }

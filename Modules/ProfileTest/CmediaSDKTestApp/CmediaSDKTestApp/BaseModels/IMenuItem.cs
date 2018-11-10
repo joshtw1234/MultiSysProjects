@@ -29,7 +29,7 @@ namespace CmediaSDKTestApp.BaseModels
         /// on a particular menu item 
         /// </summary>
         //DelegateCommand<string> MenuCommand { get; set; }
-        MyCommond<string> MenuCommand { get; set; }
+        MyDelegateCommond<string> MenuCommand { get; set; }
 
         /// <summary>
         /// MenuStyle is the styling applied to a particular menu item

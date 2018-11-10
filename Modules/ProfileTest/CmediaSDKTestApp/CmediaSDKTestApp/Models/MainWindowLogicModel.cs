@@ -10,12 +10,12 @@ namespace CmediaSDKTestApp.Models
     {
         protected MicPageContentModel _micPage;
         protected ObservableCollection<IMenuItem> _contentpages;
-        private MyCommond<string> _onCommonButtonClickEvent;
-        protected MyCommond<string> OnCommonButtonClickEvent => _onCommonButtonClickEvent ?? (_onCommonButtonClickEvent = new MyCommond<string>(OnCommonButtonClick));
-        private MyCommond<string> _onPageButtonClickEvent;
-        protected MyCommond<string> OnPageButtonClickEvent => _onPageButtonClickEvent ?? (_onPageButtonClickEvent = new MyCommond<string>(OnPageButtonClick));
-        private MyCommond<RoutedPropertyChangedEventArgs<double>> _onSliderValueChangeCommand;
-        protected MyCommond<RoutedPropertyChangedEventArgs<double>> OnSliderValueChangeCommand => _onSliderValueChangeCommand ?? (_onSliderValueChangeCommand = new MyCommond<RoutedPropertyChangedEventArgs<double>>(OnSliderValueChanged));
+        private MyDelegateCommond<string> _onCommonButtonClickEvent;
+        protected MyDelegateCommond<string> OnCommonButtonClickEvent => _onCommonButtonClickEvent ?? (_onCommonButtonClickEvent = new MyDelegateCommond<string>(OnCommonButtonClick));
+        private MyDelegateCommond<string> _onPageButtonClickEvent;
+        protected MyDelegateCommond<string> OnPageButtonClickEvent => _onPageButtonClickEvent ?? (_onPageButtonClickEvent = new MyDelegateCommond<string>(OnPageButtonClick));
+        private MyDelegateCommond<RoutedPropertyChangedEventArgs<double>> _onSliderValueChangeCommand;
+        protected MyDelegateCommond<RoutedPropertyChangedEventArgs<double>> OnSliderValueChangeCommand => _onSliderValueChangeCommand ?? (_onSliderValueChangeCommand = new MyDelegateCommond<RoutedPropertyChangedEventArgs<double>>(OnSliderValueChanged));
 
         protected virtual void OnSliderValueChanged(RoutedPropertyChangedEventArgs<double> obj)
         {

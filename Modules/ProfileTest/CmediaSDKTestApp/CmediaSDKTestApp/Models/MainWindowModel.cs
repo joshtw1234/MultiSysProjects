@@ -210,6 +210,11 @@ namespace CmediaSDKTestApp.Models
             }
         }
 
+        protected override void OnSliderValueChanged(RoutedPropertyChangedEventArgs<double> obj)
+        {
+            base.OnSliderValueChanged(obj);
+        }
+
         private void SliderInitialize()
         {
             //Audio

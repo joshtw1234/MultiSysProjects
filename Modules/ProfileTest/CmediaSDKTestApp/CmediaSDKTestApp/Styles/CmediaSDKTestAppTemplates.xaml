@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                    xmlns:base="clr-namespace:CmediaSDKTestApp.BaseModels"
                     xmlns:local="clr-namespace:CmediaSDKTestApp.Styles">
 
     <SolidColorBrush x:Key="DefaultBackground" Color="#212121"/>
@@ -75,11 +76,14 @@
                     Minimum="{Binding SliderMinimum.MenuName}"
                     Maximum="{Binding SliderMaximum.MenuName}"
                     Style="{DynamicResource HorizSlider}">
-                <i:Interaction.Triggers>
+                <i:Interaction.Behaviors>
+                    <base:EventToCommandBehavior Command="{Binding SliderValueChangeCommand}" Event="ValueChanged" PassArguments="True"/>
+                </i:Interaction.Behaviors>
+                <!--<i:Interaction.Triggers>
                     <i:EventTrigger EventName="ValueChanged">
-                        <i:InvokeCommandAction Command="{Binding SliderValueChangeCommand}"/>
+                        <i:InvokeCommandAction Command="{Binding SliderValueChangeCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>
                     </i:EventTrigger>
-                </i:Interaction.Triggers>
+                </i:Interaction.Triggers>-->
             </Slider>
         </StackPanel>
     </DataTemplate>

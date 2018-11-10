@@ -94,8 +94,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="BaseModels\EventToCommandBehavior.cs" />
     <Compile Include="BaseModels\IMenuItem.cs" />
     <Compile Include="BaseModels\MenuItem.cs" />
+    <Compile Include="BaseModels\MyDelegateCommond.cs" />
     <Compile Include="BaseModels\OMENStructures.cs" />
     <Compile Include="BaseModels\ZazuReadWriteStructure.cs" />
     <Compile Include="Models\CmediaSDKHelper.cs" />

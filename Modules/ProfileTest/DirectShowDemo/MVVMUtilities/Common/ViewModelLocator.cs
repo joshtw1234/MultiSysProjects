@@ -29,14 +29,31 @@ namespace MVVMUtilities.Common
         {
             if (DesignerProperties.GetIsInDesignMode(d)) return;
             var viewType = d.GetType();
+            //Get Model
+            string strModel = viewType.FullName;
+            strModel = strModel.Replace(".Views.", ".Models.");
+            string[] viewNameArray = strModel.Split('.');
+            var modelName = $"{viewNameArray[viewNameArray.Length - 1]}Model";
+            var viewTypeName = strModel.Remove(strModel.LastIndexOf('.') + 1);
+            var modelTypeName = viewTypeName + modelName;
+            var modelType = Type.GetType(modelTypeName);
+            object modelInstance = null;
+            if (modelType != null)
+            {
+                modelInstance = Activator.CreateInstance(modelType);
+            }
+
+            //Get ViewModel
             string str = viewType.FullName;
             str = str.Replace(".Views.", ".ViewModels.");
-
-            var viewTypeName = str;
-            var viewModelTypeName = viewTypeName + "Model";
+            viewTypeName = str;
+            var viewModelTypeName = viewTypeName + "ViewModel";
             var viewModelType = Type.GetType(viewModelTypeName);
-            var viewModel = Activator.CreateInstance(viewModelType);
-            ((FrameworkElement)d).DataContext = viewModel;
+            if (viewModelType != null)
+            {
+                var viewModel = Activator.CreateInstance(viewModelType, modelInstance);
+                ((FrameworkElement)d).DataContext = viewModel;
+            }
         }
     }
 }

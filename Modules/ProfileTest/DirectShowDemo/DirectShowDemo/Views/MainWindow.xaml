@@ -1,0 +1,30 @@
+﻿<Window x:Class="DirectShowDemo.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DirectShowDemo"
+        xmlns:vm="clr-namespace:DirectShowDemo.ViewModels"
+        xmlns:m="clr-namespace:DirectShowDemo.Models"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" DataContext="{DynamicResource WPFVM}">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ObjectDataProvider x:Key="WPFVM" ObjectType="{x:Type vm:MainWindowViewModel}">
+                <ObjectDataProvider.ConstructorParameters>
+                    <m:MainWindowModel/>
+                </ObjectDataProvider.ConstructorParameters>
+            </ObjectDataProvider>
+            <ResourceDictionary.MergedDictionaries>
+                <!--<ResourceDictionary Source="/Styles/HIDDemoStyle.xaml"/>-->
+                <ResourceDictionary Source="pack://application:,,,/DirectShowDemo;component/Styles/MultiAccessoryTestStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <TextBlock Style="{Binding MenuStyle}"/>
+        <ItemsControl ItemsSource="{Binding CommonButtons}"
+                      ItemTemplate="{StaticResource ButtonTemplate}"
+                      ItemsPanel="{StaticResource ButtonPanelTemplate}"/>
+    </Grid>
+</Window>

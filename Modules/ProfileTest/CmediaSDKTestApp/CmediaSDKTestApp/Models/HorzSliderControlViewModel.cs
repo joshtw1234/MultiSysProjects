@@ -1,9 +1,11 @@
 ﻿using CmediaSDKTestApp.BaseModels;
+using System.Windows;
 
 namespace CmediaSDKTestApp.Models
 {
-    class HorzSliderControlViewModel
+    class HorzSliderControlModel
     {
+        public string SliderName { get; set; }
         public IMenuItem Btn_Left { get; set; }
         public IMenuItem SliderValueStr { get; set; }
         public IMenuItem SlideUnitStr { get; set; }
@@ -12,5 +14,6 @@ namespace CmediaSDKTestApp.Models
         public IMenuItem SliderTickFrequency { get; set; }
         public IMenuItem SliderMinimum { get; set; }
         public IMenuItem SliderMaximum { get; set; }
+        public MyCommond<RoutedPropertyChangedEventArgs<double>> SliderValueChangeCommand { get; set; }
     }
 }

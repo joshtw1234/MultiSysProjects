@@ -2,6 +2,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 
 namespace CmediaSDKTestApp.Models
 {
@@ -13,8 +14,15 @@ namespace CmediaSDKTestApp.Models
         protected MyCommond<string> OnCommonButtonClickEvent => _onCommonButtonClickEvent ?? (_onCommonButtonClickEvent = new MyCommond<string>(OnCommonButtonClick));
         private MyCommond<string> _onPageButtonClickEvent;
         protected MyCommond<string> OnPageButtonClickEvent => _onPageButtonClickEvent ?? (_onPageButtonClickEvent = new MyCommond<string>(OnPageButtonClick));
+        private MyCommond<RoutedPropertyChangedEventArgs<double>> _onSliderValueChangeCommand;
+        protected MyCommond<RoutedPropertyChangedEventArgs<double>> OnSliderValueChangeCommand => _onSliderValueChangeCommand ?? (_onSliderValueChangeCommand = new MyCommond<RoutedPropertyChangedEventArgs<double>>(OnSliderValueChanged));
 
-        private void OnPageButtonClick(string obj)
+        protected virtual void OnSliderValueChanged(RoutedPropertyChangedEventArgs<double> obj)
+        {
+            //throw new NotImplementedException();
+        }
+
+        protected virtual void OnPageButtonClick(string obj)
         {
             var btn = (ButtonStrings)Enum.Parse(typeof(ButtonStrings), obj);
             foreach (IMenuItem page in _contentpages)

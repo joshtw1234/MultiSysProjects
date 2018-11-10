@@ -111,8 +111,9 @@ namespace CmediaSDKTestApp.Models
                             MenuCommand = OnCommonButtonClickEvent
                         },
 #endif
-                var defSlider = new HorzSliderControlViewModel()
+                var defSlider = new HorzSliderControlModel()
                 {
+                    SliderName = "Audio",
                     SliderValueStr = new MenuItem()
                     {
                         MenuName = "40"
@@ -137,10 +138,12 @@ namespace CmediaSDKTestApp.Models
                     SliderTickFrequency = new MenuItem()
                     {
                         MenuName = "0.01"
-                    }
+                    },
+                    SliderValueChangeCommand = OnSliderValueChangeCommand
                 };
-                var secSlider = new HorzSliderControlViewModel()
+                var secSlider = new HorzSliderControlModel()
                 {
+                    SliderName = "Microphone",
                     SliderValueStr = new MenuItem()
                     {
                         MenuName = "40"
@@ -165,7 +168,8 @@ namespace CmediaSDKTestApp.Models
                     SliderTickFrequency = new MenuItem()
                     {
                         MenuName = "0.01"
-                    }
+                    },
+                    SliderValueChangeCommand = OnSliderValueChangeCommand
                 };
 
                 _micPage = new MicPageContentModel()
@@ -177,7 +181,7 @@ namespace CmediaSDKTestApp.Models
                         MenuName = "Message here"
                     },
 
-                    SliderControls = new ObservableCollection<HorzSliderControlViewModel>()
+                    SliderControls = new ObservableCollection<HorzSliderControlModel>()
                 };
                 _micPage.SliderControls.Add(defSlider);
                 _micPage.SliderControls.Add(secSlider);

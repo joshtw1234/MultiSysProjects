@@ -77,7 +77,7 @@
                     Style="{DynamicResource HorizSlider}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="ValueChanged">
-                        <i:InvokeCommandAction Command="{Binding SliderValueChanged}"/>
+                        <i:InvokeCommandAction Command="{Binding SliderValueChangeCommand}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Slider>

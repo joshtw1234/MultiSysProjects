@@ -21,6 +21,6 @@ namespace CmediaSDKTestApp.Models
     class MicPageContentModel : BasePageContentModel
     {
         public IMenuItem DisplayText { get; set; }
-        public ObservableCollection<HorzSliderControlViewModel> SliderControls { get; set; }
+        public ObservableCollection<HorzSliderControlModel> SliderControls { get; set; }
     }
 }

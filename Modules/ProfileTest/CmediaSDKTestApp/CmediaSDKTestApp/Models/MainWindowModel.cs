@@ -195,7 +195,7 @@ namespace CmediaSDKTestApp.Models
                         MenuName = ButtonStrings.Equaliser.ToString(),
                         MenuStyle = localDic["EQContentPageStyle"] as Style,
                         MenuVisibility = true,
-                        MenuImage = "/CmediaSDKTestApp;component/Assets/TestAsset1.jpg"
+                        //MenuImage = "/CmediaSDKTestApp;component/Assets/TestAsset1.jpg"
                     },
                     new BasePageContentModel()
                     {
@@ -251,16 +251,10 @@ namespace CmediaSDKTestApp.Models
         private void SliderInitialize()
         {
             //Audio
-            //_micPage.SliderControls[0].SliderMaximum.MenuName = _audioVolumeControl.MaxValue.ToString();
-            //_micPage.SliderControls[0].SliderMinimum.MenuName = _audioVolumeControl.MinValue.ToString();
             _micPage.SliderControls[0].SliderValueStr.MenuName = _audioVolumeControl.ScalarValue.ToString();
-            //_micPage.SliderControls[0].SliderTickFrequency.MenuName = _audioVolumeControl.StepValue.ToString();
             _micPage.SliderControls[0].SliderTitle.MenuChecked = Convert.ToBoolean(_audioVolumeControl.IsMuted);
             //Microphone
-            //_micPage.SliderControls[1].SliderMaximum.MenuName = _microphoneVolumeControl.MaxValue.ToString();
-            //_micPage.SliderControls[1].SliderMinimum.MenuName = _microphoneVolumeControl.MinValue.ToString();
             _micPage.SliderControls[1].SliderValueStr.MenuName = _microphoneVolumeControl.ScalarValue.ToString();
-            //_micPage.SliderControls[1].SliderTickFrequency.MenuName = _microphoneVolumeControl.StepValue.ToString();
             _micPage.SliderControls[1].SliderTitle.MenuChecked = Convert.ToBoolean(_microphoneVolumeControl.IsMuted);
         }
 
@@ -288,12 +282,6 @@ namespace CmediaSDKTestApp.Models
                 }
                 IsModuleInitialized = true;
                 var resu = ReadDataFromDriver();
-                //revOMEN = await CmediaSDKHelper.SetJackDeviceDataAsync(new OMENClientData() { ApiName = CmediaAPIFunctionPoint.DefaultDeviceControl.ToString(), SetValue= 0 });
-                //revOMEN = await CmediaSDKHelper.GetJackDeviceDataAsync(new OMENClientData() { ApiName = CmediaAPIFunctionPoint.DefaultDeviceControl.ToString() });
-                //revOMEN = await CmediaSDKHelper.GetJackDeviceDataAsync(new OMENClientData() { ApiName = CmediaRenderFunctionPoint.GetDriverVer.ToString() });
-                //revOMEN = await CmediaSDKHelper.GetSurroundAsync(HPSurroundCommand.XEAR_SURR_HP_ENABLE);
-                //revOMEN = await CmediaSDKHelper.GetSurroundAsync(HPSurroundCommand.XEAR_SURR_HP_MODE);
-                //revOMEN = await CmediaSDKHelper.GetSurroundAsync(HPSurroundCommand.XEAR_SURR_HP_ROOM);
 
             });
             OMENZazuHelper.RegisterSDKCallbackFunction(OnCmediaSDKCallBack);

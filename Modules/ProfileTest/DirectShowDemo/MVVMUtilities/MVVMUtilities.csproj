@@ -50,11 +50,11 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Common\EventToCommandBehavior.cs" />
     <Compile Include="Common\IMenuItem.cs" />
     <Compile Include="Common\MenuItem.cs" />
     <Compile Include="Common\MyDelegateCommond.cs" />
+    <Compile Include="Common\ViewModelLocator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -89,6 +89,7 @@
     </Compile>
     <Compile Include="Models\IMainWindowModel.cs" />
     <Compile Include="Models\MainWindowModel.cs" />
+    <Compile Include="Models\ViewModelLocator.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -125,6 +126,10 @@
     <ProjectReference Include="..\DirectX.Capture\DirectX.Capture.csproj">
       <Project>{8c0015db-69e1-46e7-8705-3a4f8be2e5e7}</Project>
       <Name>DirectX.Capture</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MVVMUtilities\MVVMUtilities.csproj">
+      <Project>{b4e71c6c-cd19-412e-8b19-853770f66293}</Project>
+      <Name>MVVMUtilities</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -2,11 +2,8 @@
 using System.ComponentModel;
 using System.Windows;
 
-namespace MVVMUtilities.Common
+namespace DirectShowDemo.Models
 {
-    /// <summary>
-    /// This class need run as same in the namespace.
-    /// </summary>
     public class ViewModelLocator
     {
         public static bool GetAutoHookedUpViewModel(DependencyObject obj)

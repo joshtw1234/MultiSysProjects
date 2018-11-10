@@ -223,11 +223,7 @@ namespace CmediaSDKTestApp.Models
             HorzSliderControlModel muteBoxDataContext = (obj.Source as System.Windows.Controls.CheckBox).DataContext as HorzSliderControlModel;
             if (muteBoxDataContext.SliderName.Equals("Audio"))
             {
-                var rev = OMENZazuHelper.SetAudioVolumeControl(new BaseVolumeControlStructure()
-                {
-                    IsMuted = Convert.ToInt32(muteBoxDataContext.SliderTitle.MenuChecked),
-                    ChannelValues = new List<VolumeChannelSturcture>()
-                });
+                var rev = OMENZazuHelper.SetAudioMuteControl(Convert.ToInt32(muteBoxDataContext.SliderTitle.MenuChecked));
             }
         }
 
@@ -241,16 +237,12 @@ namespace CmediaSDKTestApp.Models
             HorzSliderControlModel sliderDataContext = (obj.Source as System.Windows.Controls.Slider).DataContext as HorzSliderControlModel;
             if (sliderDataContext.SliderName.Equals("Audio"))
             {
-                var rev = OMENZazuHelper.SetAudioVolumeControl(new BaseVolumeControlStructure()
+                var rev = OMENZazuHelper.SetAudioVolumeScalarControl(new List<VolumeChannelSturcture>()
                 {
-                    IsMuted = Convert.ToInt32(sliderDataContext.SliderTitle.MenuChecked),
-                    ChannelValues = new List<VolumeChannelSturcture>()
+                    new VolumeChannelSturcture()
                     {
-                        new VolumeChannelSturcture()
-                        {
-                            ChannelIndex = VolumeChannel.Master,
-                            ChannelValue = double.Parse(sliderDataContext.SliderValueStr.MenuName)
-                        }
+                        ChannelIndex = VolumeChannel.Master,
+                        ChannelValue = float.Parse(sliderDataContext.SliderValueStr.MenuName)
                     }
                 });
             }

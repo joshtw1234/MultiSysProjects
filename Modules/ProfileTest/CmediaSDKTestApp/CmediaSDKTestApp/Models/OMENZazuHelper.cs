@@ -1,4 +1,5 @@
 ﻿using CmediaSDKTestApp.BaseModels;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace CmediaSDKTestApp.Models
@@ -41,19 +42,35 @@ namespace CmediaSDKTestApp.Models
             });
         }
 
-        public static async Task<bool> SetAudioVolumeControl(BaseVolumeControlStructure audioData)
+        public static async Task<bool> SetAudioVolumeScalarControl(List<VolumeChannelSturcture> audioData)
         {
             return await Task.Run(() =>
             {
-                return CmediaSDKHelper.SetVolumeControl(OMENDataFlow.Render, audioData);
+                return CmediaSDKHelper.SetVolumeScalarControl(OMENDataFlow.Render, audioData);
             });
         }
 
-        public static async Task<bool> SetMicrophoneVolumeControl(BaseVolumeControlStructure micData)
+        public static async Task<bool> SetMicrophoneVolumeScalarControl(List<VolumeChannelSturcture> micData)
         {
             return await Task.Run(() =>
             {
-                return CmediaSDKHelper.SetVolumeControl(OMENDataFlow.Capture, micData);
+                return CmediaSDKHelper.SetVolumeScalarControl(OMENDataFlow.Capture, micData);
+            });
+        }
+
+        public static async Task<bool> SetAudioMuteControl(int isMute)
+        {
+            return await Task.Run(() =>
+            {
+                return CmediaSDKHelper.SetMuteControl(OMENDataFlow.Render, isMute);
+            });
+        }
+
+        public static async Task<bool> SetMicrophoneMuteControl(int isMute)
+        {
+            return await Task.Run(() =>
+            {
+                return CmediaSDKHelper.SetMuteControl(OMENDataFlow.Capture, isMute);
             });
         }
 

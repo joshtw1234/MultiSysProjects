@@ -42,6 +42,10 @@ namespace CmediaSDKTestApp.BaseModels
                 {
                     return BitConverter.GetBytes((int)objData);
                 }
+                if (objData is float)
+                {
+                    return BitConverter.GetBytes((float)objData);
+                }
                 if (objData is double)
                 {
                     return BitConverter.GetBytes((double)objData);
@@ -88,7 +92,7 @@ namespace CmediaSDKTestApp.BaseModels
     struct VolumeChannelSturcture
     {
         public VolumeChannel ChannelIndex { get; set; }
-        public double ChannelValue { get; set; }
+        public float ChannelValue { get; set; }
     }
 
     class BaseVolumeControlStructure

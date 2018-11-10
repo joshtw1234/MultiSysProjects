@@ -104,7 +104,7 @@
     <Compile Include="BaseModels\NativeMethods.cs" />
     <Compile Include="Models\BasePageContentViewModel.cs" />
     <Compile Include="Models\BindAbleMenuItem.cs" />
-    <Compile Include="Models\HorzSliderControlViewModel.cs" />
+    <Compile Include="Models\HorzSliderControlModel.cs" />
     <Compile Include="Models\IMainWindowModel.cs" />
     <Compile Include="Models\MainWindowModel.cs" />
     <Compile Include="Models\OMENZazuHelper.cs" />

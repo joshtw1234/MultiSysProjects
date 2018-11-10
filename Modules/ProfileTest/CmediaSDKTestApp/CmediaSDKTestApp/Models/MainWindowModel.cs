@@ -106,7 +106,7 @@ namespace CmediaSDKTestApp.Models
                     
                     SliderControls = new ObservableCollection<IMenuItem>()
                     {
-#if true
+#if false
                         new BindAbleMenuItem()
                         {
                             MenuName = "Enable Magic",
@@ -243,7 +243,9 @@ namespace CmediaSDKTestApp.Models
                     _micPage.DisplayText.MenuName += "\nSDK initial failed";
                     return;
                 }
-                omenVolume = await ZazuHelper.GetVolumeControl(OMENDataFlow.Render);
+                omenVolume = await ZazuHelper.GetAudioVolumeControl();
+                _micPage.DisplayText.MenuName += $"\nOmenVolume get [{omenVolume.MaxValue}] [{omenVolume.MinValue}] [{omenVolume.ScalarValue}] [{omenVolume.IsMuted}]";
+                omenVolume = await ZazuHelper.GetMicrophoneVolumeControl();
                 _micPage.DisplayText.MenuName += $"\nOmenVolume get [{omenVolume.MaxValue}] [{omenVolume.MinValue}] [{omenVolume.ScalarValue}] [{omenVolume.IsMuted}]";
                 //revOMEN = await CmediaSDKHelper.SetJackDeviceDataAsync(new OMENClientData() { ApiName = CmediaAPIFunctionPoint.DefaultDeviceControl.ToString(), SetValue= 0 });
                 //revOMEN = await CmediaSDKHelper.GetJackDeviceDataAsync(new OMENClientData() { ApiName = CmediaAPIFunctionPoint.DefaultDeviceControl.ToString() });

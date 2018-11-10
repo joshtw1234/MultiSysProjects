@@ -99,7 +99,7 @@ namespace CmediaSDKTestApp.Models
                 byte[] NewExtraByteArray = new byte[CMEDIABUFFERSIZE];
                 Marshal.Copy(revExraPtr[0], NewExtraByteArray, 0, NewExtraByteArray.Length);
                 revExraData = System.Text.Encoding.ASCII.GetString(NewExtraByteArray).Replace("\0", "");
-                revString += $" Extra [{revExraData}]";
+                //revString += $" Extra [{revExraData}]";
             }
             gchDevValue.Free();
             gch.Free();

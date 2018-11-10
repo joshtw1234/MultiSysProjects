@@ -25,11 +25,19 @@ namespace CmediaSDKTestApp.Models
             });
         }
 
-        public static async Task<OMENVolumeControlStructure> GetVolumeControl(OMENDataFlow renderCapture)
+        public static async Task<OMENVolumeControlStructure> GetAudioVolumeControl()
         {
             return await Task.Run(() =>
             {
-                return CmediaSDKHelper.GetVolumeControl(renderCapture);
+                return CmediaSDKHelper.GetVolumeControl(OMENDataFlow.Render);
+            });
+        }
+
+        public static async Task<OMENVolumeControlStructure> GetMicrophoneVolumeControl()
+        {
+            return await Task.Run(() =>
+            {
+                return CmediaSDKHelper.GetVolumeControl(OMENDataFlow.Capture);
             });
         }
 

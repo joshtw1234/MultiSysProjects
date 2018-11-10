@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Windows;
+using DirectX.Capture;
 using MVVMUtilities.Common;
 
 namespace DirectShowDemo.Models
@@ -68,9 +69,11 @@ namespace DirectShowDemo.Models
                 };
             }
         }
+        private Filters filters = new Filters();
         public void ModuleInitialize()
         {
             _displayMenuItem.MenuName += "\nModule Initialized";
+            _displayMenuItem.MenuName += $"\nFilter Video Input {filters.VideoInputDevices.Count} Audio Input {filters.AudioInputDevices.Count}";
         }
     }
 }

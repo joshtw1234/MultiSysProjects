@@ -54,8 +54,8 @@ namespace CmediaSDKTestApp.Models
             }
         }
 
-        protected OMENVolumeControlStructure _audioVolumeControl = null;
-        protected OMENVolumeControlStructure _microphoneVolumeControl = null;
+        protected VolumeControlStructure _audioVolumeControl = null;
+        protected VolumeControlStructure _microphoneVolumeControl = null;
     }
 
     enum ButtonStrings

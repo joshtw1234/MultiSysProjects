@@ -21,19 +21,7 @@ namespace CmediaSDKTestApp.BaseModels
             {
                 return null;
             }
-            if (SetValue.GetType().Namespace.Equals(BuildInName))
-            {
-                //Build in types
-                if (SetValue is int)
-                {
-                    return BitConverter.GetBytes((int)SetValue);
-                }
-            }
-            if (SetValue is OMENChannel)
-            {
-                return BitConverter.GetBytes((int)SetExtraValue);
-            }
-            return ObjectToByteArray(SetValue);
+            return GetObjectBytes(SetValue);
         }
 
         public byte[] SetExtraValueToByteArray()
@@ -42,19 +30,28 @@ namespace CmediaSDKTestApp.BaseModels
             {
                 return null;
             }
-            if (SetExtraValue.GetType().Namespace.Equals(BuildInName))
+            return GetObjectBytes(SetExtraValue);
+        }
+
+        private byte[] GetObjectBytes(object objData)
+        {
+            if (objData.GetType().Namespace.Equals(BuildInName))
             {
                 //Build in types
-                if (SetExtraValue is int)
+                if (objData is int)
                 {
-                    return BitConverter.GetBytes((int)SetExtraValue);
+                    return BitConverter.GetBytes((int)objData);
+                }
+                if (objData is bool)
+                {
+                    return BitConverter.GetBytes((bool)objData);
                 }
             }
-            if (SetExtraValue is OMENChannel)
+            if (objData is VolumeChannel)
             {
-                return BitConverter.GetBytes((int)SetExtraValue);
+                return BitConverter.GetBytes((int)objData);
             }
-            return ObjectToByteArray(SetExtraValue);
+            return ObjectToByteArray(objData);
         }
 
         private byte[] ObjectToByteArray(object obj)
@@ -77,26 +74,31 @@ namespace CmediaSDKTestApp.BaseModels
         public string RevExtraValue { get; set; }
     }
 
-    enum OMENChannel
+    enum VolumeChannel
     {
         Master = -1,
         FrontLeft,
         FrontRight
     }
 
-    struct OMENChannelControlSturcture
+    struct VolumeChannelSturcture
     {
-        public OMENChannel ChannelIndex { get; set; }
+        public VolumeChannel ChannelIndex { get; set; }
         public double ChannelValue { get; set; }
     }
-    class OMENVolumeControlStructure
+
+    class BaseVolumeControlStructure
+    {
+        public bool IsMuted { get; set; }
+        public List<VolumeChannelSturcture> ChannelValues { get; set; }
+    }
+
+    class VolumeControlStructure : BaseVolumeControlStructure
     {
         public double MaxValue { get; set; }
         public double MinValue { get; set; }
         public double StepValue { get; set; }
         public double ScalarValue { get; set; }
-        public bool IsMuted { get; set; }
-        public List<OMENChannelControlSturcture> ChannelValues { get; set; }
     }
 
     enum OMENDataFlow

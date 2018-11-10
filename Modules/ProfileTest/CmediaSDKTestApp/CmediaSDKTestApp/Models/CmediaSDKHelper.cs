@@ -28,14 +28,14 @@ namespace CmediaSDKTestApp.Models
             return CmediaSDKService.Instance.Unitialize();
         }
 
-        internal static OMENVolumeControlStructure GetVolumeControl(OMENDataFlow renderCapture)
+        internal static VolumeControlStructure GetVolumeControl(OMENDataFlow renderCapture)
         {
             CmediaDataFlow cmediaDataFlow = CmediaDataFlow.eRender;
             if (renderCapture == OMENDataFlow.Capture)
             {
                 cmediaDataFlow = CmediaDataFlow.eCapture;
             }
-            OMENVolumeControlStructure volumeControl = new OMENVolumeControlStructure();
+            VolumeControlStructure volumeControl = new VolumeControlStructure();
             var rev = CmediaSDKService.Instance.GetSetJackDeviceData(cmediaDataFlow, CmediaDriverReadWrite.Read, new OMENClientData() { ApiName = CmediaAPIFunctionPoint.GetMaxVol.ToString() });
             if (rev.RevCode != 0) return null;
             volumeControl.MaxValue = double.Parse(rev.RevValue);
@@ -52,27 +52,39 @@ namespace CmediaSDKTestApp.Models
             if (rev.RevCode != 0) return null;
             volumeControl.IsMuted = Convert.ToBoolean(int.Parse(rev.RevValue));
             //Get Channel data
-            volumeControl.ChannelValues = new System.Collections.Generic.List<OMENChannelControlSturcture>();
+            volumeControl.ChannelValues = new System.Collections.Generic.List<VolumeChannelSturcture>();
             
-            rev = CmediaSDKService.Instance.GetSetJackDeviceData(cmediaDataFlow, CmediaDriverReadWrite.Read, new OMENClientData() { ApiName = CmediaAPIFunctionPoint.VolumeControl.ToString(), SetValue = null, SetExtraValue = OMENChannel.Master });
+            rev = CmediaSDKService.Instance.GetSetJackDeviceData(cmediaDataFlow, CmediaDriverReadWrite.Read, new OMENClientData() { ApiName = CmediaAPIFunctionPoint.VolumeControl.ToString(), SetValue = null, SetExtraValue = VolumeChannel.Master });
             if (rev.RevCode != 0) return null;
-            OMENChannelControlSturcture channel = new OMENChannelControlSturcture() { ChannelValue = double.Parse(rev.RevValue), ChannelIndex = OMENChannel.Master };
+            VolumeChannelSturcture channel = new VolumeChannelSturcture() { ChannelValue = double.Parse(rev.RevValue), ChannelIndex = VolumeChannel.Master };
             volumeControl.ChannelValues.Add(channel);
-            rev = CmediaSDKService.Instance.GetSetJackDeviceData(cmediaDataFlow, CmediaDriverReadWrite.Read, new OMENClientData() { ApiName = CmediaAPIFunctionPoint.VolumeControl.ToString(), SetValue = null, SetExtraValue = OMENChannel.FrontLeft });
+            rev = CmediaSDKService.Instance.GetSetJackDeviceData(cmediaDataFlow, CmediaDriverReadWrite.Read, new OMENClientData() { ApiName = CmediaAPIFunctionPoint.VolumeControl.ToString(), SetValue = null, SetExtraValue = VolumeChannel.FrontLeft });
             if (rev.RevCode != 0) return null;
-            channel = new OMENChannelControlSturcture() { ChannelValue = double.Parse(rev.RevValue), ChannelIndex = OMENChannel.FrontLeft };
+            channel = new VolumeChannelSturcture() { ChannelValue = double.Parse(rev.RevValue), ChannelIndex = VolumeChannel.FrontLeft };
             volumeControl.ChannelValues.Add(channel);
-            rev = CmediaSDKService.Instance.GetSetJackDeviceData(cmediaDataFlow, CmediaDriverReadWrite.Read, new OMENClientData() { ApiName = CmediaAPIFunctionPoint.VolumeControl.ToString(), SetValue = null, SetExtraValue = OMENChannel.FrontRight });
+            rev = CmediaSDKService.Instance.GetSetJackDeviceData(cmediaDataFlow, CmediaDriverReadWrite.Read, new OMENClientData() { ApiName = CmediaAPIFunctionPoint.VolumeControl.ToString(), SetValue = null, SetExtraValue = VolumeChannel.FrontRight });
             if (rev.RevCode != 0) return null;
-            channel = new OMENChannelControlSturcture() { ChannelValue = double.Parse(rev.RevValue), ChannelIndex = OMENChannel.FrontRight };
+            channel = new VolumeChannelSturcture() { ChannelValue = double.Parse(rev.RevValue), ChannelIndex = VolumeChannel.FrontRight };
             volumeControl.ChannelValues.Add(channel);
 
             return volumeControl;
         }
 
-        internal static bool SetVolumeControl(OMENDataFlow renderCapture, OMENChannelControlSturcture volumeData)
+        internal static bool SetVolumeControl(OMENDataFlow renderCapture, BaseVolumeControlStructure volumeData)
         {
+            CmediaDataFlow cmediaDataFlow = CmediaDataFlow.eRender;
+            if (renderCapture == OMENDataFlow.Capture)
+            {
+                cmediaDataFlow = CmediaDataFlow.eCapture;
+            }
             bool rev = false;
+            OMENREVData revData;
+            foreach(var channle in volumeData.ChannelValues)
+            {
+                revData = CmediaSDKService.Instance.GetSetJackDeviceData(cmediaDataFlow, CmediaDriverReadWrite.Write, new OMENClientData() { ApiName = CmediaAPIFunctionPoint.VolumeControl.ToString(), SetValue = channle.ChannelValue, SetExtraValue = channle.ChannelIndex });
+            }
+            revData = CmediaSDKService.Instance.GetSetJackDeviceData(cmediaDataFlow, CmediaDriverReadWrite.Write, new OMENClientData() { ApiName = CmediaAPIFunctionPoint.MuteControl.ToString(), SetValue = volumeData.IsMuted });
+            if (revData.RevCode != 0) return rev;
             return rev;
         }
 

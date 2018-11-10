@@ -25,7 +25,7 @@ namespace CmediaSDKTestApp.Models
             });
         }
 
-        public static async Task<OMENVolumeControlStructure> GetAudioVolumeControl()
+        public static async Task<VolumeControlStructure> GetAudioVolumeControl()
         {
             return await Task.Run(() =>
             {
@@ -33,11 +33,27 @@ namespace CmediaSDKTestApp.Models
             });
         }
 
-        public static async Task<OMENVolumeControlStructure> GetMicrophoneVolumeControl()
+        public static async Task<VolumeControlStructure> GetMicrophoneVolumeControl()
         {
             return await Task.Run(() =>
             {
                 return CmediaSDKHelper.GetVolumeControl(OMENDataFlow.Capture);
+            });
+        }
+
+        public static async Task<bool> SetAudioVolumeControl(BaseVolumeControlStructure audioData)
+        {
+            return await Task.Run(() =>
+            {
+                return CmediaSDKHelper.SetVolumeControl(OMENDataFlow.Render, audioData);
+            });
+        }
+
+        public static async Task<bool> SetMicrophoneVolumeControl(BaseVolumeControlStructure micData)
+        {
+            return await Task.Run(() =>
+            {
+                return CmediaSDKHelper.SetVolumeControl(OMENDataFlow.Capture, micData);
             });
         }
 

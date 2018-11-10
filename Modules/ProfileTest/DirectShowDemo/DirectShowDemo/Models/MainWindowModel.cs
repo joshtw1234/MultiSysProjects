@@ -68,5 +68,9 @@ namespace DirectShowDemo.Models
                 };
             }
         }
+        public void ModuleInitialize()
+        {
+            _displayMenuItem.MenuName += "\nModule Initialized";
+        }
     }
 }

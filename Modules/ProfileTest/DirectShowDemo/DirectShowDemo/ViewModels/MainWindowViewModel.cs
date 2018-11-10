@@ -16,6 +16,7 @@ namespace DirectShowDemo.ViewModels
             _model = model;
             DisplayMenuItem = _model.GetDisplayMenuItem;
             CommonButtons = _model.GetCommonButtons;
+            _model.ModuleInitialize();
         }
     }
 }

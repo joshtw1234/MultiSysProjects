@@ -7,5 +7,7 @@ namespace DirectShowDemo.Models
     {
         IMenuItem GetDisplayMenuItem { get; }
         ObservableCollection<IMenuItem> GetCommonButtons { get; }
+
+        void ModuleInitialize();
     }
 }

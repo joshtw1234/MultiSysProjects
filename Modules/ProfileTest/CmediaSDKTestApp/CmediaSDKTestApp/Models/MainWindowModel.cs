@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
@@ -114,7 +115,7 @@ namespace CmediaSDKTestApp.Models
                 var defSlider = new HorzSliderControlModel()
                 {
                     SliderName = "Audio",
-                    SliderValueStr = new MenuItem()
+                    SliderValueStr = new BindAbleMenuItem()
                     {
                         MenuName = "40"
                     },
@@ -122,7 +123,7 @@ namespace CmediaSDKTestApp.Models
                     {
                         MenuName = "v",
                     },
-                    SliderTitle = new MenuItem()
+                    SliderTitle = new BindAbleMenuItem()
                     {
                         MenuName = "Audio Volume Control",
                         MenuData = "Is Mute"
@@ -139,12 +140,13 @@ namespace CmediaSDKTestApp.Models
                     {
                         MenuName = "0.01"
                     },
-                    SliderValueChangeCommand = OnSliderValueChangeCommand
+                    SliderValueChangeCommand = OnSliderValueChangeCommand,
+                    MuteBoxCheckedCommand = OnMuteBoxCheckedCommand
                 };
                 var secSlider = new HorzSliderControlModel()
                 {
                     SliderName = "Microphone",
-                    SliderValueStr = new MenuItem()
+                    SliderValueStr = new BindAbleMenuItem()
                     {
                         MenuName = "40"
                     },
@@ -152,7 +154,7 @@ namespace CmediaSDKTestApp.Models
                     {
                         MenuName = "v",
                     },
-                    SliderTitle = new MenuItem()
+                    SliderTitle = new BindAbleMenuItem()
                     {
                         MenuName = "Microphone Volume Control",
                         MenuData = "Is Mute"
@@ -169,7 +171,8 @@ namespace CmediaSDKTestApp.Models
                     {
                         MenuName = "0.01"
                     },
-                    SliderValueChangeCommand = OnSliderValueChangeCommand
+                    SliderValueChangeCommand = OnSliderValueChangeCommand,
+                    MuteBoxCheckedCommand = OnMuteBoxCheckedCommand
                 };
 
                 _micPage = new MicPageContentModel()
@@ -210,9 +213,47 @@ namespace CmediaSDKTestApp.Models
             }
         }
 
+        protected override void OnMuteBoxChecked(RoutedEventArgs obj)
+        {
+            if (IsReadDataFromDriver)
+            {
+                IsReadDataFromDriver = !IsReadDataFromDriver;
+                return;
+            }
+            HorzSliderControlModel muteBoxDataContext = (obj.Source as System.Windows.Controls.CheckBox).DataContext as HorzSliderControlModel;
+            if (muteBoxDataContext.SliderName.Equals("Audio"))
+            {
+                var rev = OMENZazuHelper.SetAudioVolumeControl(new BaseVolumeControlStructure()
+                {
+                    IsMuted = Convert.ToInt32(muteBoxDataContext.SliderTitle.MenuChecked),
+                    ChannelValues = new List<VolumeChannelSturcture>()
+                });
+            }
+        }
+
         protected override void OnSliderValueChanged(RoutedPropertyChangedEventArgs<double> obj)
         {
-            base.OnSliderValueChanged(obj);
+            if (IsReadDataFromDriver)
+            {
+                IsReadDataFromDriver = !IsReadDataFromDriver;
+                return;
+            }
+            HorzSliderControlModel sliderDataContext = (obj.Source as System.Windows.Controls.Slider).DataContext as HorzSliderControlModel;
+            if (sliderDataContext.SliderName.Equals("Audio"))
+            {
+                var rev = OMENZazuHelper.SetAudioVolumeControl(new BaseVolumeControlStructure()
+                {
+                    IsMuted = Convert.ToInt32(sliderDataContext.SliderTitle.MenuChecked),
+                    ChannelValues = new List<VolumeChannelSturcture>()
+                    {
+                        new VolumeChannelSturcture()
+                        {
+                            ChannelIndex = VolumeChannel.Master,
+                            ChannelValue = double.Parse(sliderDataContext.SliderValueStr.MenuName)
+                        }
+                    }
+                });
+            }
         }
 
         private void SliderInitialize()
@@ -222,13 +263,24 @@ namespace CmediaSDKTestApp.Models
             //_micPage.SliderControls[0].SliderMinimum.MenuName = _audioVolumeControl.MinValue.ToString();
             _micPage.SliderControls[0].SliderValueStr.MenuName = _audioVolumeControl.ScalarValue.ToString();
             //_micPage.SliderControls[0].SliderTickFrequency.MenuName = _audioVolumeControl.StepValue.ToString();
-            _micPage.SliderControls[0].SliderTitle.MenuEnabled = _audioVolumeControl.IsMuted;
+            _micPage.SliderControls[0].SliderTitle.MenuChecked = Convert.ToBoolean(_audioVolumeControl.IsMuted);
             //Microphone
             //_micPage.SliderControls[1].SliderMaximum.MenuName = _microphoneVolumeControl.MaxValue.ToString();
             //_micPage.SliderControls[1].SliderMinimum.MenuName = _microphoneVolumeControl.MinValue.ToString();
             _micPage.SliderControls[1].SliderValueStr.MenuName = _microphoneVolumeControl.ScalarValue.ToString();
             //_micPage.SliderControls[1].SliderTickFrequency.MenuName = _microphoneVolumeControl.StepValue.ToString();
-            _micPage.SliderControls[1].SliderTitle.MenuEnabled = _microphoneVolumeControl.IsMuted;
+            _micPage.SliderControls[1].SliderTitle.MenuChecked = Convert.ToBoolean(_microphoneVolumeControl.IsMuted);
+        }
+
+        private bool IsModuleInitialized = false;
+        private bool IsReadDataFromDriver = false;
+        private async Task ReadDataFromDriver()
+        {
+            _audioVolumeControl = await OMENZazuHelper.GetAudioVolumeControl();
+            _micPage.DisplayText.MenuName += $"\nAudioVolumeControl get [{_audioVolumeControl.MaxValue}] [{_audioVolumeControl.MinValue}] [{_audioVolumeControl.ScalarValue}] [{_audioVolumeControl.IsMuted}]";
+            _microphoneVolumeControl = await OMENZazuHelper.GetMicrophoneVolumeControl();
+            _micPage.DisplayText.MenuName += $"\nMicrophoneVolumeControl get [{_microphoneVolumeControl.MaxValue}] [{_microphoneVolumeControl.MinValue}] [{_microphoneVolumeControl.ScalarValue}] [{_microphoneVolumeControl.IsMuted}]";
+            SliderInitialize();
         }
 
         public void ModelInitialize()
@@ -242,11 +294,8 @@ namespace CmediaSDKTestApp.Models
                     _micPage.DisplayText.MenuName += "\nSDK initial failed";
                     return;
                 }
-                _audioVolumeControl = await OMENZazuHelper.GetAudioVolumeControl();
-                _micPage.DisplayText.MenuName += $"\nAudioVolumeControl get [{_audioVolumeControl.MaxValue}] [{_audioVolumeControl.MinValue}] [{_audioVolumeControl.ScalarValue}] [{_audioVolumeControl.IsMuted}]";
-                _microphoneVolumeControl = await OMENZazuHelper.GetMicrophoneVolumeControl();
-                _micPage.DisplayText.MenuName += $"\nMicrophoneVolumeControl get [{_microphoneVolumeControl.MaxValue}] [{_microphoneVolumeControl.MinValue}] [{_microphoneVolumeControl.ScalarValue}] [{_microphoneVolumeControl.IsMuted}]";
-                SliderInitialize();
+                IsModuleInitialized = true;
+                var resu = ReadDataFromDriver();
                 //revOMEN = await CmediaSDKHelper.SetJackDeviceDataAsync(new OMENClientData() { ApiName = CmediaAPIFunctionPoint.DefaultDeviceControl.ToString(), SetValue= 0 });
                 //revOMEN = await CmediaSDKHelper.GetJackDeviceDataAsync(new OMENClientData() { ApiName = CmediaAPIFunctionPoint.DefaultDeviceControl.ToString() });
                 //revOMEN = await CmediaSDKHelper.GetJackDeviceDataAsync(new OMENClientData() { ApiName = CmediaRenderFunctionPoint.GetDriverVer.ToString() });
@@ -263,6 +312,11 @@ namespace CmediaSDKTestApp.Models
         private void OnCmediaSDKCallBack(int type, int id, int componentType, ulong eventId)
         {
             _micPage.DisplayText.MenuName += $"\n OnCmediaSDKCallBack {type} {id} {componentType} {eventId}";
+            if (IsModuleInitialized)
+            {
+                var resu = ReadDataFromDriver();
+                IsReadDataFromDriver = true;
+            }
         }
     }
 }

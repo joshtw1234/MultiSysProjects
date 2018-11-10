@@ -16,6 +16,12 @@ namespace CmediaSDKTestApp.Models
         protected MyDelegateCommond<string> OnPageButtonClickEvent => _onPageButtonClickEvent ?? (_onPageButtonClickEvent = new MyDelegateCommond<string>(OnPageButtonClick));
         private MyDelegateCommond<RoutedPropertyChangedEventArgs<double>> _onSliderValueChangeCommand;
         protected MyDelegateCommond<RoutedPropertyChangedEventArgs<double>> OnSliderValueChangeCommand => _onSliderValueChangeCommand ?? (_onSliderValueChangeCommand = new MyDelegateCommond<RoutedPropertyChangedEventArgs<double>>(OnSliderValueChanged));
+        private MyDelegateCommond<RoutedEventArgs> _onMuteBoxCheckedCommand;
+        protected MyDelegateCommond<RoutedEventArgs> OnMuteBoxCheckedCommand => _onMuteBoxCheckedCommand ?? (_onMuteBoxCheckedCommand = new MyDelegateCommond<RoutedEventArgs>(OnMuteBoxChecked));
+
+        protected virtual void OnMuteBoxChecked(RoutedEventArgs obj)
+        {
+        }
 
         protected virtual void OnSliderValueChanged(RoutedPropertyChangedEventArgs<double> obj)
         {

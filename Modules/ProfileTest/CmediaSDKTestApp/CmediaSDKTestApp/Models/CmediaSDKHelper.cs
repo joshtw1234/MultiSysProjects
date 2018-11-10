@@ -50,7 +50,7 @@ namespace CmediaSDKTestApp.Models
             volumeControl.StepValue = double.Parse(rev.RevValue);
             rev = CmediaSDKService.Instance.GetSetJackDeviceData(cmediaDataFlow, CmediaDriverReadWrite.Read, new OMENClientData() { ApiName = CmediaAPIFunctionPoint.MuteControl.ToString() });
             if (rev.RevCode != 0) return null;
-            volumeControl.IsMuted = Convert.ToBoolean(int.Parse(rev.RevValue));
+            volumeControl.IsMuted = int.Parse(rev.RevValue);
             //Get Channel data
             volumeControl.ChannelValues = new System.Collections.Generic.List<VolumeChannelSturcture>();
             

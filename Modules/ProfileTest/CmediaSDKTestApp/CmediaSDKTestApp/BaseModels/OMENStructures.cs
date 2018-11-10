@@ -42,6 +42,10 @@ namespace CmediaSDKTestApp.BaseModels
                 {
                     return BitConverter.GetBytes((int)objData);
                 }
+                if (objData is double)
+                {
+                    return BitConverter.GetBytes((double)objData);
+                }
                 if (objData is bool)
                 {
                     return BitConverter.GetBytes((bool)objData);
@@ -89,7 +93,7 @@ namespace CmediaSDKTestApp.BaseModels
 
     class BaseVolumeControlStructure
     {
-        public bool IsMuted { get; set; }
+        public int IsMuted { get; set; }
         public List<VolumeChannelSturcture> ChannelValues { get; set; }
     }
 

@@ -13,7 +13,8 @@ namespace CmediaSDKTestApp.Models
         public MyDelegateCommond<string> MenuCommand { get; set; }
         public Style MenuStyle { get; set; }
         public bool MenuEnabled { get; set; }
-        public bool MenuChecked { get; set; }
+        private bool _menuChecked;
+        public bool MenuChecked { get { return _menuChecked; } set { _menuChecked = value; onPropertyChanged(this, "MenuChecked"); } }
         public bool MenuVisibility { get; set; }
     }
 }

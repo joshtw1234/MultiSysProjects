@@ -15,5 +15,6 @@ namespace CmediaSDKTestApp.Models
         public IMenuItem SliderMinimum { get; set; }
         public IMenuItem SliderMaximum { get; set; }
         public MyDelegateCommond<RoutedPropertyChangedEventArgs<double>> SliderValueChangeCommand { get; set; }
+        public MyDelegateCommond<RoutedEventArgs> MuteBoxCheckedCommand { get; set; }
     }
 }

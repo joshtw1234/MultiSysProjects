@@ -67,7 +67,12 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock DataContext="{Binding SliderTitle}" Style="{DynamicResource BaseTextBlock}"/>
-                    <CheckBox Content="{Binding SliderTitle.MenuData}" IsChecked="{Binding SliderTitle.MenuEnabled}" Foreground="White"/>
+                    <CheckBox Content="{Binding SliderTitle.MenuData}" IsChecked="{Binding SliderTitle.MenuChecked}" Foreground="White">
+                        <i:Interaction.Behaviors>
+                            <base:EventToCommandBehavior Command="{Binding MuteBoxCheckedCommand}" Event="Checked" PassArguments="True"/>
+                            <base:EventToCommandBehavior Command="{Binding MuteBoxCheckedCommand}" Event="Unchecked" PassArguments="True"/>
+                        </i:Interaction.Behaviors>
+                    </CheckBox>
                     <!--TODO Add Tip-->
                 </StackPanel>
             </DockPanel>
@@ -94,12 +99,12 @@
 
     <ControlTemplate x:Key="MICControlTemplate" TargetType="{x:Type ContentControl}">
         <DockPanel>
-            <ScrollViewer DockPanel.Dock="Left">
-                <TextBlock  Text="{Binding DisplayText.MenuName}" Style="{DynamicResource BaseTextBlock}"/>
-            </ScrollViewer>
-            <ItemsControl ItemsSource="{Binding SliderControls}"
+            <ItemsControl DockPanel.Dock="Bottom" ItemsSource="{Binding SliderControls}"
                       ItemTemplate="{StaticResource SliderControlTemplate}"
                       ItemsPanel="{StaticResource StackVerticalPanelTemplate}"/>
+            <ScrollViewer >
+                <TextBlock  Text="{Binding DisplayText.MenuName}" Style="{DynamicResource BaseTextBlock}"/>
+            </ScrollViewer>
         </DockPanel>
     </ControlTemplate>
 

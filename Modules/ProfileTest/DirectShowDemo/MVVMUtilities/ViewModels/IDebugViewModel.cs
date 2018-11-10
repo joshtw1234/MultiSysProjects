@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 
 namespace MVVMUtilities.ViewModels
 {
-    interface IDebugViewModel
+    public interface IDebugViewModel
     {
         IMenuItem DisplayMenuItem { get; set; }
         ObservableCollection<IMenuItem> CommonButtons { get; set; }

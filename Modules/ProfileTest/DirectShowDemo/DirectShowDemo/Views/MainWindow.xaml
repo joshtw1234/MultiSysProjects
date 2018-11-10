@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:DirectShowDemo.Views"
         xmlns:m="clr-namespace:DirectShowDemo.ViewModels"
         m:ViewModelLocator.AutoHookedUpViewModel ="true"
+        xmlns:mvvmUtility="clr-namespace:MVVMUtilities.Views;assembly=MVVMUtilities"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" Background="{x:Null}">
     <Window.Resources>
@@ -17,6 +18,6 @@
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
-       
+        <mvvmUtility:ViewDebug/>
     </Grid>
 </Window>

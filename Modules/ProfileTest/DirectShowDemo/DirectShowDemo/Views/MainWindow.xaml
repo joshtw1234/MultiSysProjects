@@ -5,22 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DirectShowDemo.Views"
         xmlns:m="clr-namespace:DirectShowDemo.Models"
-        xmlns:vml="clr-namespace:MVVMUtilities.Common;assembly=MVVMUtilities"
         m:ViewModelLocator.AutoHookedUpViewModel ="true"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" Background="{x:Null}">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <!--<ResourceDictionary Source="/Styles/HIDDemoStyle.xaml"/>-->
-                <ResourceDictionary Source="pack://application:,,,/DirectShowDemo;component/Styles/MultiAccessoryTestStyle.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/DirectShowDemo;component/Styles/DirectShowDemoStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
-        <TextBlock Style="{Binding MenuStyle}"/>
-        <ItemsControl ItemsSource="{Binding CommonButtons}"
+        <DockPanel>
+            <ItemsControl DockPanel.Dock="Bottom" ItemsSource="{Binding CommonButtons}"
                       ItemTemplate="{StaticResource ButtonTemplate}"
                       ItemsPanel="{StaticResource ButtonPanelTemplate}"/>
+            <ScrollViewer>
+                <TextBlock DataContext="{Binding DisplayMenuItem}" Style="{Binding MenuStyle}"/>
+            </ScrollViewer>
+        </DockPanel>
     </Grid>
 </Window>

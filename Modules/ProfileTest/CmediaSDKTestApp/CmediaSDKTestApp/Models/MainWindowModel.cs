@@ -95,17 +95,6 @@ namespace CmediaSDKTestApp.Models
         {
             get
             {
-                _micPage = new MicPageContentModel()
-                {
-                    MenuName = ButtonStrings.Microphone.ToString(),
-                    MenuStyle = localDic["MICContentPageStyle"] as Style,
-                    DisplayText = new BindAbleMenuItem()
-                    {
-                        MenuName = "Message here"
-                    },
-                    
-                    SliderControls = new ObservableCollection<IMenuItem>()
-                    {
 #if false
                         new BindAbleMenuItem()
                         {
@@ -121,92 +110,77 @@ namespace CmediaSDKTestApp.Models
                             MenuData = ButtonStrings.EnableEcho.ToString(),
                             MenuCommand = OnCommonButtonClickEvent
                         },
-#else
-                        new HorzSliderControlViewModel()
-                            {
-                                SliderValueStr = new MenuItem()
-                                {
-                                    MenuName = "100",
-                                },
-                                SlideUnitStr = new  MenuItem()
-                                {
-                                    MenuName = "v",
-                                },
-                                SliderTitle = new MenuItem()
-                                {
-                                    MenuName = "Slider Title",
-                                },
-                                SliderMaximum = new MenuItem()
-                                {
-                                    MenuName = "200"
-                                },
-                                SliderMinimum = new MenuItem()
-                                {
-                                    MenuName = "0"
-                                },
-                                SliderTickFrequency = new MenuItem()
-                                {
-                                    MenuName = "5"
-                                }
-                            },
-                            new HorzSliderControlViewModel()
-                            {
-                                SliderValueStr = new MenuItem()
-                                {
-                                    MenuName = "100",
-                                },
-                                SlideUnitStr = new  MenuItem()
-                                {
-                                    MenuName = "v",
-                                },
-                                SliderTitle = new MenuItem()
-                                {
-                                    MenuName = "Slider Title",
-                                },
-                                SliderMaximum = new MenuItem()
-                                {
-                                    MenuName = "200"
-                                },
-                                SliderMinimum = new MenuItem()
-                                {
-                                    MenuName = "0"
-                                },
-                                SliderTickFrequency = new MenuItem()
-                                {
-                                    MenuName = "5"
-                                }
-                            },
-                            new HorzSliderControlViewModel()
-                            {
-                                SliderValueStr = new MenuItem()
-                                {
-                                    MenuName = "100",
-                                },
-                                SlideUnitStr = new  MenuItem()
-                                {
-                                    MenuName = "v",
-                                },
-                                SliderTitle = new MenuItem()
-                                {
-                                    MenuName = "Slider Title",
-                                },
-                                SliderMaximum = new MenuItem()
-                                {
-                                    MenuName = "200"
-                                },
-                                SliderMinimum = new MenuItem()
-                                {
-                                    MenuName = "0"
-                                },
-                                SliderTickFrequency = new MenuItem()
-                                {
-                                    MenuName = "5"
-                                }
-                            }
 #endif
+                var defSlider = new HorzSliderControlViewModel()
+                {
+                    SliderValueStr = new MenuItem()
+                    {
+                        MenuName = "40"
+                    },
+                    SlideUnitStr = new MenuItem()
+                    {
+                        MenuName = "v",
+                    },
+                    SliderTitle = new MenuItem()
+                    {
+                        MenuName = "Audio Volume Control",
+                        MenuData = "Is Mute"
+                    },
+                    SliderMaximum = new MenuItem()
+                    {
+                        MenuName = "1"
+                    },
+                    SliderMinimum = new MenuItem()
+                    {
+                        MenuName = "0"
+                    },
+                    SliderTickFrequency = new MenuItem()
+                    {
+                        MenuName = "0.01"
                     }
-
                 };
+                var secSlider = new HorzSliderControlViewModel()
+                {
+                    SliderValueStr = new MenuItem()
+                    {
+                        MenuName = "40"
+                    },
+                    SlideUnitStr = new MenuItem()
+                    {
+                        MenuName = "v",
+                    },
+                    SliderTitle = new MenuItem()
+                    {
+                        MenuName = "Microphone Volume Control",
+                        MenuData = "Is Mute"
+                    },
+                    SliderMaximum = new MenuItem()
+                    {
+                        MenuName = "1"
+                    },
+                    SliderMinimum = new MenuItem()
+                    {
+                        MenuName = "0"
+                    },
+                    SliderTickFrequency = new MenuItem()
+                    {
+                        MenuName = "0.01"
+                    }
+                };
+
+                _micPage = new MicPageContentModel()
+                {
+                    MenuName = ButtonStrings.Microphone.ToString(),
+                    MenuStyle = localDic["MICContentPageStyle"] as Style,
+                    DisplayText = new BindAbleMenuItem()
+                    {
+                        MenuName = "Message here"
+                    },
+
+                    SliderControls = new ObservableCollection<HorzSliderControlViewModel>()
+                };
+                _micPage.SliderControls.Add(defSlider);
+                _micPage.SliderControls.Add(secSlider);
                 _contentpages = new ObservableCollection<IMenuItem>()
                 {
                     new BasePageContentModel()
@@ -232,9 +206,25 @@ namespace CmediaSDKTestApp.Models
             }
         }
 
+        private void SliderInitialize()
+        {
+            //Audio
+            //_micPage.SliderControls[0].SliderMaximum.MenuName = _audioVolumeControl.MaxValue.ToString();
+            //_micPage.SliderControls[0].SliderMinimum.MenuName = _audioVolumeControl.MinValue.ToString();
+            _micPage.SliderControls[0].SliderValueStr.MenuName = _audioVolumeControl.ScalarValue.ToString();
+            //_micPage.SliderControls[0].SliderTickFrequency.MenuName = _audioVolumeControl.StepValue.ToString();
+            _micPage.SliderControls[0].SliderTitle.MenuEnabled = _audioVolumeControl.IsMuted;
+            //Microphone
+            //_micPage.SliderControls[1].SliderMaximum.MenuName = _microphoneVolumeControl.MaxValue.ToString();
+            //_micPage.SliderControls[1].SliderMinimum.MenuName = _microphoneVolumeControl.MinValue.ToString();
+            _micPage.SliderControls[1].SliderValueStr.MenuName = _microphoneVolumeControl.ScalarValue.ToString();
+            //_micPage.SliderControls[1].SliderTickFrequency.MenuName = _microphoneVolumeControl.StepValue.ToString();
+            _micPage.SliderControls[1].SliderTitle.MenuEnabled = _microphoneVolumeControl.IsMuted;
+        }
+
         public void ModelInitialize()
         {
-            OMENVolumeControlStructure omenVolume = null;
+            
             Task.Factory.StartNew(async () => 
             {
                 var rev = await ZazuHelper.InitializeSDKAsync(_micPage.DisplayText);
@@ -243,10 +233,11 @@ namespace CmediaSDKTestApp.Models
                     _micPage.DisplayText.MenuName += "\nSDK initial failed";
                     return;
                 }
-                omenVolume = await ZazuHelper.GetAudioVolumeControl();
-                _micPage.DisplayText.MenuName += $"\nOmenVolume get [{omenVolume.MaxValue}] [{omenVolume.MinValue}] [{omenVolume.ScalarValue}] [{omenVolume.IsMuted}]";
-                omenVolume = await ZazuHelper.GetMicrophoneVolumeControl();
-                _micPage.DisplayText.MenuName += $"\nOmenVolume get [{omenVolume.MaxValue}] [{omenVolume.MinValue}] [{omenVolume.ScalarValue}] [{omenVolume.IsMuted}]";
+                _audioVolumeControl = await ZazuHelper.GetAudioVolumeControl();
+                _micPage.DisplayText.MenuName += $"\nAudioVolumeControl get [{_audioVolumeControl.MaxValue}] [{_audioVolumeControl.MinValue}] [{_audioVolumeControl.ScalarValue}] [{_audioVolumeControl.IsMuted}]";
+                _microphoneVolumeControl = await ZazuHelper.GetMicrophoneVolumeControl();
+                _micPage.DisplayText.MenuName += $"\nMicrophoneVolumeControl get [{_microphoneVolumeControl.MaxValue}] [{_microphoneVolumeControl.MinValue}] [{_microphoneVolumeControl.ScalarValue}] [{_microphoneVolumeControl.IsMuted}]";
+                SliderInitialize();
                 //revOMEN = await CmediaSDKHelper.SetJackDeviceDataAsync(new OMENClientData() { ApiName = CmediaAPIFunctionPoint.DefaultDeviceControl.ToString(), SetValue= 0 });
                 //revOMEN = await CmediaSDKHelper.GetJackDeviceDataAsync(new OMENClientData() { ApiName = CmediaAPIFunctionPoint.DefaultDeviceControl.ToString() });
                 //revOMEN = await CmediaSDKHelper.GetJackDeviceDataAsync(new OMENClientData() { ApiName = CmediaRenderFunctionPoint.GetDriverVer.ToString() });

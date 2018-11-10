@@ -1,9 +1,8 @@
 ﻿using CmediaSDKTestApp.BaseModels;
-using System.Collections.ObjectModel;
 
 namespace CmediaSDKTestApp.Models
 {
-    class HorzSliderControlViewModel : MenuItem
+    class HorzSliderControlViewModel
     {
         public IMenuItem Btn_Left { get; set; }
         public IMenuItem SliderValueStr { get; set; }

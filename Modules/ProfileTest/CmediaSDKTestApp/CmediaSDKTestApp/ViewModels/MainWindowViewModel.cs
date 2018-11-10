@@ -15,10 +15,10 @@ namespace CmediaSDKTestApp.ViewModels
         public MainWindowViewModel(IMainWindowModel model)
         {
             _model = model;
+            
             PageButtons = _model.GetPageButtons;
             CommonButtons = _model.GetCommonButtons;
             ContentPages = _model.GetContentPages;
-
             _model.ModelInitialize();
         }
     }

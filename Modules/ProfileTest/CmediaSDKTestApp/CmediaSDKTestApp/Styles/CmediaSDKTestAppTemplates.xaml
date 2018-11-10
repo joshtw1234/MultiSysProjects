@@ -66,6 +66,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock DataContext="{Binding SliderTitle}" Style="{DynamicResource BaseTextBlock}"/>
+                    <CheckBox Content="{Binding SliderTitle.MenuData}" IsChecked="{Binding SliderTitle.MenuEnabled}" Foreground="White"/>
                     <!--TODO Add Tip-->
                 </StackPanel>
             </DockPanel>

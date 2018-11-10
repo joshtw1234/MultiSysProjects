@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DShowNET", "DShowNET\DShowN
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DirectX.Capture", "DirectX.Capture\DirectX.Capture.csproj", "{8C0015DB-69E1-46E7-8705-3A4F8BE2E5E7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVMUtilities", "MVVMUtilities\MVVMUtilities.csproj", "{B4E71C6C-CD19-412E-8B19-853770F66293}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,14 @@ Global
 		{8C0015DB-69E1-46E7-8705-3A4F8BE2E5E7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8C0015DB-69E1-46E7-8705-3A4F8BE2E5E7}.Release|x64.ActiveCfg = Release|x64
 		{8C0015DB-69E1-46E7-8705-3A4F8BE2E5E7}.Release|x64.Build.0 = Release|x64
+		{B4E71C6C-CD19-412E-8B19-853770F66293}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4E71C6C-CD19-412E-8B19-853770F66293}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4E71C6C-CD19-412E-8B19-853770F66293}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B4E71C6C-CD19-412E-8B19-853770F66293}.Debug|x64.Build.0 = Debug|Any CPU
+		{B4E71C6C-CD19-412E-8B19-853770F66293}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4E71C6C-CD19-412E-8B19-853770F66293}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4E71C6C-CD19-412E-8B19-853770F66293}.Release|x64.ActiveCfg = Release|Any CPU
+		{B4E71C6C-CD19-412E-8B19-853770F66293}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

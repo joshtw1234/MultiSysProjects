@@ -71,7 +71,7 @@ namespace DirectShowDemo.Models
         public void ModuleInitialize()
         {
             _displayMenuItem.MenuName += "\nModule Initialized";
-            int rev = CoreAudioApiService.fnCoreAudioApisDll();
+            CoreAudioApiService.Instance.InitializeAudioDevice();
 
         }
     }

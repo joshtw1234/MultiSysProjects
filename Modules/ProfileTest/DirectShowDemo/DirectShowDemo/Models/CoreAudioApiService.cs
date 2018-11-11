@@ -1,13 +1,25 @@
-﻿using System;
-using System.Runtime.InteropServices;
+﻿using AudioDeviceUtil;
 
 namespace DirectShowDemo.Models
 {
     class CoreAudioApiService
     {
-        //[DllImport("CoreAudioApisDll.dll", EntryPoint = "nCoreAudioApisDll", CharSet = CharSet.Auto)]
-        //internal static extern int nCoreAudioApisDll;
-        [DllImport("CoreAudioApisDll.dll", EntryPoint = "fnCoreAudioApisDll", CharSet = CharSet.Auto)]
-        internal static extern int fnCoreAudioApisDll();
+        private static CoreAudioApiService _instance;
+        /// <summary>
+        /// Gets the instance.
+        /// </summary>
+        public static CoreAudioApiService Instance
+        {
+            get
+            {
+                return _instance ?? (_instance = new CoreAudioApiService());
+            }
+        }
+
+        AudioDeviceManager audioDeviceSwitcher { get; set; }
+        public void InitializeAudioDevice()
+        {
+            audioDeviceSwitcher = new AudioDeviceManager();
+        }
     }
 }

@@ -129,6 +129,10 @@
       <Project>{b4e71c6c-cd19-412e-8b19-853770f66293}</Project>
       <Name>MVVMUtilities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SoundDeviceUtil\SoundDeviceUtil.vcxproj">
+      <Project>{84a7fcbe-1726-4ef3-9e77-ed5b0aa3bd01}</Project>
+      <Name>AudioDeviceUtil</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

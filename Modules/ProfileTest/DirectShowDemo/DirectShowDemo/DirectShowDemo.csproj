@@ -124,17 +124,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DirectX.Capture\DirectX.Capture.csproj">
-      <Project>{8c0015db-69e1-46e7-8705-3a4f8be2e5e7}</Project>
-      <Name>DirectX.Capture</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MVVMUtilities\MVVMUtilities.csproj">
       <Project>{b4e71c6c-cd19-412e-8b19-853770f66293}</Project>
       <Name>MVVMUtilities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\WinMMLibrary\WinMMLibrary.csproj">
-      <Project>{7477bef8-65d1-4d8c-922b-8a3c2112faf8}</Project>
-      <Name>WinMMLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

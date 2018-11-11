@@ -15,7 +15,10 @@ namespace DirectShowDemo.Models
                 return _instance ?? (_instance = new CoreAudioApiService());
             }
         }
-
+        /// <summary>
+        /// Codeproject sample 
+        /// https://www.codeproject.com/Articles/829712/WebControls/
+        /// </summary>
         AudioDeviceManager audioDeviceSwitcher { get; set; }
         public void InitializeAudioDevice()
         {

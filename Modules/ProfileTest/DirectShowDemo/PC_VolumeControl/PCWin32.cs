@@ -36,23 +36,14 @@ namespace PCVolumeControl.Win32
     /// </summary>
     public static class PCWin32
     {
-        [DllImport("winmm.dll", CharSet=CharSet.Ansi)] 
-        public static extern int mixerClose (int hmx);
-
         [DllImport("winmm.dll", EntryPoint = "mixerClose", SetLastError = true)]
         public static extern int MixerClose(IntPtr hmx);
 
         [DllImport("winmm.dll", CharSet=CharSet.Ansi)]
         public static extern int mixerGetControlDetailsA(int hmxobj, ref VolumeStructs.MixerDetails pmxcd, int fdwDetails);
 
-        //[DllImport("winmm.dll", CharSet=CharSet.Ansi)]
-        //public static extern int mixerGetDevCapsA(int uMxId, VolumeStructs.MixerCaps pmxcaps, int cbmxcaps);
-
         [DllImport("winmm.dll", EntryPoint = "mixerGetDevCaps", SetLastError = true)]
         public static extern uint MixerGetDevCaps(int mixerId, ref VolumeStructs.MixerCaps mixerCaps, int mixerCapsSize);
-
-        [DllImport("winmm.dll", CharSet=CharSet.Ansi)]
-        public static extern int mixerGetID(int hmxobj, int pumxID, int fdwId);
 
         [DllImport("winmm.dll", EntryPoint = "mixerGetID", SetLastError = true)]
         public static extern int MixerGetID(IntPtr mixerHandel, out int mixerID, int flagID);
@@ -63,9 +54,6 @@ namespace PCVolumeControl.Win32
         [DllImport("winmm.dll", EntryPoint = "mixerGetLineControls", SetLastError = true)]
         public static extern int MixerGetLineControls(IntPtr hmxobj, ref VolumeStructs.MIXERLINECONTROLS pmxlc, uint fdwControls);
 
-        [DllImport("winmm.dll", CharSet=CharSet.Ansi)]
-        public static extern int mixerGetLineInfoA(int hmxobj, ref VolumeStructs.MixerLine pmxl, int fdwInfo);
-
         [DllImport("winmm.dll", EntryPoint = "mixerGetLineInfo", SetLastError = true)]
         public static extern int MixerGetLineInfo(IntPtr hmxobj, ref VolumeStructs.MIXERLINE pmxl, uint fdwInfo);
 
@@ -74,9 +62,6 @@ namespace PCVolumeControl.Win32
 
         [DllImport("winmm.dll", CharSet=CharSet.Ansi)]
         public static extern int mixerMessage(int hmx, int uMsg, int dwParam1, int dwParam2);
-
-        [DllImport("winmm.dll", CharSet=CharSet.Ansi)]
-        public static extern int mixerOpen(out int phmx, int uMxId, int dwCallback, int dwInstance, int fdwOpen);
 
         [DllImport("winmm.dll", EntryPoint = "mixerOpen", SetLastError = true)]
         public static extern int MixerOpen(ref IntPtr phmx, uint pMxId, IntPtr dwCallback, IntPtr dwInstance, UInt32 fdwOpen);

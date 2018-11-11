@@ -132,6 +132,10 @@
       <Project>{b4e71c6c-cd19-412e-8b19-853770f66293}</Project>
       <Name>MVVMUtilities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PC_VolumeControl\PCVolumeControl.csproj">
+      <Project>{1a4c6ae4-8419-497b-bc8d-0af179c51553}</Project>
+      <Name>PCVolumeControl</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

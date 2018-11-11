@@ -125,10 +125,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CoreAudioApisDll\CoreAudioApisDll.vcxproj">
-      <Project>{d643afd3-b835-47a3-b3f6-2a4174f5bdb1}</Project>
-      <Name>CoreAudioApisDll</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MVVMUtilities\MVVMUtilities.csproj">
       <Project>{b4e71c6c-cd19-412e-8b19-853770f66293}</Project>
       <Name>MVVMUtilities</Name>

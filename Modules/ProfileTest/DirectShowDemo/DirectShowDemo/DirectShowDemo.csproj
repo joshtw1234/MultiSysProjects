@@ -88,6 +88,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\BindableMenuItem.cs" />
+    <Compile Include="Models\CoreAudioApiService.cs" />
     <Compile Include="Models\IMainWindowModel.cs" />
     <Compile Include="Models\MainWindowModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
@@ -124,10 +125,18 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CoreAudioApisDll\CoreAudioApisDll.vcxproj">
+      <Project>{d643afd3-b835-47a3-b3f6-2a4174f5bdb1}</Project>
+      <Name>CoreAudioApisDll</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MVVMUtilities\MVVMUtilities.csproj">
       <Project>{b4e71c6c-cd19-412e-8b19-853770f66293}</Project>
       <Name>MVVMUtilities</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy ..\..\..\..\x64\Debug\*.dll . /Y/D
+xcopy ..\..\..\..\x64\Debug\*.pdb . /Y/D</PostBuildEvent>
+  </PropertyGroup>
 </Project>

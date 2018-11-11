@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DirectX.Capture", "DirectX.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVMUtilities", "MVVMUtilities\MVVMUtilities.csproj", "{B4E71C6C-CD19-412E-8B19-853770F66293}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PCVolumeControl", "PC_VolumeControl\PCVolumeControl.csproj", "{1A4C6AE4-8419-497B-BC8D-0AF179C51553}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinMMLibrary", "WinMMLibrary\WinMMLibrary.csproj", "{7477BEF8-65D1-4D8C-922B-8A3C2112FAF8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,14 +53,14 @@ Global
 		{B4E71C6C-CD19-412E-8B19-853770F66293}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B4E71C6C-CD19-412E-8B19-853770F66293}.Release|x64.ActiveCfg = Release|Any CPU
 		{B4E71C6C-CD19-412E-8B19-853770F66293}.Release|x64.Build.0 = Release|Any CPU
-		{1A4C6AE4-8419-497B-BC8D-0AF179C51553}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1A4C6AE4-8419-497B-BC8D-0AF179C51553}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1A4C6AE4-8419-497B-BC8D-0AF179C51553}.Debug|x64.ActiveCfg = Debug|x64
-		{1A4C6AE4-8419-497B-BC8D-0AF179C51553}.Debug|x64.Build.0 = Debug|x64
-		{1A4C6AE4-8419-497B-BC8D-0AF179C51553}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1A4C6AE4-8419-497B-BC8D-0AF179C51553}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1A4C6AE4-8419-497B-BC8D-0AF179C51553}.Release|x64.ActiveCfg = Release|Any CPU
-		{1A4C6AE4-8419-497B-BC8D-0AF179C51553}.Release|x64.Build.0 = Release|Any CPU
+		{7477BEF8-65D1-4D8C-922B-8A3C2112FAF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7477BEF8-65D1-4D8C-922B-8A3C2112FAF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7477BEF8-65D1-4D8C-922B-8A3C2112FAF8}.Debug|x64.ActiveCfg = Debug|x64
+		{7477BEF8-65D1-4D8C-922B-8A3C2112FAF8}.Debug|x64.Build.0 = Debug|x64
+		{7477BEF8-65D1-4D8C-922B-8A3C2112FAF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7477BEF8-65D1-4D8C-922B-8A3C2112FAF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7477BEF8-65D1-4D8C-922B-8A3C2112FAF8}.Release|x64.ActiveCfg = Release|Any CPU
+		{7477BEF8-65D1-4D8C-922B-8A3C2112FAF8}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

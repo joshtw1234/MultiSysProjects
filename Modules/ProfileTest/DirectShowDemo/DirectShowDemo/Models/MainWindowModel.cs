@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Runtime.InteropServices;
 using System.Windows;
 using DirectX.Capture;
 using MVVMUtilities.Common;
-using PCVolumeControl.Constants;
-using PCVolumeControl.Win32;
-using static PCVolumeControl.Structs.VolumeStructs;
 
 namespace DirectShowDemo.Models
 {
@@ -79,9 +74,17 @@ namespace DirectShowDemo.Models
         {
             _displayMenuItem.MenuName += "\nModule Initialized";
             _displayMenuItem.MenuName += $"\nFilter Video Input {filters.VideoInputDevices.Count} Audio Input {filters.AudioInputDevices.Count}";
-            StartPCVolumeControl();
+            StartWinmWarp();
+            //StartPCVolumeControl();
 
         }
+
+        private void StartWinmWarp()
+        {
+            WinMMLibrary.MixerInfo mi = new WinMMLibrary.MixerInfo();
+            var rev = WinMMLibrary.WinMMWarpItem.Instance.GetMixerControls(out mi);
+        }
+#if false
         private void StartPCVolumeControl()
         {
             List<MixerCaps> lstMixerCaps = new List<MixerCaps>();
@@ -92,24 +95,27 @@ namespace DirectShowDemo.Models
             MIXERLINE mixLine;
             IntPtr mixerHandle = IntPtr.Zero;
             //Get Mixer numbers
-            var rev = PCWin32.mixerGetNumDevs();
-            for (int mixerId = 0; mixerId < rev; mixerId++)
+            var deviceCount = PCWin32.mixerGetNumDevs();
+            int rev = 0;
+            for (int mixerId = 0; mixerId < deviceCount; mixerId++)
             {
                 mixCap = new MixerCaps();
-                PCWin32.MixerGetDevCaps(mixerId, ref mixCap, Marshal.SizeOf(mixCap));
+                rev = PCWin32.MixerGetDevCaps(mixerId, ref mixCap, Marshal.SizeOf(mixCap));
                 lstMixerCaps.Add(mixCap);
-                PCWin32.MixerOpen(ref mixerHandle, (uint)mixerId, IntPtr.Zero, IntPtr.Zero, 0);
+                //rev = PCWin32.MixerOpen(ref mixerHandle, (uint)mixerId, IntPtr.Zero, IntPtr.Zero, 0);
+                rev = PCWin32.MixerOpen(ref mixerHandle, mixerId, IntPtr.Zero, IntPtr.Zero, (int)VolumeConstants.MIXER_OBJECTF.MIXER);
+                //listMixerHandle.Add(mixerHandle);
                 listMixerHandle.Add(mixerHandle);
             }
             int mixerID = 0;
             //This will return the ID as same as list index
-            PCWin32.MixerGetID(listMixerHandle[1], out mixerID, 0);
+            //PCWin32.MixerGetID(listMixerHandle[1], out mixerID, 0);
 
             for (int i = 0; i < listMixerHandle.Count; i++)
             {
                 mixLine = new MIXERLINE();
                 //Get Speaker
-                mixLine.StructSize = (uint)Marshal.SizeOf(mixLine);
+                mixLine.StructSize = Marshal.SizeOf(mixLine);
 
                 switch (i)
                 {
@@ -130,6 +136,8 @@ namespace DirectShowDemo.Models
             {
                 PCWin32.MixerClose(mixerHand);
             }
+
         }
+#endif
     }
 }

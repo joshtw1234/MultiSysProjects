@@ -229,7 +229,7 @@ namespace OMENCmediaSDK.CmediaSDK
         #endregion
     }
 
-    public enum VolumeChannel
+    public enum CmediaVolumeChannel
     {
         Master = -1,
         FrontLeft,
@@ -293,7 +293,7 @@ namespace OMENCmediaSDK.CmediaSDK
                     return BitConverter.GetBytes((bool)objData);
                 }
             }
-            if (objData is VolumeChannel)
+            if (objData is CmediaVolumeChannel)
             {
                 return BitConverter.GetBytes((int)objData);
             }

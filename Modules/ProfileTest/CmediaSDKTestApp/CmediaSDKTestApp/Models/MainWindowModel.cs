@@ -241,7 +241,7 @@ namespace CmediaSDKTestApp.Models
                 {
                     new OMENCmediaSDK.OMENSDK.VolumeChannelSturcture()
                     {
-                        ChannelIndex = OMENCmediaSDK.CmediaSDK.VolumeChannel.Master,
+                        ChannelIndex = OMENCmediaSDK.CmediaSDK.CmediaVolumeChannel.Master,
                         ChannelValue = float.Parse(sliderDataContext.SliderValueStr.MenuName)
                     }
                 });

@@ -9,7 +9,7 @@ namespace OMENCmediaSDK.OMENSDK
 
     public struct VolumeChannelSturcture
     {
-        public VolumeChannel ChannelIndex { get; set; }
+        public CmediaVolumeChannel ChannelIndex { get; set; }
         public float ChannelValue { get; set; }
     }
 

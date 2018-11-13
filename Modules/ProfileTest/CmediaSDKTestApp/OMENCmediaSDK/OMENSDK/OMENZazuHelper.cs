@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using OMENCmediaSDK.OMENSDK.Structures;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace OMENCmediaSDK.OMENSDK

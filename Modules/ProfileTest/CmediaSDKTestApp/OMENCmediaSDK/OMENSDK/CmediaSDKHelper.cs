@@ -1,4 +1,5 @@
 ﻿using OMENCmediaSDK.CmediaSDK;
+using OMENCmediaSDK.OMENSDK.Structures;
 using System.Collections.Generic;
 
 namespace OMENCmediaSDK.OMENSDK
@@ -99,7 +100,13 @@ namespace OMENCmediaSDK.OMENSDK
             ReturnValue revData;
             foreach (var channle in volumeData)
             {
-                revData = CmediaSDKService.Instance.ConfigureJackDeviceData(cmediaDataFlow, CmediaDriverReadWrite.Write, new ClientData() { ApiName = CmediaAPIFunctionPoint.VolumeScalarControl.ToString(), SetValue = channle.ChannelValue, SetExtraValue = channle.ChannelIndex });
+                revData = CmediaSDKService.Instance.ConfigureJackDeviceData(
+                    cmediaDataFlow, 
+                    CmediaDriverReadWrite.Write, 
+                    new ClientData() {
+                        ApiName = CmediaAPIFunctionPoint.VolumeScalarControl.ToString(),
+                        SetValue = channle.ChannelValue,
+                        SetExtraValue = (CmediaVolumeChannel)channle.ChannelIndex });
             }
             return rev;
         }

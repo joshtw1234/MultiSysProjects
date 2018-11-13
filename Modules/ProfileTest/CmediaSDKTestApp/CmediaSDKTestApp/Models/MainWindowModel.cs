@@ -237,11 +237,11 @@ namespace CmediaSDKTestApp.Models
             HorzSliderControlModel sliderDataContext = (obj.Source as System.Windows.Controls.Slider).DataContext as HorzSliderControlModel;
             if (sliderDataContext.SliderName.Equals("Audio"))
             {
-                var rev = OMENCmediaSDK.OMENSDK.OMENZazuHelper.SetAudioVolumeScalarControl(new List<OMENCmediaSDK.OMENSDK.VolumeChannelSturcture>()
+                var rev = OMENCmediaSDK.OMENSDK.OMENZazuHelper.SetAudioVolumeScalarControl(new List<OMENCmediaSDK.OMENSDK.Structures.VolumeChannelSturcture>()
                 {
-                    new OMENCmediaSDK.OMENSDK.VolumeChannelSturcture()
+                    new OMENCmediaSDK.OMENSDK.Structures.VolumeChannelSturcture()
                     {
-                        ChannelIndex = OMENCmediaSDK.OMENSDK.OMENVolumeChannel.Master,
+                        ChannelIndex = OMENCmediaSDK.OMENSDK.Structures.OMENVolumeChannel.Master,
                         ChannelValue = float.Parse(sliderDataContext.SliderValueStr.MenuName)
                     }
                 });
@@ -272,7 +272,6 @@ namespace CmediaSDKTestApp.Models
 
         public void ModelInitialize()
         {
-            
             Task.Factory.StartNew(async () => 
             {
                 var rev = await OMENCmediaSDK.OMENSDK.OMENZazuHelper.InitializeSDKAsync();

@@ -5,7 +5,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace OMENCmediaSDK.CmediaSDK
 {
-    internal class ZazuReadWriteStructure
+    class ZazuReadWriteStructure
     {
         public CmediaJackDeviceInfo JackInfo { get; set; }
         public string ApiPropertyName { get; set; }
@@ -15,7 +15,7 @@ namespace OMENCmediaSDK.CmediaSDK
         public byte[] WriteExtraData { get; set; }
     }
 
-    internal struct CmediaDeviceInfo
+    struct CmediaDeviceInfo
     {
         public int id;
         public CmediaJackType JackType;
@@ -23,7 +23,7 @@ namespace OMENCmediaSDK.CmediaSDK
         public CmediaDeviceState DeviceState;
     }
 
-    internal class CmediaJackDeviceInfo
+    class CmediaJackDeviceInfo
     {
         public CmediaDeviceInfo m_devInfo;       // reference to DEVICEINFO
         // function attributes
@@ -77,7 +77,7 @@ namespace OMENCmediaSDK.CmediaSDK
     #endregion
 
     #region Cmedia Enums
-    internal enum CmediaDeviceState
+    enum CmediaDeviceState
     {
         UnknowState = 0,
         Active,
@@ -86,7 +86,7 @@ namespace OMENCmediaSDK.CmediaSDK
         Unplugged
     }
 
-    internal enum CmediaJackType
+    enum CmediaJackType
     {
         UnknowJack = 0,
         JackSpeaker,
@@ -103,7 +103,7 @@ namespace OMENCmediaSDK.CmediaSDK
         JackSpeakerQuarter
     }
 
-    internal enum CmediaDataFlow
+    enum CmediaDataFlow
     {
         eRender,
         eCapture,
@@ -111,7 +111,7 @@ namespace OMENCmediaSDK.CmediaSDK
         DATAFLOW_enum_count
     }
 
-    internal enum CmediaDriverReadWrite
+    enum CmediaDriverReadWrite
     {
         Read,
         Write
@@ -123,7 +123,7 @@ namespace OMENCmediaSDK.CmediaSDK
     /// The Cmedia SDK API function names
     /// Use string type to call SDK API
     /// </summary>
-    internal enum CmediaAPIFunctionPoint
+    enum CmediaAPIFunctionPoint
     {
         #region CMI Device
         /// <summary>
@@ -229,7 +229,7 @@ namespace OMENCmediaSDK.CmediaSDK
         #endregion
     }
 
-    internal enum CmediaVolumeChannel
+    enum CmediaVolumeChannel
     {
         Master = -1,
         FrontLeft,
@@ -237,9 +237,9 @@ namespace OMENCmediaSDK.CmediaSDK
     }
 
     [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    internal delegate void CmediaSDKCallback(int type, int id, int componentType, ulong eventId);
+    delegate void CmediaSDKCallback(int type, int id, int componentType, ulong eventId);
 
-    internal struct ReturnValue
+    struct ReturnValue
     {
         public int RevCode { get; set; }
         public string RevValue { get; set; }
@@ -247,7 +247,7 @@ namespace OMENCmediaSDK.CmediaSDK
         public string RevExtraValue { get; set; }
     }
 
-    internal struct ClientData
+    struct ClientData
     {
         const string BuildInName = "System";
         public string ApiName { get; set; }

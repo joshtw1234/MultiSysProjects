@@ -163,7 +163,7 @@ namespace OMENCmediaSDK.CmediaSDK
             return rev;
         }
 
-        public ReturnValue GetSetJackDeviceData(CmediaDataFlow dataFlow, CmediaDriverReadWrite readWrite, ClientData clientData)
+        public ReturnValue ConfigureJackDeviceData(CmediaDataFlow dataFlow, CmediaDriverReadWrite readWrite, ClientData clientData)
         {
             ReturnValue revData = new ReturnValue() { RevCode = -1, RevMessage = $"API Name [{clientData.ApiName}] not Correct!" };
             CmediaAPIFunctionPoint sdkAPI;
@@ -194,7 +194,7 @@ namespace OMENCmediaSDK.CmediaSDK
             return revData;
         }
 
-        public ReturnValue GetSetSurroundData(CmediaDriverReadWrite readWrite, HPSurroundCommand hpCommand)
+        public ReturnValue ConfitureSurroundData(CmediaDriverReadWrite readWrite, HPSurroundCommand hpCommand)
         {
             ReturnValue revData = new ReturnValue() { RevCode = -1, RevMessage = $"[{hpCommand}] not Correct!" };
             ZazuReadWriteStructure rwData = null;

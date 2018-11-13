@@ -13,7 +13,7 @@ namespace OMENCmediaSDK.OMENSDK
         {
             return await Task.Run(() =>
             {
-                return CmediaSDKHelper.InitializeSDK();
+                return CmediaSDKHelper.Instance.InitializeSDK();
             });
         }
 
@@ -21,7 +21,7 @@ namespace OMENCmediaSDK.OMENSDK
         {
             return await Task.Run(() =>
             {
-                return CmediaSDKHelper.UnInitializeSDK();
+                return CmediaSDKHelper.Instance.UnInitializeSDK();
             });
         }
 
@@ -29,7 +29,7 @@ namespace OMENCmediaSDK.OMENSDK
         {
             return await Task.Run(() =>
             {
-                return CmediaSDKHelper.GetVolumeControl(OMENDataFlow.Render);
+                return CmediaSDKHelper.Instance.GetVolumeControl(OMENDataFlow.Render);
             });
         }
 
@@ -37,7 +37,7 @@ namespace OMENCmediaSDK.OMENSDK
         {
             return await Task.Run(() =>
             {
-                return CmediaSDKHelper.GetVolumeControl(OMENDataFlow.Capture);
+                return CmediaSDKHelper.Instance.GetVolumeControl(OMENDataFlow.Capture);
             });
         }
 
@@ -45,7 +45,7 @@ namespace OMENCmediaSDK.OMENSDK
         {
             return await Task.Run(() =>
             {
-                return CmediaSDKHelper.SetVolumeScalarControl(OMENDataFlow.Render, audioData);
+                return CmediaSDKHelper.Instance.SetVolumeScalarControl(OMENDataFlow.Render, audioData);
             });
         }
 
@@ -53,7 +53,7 @@ namespace OMENCmediaSDK.OMENSDK
         {
             return await Task.Run(() =>
             {
-                return CmediaSDKHelper.SetVolumeScalarControl(OMENDataFlow.Capture, micData);
+                return CmediaSDKHelper.Instance.SetVolumeScalarControl(OMENDataFlow.Capture, micData);
             });
         }
 
@@ -61,7 +61,7 @@ namespace OMENCmediaSDK.OMENSDK
         {
             return await Task.Run(() =>
             {
-                return CmediaSDKHelper.SetMuteControl(OMENDataFlow.Render, isMute);
+                return CmediaSDKHelper.Instance.SetMuteControl(OMENDataFlow.Render, isMute);
             });
         }
 
@@ -69,14 +69,14 @@ namespace OMENCmediaSDK.OMENSDK
         {
             return await Task.Run(() =>
             {
-                return CmediaSDKHelper.SetMuteControl(OMENDataFlow.Capture, isMute);
+                return CmediaSDKHelper.Instance.SetMuteControl(OMENDataFlow.Capture, isMute);
             });
         }
 
-        public static void RegisterSDKCallbackFunction(CmediaSDKCallback callBack)
+        public static void RegisterSDKCallbackFunction(OMENSDKCallback callBack)
         {
             //Return value is useless.
-            CmediaSDKService.Instance.RegisterSDKCallBackFunction(callBack);
+            CmediaSDKHelper.Instance.RegisterSDKCallBackFunction(callBack);
         }
     }
 }

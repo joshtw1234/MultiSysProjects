@@ -229,7 +229,7 @@ namespace OMENCmediaSDK.CmediaSDK
         #endregion
     }
 
-    public enum CmediaVolumeChannel
+    internal enum CmediaVolumeChannel
     {
         Master = -1,
         FrontLeft,
@@ -237,9 +237,9 @@ namespace OMENCmediaSDK.CmediaSDK
     }
 
     [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    public delegate void CmediaSDKCallback(int type, int id, int componentType, ulong eventId);
+    internal delegate void CmediaSDKCallback(int type, int id, int componentType, ulong eventId);
 
-    public struct ReturnValue
+    internal struct ReturnValue
     {
         public int RevCode { get; set; }
         public string RevValue { get; set; }
@@ -247,7 +247,7 @@ namespace OMENCmediaSDK.CmediaSDK
         public string RevExtraValue { get; set; }
     }
 
-    public struct ClientData
+    internal struct ClientData
     {
         const string BuildInName = "System";
         public string ApiName { get; set; }

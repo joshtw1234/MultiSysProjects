@@ -241,7 +241,7 @@ namespace CmediaSDKTestApp.Models
                 {
                     new OMENCmediaSDK.OMENSDK.VolumeChannelSturcture()
                     {
-                        ChannelIndex = OMENCmediaSDK.CmediaSDK.CmediaVolumeChannel.Master,
+                        ChannelIndex = OMENCmediaSDK.OMENSDK.OMENVolumeChannel.Master,
                         ChannelValue = float.Parse(sliderDataContext.SliderValueStr.MenuName)
                     }
                 });
@@ -286,8 +286,19 @@ namespace CmediaSDKTestApp.Models
 
             });
             OMENCmediaSDK.OMENSDK.OMENZazuHelper.RegisterSDKCallbackFunction(OnCmediaSDKCallBack);
+            OMENCmediaSDK.OMENSDK.OMENZazuHelper.RegisterSDKCallbackFunction(On2CmediaSDKCallBack);
             Application.Current.MainWindow.Closing += MainWindow_Closing;
             //_micPage.DisplayText.MenuName += $"\nCmediaRenderFunctionPoint get {Enum.GetNames(typeof(CmediaAPIFunctionPoint)).Length}";
+        }
+
+        private void On2CmediaSDKCallBack(int type, int id, int componentType, ulong eventId)
+        {
+            _micPage.DisplayText.MenuName += $"\n On2CmediaSDKCallBack {type} {id} {componentType} {eventId}";
+            if (IsModuleInitialized)
+            {
+                var resu = ReadDataFromDriver();
+                IsReadDataFromDriver = true;
+            }
         }
 
         private void OnCmediaSDKCallBack(int type, int id, int componentType, ulong eventId)

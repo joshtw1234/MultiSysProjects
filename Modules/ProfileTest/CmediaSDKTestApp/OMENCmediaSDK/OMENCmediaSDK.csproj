@@ -64,7 +64,7 @@
     <Compile Include="CmediaSDK\Structures\ZazuReadWriteStructure.cs" />
     <Compile Include="OMENSDK\CmediaSDKHelper.cs" />
     <Compile Include="OMENSDK\Structures\OMENStructures.cs" />
-    <Compile Include="OMENSDK\OMENZazuHelper.cs" />
+    <Compile Include="OMENSDK\OMENHeadsetHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

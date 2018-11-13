@@ -126,6 +126,24 @@ namespace OMENCmediaSDK.OMENSDK
             return rev;
         }
 
+        public OMENReturnValue GetCmediaInfo()
+        {
+            OMENReturnValue revData = new OMENReturnValue();
+            var rev = CmediaSDKService.Instance.ConfigureJackDeviceData(CmediaDataFlow.eRender, CmediaDriverReadWrite.Read,
+                new ClientData() { ApiName = CmediaAPIFunctionPoint.GetDeviceFriendlyName.ToString() });
+            revData.RevCode = rev.RevCode;
+            revData.RevValue= rev.RevValue;
+            revData.RevExtraValue = rev.RevExtraValue;
+            revData.RevMessage = $"{rev.RevValue}|";
+            rev = CmediaSDKService.Instance.ConfigureJackDeviceData(CmediaDataFlow.eRender, CmediaDriverReadWrite.Read,
+                new ClientData() { ApiName = CmediaAPIFunctionPoint.GetDriverVer.ToString() });
+            revData.RevMessage += $"{rev.RevValue}|";
+            rev = CmediaSDKService.Instance.ConfigureJackDeviceData(CmediaDataFlow.eRender, CmediaDriverReadWrite.Read,
+               new ClientData() { ApiName = CmediaAPIFunctionPoint.GetFirmwareVer.ToString() });
+            revData.RevMessage += $"{rev.RevValue}|";
+            return revData;
+        }
+
         private CmediaSDKCallback _cmediaSDKCallback;
         public int RegisterSDKCallBackFunction(OMENSDKCallback callBack)
         {

@@ -7,7 +7,7 @@ namespace OMENCmediaSDK.OMENSDK
     /// <summary>
     /// The Client API for OMEN
     /// </summary>
-    public class OMENZazuHelper
+    public class OMENHeadsetHelper
     {
         public static async Task<int> InitializeSDKAsync()
         {
@@ -70,6 +70,14 @@ namespace OMENCmediaSDK.OMENSDK
             return await Task.Run(() =>
             {
                 return CmediaSDKHelper.Instance.SetMuteControl(OMENDataFlow.Capture, isMute);
+            });
+        }
+
+        public static async Task<OMENReturnValue> GetOMENHeadsetInfo()
+        {
+            return await Task.Run(() =>
+            {
+                return CmediaSDKHelper.Instance.GetCmediaInfo();
             });
         }
 

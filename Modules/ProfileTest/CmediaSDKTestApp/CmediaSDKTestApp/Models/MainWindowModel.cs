@@ -27,7 +27,7 @@ namespace CmediaSDKTestApp.Models
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            var rev = OMENCmediaSDK.OMENSDK.OMENZazuHelper.UnInitializeSDKAsync();
+            var rev = OMENCmediaSDK.OMENSDK.OMENHeadsetHelper.UnInitializeSDKAsync();
         }
 
         public ObservableCollection<IMenuItem> GetPageButtons
@@ -223,7 +223,7 @@ namespace CmediaSDKTestApp.Models
             HorzSliderControlModel muteBoxDataContext = (obj.Source as System.Windows.Controls.CheckBox).DataContext as HorzSliderControlModel;
             if (muteBoxDataContext.SliderName.Equals("Audio"))
             {
-                var rev = OMENCmediaSDK.OMENSDK.OMENZazuHelper.SetAudioMuteControl(Convert.ToInt32(muteBoxDataContext.SliderTitle.MenuChecked));
+                var rev = OMENCmediaSDK.OMENSDK.OMENHeadsetHelper.SetAudioMuteControl(Convert.ToInt32(muteBoxDataContext.SliderTitle.MenuChecked));
             }
         }
 
@@ -237,7 +237,7 @@ namespace CmediaSDKTestApp.Models
             HorzSliderControlModel sliderDataContext = (obj.Source as System.Windows.Controls.Slider).DataContext as HorzSliderControlModel;
             if (sliderDataContext.SliderName.Equals("Audio"))
             {
-                var rev = OMENCmediaSDK.OMENSDK.OMENZazuHelper.SetAudioVolumeScalarControl(new List<OMENCmediaSDK.OMENSDK.Structures.VolumeChannelSturcture>()
+                var rev = OMENCmediaSDK.OMENSDK.OMENHeadsetHelper.SetAudioVolumeScalarControl(new List<OMENCmediaSDK.OMENSDK.Structures.VolumeChannelSturcture>()
                 {
                     new OMENCmediaSDK.OMENSDK.Structures.VolumeChannelSturcture()
                     {
@@ -263,9 +263,9 @@ namespace CmediaSDKTestApp.Models
         private async Task ReadDataFromDriver()
         {
             
-            _audioVolumeControl = await OMENCmediaSDK.OMENSDK.OMENZazuHelper.GetAudioVolumeControl();
+            _audioVolumeControl = await OMENCmediaSDK.OMENSDK.OMENHeadsetHelper.GetAudioVolumeControl();
             _micPage.DisplayText.MenuName += $"\nAudioVolumeControl get [{_audioVolumeControl.MaxValue}] [{_audioVolumeControl.MinValue}] [{_audioVolumeControl.ScalarValue}] [{_audioVolumeControl.IsMuted}]";
-            _microphoneVolumeControl = await OMENCmediaSDK.OMENSDK.OMENZazuHelper.GetMicrophoneVolumeControl();
+            _microphoneVolumeControl = await OMENCmediaSDK.OMENSDK.OMENHeadsetHelper.GetMicrophoneVolumeControl();
             _micPage.DisplayText.MenuName += $"\nMicrophoneVolumeControl get [{_microphoneVolumeControl.MaxValue}] [{_microphoneVolumeControl.MinValue}] [{_microphoneVolumeControl.ScalarValue}] [{_microphoneVolumeControl.IsMuted}]";
             SliderInitialize();
         }
@@ -274,7 +274,7 @@ namespace CmediaSDKTestApp.Models
         {
             Task.Factory.StartNew(async () => 
             {
-                var rev = await OMENCmediaSDK.OMENSDK.OMENZazuHelper.InitializeSDKAsync();
+                var rev = await OMENCmediaSDK.OMENSDK.OMENHeadsetHelper.InitializeSDKAsync();
                 if (rev != 0)
                 {
                     _micPage.DisplayText.MenuName += "\nSDK initial failed";
@@ -282,11 +282,14 @@ namespace CmediaSDKTestApp.Models
                 }
                 IsModuleInitialized = true;
                 await ReadDataFromDriver();
+                var omenRev = await OMENCmediaSDK.OMENSDK.OMENHeadsetHelper.GetOMENHeadsetInfo();
+                _micPage.DisplayText.MenuName += $"\n{omenRev.RevMessage}";
 
             });
-            OMENCmediaSDK.OMENSDK.OMENZazuHelper.RegisterSDKCallbackFunction(OnCmediaSDKCallBack);
-            OMENCmediaSDK.OMENSDK.OMENZazuHelper.RegisterSDKCallbackFunction(On2CmediaSDKCallBack);
+            OMENCmediaSDK.OMENSDK.OMENHeadsetHelper.RegisterSDKCallbackFunction(OnCmediaSDKCallBack);
+            OMENCmediaSDK.OMENSDK.OMENHeadsetHelper.RegisterSDKCallbackFunction(On2CmediaSDKCallBack);
             Application.Current.MainWindow.Closing += MainWindow_Closing;
+            
             //_micPage.DisplayText.MenuName += $"\nCmediaRenderFunctionPoint get {Enum.GetNames(typeof(CmediaAPIFunctionPoint)).Length}";
         }
 

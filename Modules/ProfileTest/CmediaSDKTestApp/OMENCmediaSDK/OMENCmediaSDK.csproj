@@ -61,7 +61,7 @@
   <ItemGroup>
     <Compile Include="CmediaSDK\CmediaSDKService.cs" />
     <Compile Include="CmediaSDK\NativeMethods.cs" />
-    <Compile Include="CmediaSDK\ZazuReadWriteStructure.cs" />
+    <Compile Include="CmediaSDK\Structures\ZazuReadWriteStructure.cs" />
     <Compile Include="OMENSDK\CmediaSDKHelper.cs" />
     <Compile Include="OMENSDK\Structures\OMENStructures.cs" />
     <Compile Include="OMENSDK\OMENZazuHelper.cs" />

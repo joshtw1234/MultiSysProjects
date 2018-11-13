@@ -1,4 +1,5 @@
 ﻿using OMENCmediaSDK.CmediaSDK;
+using OMENCmediaSDK.CmediaSDK.Structures;
 using OMENCmediaSDK.OMENSDK.Structures;
 using System.Collections.Generic;
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OMENCmediaSDK.CmediaSDK.Structures;
+using System;
 using System.Runtime.InteropServices;
 
 namespace OMENCmediaSDK.CmediaSDK

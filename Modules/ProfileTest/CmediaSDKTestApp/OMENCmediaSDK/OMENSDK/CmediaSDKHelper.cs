@@ -1,5 +1,4 @@
 ﻿using OMENCmediaSDK.CmediaSDK;
-using System;
 using System.Collections.Generic;
 
 namespace OMENCmediaSDK.OMENSDK

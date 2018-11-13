@@ -1,5 +1,4 @@
-﻿using OMENCmediaSDK.CmediaSDK;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -75,7 +74,7 @@ namespace OMENCmediaSDK.OMENSDK
                     return BitConverter.GetBytes((bool)objData);
                 }
             }
-            if (objData is CmediaVolumeChannel)
+            if (objData is OMENVolumeChannel)
             {
                 return BitConverter.GetBytes((int)objData);
             }

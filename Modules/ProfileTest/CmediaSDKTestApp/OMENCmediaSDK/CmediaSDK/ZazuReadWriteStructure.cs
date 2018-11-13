@@ -5,16 +5,6 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace OMENCmediaSDK.CmediaSDK
 {
-    class ZazuReadWriteStructure
-    {
-        public CmediaJackDeviceInfo JackInfo { get; set; }
-        public string ApiPropertyName { get; set; }
-        public CmediaDriverReadWrite ReadWrite { get; set; }
-        public byte[] WriteData { get; set; }
-        public bool IsWriteExtra { get; set; }
-        public byte[] WriteExtraData { get; set; }
-    }
-
     struct CmediaDeviceInfo
     {
         public int id;
@@ -115,6 +105,13 @@ namespace OMENCmediaSDK.CmediaSDK
     {
         Read,
         Write
+    }
+
+    enum CmediaVolumeChannel
+    {
+        Master = -1,
+        FrontLeft,
+        FrontRight
     }
     #endregion
 
@@ -229,15 +226,22 @@ namespace OMENCmediaSDK.CmediaSDK
         #endregion
     }
 
-    enum CmediaVolumeChannel
-    {
-        Master = -1,
-        FrontLeft,
-        FrontRight
-    }
-
     [UnmanagedFunctionPointer(CallingConvention.StdCall)]
     delegate void CmediaSDKCallback(int type, int id, int componentType, ulong eventId);
+
+    #endregion
+
+    #region Custom structure
+
+    class ZazuReadWriteStructure
+    {
+        public CmediaJackDeviceInfo JackInfo { get; set; }
+        public string ApiPropertyName { get; set; }
+        public CmediaDriverReadWrite ReadWrite { get; set; }
+        public byte[] WriteData { get; set; }
+        public bool IsWriteExtra { get; set; }
+        public byte[] WriteExtraData { get; set; }
+    }
 
     struct ReturnValue
     {

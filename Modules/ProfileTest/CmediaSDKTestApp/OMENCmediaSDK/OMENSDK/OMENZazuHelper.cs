@@ -7,7 +7,7 @@ namespace OMENCmediaSDK.OMENSDK
     /// <summary>
     /// The Client API for OMEN
     /// </summary>
-    class OMENZazuHelper
+    public class OMENZazuHelper
     {
         public static async Task<int> InitializeSDKAsync()
         {

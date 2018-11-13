@@ -7,19 +7,19 @@ namespace OMENCmediaSDK.OMENSDK
     {
     }
 
-    struct VolumeChannelSturcture
+    public struct VolumeChannelSturcture
     {
         public VolumeChannel ChannelIndex { get; set; }
         public float ChannelValue { get; set; }
     }
 
-    class BaseVolumeControlStructure
+    public class BaseVolumeControlStructure
     {
         public int IsMuted { get; set; }
         public List<VolumeChannelSturcture> ChannelValues { get; set; }
     }
 
-    class VolumeControlStructure : BaseVolumeControlStructure
+    public class VolumeControlStructure : BaseVolumeControlStructure
     {
         public double MaxValue { get; set; }
         public double MinValue { get; set; }

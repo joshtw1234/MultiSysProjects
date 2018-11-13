@@ -98,18 +98,12 @@
     <Compile Include="BaseModels\IMenuItem.cs" />
     <Compile Include="BaseModels\MenuItem.cs" />
     <Compile Include="BaseModels\MyDelegateCommond.cs" />
-    <Compile Include="BaseModels\OMENStructures.cs" />
-    <Compile Include="BaseModels\ZazuReadWriteStructure.cs" />
-    <Compile Include="Models\CmediaSDKHelper.cs" />
-    <Compile Include="Models\CmediaSDKService.cs" />
     <Compile Include="Models\MainWindowLogicModel.cs" />
-    <Compile Include="BaseModels\NativeMethods.cs" />
     <Compile Include="Models\BasePageContentViewModel.cs" />
     <Compile Include="Models\BindAbleMenuItem.cs" />
     <Compile Include="Models\HorzSliderControlModel.cs" />
     <Compile Include="Models\IMainWindowModel.cs" />
     <Compile Include="Models\MainWindowModel.cs" />
-    <Compile Include="Models\OMENZazuHelper.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -145,6 +139,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\TestAsset1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OMENCmediaSDK\OMENCmediaSDK.csproj">
+      <Project>{99508ec3-2513-4410-a5ce-301c61eb8653}</Project>
+      <Name>OMENCmediaSDK</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -33,7 +33,7 @@ namespace OMENCmediaSDK.CmediaSDK
 
         private const int CMEDIABUFFERSIZE = 1024;
 
-        private ReturnValue OMEN_PropertyControl(ZazuReadWriteStructure rwData)
+        private ReturnValue ConfigurePropertyControl(ZazuReadWriteStructure rwData)
         {
             // Allocate a Cmedia standard Array.
             byte[] devBvalue = new byte[CMEDIABUFFERSIZE];
@@ -108,14 +108,13 @@ namespace OMENCmediaSDK.CmediaSDK
 
         private CmediaJackDeviceInfo GetJackDevice(CmediaDataFlow deviceType)
         {
-            string msg = "Found Device ";
             uint devCount = 0;
             CmediaDeviceInfo devInfo;
             CmediaJackDeviceInfo jackDeviceInfo = new CmediaJackDeviceInfo();
             int rev = NativeMethods.CMI_GetDeviceCount(deviceType, ref devCount);
             if (0 == devCount)
             {
-                msg = $"{deviceType} Device not found!!";
+                //Device not found!!
                 return null;
             }
             else
@@ -127,41 +126,12 @@ namespace OMENCmediaSDK.CmediaSDK
                     {
                         case CmediaDeviceState.Active:
                             jackDeviceInfo.m_devInfo = devInfo;
-                            msg += $"JackInfo {deviceType} JackType [{jackDeviceInfo.m_devInfo.JackType}]";
-                            break;
-                        default:
-                            msg = $"Device State {devInfo.DeviceState}";
                             break;
                     }
                 };
 
             }
             return jackDeviceInfo;
-        }
-
-        private ReturnValue GetJackDeviceInfoDemo(CmediaDriverReadWrite readWrite)
-        {
-            ZazuReadWriteStructure rwData = null;
-            CmediaJackDeviceInfo jackDevice = _cmediaJackInfoRender;
-            ReturnValue rev = new ReturnValue() { RevCode = -1, RevMessage = $"jackDevice type [{jackDevice.m_devInfo.DataFlow}]" };
-            for(int i = 0; i < Enum.GetNames(typeof(CmediaAPIFunctionPoint)).Length; i++)
-            {
-                if (i > (int)CmediaAPIFunctionPoint.VOICECLARITY_NOISESUPP_LEVEL)
-                {
-                    jackDevice = _cmediajackInfoCapture;
-                }
-                switch(readWrite)
-                {
-                    case CmediaDriverReadWrite.Read:
-                        rwData = new ZazuReadWriteStructure() { JackInfo = jackDevice, ApiPropertyName = ((CmediaAPIFunctionPoint)i).ToString(), ReadWrite = readWrite };
-                        break;
-                    case CmediaDriverReadWrite.Write:
-                        //TODO add write logic for demo
-                        break;
-                }
-                rev = OMEN_PropertyControl(rwData);
-            }
-            return rev;
         }
 
         public ReturnValue ConfigureJackDeviceData(CmediaDataFlow dataFlow, CmediaDriverReadWrite readWrite, ClientData clientData)
@@ -191,7 +161,7 @@ namespace OMENCmediaSDK.CmediaSDK
             {
                 rwData.IsWriteExtra = true;
             }
-            revData = OMEN_PropertyControl(rwData);
+            revData = ConfigurePropertyControl(rwData);
             return revData;
         }
 
@@ -220,7 +190,7 @@ namespace OMENCmediaSDK.CmediaSDK
             }
             rwData = new ZazuReadWriteStructure() { JackInfo = _cmediaJackInfoRender, ApiPropertyName = CmediaAPIFunctionPoint.VirtualSurroundEffectControl.ToString(),
                 ReadWrite = readWrite, WriteData = null, IsWriteExtra = true, WriteExtraData = regop.ToBytes() };
-            revData = OMEN_PropertyControl(rwData);
+            revData = ConfigurePropertyControl(rwData);
             return revData;
         }
 
@@ -236,9 +206,6 @@ namespace OMENCmediaSDK.CmediaSDK
             _cmediajackInfoCapture = GetJackDevice(CmediaDataFlow.eCapture);
             if (_cmediajackInfoCapture == null) return -1;
 
-#if DEMO
-            var revData = GetJackDeviceInfoDemo(CmediaDriverReadWrite.Read);
-#endif
             return rev;
         }
 

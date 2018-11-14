@@ -141,7 +141,7 @@
     <Resource Include="Assets\TestAsset1.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OMENCmediaSDK\MYCmediaSDK.csproj">
+    <ProjectReference Include="..\MYCmediaSDK\MYCmediaSDK.csproj">
       <Project>{99508ec3-2513-4410-a5ce-301c61eb8653}</Project>
       <Name>MYCmediaSDK</Name>
     </ProjectReference>

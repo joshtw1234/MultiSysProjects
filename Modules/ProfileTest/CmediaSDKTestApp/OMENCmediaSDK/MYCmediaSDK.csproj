@@ -7,8 +7,8 @@
     <ProjectGuid>{99508EC3-2513-4410-A5CE-301C61EB8653}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OMENCmediaSDK</RootNamespace>
-    <AssemblyName>OMENCmediaSDK</AssemblyName>
+    <RootNamespace>MYCmediaSDK</RootNamespace>
+    <AssemblyName>MYCmediaSDK</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -62,9 +62,9 @@
     <Compile Include="CmediaSDK\CmediaSDKService.cs" />
     <Compile Include="CmediaSDK\NativeMethods.cs" />
     <Compile Include="CmediaSDK\Structures\ZazuReadWriteStructure.cs" />
-    <Compile Include="OMENSDK\CmediaSDKHelper.cs" />
-    <Compile Include="OMENSDK\Structures\OMENStructures.cs" />
-    <Compile Include="OMENSDK\OMENHeadsetHelper.cs" />
+    <Compile Include="MYSDK\CmediaSDKHelper.cs" />
+    <Compile Include="MYSDK\Structures\MYStructures.cs" />
+    <Compile Include="MYSDK\MYHeadsetHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

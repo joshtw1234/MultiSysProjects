@@ -1,9 +1,9 @@
-﻿using OMENCmediaSDK.CmediaSDK;
-using OMENCmediaSDK.CmediaSDK.Structures;
-using OMENCmediaSDK.OMENSDK.Structures;
+﻿using MYCmediaSDK.CmediaSDK;
+using MYCmediaSDK.CmediaSDK.Structures;
+using MYCmediaSDK.MYSDK.Structures;
 using System.Collections.Generic;
 
-namespace OMENCmediaSDK.OMENSDK
+namespace MYCmediaSDK.MYSDK
 {
     /// <summary>
     /// Internal Class for OMEN logic

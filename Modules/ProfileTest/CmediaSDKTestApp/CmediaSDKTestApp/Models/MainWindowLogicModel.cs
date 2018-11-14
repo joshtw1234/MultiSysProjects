@@ -1,4 +1,5 @@
 ﻿using CmediaSDKTestApp.BaseModels;
+using MYCmediaSDK.MYSDK.Structures;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -68,8 +69,8 @@ namespace CmediaSDKTestApp.Models
             }
         }
 
-        protected OMENCmediaSDK.OMENSDK.Structures.VolumeControlStructure _audioVolumeControl = null;
-        protected OMENCmediaSDK.OMENSDK.Structures.VolumeControlStructure _microphoneVolumeControl = null;
+        protected VolumeControlStructure _audioVolumeControl = null;
+        protected VolumeControlStructure _microphoneVolumeControl = null;
     }
 
     enum ButtonStrings

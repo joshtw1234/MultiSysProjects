@@ -1,13 +1,13 @@
-﻿using OMENCmediaSDK.OMENSDK.Structures;
+﻿using MYCmediaSDK.MYSDK.Structures;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace OMENCmediaSDK.OMENSDK
+namespace MYCmediaSDK.MYSDK
 {
     /// <summary>
     /// The Client API for OMEN
     /// </summary>
-    public class OMENHeadsetHelper
+    public class MYHeadsetHelper
     {
         public static async Task<int> InitializeSDKAsync()
         {

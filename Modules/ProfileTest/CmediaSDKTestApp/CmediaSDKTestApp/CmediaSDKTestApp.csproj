@@ -141,9 +141,9 @@
     <Resource Include="Assets\TestAsset1.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OMENCmediaSDK\OMENCmediaSDK.csproj">
+    <ProjectReference Include="..\OMENCmediaSDK\MYCmediaSDK.csproj">
       <Project>{99508ec3-2513-4410-a5ce-301c61eb8653}</Project>
-      <Name>OMENCmediaSDK</Name>
+      <Name>MYCmediaSDK</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

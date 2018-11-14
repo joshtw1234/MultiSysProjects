@@ -1,8 +1,8 @@
-﻿using OMENCmediaSDK.CmediaSDK.Structures;
+﻿using MYCmediaSDK.CmediaSDK.Structures;
 using System;
 using System.Runtime.InteropServices;
 
-namespace OMENCmediaSDK.CmediaSDK
+namespace MYCmediaSDK.CmediaSDK
 {
     /// <summary>
     /// Implement Cmedia SDK sample code as service

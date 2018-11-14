@@ -4,9 +4,9 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace OMENCmediaSDK.OMENSDK.Structures
+namespace MYCmediaSDK.MYSDK.Structures
 {
-    class OMENStructures
+    class MYStructures
     {
     }
 

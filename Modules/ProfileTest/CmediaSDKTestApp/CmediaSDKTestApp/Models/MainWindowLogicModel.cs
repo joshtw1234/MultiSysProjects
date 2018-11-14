@@ -22,11 +22,12 @@ namespace CmediaSDKTestApp.Models
 
         protected virtual void OnMuteBoxChecked(RoutedEventArgs obj)
         {
+            //Base checkbox event
         }
 
         protected virtual void OnSliderValueChanged(RoutedPropertyChangedEventArgs<double> obj)
         {
-            //throw new NotImplementedException();
+            //base slider value changed event
         }
 
         protected virtual void OnPageButtonClick(string obj)

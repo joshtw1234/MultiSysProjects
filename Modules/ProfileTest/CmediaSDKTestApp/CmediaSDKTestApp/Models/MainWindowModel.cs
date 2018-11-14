@@ -289,20 +289,8 @@ namespace CmediaSDKTestApp.Models
 
             });
             MYHeadsetHelper.RegisterSDKCallbackFunction(OnCmediaSDKCallBack);
-            MYHeadsetHelper.RegisterSDKCallbackFunction(On2CmediaSDKCallBack);
             Application.Current.MainWindow.Closing += MainWindow_Closing;
             
-            //_micPage.DisplayText.MenuName += $"\nCmediaRenderFunctionPoint get {Enum.GetNames(typeof(CmediaAPIFunctionPoint)).Length}";
-        }
-
-        private void On2CmediaSDKCallBack(int type, int id, int componentType, ulong eventId)
-        {
-            _micPage.DisplayText.MenuName += $"\n On2CmediaSDKCallBack {type} {id} {componentType} {eventId}";
-            if (IsModuleInitialized)
-            {
-                var resu = ReadDataFromDriver();
-                IsReadDataFromDriver = true;
-            }
         }
 
         private void OnCmediaSDKCallBack(int type, int id, int componentType, ulong eventId)

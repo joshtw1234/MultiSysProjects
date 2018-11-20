@@ -5,9 +5,7 @@ VisualStudioVersion = 15.0.28010.2048
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UWPAudioTest", "UWPAudioTest\UWPAudioTest.csproj", "{D3BE1EB1-568C-4C4A-9589-7C2357CF0C4A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyStandardDLL", "MyStandardDLL\MyStandardDLL.csproj", "{35E10C01-5BFF-4DEA-A2C0-982078BF5339}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVMUtilities", "..\DirectShowDemo\MVVMUtilities\MVVMUtilities.csproj", "{B4E71C6C-CD19-412E-8B19-853770F66293}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyStandardDLL", "MyStandardDLL\MyStandardDLL.csproj", "{35E10C01-5BFF-4DEA-A2C0-982078BF5339}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,22 +55,6 @@ Global
 		{35E10C01-5BFF-4DEA-A2C0-982078BF5339}.Release|x64.Build.0 = Release|Any CPU
 		{35E10C01-5BFF-4DEA-A2C0-982078BF5339}.Release|x86.ActiveCfg = Release|Any CPU
 		{35E10C01-5BFF-4DEA-A2C0-982078BF5339}.Release|x86.Build.0 = Release|Any CPU
-		{B4E71C6C-CD19-412E-8B19-853770F66293}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B4E71C6C-CD19-412E-8B19-853770F66293}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B4E71C6C-CD19-412E-8B19-853770F66293}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{B4E71C6C-CD19-412E-8B19-853770F66293}.Debug|ARM.Build.0 = Debug|Any CPU
-		{B4E71C6C-CD19-412E-8B19-853770F66293}.Debug|x64.ActiveCfg = Debug|x64
-		{B4E71C6C-CD19-412E-8B19-853770F66293}.Debug|x64.Build.0 = Debug|x64
-		{B4E71C6C-CD19-412E-8B19-853770F66293}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{B4E71C6C-CD19-412E-8B19-853770F66293}.Debug|x86.Build.0 = Debug|Any CPU
-		{B4E71C6C-CD19-412E-8B19-853770F66293}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B4E71C6C-CD19-412E-8B19-853770F66293}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B4E71C6C-CD19-412E-8B19-853770F66293}.Release|ARM.ActiveCfg = Release|Any CPU
-		{B4E71C6C-CD19-412E-8B19-853770F66293}.Release|ARM.Build.0 = Release|Any CPU
-		{B4E71C6C-CD19-412E-8B19-853770F66293}.Release|x64.ActiveCfg = Release|x64
-		{B4E71C6C-CD19-412E-8B19-853770F66293}.Release|x64.Build.0 = Release|x64
-		{B4E71C6C-CD19-412E-8B19-853770F66293}.Release|x86.ActiveCfg = Release|Any CPU
-		{B4E71C6C-CD19-412E-8B19-853770F66293}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

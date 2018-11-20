@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace MVVMUtilities.Common
+namespace MyStandardDLL.MVVMUtility
 {
     public class MyDelegateCommond<T> : ICommand
     {

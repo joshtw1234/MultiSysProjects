@@ -100,7 +100,10 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\AudioTestModel.cs" />
+    <Compile Include="Models\IAudioTestModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\AudioTestViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Views\AudioTest.xaml.cs">
       <DependentUpon>AudioTest.xaml</DependentUpon>
     </Compile>
@@ -139,9 +142,6 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.1.9</Version>
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MyStandardDLL\MyStandardDLL.csproj">

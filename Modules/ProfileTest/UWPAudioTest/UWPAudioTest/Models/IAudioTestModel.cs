@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace UWPAudioTest.Models
 {
-    public class AudioTestModel : IAudioTestModel
+    public interface IAudioTestModel
     {
-       
     }
 }

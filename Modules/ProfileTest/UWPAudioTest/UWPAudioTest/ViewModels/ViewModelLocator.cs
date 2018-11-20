@@ -1,12 +1,8 @@
 ﻿using System;
 using Windows.UI.Xaml;
 
-namespace MyStandardDLL.MVVMUtility
+namespace UWPAudioTest.ViewModels
 {
-    /// <summary>
-    /// This class can't use outside App name space.
-    /// Copy this into ViewModel folder.
-    /// </summary>
     public class ViewModelLocator
     {
         public static bool GetAutoHookedUpViewModel(DependencyObject obj)

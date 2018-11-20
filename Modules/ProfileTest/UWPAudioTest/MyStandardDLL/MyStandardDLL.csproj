@@ -6,9 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="PresentationFramework">
-      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\PresentationFramework.dll</HintPath>
-    </Reference>
     <Reference Include="Windows.Foundation.UniversalApiContract">
       <HintPath>C:\Program Files (x86)\Windows Kits\10\References\10.0.17134.0\Windows.Foundation.UniversalApiContract\6.0.0.0\Windows.Foundation.UniversalApiContract.winmd</HintPath>
       <IsWinMDFile>true</IsWinMDFile>

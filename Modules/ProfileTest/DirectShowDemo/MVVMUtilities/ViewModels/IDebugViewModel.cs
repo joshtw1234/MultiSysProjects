@@ -5,7 +5,7 @@ namespace MVVMUtilities.ViewModels
 {
     public interface IDebugViewModel
     {
-        IMenuItem DisplayMenuItem { get; set; }
-        ObservableCollection<IMenuItem> CommonButtons { get; set; }
+        IViewItem DisplayMenuItem { get; set; }
+        ObservableCollection<IViewItem> CommonButtons { get; set; }
     }
 }

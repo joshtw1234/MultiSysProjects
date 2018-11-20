@@ -9,8 +9,8 @@ namespace DirectShowDemo.ViewModels
     {
         IMainWindowModel _model;
 
-        public IMenuItem DisplayMenuItem { get; set; }
-        public ObservableCollection<IMenuItem> CommonButtons { get; set; }
+        public IViewItem DisplayMenuItem { get; set; }
+        public ObservableCollection<IViewItem> CommonButtons { get; set; }
         public MainWindowViewModel(IMainWindowModel model)
         {
             _model = model;

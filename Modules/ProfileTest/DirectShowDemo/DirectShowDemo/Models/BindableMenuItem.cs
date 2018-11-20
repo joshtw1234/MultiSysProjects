@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace DirectShowDemo.Models
 {
-    class BindableMenuItem : BindAbleBases, IMenuItem
+    class BindableMenuItem : BindAbleBases, IViewItem
     {
         private string _menuName;
         public string MenuName { get { return _menuName; } set { _menuName = value; onPropertyChanged(this, "MenuName"); } }

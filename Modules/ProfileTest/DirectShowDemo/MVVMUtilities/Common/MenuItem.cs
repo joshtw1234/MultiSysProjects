@@ -3,7 +3,10 @@ using System.Windows;
 
 namespace MVVMUtilities.Common
 {
-    public class MenuItem : IMenuItem
+    /// <summary>
+    /// This is the implement class of IViewItem
+    /// </summary>
+    public class ViewItem : IViewItem
     {
         public string MenuName { get; set; }
         public string MenuImage { get; set; }

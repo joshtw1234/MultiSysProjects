@@ -2,7 +2,10 @@
 
 namespace MVVMUtilities.Common
 {
-    public interface IMenuItem
+    /// <summary>
+    /// This Interface present a common View properties.
+    /// </summary>
+    public interface IViewItem
     {
         /// <summary>
         /// MenuName is the name associated to a particular menu item

@@ -5,8 +5,8 @@ namespace DirectShowDemo.Models
 {
     interface IMainWindowModel
     {
-        IMenuItem GetDisplayMenuItem { get; }
-        ObservableCollection<IMenuItem> GetCommonButtons { get; }
+        IViewItem GetDisplayMenuItem { get; }
+        ObservableCollection<IViewItem> GetCommonButtons { get; }
 
         void ModuleInitialize();
     }

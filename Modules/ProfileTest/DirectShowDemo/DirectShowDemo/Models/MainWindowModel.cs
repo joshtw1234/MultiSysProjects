@@ -31,13 +31,13 @@ namespace DirectShowDemo.Models
             }
         }
 
-        private IMenuItem _displayMenuItem;
+        private IViewItem _displayMenuItem;
 
-        public IMenuItem GetDisplayMenuItem
+        public IViewItem GetDisplayMenuItem
         {
             get
             {
-                return _displayMenuItem = new MenuItem()
+                return _displayMenuItem = new ViewItem()
                 {
                     MenuName = "Hello Word!",
                     MenuStyle = localDic["MessageTextBlock"] as Style
@@ -45,20 +45,20 @@ namespace DirectShowDemo.Models
             }
         }
 
-        public ObservableCollection<IMenuItem> GetCommonButtons
+        public ObservableCollection<IViewItem> GetCommonButtons
         {
             get
             {
-                return new ObservableCollection<IMenuItem>()
+                return new ObservableCollection<IViewItem>()
                 {
-                    new MenuItem()
+                    new ViewItem()
                     {
                         MenuName= "Cancel",
                         MenuStyle = localDic["BaseButtonStyle"] as Style,
                         MenuCommand = OnCommonButtonClickEvent,
                         MenuData = "Cancel"
                     },
-                    new MenuItem()
+                    new ViewItem()
                     {
                         MenuName= "Apply",
                         MenuStyle = localDic["BaseButtonStyle"] as Style,

@@ -12,7 +12,14 @@ namespace DirectShowDemo.Models
 
         private void OnCommonButtonClick(string obj)
         {
-            //throw new NotImplementedException();
+            if (obj.Equals("Apply"))
+            {
+                UWPAudioService.Instence.StartAudio();
+            }
+            else
+            {
+                UWPAudioService.Instence.StopAudio();
+            }
         }
 
         private ResourceDictionary _localDic;
@@ -72,6 +79,7 @@ namespace DirectShowDemo.Models
         {
             _displayMenuItem.MenuName += "\nModule Initialized";
             CoreAudioApiService.Instance.InitializeAudioDevice();
+            var result = UWPAudioService.Instence.InitializeUWPAudio();
 
         }
     }

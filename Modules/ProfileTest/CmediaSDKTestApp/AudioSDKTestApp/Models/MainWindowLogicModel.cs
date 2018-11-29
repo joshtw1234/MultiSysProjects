@@ -1,11 +1,11 @@
-﻿using CmediaSDKTestApp.BaseModels;
+﻿using AudioSDKTestApp.BaseModels;
 using MYCmediaSDK.MYSDK.Structures;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 
-namespace CmediaSDKTestApp.Models
+namespace AudioSDKTestApp.Models
 {
     class MainWindowLogicModel
     {

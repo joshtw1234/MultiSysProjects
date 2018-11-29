@@ -1,8 +1,8 @@
-﻿using CmediaSDKTestApp.BaseModels;
+﻿using AudioSDKTestApp.BaseModels;
 using System.Collections.ObjectModel;
 using System.Windows;
 
-namespace CmediaSDKTestApp.Models
+namespace AudioSDKTestApp.Models
 {
     class BasePageContentModel : BindAbleBases, IMenuItem
     {

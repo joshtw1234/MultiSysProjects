@@ -1,8 +1,8 @@
-﻿using CmediaSDKTestApp.BaseModels;
-using CmediaSDKTestApp.Models;
+﻿using AudioSDKTestApp.BaseModels;
+using AudioSDKTestApp.Models;
 using System.Collections.ObjectModel;
 
-namespace CmediaSDKTestApp.ViewModels
+namespace AudioSDKTestApp.ViewModels
 {
     class MainWindowViewModel
     {

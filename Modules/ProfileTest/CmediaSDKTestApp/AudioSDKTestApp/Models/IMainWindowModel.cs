@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
-using CmediaSDKTestApp.BaseModels;
+using AudioSDKTestApp.BaseModels;
 
-namespace CmediaSDKTestApp.Models
+namespace AudioSDKTestApp.Models
 {
     interface IMainWindowModel
     {

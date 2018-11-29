@@ -1,7 +1,7 @@
-﻿using CmediaSDKTestApp.BaseModels;
+﻿using AudioSDKTestApp.BaseModels;
 using System.Windows;
 
-namespace CmediaSDKTestApp.Models
+namespace AudioSDKTestApp.Models
 {
     class HorzSliderControlModel
     {

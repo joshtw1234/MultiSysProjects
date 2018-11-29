@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace CmediaSDKTestApp.Views
+namespace AudioSDKTestApp.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

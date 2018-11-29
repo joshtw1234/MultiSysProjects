@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
-using CmediaSDKTestApp.BaseModels;
+using AudioSDKTestApp.BaseModels;
 using MYCmediaSDK.MYSDK;
 using MYCmediaSDK.MYSDK.Structures;
 
-namespace CmediaSDKTestApp.Models
+namespace AudioSDKTestApp.Models
 {
     class MainWindowModel : MainWindowLogicModel, IMainWindowModel
     {

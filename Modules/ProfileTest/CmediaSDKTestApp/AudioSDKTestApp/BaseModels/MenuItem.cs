@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 
-namespace CmediaSDKTestApp.BaseModels
+namespace AudioSDKTestApp.BaseModels
 {
     public class MenuItem : IMenuItem
     {

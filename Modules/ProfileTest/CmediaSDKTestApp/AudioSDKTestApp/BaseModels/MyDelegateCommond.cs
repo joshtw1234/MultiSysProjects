@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace CmediaSDKTestApp.BaseModels
+namespace AudioSDKTestApp.BaseModels
 {
     public class MyDelegateCommond<T> : ICommand
     {

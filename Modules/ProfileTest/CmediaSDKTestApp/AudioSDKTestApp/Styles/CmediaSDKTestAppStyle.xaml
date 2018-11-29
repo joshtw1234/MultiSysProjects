@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:CmediaSDKTestApp.Styles">
+                    xmlns:local="clr-namespace:AudioSDKTestApp.Styles">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/CmediaSDKTestApp;component/Styles/CmediaSDKTestAppTemplates.xaml"/>
     </ResourceDictionary.MergedDictionaries>

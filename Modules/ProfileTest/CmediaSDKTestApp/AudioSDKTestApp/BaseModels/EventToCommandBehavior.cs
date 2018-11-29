@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interactivity;
 
-namespace CmediaSDKTestApp.BaseModels
+namespace AudioSDKTestApp.BaseModels
 {
     /// <summary>
     /// Behavior that will connect an UI event to a viewmodel Command,

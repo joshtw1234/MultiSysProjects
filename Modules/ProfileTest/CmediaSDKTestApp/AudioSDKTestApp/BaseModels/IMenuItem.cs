@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace CmediaSDKTestApp.BaseModels
+namespace AudioSDKTestApp.BaseModels
 {
     public interface IMenuItem
     {

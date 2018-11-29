@@ -18,7 +18,7 @@
             </ObjectDataProvider>
             <ResourceDictionary.MergedDictionaries>
                 <!--<ResourceDictionary Source="/Styles/HIDDemoStyle.xaml"/>-->
-                <ResourceDictionary Source="pack://application:,,,/CmediaSDKTestApp;component/Styles/CmediaSDKTestAppStyle.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/AudioSDKTestApp;component/Styles/AudioSDKTestAppStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>

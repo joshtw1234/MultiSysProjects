@@ -78,11 +78,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Styles\CmediaSDKTestAppStyle.xaml">
+    <Page Include="Styles\AudioSDKTestAppStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Styles\CmediaSDKTestAppTemplates.xaml">
+    <Page Include="Styles\AudioSDKTestAppTemplates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

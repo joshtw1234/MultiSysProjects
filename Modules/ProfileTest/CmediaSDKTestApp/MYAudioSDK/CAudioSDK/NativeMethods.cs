@@ -25,13 +25,13 @@ namespace MYAudioSDK.CAudioSDK
         public static extern int CMI_GetDeviceCount(CmediaDataFlow type, ref uint DevCount);
 
         [DllImport(_caudioDllPath, EntryPoint = "GetDeviceById")]
-        public static extern int CMI_GetDeviceById(CmediaDataFlow type, int id, out CmediaDeviceInfo deviceInfo);
+        public static extern int CMI_GetDeviceById(CmediaDataFlow type, int id, out CAudioDeviceInfo deviceInfo);
 
         [DllImport(_caudioDllPath, EntryPoint = "PropertyControl", CharSet= CharSet.Auto, CallingConvention = CallingConvention.StdCall, ExactSpelling = true, SetLastError = true)]
-        public static extern int CMI_PropertyControl(CmediaDeviceInfo info, string propertyName, IntPtr value, IntPtr extraData, CmediaDriverReadWrite driverRW);
+        public static extern int CMI_PropertyControl(CAudioDeviceInfo info, string propertyName, IntPtr value, IntPtr extraData, CmediaDriverReadWrite driverRW);
 
         [DllImport(_caudioDllPath, EntryPoint = "RegisterCallbackFunction", CharSet = CharSet.Auto, SetLastError = true)]
-        public static extern int CMI_RegisterCallbackFunction([MarshalAs(UnmanagedType.FunctionPtr)] CmediaSDKCallback callbackPointer, IntPtr wndHandle);
+        public static extern int CMI_RegisterCallbackFunction([MarshalAs(UnmanagedType.FunctionPtr)] CAudioSDKCallback callbackPointer, IntPtr wndHandle);
         #endregion
     }
 }

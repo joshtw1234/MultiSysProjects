@@ -5,7 +5,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace MYAudioSDK.CAudioSDK.Structures
 {
-    struct CmediaDeviceInfo
+    struct CAudioDeviceInfo
     {
         public int id;
         public CmediaJackType JackType;
@@ -13,9 +13,9 @@ namespace MYAudioSDK.CAudioSDK.Structures
         public CmediaDeviceState DeviceState;
     }
 
-    class CmediaJackDeviceInfo
+    class CAudioJackDeviceInfo
     {
-        public CmediaDeviceInfo m_devInfo;       // reference to DEVICEINFO
+        public CAudioDeviceInfo m_devInfo;       // reference to DEVICEINFO
         // function attributes
         public int m_dwCMediaDSP0 { get; set; }      // CMedia DSP function tables
         public int m_dwThirdPartyDSP0 { get; set; }    // Third-Party DSP function tables
@@ -117,7 +117,7 @@ namespace MYAudioSDK.CAudioSDK.Structures
 
     #region Cmedia Function Point
     [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    delegate void CmediaSDKCallback(int type, int id, int componentType, ulong eventId);
+    delegate void CAudioSDKCallback(int type, int id, int componentType, ulong eventId);
 
     #endregion
 
@@ -125,7 +125,7 @@ namespace MYAudioSDK.CAudioSDK.Structures
 
     class ZazuReadWriteStructure
     {
-        public CmediaJackDeviceInfo JackInfo { get; set; }
+        public CAudioJackDeviceInfo JackInfo { get; set; }
         public string ApiPropertyName { get; set; }
         public CmediaDriverReadWrite ReadWrite { get; set; }
         public byte[] WriteData { get; set; }

@@ -145,10 +145,10 @@ namespace MYAudioSDK.MYSDK
             return revData;
         }
 
-        private CmediaSDKCallback _cmediaSDKCallback;
+        private CAudioSDKCallback _cmediaSDKCallback;
         public int RegisterSDKCallBackFunction(OMENSDKCallback callBack)
         {
-            _cmediaSDKCallback = new CmediaSDKCallback(callBack);
+            _cmediaSDKCallback = new CAudioSDKCallback(callBack);
             return CAudioSDKService.Instance.RegisterSDKCallBackFunction(_cmediaSDKCallback);
         }
     }

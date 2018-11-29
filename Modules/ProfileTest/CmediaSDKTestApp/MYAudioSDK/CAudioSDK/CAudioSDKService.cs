@@ -10,9 +10,9 @@ namespace MYAudioSDK.CAudioSDK
     /// </summary>
     sealed class CAudioSDKService : IDisposable
     {
-        private CmediaSDKCallback _cmediaSDKCallback;
-        private CmediaJackDeviceInfo _cmediaJackInfoRender;
-        private CmediaJackDeviceInfo _cmediajackInfoCapture;
+        private CAudioSDKCallback _cmediaSDKCallback;
+        private CAudioJackDeviceInfo _cmediaJackInfoRender;
+        private CAudioJackDeviceInfo _cmediajackInfoCapture;
 
         private static CAudioSDKService _instance;
         /// <summary>
@@ -107,11 +107,11 @@ namespace MYAudioSDK.CAudioSDK
             return rev;
         }
 
-        private CmediaJackDeviceInfo GetJackDevice(CmediaDataFlow deviceType)
+        private CAudioJackDeviceInfo GetJackDevice(CmediaDataFlow deviceType)
         {
             uint devCount = 0;
-            CmediaDeviceInfo devInfo;
-            CmediaJackDeviceInfo jackDeviceInfo = new CmediaJackDeviceInfo();
+            CAudioDeviceInfo devInfo;
+            CAudioJackDeviceInfo jackDeviceInfo = new CAudioJackDeviceInfo();
             int rev = NativeMethods.CMI_GetDeviceCount(deviceType, ref devCount);
             if (0 == devCount)
             {
@@ -151,7 +151,7 @@ namespace MYAudioSDK.CAudioSDK
             }
             
             ZazuReadWriteStructure rwData = null;
-            CmediaJackDeviceInfo jackInfo = null;
+            CAudioJackDeviceInfo jackInfo = null;
             jackInfo = _cmediaJackInfoRender;
             if (dataFlow == CmediaDataFlow.eCapture || sdkAPI > CAudioAPIFunctionPoint.VOICECLARITY_NOISESUPP_LEVEL)
             {
@@ -215,7 +215,7 @@ namespace MYAudioSDK.CAudioSDK
            return NativeMethods.CMI_ConfLibUnInit();
         }
 
-        public int RegisterSDKCallBackFunction(CmediaSDKCallback callBack)
+        public int RegisterSDKCallBackFunction(CAudioSDKCallback callBack)
         {
             _cmediaSDKCallback += callBack;
             return NativeMethods.CMI_RegisterCallbackFunction(_cmediaSDKCallback, IntPtr.Zero);

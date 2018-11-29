@@ -1,4 +1,6 @@
-﻿namespace MYAudioSDK.CAudioSDK.Structures
+﻿using MYAudioSDK.CAudioSDK.Enums;
+
+namespace MYAudioSDK.CAudioSDK.Structures
 {
     struct CAudioDeviceInfo
     {

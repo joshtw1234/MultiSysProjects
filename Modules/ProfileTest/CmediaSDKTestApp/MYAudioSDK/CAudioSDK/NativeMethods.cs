@@ -1,4 +1,5 @@
 ﻿using MYAudioSDK.CAudioSDK.CallBacks;
+using MYAudioSDK.CAudioSDK.Enums;
 using MYAudioSDK.CAudioSDK.Structures;
 using System;
 using System.Runtime.InteropServices;

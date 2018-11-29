@@ -50,52 +50,13 @@ namespace MYAudioSDK.CAudioSDK.Structures
     #endregion
 
     #region Cmedia Enums
-    enum CAudioDeviceState
-    {
-        UnknowState = 0,
-        Active,
-        Nopresent,
-        Disabled,
-        Unplugged
-    }
+  
+    
+   
 
-    enum CAudioJackType
-    {
-        UnknowJack = 0,
-        JackSpeaker,
-        JackMicrophone,
-        JackLine,
-        JackSPDIF,
-        JackAux,
-        JackCDPlayer,
-        JackHeadphone,
-        JackStereoMix,
-        JackHDMI,
-        JackDesktopMicrophone,
-        JackSPDIFInRCA,
-        JackSpeakerQuarter
-    }
+   
 
-    enum CAudioDataFlow
-    {
-        eRender,
-        eCapture,
-        eAll,
-        DATAFLOW_enum_count
-    }
-
-    enum CAudioDriverReadWrite
-    {
-        Read,
-        Write
-    }
-
-    enum CAudioVolumeChannel
-    {
-        Master = -1,
-        FrontLeft,
-        FrontRight
-    }
+   
     #endregion
 
     #region Cmedia Function Point

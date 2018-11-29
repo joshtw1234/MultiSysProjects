@@ -3,7 +3,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace MYAudioSDK.CmediaSDK.Structures
+namespace MYAudioSDK.CAudioSDK.Structures
 {
     struct CmediaDeviceInfo
     {

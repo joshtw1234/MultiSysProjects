@@ -1,4 +1,4 @@
-﻿namespace MYAudioSDK.CmediaSDK.Enums
+﻿namespace MYAudioSDK.CAudioSDK.Enums
 {
     /// <summary>
     /// The Cmedia SDK API function names

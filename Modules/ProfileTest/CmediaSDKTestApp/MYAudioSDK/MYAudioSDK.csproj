@@ -59,10 +59,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CmediaSDK\CmediaSDKService.cs" />
-    <Compile Include="CmediaSDK\Enums\CmediaAPIFunctionPoint.cs" />
-    <Compile Include="CmediaSDK\NativeMethods.cs" />
-    <Compile Include="CmediaSDK\Structures\ZazuReadWriteStructure.cs" />
+    <Compile Include="CAudioSDK\CmediaSDKService.cs" />
+    <Compile Include="CAudioSDK\Enums\CmediaAPIFunctionPoint.cs" />
+    <Compile Include="CAudioSDK\NativeMethods.cs" />
+    <Compile Include="CAudioSDK\Structures\ZazuReadWriteStructure.cs" />
     <Compile Include="MYSDK\CmediaSDKHelper.cs" />
     <Compile Include="MYSDK\Structures\MYStructures.cs" />
     <Compile Include="MYSDK\MYHeadsetHelper.cs" />

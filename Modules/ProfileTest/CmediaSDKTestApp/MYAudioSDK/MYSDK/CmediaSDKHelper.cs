@@ -1,6 +1,6 @@
-﻿using MYAudioSDK.CmediaSDK;
-using MYAudioSDK.CmediaSDK.Enums;
-using MYAudioSDK.CmediaSDK.Structures;
+﻿using MYAudioSDK.CAudioSDK;
+using MYAudioSDK.CAudioSDK.Enums;
+using MYAudioSDK.CAudioSDK.Structures;
 using MYAudioSDK.MYSDK.Structures;
 using System.Collections.Generic;
 

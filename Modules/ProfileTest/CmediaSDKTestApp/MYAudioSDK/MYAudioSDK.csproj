@@ -59,9 +59,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CAudioSDK\CallBacks\CAudioSDKCallback.cs" />
     <Compile Include="CAudioSDK\CAudioSDKService.cs" />
     <Compile Include="CAudioSDK\Enums\CAudioAPIFunctionPoint.cs" />
     <Compile Include="CAudioSDK\NativeMethods.cs" />
+    <Compile Include="CAudioSDK\Structures\CAudioClientData.cs" />
+    <Compile Include="CAudioSDK\Structures\CAudioDeviceInfo.cs" />
+    <Compile Include="CAudioSDK\Structures\CAudioJackDeviceInfo.cs" />
+    <Compile Include="CAudioSDK\Structures\CAudioStructure.cs" />
+    <Compile Include="CAudioSDK\Structures\ReturnValue.cs" />
     <Compile Include="CAudioSDK\Structures\ZazuReadWriteStructure.cs" />
     <Compile Include="MYSDK\MYSDKHelper.cs" />
     <Compile Include="MYSDK\Structures\MYStructures.cs" />

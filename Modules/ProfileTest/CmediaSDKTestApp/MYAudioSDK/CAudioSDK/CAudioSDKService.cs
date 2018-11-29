@@ -1,4 +1,5 @@
-﻿using MYAudioSDK.CAudioSDK.Enums;
+﻿using MYAudioSDK.CAudioSDK.CallBacks;
+using MYAudioSDK.CAudioSDK.Enums;
 using MYAudioSDK.CAudioSDK.Structures;
 using System;
 using System.Runtime.InteropServices;
@@ -34,11 +35,11 @@ namespace MYAudioSDK.CAudioSDK
 
         private const int CMEDIABUFFERSIZE = 1024;
 
-        private ReturnValue ConfigurePropertyControl(ZazuReadWriteStructure rwData)
+        private ReturnValue ConfigurePropertyControl(CAudioStructure rwData)
         {
             // Allocate a Cmedia standard Array.
             byte[] devBvalue = new byte[CMEDIABUFFERSIZE];
-            if (rwData.ReadWrite == CmediaDriverReadWrite.Write && rwData.WriteData != null)
+            if (rwData.ReadWrite == CAudioDriverReadWrite.Write && rwData.WriteData != null)
             {
                 devBvalue = rwData.WriteData;
             }
@@ -58,7 +59,7 @@ namespace MYAudioSDK.CAudioSDK
             IntPtr devValue = gchDevValue.AddrOfPinnedObject();
 
             byte[] devExtraBvalue = new byte[CMEDIABUFFERSIZE];
-            if ((rwData.ReadWrite == CmediaDriverReadWrite.Write || rwData.IsWriteExtra) && rwData.WriteExtraData != null)
+            if ((rwData.ReadWrite == CAudioDriverReadWrite.Write || rwData.IsWriteExtra) && rwData.WriteExtraData != null)
             {
                 devExtraBvalue = rwData.WriteExtraData;
             }
@@ -107,7 +108,7 @@ namespace MYAudioSDK.CAudioSDK
             return rev;
         }
 
-        private CAudioJackDeviceInfo GetJackDevice(CmediaDataFlow deviceType)
+        private CAudioJackDeviceInfo GetJackDevice(CAudioDataFlow deviceType)
         {
             uint devCount = 0;
             CAudioDeviceInfo devInfo;
@@ -125,7 +126,7 @@ namespace MYAudioSDK.CAudioSDK
                     rev = NativeMethods.CMI_GetDeviceById(deviceType, i, out devInfo);
                     switch (devInfo.DeviceState)
                     {
-                        case CmediaDeviceState.Active:
+                        case CAudioDeviceState.Active:
                             jackDeviceInfo.m_devInfo = devInfo;
                             break;
                     }
@@ -135,7 +136,7 @@ namespace MYAudioSDK.CAudioSDK
             return jackDeviceInfo;
         }
 
-        public ReturnValue ConfigureJackDeviceData(CmediaDataFlow dataFlow, CmediaDriverReadWrite readWrite, ClientData clientData)
+        public ReturnValue ConfigureJackDeviceData(CAudioDataFlow dataFlow, CAudioDriverReadWrite readWrite, CAudioClientData clientData)
         {
             ReturnValue revData = new ReturnValue() { RevCode = -1, RevMessage = $"API Name [{clientData.ApiName}] not Correct!" };
             CAudioAPIFunctionPoint sdkAPI;
@@ -143,21 +144,21 @@ namespace MYAudioSDK.CAudioSDK
             {
                 return revData;
             }
-            if (readWrite == CmediaDriverReadWrite.Write && 
+            if (readWrite == CAudioDriverReadWrite.Write && 
                 clientData.SetValue == null && clientData.SetExtraValue == null)
             {
                 revData.RevMessage = "SetValue Can't be Null";
                 return revData;
             }
             
-            ZazuReadWriteStructure rwData = null;
+            CAudioStructure rwData = null;
             CAudioJackDeviceInfo jackInfo = null;
             jackInfo = _cmediaJackInfoRender;
-            if (dataFlow == CmediaDataFlow.eCapture || sdkAPI > CAudioAPIFunctionPoint.VOICECLARITY_NOISESUPP_LEVEL)
+            if (dataFlow == CAudioDataFlow.eCapture || sdkAPI > CAudioAPIFunctionPoint.VOICECLARITY_NOISESUPP_LEVEL)
             {
                 jackInfo = _cmediajackInfoCapture;
             }
-            rwData = new ZazuReadWriteStructure() { JackInfo = jackInfo, ApiPropertyName = clientData.ApiName, ReadWrite = readWrite, WriteData = clientData.SetValueToByteArray(), WriteExtraData = clientData.SetExtraValueToByteArray() };
+            rwData = new CAudioStructure() { JackInfo = jackInfo, ApiPropertyName = clientData.ApiName, ReadWrite = readWrite, WriteData = clientData.SetValueToByteArray(), WriteExtraData = clientData.SetExtraValueToByteArray() };
             if (clientData.SetValue != null || clientData.SetExtraValue !=null)
             {
                 rwData.IsWriteExtra = true;
@@ -166,10 +167,10 @@ namespace MYAudioSDK.CAudioSDK
             return revData;
         }
 
-        public ReturnValue ConfitureSurroundData(CmediaDriverReadWrite readWrite, HPSurroundCommand hpCommand)
+        public ReturnValue ConfitureSurroundData(CAudioDriverReadWrite readWrite, HPSurroundCommand hpCommand)
         {
             ReturnValue revData = new ReturnValue() { RevCode = -1, RevMessage = $"[{hpCommand}] not Correct!" };
-            ZazuReadWriteStructure rwData = null;
+            CAudioStructure rwData = null;
             CmediaRegisterOperation regop = new CmediaRegisterOperation();
             switch (hpCommand)
             {
@@ -189,7 +190,7 @@ namespace MYAudioSDK.CAudioSDK
                     regop.ValueType = HPSurroundValueType.ValueType_LONG;
                     break;
             }
-            rwData = new ZazuReadWriteStructure() { JackInfo = _cmediaJackInfoRender, ApiPropertyName = CAudioAPIFunctionPoint.VirtualSurroundEffectControl.ToString(),
+            rwData = new CAudioStructure() { JackInfo = _cmediaJackInfoRender, ApiPropertyName = CAudioAPIFunctionPoint.VirtualSurroundEffectControl.ToString(),
                 ReadWrite = readWrite, WriteData = null, IsWriteExtra = true, WriteExtraData = regop.ToBytes() };
             revData = ConfigurePropertyControl(rwData);
             return revData;
@@ -201,10 +202,10 @@ namespace MYAudioSDK.CAudioSDK
             rev = NativeMethods.CMI_CreateDeviceList();
 
             //Get Render device
-            _cmediaJackInfoRender = GetJackDevice(CmediaDataFlow.eRender);
+            _cmediaJackInfoRender = GetJackDevice(CAudioDataFlow.eRender);
             if (_cmediaJackInfoRender == null) return -1;
             //Get Capture device
-            _cmediajackInfoCapture = GetJackDevice(CmediaDataFlow.eCapture);
+            _cmediajackInfoCapture = GetJackDevice(CAudioDataFlow.eCapture);
             if (_cmediajackInfoCapture == null) return -1;
 
             return rev;

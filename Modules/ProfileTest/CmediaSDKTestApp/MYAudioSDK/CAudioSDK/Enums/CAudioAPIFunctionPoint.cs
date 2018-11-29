@@ -4,7 +4,7 @@
     /// The Cmedia SDK API function names
     /// Use string type to call SDK API
     /// </summary>
-    enum CmediaAPIFunctionPoint
+    enum CAudioAPIFunctionPoint
     {
         #region CMI Device
         /// <summary>

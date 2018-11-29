@@ -8,21 +8,21 @@ namespace MYAudioSDK.CAudioSDK
     /// <summary>
     /// Implement Cmedia SDK sample code as service
     /// </summary>
-    sealed class CmediaSDKService : IDisposable
+    sealed class CAudioSDKService : IDisposable
     {
         private CmediaSDKCallback _cmediaSDKCallback;
         private CmediaJackDeviceInfo _cmediaJackInfoRender;
         private CmediaJackDeviceInfo _cmediajackInfoCapture;
 
-        private static CmediaSDKService _instance;
+        private static CAudioSDKService _instance;
         /// <summary>
         /// Gets the instance.
         /// </summary>
-        public static CmediaSDKService Instance
+        public static CAudioSDKService Instance
         {
             get
             {
-                return _instance ?? (_instance = new CmediaSDKService());
+                return _instance ?? (_instance = new CAudioSDKService());
             }
         }
 
@@ -30,7 +30,7 @@ namespace MYAudioSDK.CAudioSDK
         /// Private constructor.
         /// Please use instance to get functions
         /// </summary>
-        private CmediaSDKService() { }
+        private CAudioSDKService() { }
 
         private const int CMEDIABUFFERSIZE = 1024;
 
@@ -138,7 +138,7 @@ namespace MYAudioSDK.CAudioSDK
         public ReturnValue ConfigureJackDeviceData(CmediaDataFlow dataFlow, CmediaDriverReadWrite readWrite, ClientData clientData)
         {
             ReturnValue revData = new ReturnValue() { RevCode = -1, RevMessage = $"API Name [{clientData.ApiName}] not Correct!" };
-            CmediaAPIFunctionPoint sdkAPI;
+            CAudioAPIFunctionPoint sdkAPI;
             if (!Enum.TryParse(clientData.ApiName, out sdkAPI))
             {
                 return revData;
@@ -153,7 +153,7 @@ namespace MYAudioSDK.CAudioSDK
             ZazuReadWriteStructure rwData = null;
             CmediaJackDeviceInfo jackInfo = null;
             jackInfo = _cmediaJackInfoRender;
-            if (dataFlow == CmediaDataFlow.eCapture || sdkAPI > CmediaAPIFunctionPoint.VOICECLARITY_NOISESUPP_LEVEL)
+            if (dataFlow == CmediaDataFlow.eCapture || sdkAPI > CAudioAPIFunctionPoint.VOICECLARITY_NOISESUPP_LEVEL)
             {
                 jackInfo = _cmediajackInfoCapture;
             }
@@ -189,7 +189,7 @@ namespace MYAudioSDK.CAudioSDK
                     regop.ValueType = HPSurroundValueType.ValueType_LONG;
                     break;
             }
-            rwData = new ZazuReadWriteStructure() { JackInfo = _cmediaJackInfoRender, ApiPropertyName = CmediaAPIFunctionPoint.VirtualSurroundEffectControl.ToString(),
+            rwData = new ZazuReadWriteStructure() { JackInfo = _cmediaJackInfoRender, ApiPropertyName = CAudioAPIFunctionPoint.VirtualSurroundEffectControl.ToString(),
                 ReadWrite = readWrite, WriteData = null, IsWriteExtra = true, WriteExtraData = regop.ToBytes() };
             revData = ConfigurePropertyControl(rwData);
             return revData;

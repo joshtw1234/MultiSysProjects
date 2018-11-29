@@ -1,156 +1,90 @@
-﻿using MYAudioSDK.CAudioSDK;
-using MYAudioSDK.CAudioSDK.CallBacks;
-using MYAudioSDK.CAudioSDK.Enums;
-using MYAudioSDK.CAudioSDK.Structures;
-using MYAudioSDK.MYSDK.Structures;
+﻿using MYAudioSDK.MYSDK.Structures;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MYAudioSDK.MYSDK
 {
     /// <summary>
-    /// Internal Class for OMEN logic
+    /// The Client API for OMEN
     /// </summary>
-    class MYSDKHelper
+    public class MYSDKHelper
     {
-        private static MYSDKHelper _instance;
-        /// <summary>
-        /// Gets the instance.
-        /// </summary>
-        public static MYSDKHelper Instance
+        public static async Task<int> InitializeSDKAsync()
         {
-            get
+            return await Task.Run(() =>
             {
-                return _instance ?? (_instance = new MYSDKHelper());
-            }
+                return CAudioSDKHelper.Instance.InitializeSDK();
+            });
         }
 
-        /// <summary>
-        /// Private constructor.
-        /// Please use instance to get functions
-        /// </summary>
-        private MYSDKHelper() { }
-
-        //OMENREVData GetSurroundAsync(HPSurroundCommand hpcommand)
-        //{
-        //    return CmediaSDKService.Instance.GetSetSurroundData(CmediaDriverReadWrite.Read, hpcommand);
-        //}
-
-        //OMENREVData SetSurroundAsync(HPSurroundCommand hpcommand)
-        //{
-        //    return CmediaSDKService.Instance.GetSetSurroundData(CmediaDriverReadWrite.Write, hpcommand);
-        //}
-
-        public int InitializeSDK()
+        public static async Task<int> UnInitializeSDKAsync()
         {
-            return CAudioSDKService.Instance.Initialize();
-        }
-
-        public int UnInitializeSDK()
-        {
-            return CAudioSDKService.Instance.Unitialize();
-        }
-
-        public VolumeControlStructure GetVolumeControl(OMENDataFlow renderCapture)
-        {
-            CAudioDataFlow cmediaDataFlow = CAudioDataFlow.eRender;
-            if (renderCapture == OMENDataFlow.Capture)
+            return await Task.Run(() =>
             {
-                cmediaDataFlow = CAudioDataFlow.eCapture;
-            }
-            VolumeControlStructure volumeControl = new VolumeControlStructure();
-            var rev = CAudioSDKService.Instance.ConfigureJackDeviceData(cmediaDataFlow, CAudioDriverReadWrite.Read, new CAudioClientData() { ApiName = CAudioAPIFunctionPoint.GetMaxVol.ToString() });
-            if (rev.RevCode != 0) return null;
-            volumeControl.MaxValue = double.Parse(rev.RevValue);
-            rev = CAudioSDKService.Instance.ConfigureJackDeviceData(cmediaDataFlow, CAudioDriverReadWrite.Read, new CAudioClientData() { ApiName = CAudioAPIFunctionPoint.GetMinVol.ToString() });
-            if (rev.RevCode != 0) return null;
-            volumeControl.MinValue = double.Parse(rev.RevValue);
-            rev = CAudioSDKService.Instance.ConfigureJackDeviceData(cmediaDataFlow, CAudioDriverReadWrite.Read, new CAudioClientData() { ApiName = CAudioAPIFunctionPoint.VolumeScalarControl.ToString() });
-            if (rev.RevCode != 0) return null;
-            volumeControl.ScalarValue = double.Parse(rev.RevValue);
-            rev = CAudioSDKService.Instance.ConfigureJackDeviceData(cmediaDataFlow, CAudioDriverReadWrite.Read, new CAudioClientData() { ApiName = CAudioAPIFunctionPoint.GetVolStep.ToString() });
-            if (rev.RevCode != 0) return null;
-            volumeControl.StepValue = double.Parse(rev.RevValue);
-            rev = CAudioSDKService.Instance.ConfigureJackDeviceData(cmediaDataFlow, CAudioDriverReadWrite.Read, new CAudioClientData() { ApiName = CAudioAPIFunctionPoint.MuteControl.ToString() });
-            if (rev.RevCode != 0) return null;
-            volumeControl.IsMuted = int.Parse(rev.RevValue);
-            //Get Channel data
-            volumeControl.ChannelValues = new System.Collections.Generic.List<VolumeChannelSturcture>();
-
-            rev = CAudioSDKService.Instance.ConfigureJackDeviceData(cmediaDataFlow, CAudioDriverReadWrite.Read, new CAudioClientData() { ApiName = CAudioAPIFunctionPoint.VolumeControl.ToString(), SetValue = null, SetExtraValue = CAudioVolumeChannel.Master });
-            if (rev.RevCode != 0) return null;
-            VolumeChannelSturcture channel = new VolumeChannelSturcture() { ChannelValue = float.Parse(rev.RevValue), ChannelIndex = OMENVolumeChannel.Master };
-            volumeControl.ChannelValues.Add(channel);
-            rev = CAudioSDKService.Instance.ConfigureJackDeviceData(cmediaDataFlow, CAudioDriverReadWrite.Read, new CAudioClientData() { ApiName = CAudioAPIFunctionPoint.VolumeControl.ToString(), SetValue = null, SetExtraValue = CAudioVolumeChannel.FrontLeft });
-            if (rev.RevCode != 0) return null;
-            channel = new VolumeChannelSturcture() { ChannelValue = float.Parse(rev.RevValue), ChannelIndex = OMENVolumeChannel.FrontLeft };
-            volumeControl.ChannelValues.Add(channel);
-            rev = CAudioSDKService.Instance.ConfigureJackDeviceData(cmediaDataFlow, CAudioDriverReadWrite.Read, new CAudioClientData() { ApiName = CAudioAPIFunctionPoint.VolumeControl.ToString(), SetValue = null, SetExtraValue = CAudioVolumeChannel.FrontRight });
-            if (rev.RevCode != 0) return null;
-            channel = new VolumeChannelSturcture() { ChannelValue = float.Parse(rev.RevValue), ChannelIndex = OMENVolumeChannel.FrontRight };
-            volumeControl.ChannelValues.Add(channel);
-
-            return volumeControl;
+                return CAudioSDKHelper.Instance.UnInitializeSDK();
+            });
         }
 
-        public bool SetVolumeScalarControl(OMENDataFlow renderCapture, List<VolumeChannelSturcture> volumeData)
+        public static async Task<VolumeControlStructure> GetAudioVolumeControl()
         {
-            CAudioDataFlow cmediaDataFlow = CAudioDataFlow.eRender;
-            if (renderCapture == OMENDataFlow.Capture)
+            return await Task.Run(() =>
             {
-                cmediaDataFlow = CAudioDataFlow.eCapture;
-            }
-            bool rev = false;
-            ReturnValue revData;
-            foreach (var channle in volumeData)
+                return CAudioSDKHelper.Instance.GetVolumeControl(OMENDataFlow.Render);
+            });
+        }
+
+        public static async Task<VolumeControlStructure> GetMicrophoneVolumeControl()
+        {
+            return await Task.Run(() =>
             {
-                revData = CAudioSDKService.Instance.ConfigureJackDeviceData(
-                    cmediaDataFlow, 
-                    CAudioDriverReadWrite.Write, 
-                    new CAudioClientData() {
-                        ApiName = CAudioAPIFunctionPoint.VolumeScalarControl.ToString(),
-                        SetValue = channle.ChannelValue,
-                        SetExtraValue = (CAudioVolumeChannel)channle.ChannelIndex });
-            }
-            return rev;
+                return CAudioSDKHelper.Instance.GetVolumeControl(OMENDataFlow.Capture);
+            });
         }
 
-        public bool SetMuteControl(OMENDataFlow renderCapture, int isMute)
+        public static async Task<bool> SetAudioVolumeScalarControl(List<VolumeChannelSturcture> audioData)
         {
-            CAudioDataFlow cmediaDataFlow = CAudioDataFlow.eRender;
-            if (renderCapture == OMENDataFlow.Capture)
+            return await Task.Run(() =>
             {
-                cmediaDataFlow = CAudioDataFlow.eCapture;
-            }
-            bool rev = false;
-            ReturnValue revData;
-            revData = CAudioSDKService.Instance.ConfigureJackDeviceData(cmediaDataFlow, CAudioDriverReadWrite.Write, new CAudioClientData() { ApiName = CAudioAPIFunctionPoint.MuteControl.ToString(), SetValue = isMute });
-            if (revData.RevCode != 0) return rev;
-            return rev;
+                return CAudioSDKHelper.Instance.SetVolumeScalarControl(OMENDataFlow.Render, audioData);
+            });
         }
 
-        public OMENReturnValue GetCmediaInfo()
+        public static async Task<bool> SetMicrophoneVolumeScalarControl(List<VolumeChannelSturcture> micData)
         {
-            OMENReturnValue revData = new OMENReturnValue();
-            var rev = CAudioSDKService.Instance.ConfigureJackDeviceData(CAudioDataFlow.eRender, CAudioDriverReadWrite.Read,
-                new CAudioClientData() { ApiName = CAudioAPIFunctionPoint.GetDeviceFriendlyName.ToString() });
-            revData.RevCode = rev.RevCode;
-            revData.RevValue= rev.RevValue;
-            revData.RevExtraValue = rev.RevExtraValue;
-            revData.RevMessage = $"{rev.RevValue}|";
-            rev = CAudioSDKService.Instance.ConfigureJackDeviceData(CAudioDataFlow.eRender, CAudioDriverReadWrite.Read,
-                new CAudioClientData() { ApiName = CAudioAPIFunctionPoint.GetDriverVer.ToString() });
-            revData.RevMessage += $"{rev.RevValue}|";
-            rev = CAudioSDKService.Instance.ConfigureJackDeviceData(CAudioDataFlow.eRender, CAudioDriverReadWrite.Read,
-               new CAudioClientData() { ApiName = CAudioAPIFunctionPoint.GetFirmwareVer.ToString() });
-            revData.RevMessage += $"{rev.RevValue}|";
-            return revData;
+            return await Task.Run(() =>
+            {
+                return CAudioSDKHelper.Instance.SetVolumeScalarControl(OMENDataFlow.Capture, micData);
+            });
         }
 
-        private CAudioSDKCallback _cmediaSDKCallback;
-        public int RegisterSDKCallBackFunction(OMENSDKCallback callBack)
+        public static async Task<bool> SetAudioMuteControl(int isMute)
         {
-            _cmediaSDKCallback = new CAudioSDKCallback(callBack);
-            return CAudioSDKService.Instance.RegisterSDKCallBackFunction(_cmediaSDKCallback);
+            return await Task.Run(() =>
+            {
+                return CAudioSDKHelper.Instance.SetMuteControl(OMENDataFlow.Render, isMute);
+            });
+        }
+
+        public static async Task<bool> SetMicrophoneMuteControl(int isMute)
+        {
+            return await Task.Run(() =>
+            {
+                return CAudioSDKHelper.Instance.SetMuteControl(OMENDataFlow.Capture, isMute);
+            });
+        }
+
+        public static async Task<OMENReturnValue> GetOMENHeadsetInfo()
+        {
+            return await Task.Run(() =>
+            {
+                return CAudioSDKHelper.Instance.GetCmediaInfo();
+            });
+        }
+
+        public static void RegisterSDKCallbackFunction(OMENSDKCallback callBack)
+        {
+            //Return value is useless.
+            CAudioSDKHelper.Instance.RegisterSDKCallBackFunction(callBack);
         }
     }
 }

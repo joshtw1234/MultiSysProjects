@@ -77,9 +77,9 @@
     <Compile Include="CAudioSDK\Structures\CAudioRegisterOperation.cs" />
     <Compile Include="CAudioSDK\Structures\CAudioStructure.cs" />
     <Compile Include="CAudioSDK\Structures\ReturnValue.cs" />
-    <Compile Include="MYSDK\MYSDKHelper.cs" />
+    <Compile Include="MYSDK\CAudioSDKHelper.cs" />
     <Compile Include="MYSDK\Structures\MYStructures.cs" />
-    <Compile Include="MYSDK\MYHeadsetHelper.cs" />
+    <Compile Include="MYSDK\MYSDKHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

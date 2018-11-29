@@ -29,7 +29,7 @@ namespace AudioSDKTestApp.Models
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            var rev = MYHeadsetHelper.UnInitializeSDKAsync();
+            var rev = MYSDKHelper.UnInitializeSDKAsync();
         }
 
         public ObservableCollection<IMenuItem> GetPageButtons
@@ -225,7 +225,7 @@ namespace AudioSDKTestApp.Models
             HorzSliderControlModel muteBoxDataContext = (obj.Source as System.Windows.Controls.CheckBox).DataContext as HorzSliderControlModel;
             if (muteBoxDataContext.SliderName.Equals("Audio"))
             {
-                var rev = MYHeadsetHelper.SetAudioMuteControl(Convert.ToInt32(muteBoxDataContext.SliderTitle.MenuChecked));
+                var rev = MYSDKHelper.SetAudioMuteControl(Convert.ToInt32(muteBoxDataContext.SliderTitle.MenuChecked));
             }
         }
 
@@ -239,7 +239,7 @@ namespace AudioSDKTestApp.Models
             HorzSliderControlModel sliderDataContext = (obj.Source as System.Windows.Controls.Slider).DataContext as HorzSliderControlModel;
             if (sliderDataContext.SliderName.Equals("Audio"))
             {
-                var rev = MYHeadsetHelper.SetAudioVolumeScalarControl(new List<VolumeChannelSturcture>()
+                var rev = MYSDKHelper.SetAudioVolumeScalarControl(new List<VolumeChannelSturcture>()
                 {
                     new VolumeChannelSturcture()
                     {
@@ -265,9 +265,9 @@ namespace AudioSDKTestApp.Models
         private async Task ReadDataFromDriver()
         {
             
-            _audioVolumeControl = await MYHeadsetHelper.GetAudioVolumeControl();
+            _audioVolumeControl = await MYSDKHelper.GetAudioVolumeControl();
             _micPage.DisplayText.MenuName += $"\nAudioVolumeControl get [{_audioVolumeControl.MaxValue}] [{_audioVolumeControl.MinValue}] [{_audioVolumeControl.ScalarValue}] [{_audioVolumeControl.IsMuted}]";
-            _microphoneVolumeControl = await MYHeadsetHelper.GetMicrophoneVolumeControl();
+            _microphoneVolumeControl = await MYSDKHelper.GetMicrophoneVolumeControl();
             _micPage.DisplayText.MenuName += $"\nMicrophoneVolumeControl get [{_microphoneVolumeControl.MaxValue}] [{_microphoneVolumeControl.MinValue}] [{_microphoneVolumeControl.ScalarValue}] [{_microphoneVolumeControl.IsMuted}]";
             SliderInitialize();
         }
@@ -276,7 +276,7 @@ namespace AudioSDKTestApp.Models
         {
             Task.Factory.StartNew(async () => 
             {
-                var rev = await MYHeadsetHelper.InitializeSDKAsync();
+                var rev = await MYSDKHelper.InitializeSDKAsync();
                 if (rev != 0)
                 {
                     _micPage.DisplayText.MenuName += "\nSDK initial failed";
@@ -284,11 +284,11 @@ namespace AudioSDKTestApp.Models
                 }
                 IsModuleInitialized = true;
                 await ReadDataFromDriver();
-                var omenRev = await MYHeadsetHelper.GetOMENHeadsetInfo();
+                var omenRev = await MYSDKHelper.GetOMENHeadsetInfo();
                 _micPage.DisplayText.MenuName += $"\n{omenRev.RevMessage}";
 
             });
-            MYHeadsetHelper.RegisterSDKCallbackFunction(OnCmediaSDKCallBack);
+            MYSDKHelper.RegisterSDKCallbackFunction(OnCmediaSDKCallBack);
             Application.Current.MainWindow.Closing += MainWindow_Closing;
             
         }

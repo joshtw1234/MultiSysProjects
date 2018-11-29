@@ -243,7 +243,7 @@ namespace AudioSDKTestApp.Models
                 {
                     new VolumeChannelSturcture()
                     {
-                        ChannelIndex = OMENVolumeChannel.Master,
+                        ChannelIndex = MYAudioSDK.MYSDK.Enums.OMENVolumeChannel.Master,
                         ChannelValue = float.Parse(sliderDataContext.SliderValueStr.MenuName)
                     }
                 });

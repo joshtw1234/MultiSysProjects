@@ -2,6 +2,8 @@
 using MYAudioSDK.CAudioSDK.CallBacks;
 using MYAudioSDK.CAudioSDK.Enums;
 using MYAudioSDK.CAudioSDK.Structures;
+using MYAudioSDK.MYSDK.CallBacks;
+using MYAudioSDK.MYSDK.Enums;
 using MYAudioSDK.MYSDK.Structures;
 using System.Collections.Generic;
 

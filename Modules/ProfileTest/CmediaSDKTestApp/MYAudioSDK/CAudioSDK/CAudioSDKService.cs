@@ -167,27 +167,27 @@ namespace MYAudioSDK.CAudioSDK
             return revData;
         }
 
-        public ReturnValue ConfitureSurroundData(CAudioDriverReadWrite readWrite, HPSurroundCommand hpCommand)
+        public ReturnValue ConfitureSurroundData(CAudioDriverReadWrite readWrite, CAudioSurroundCommand hpCommand)
         {
             ReturnValue revData = new ReturnValue() { RevCode = -1, RevMessage = $"[{hpCommand}] not Correct!" };
             CAudioStructure rwData = null;
-            CmediaRegisterOperation regop = new CmediaRegisterOperation();
+            CAudioRegisterOperation regop = new CAudioRegisterOperation();
             switch (hpCommand)
             {
-                case HPSurroundCommand.XEAR_SURR_HP_ENABLE:
-                    regop.Operation = HPSurroundFunction.KSPROPERTY_VIRTUALSURROUND_PARAMSVALUE;
-                    regop.Feature = HPSurroundCommand.XEAR_SURR_HP_ENABLE;
-                    regop.ValueType = HPSurroundValueType.ValueType_LONG;
+                case CAudioSurroundCommand.XEAR_SURR_HP_ENABLE:
+                    regop.Operation = CAudioSurroundFunction.KSPROPERTY_VIRTUALSURROUND_PARAMSVALUE;
+                    regop.Feature = CAudioSurroundCommand.XEAR_SURR_HP_ENABLE;
+                    regop.ValueType = CAudioSurroundValueType.ValueType_LONG;
                     break;
-                case HPSurroundCommand.XEAR_SURR_HP_MODE:
-                    regop.Operation = HPSurroundFunction.KSPROPERTY_VIRTUALSURROUND_PARAMSVALUE;
-                    regop.Feature = HPSurroundCommand.XEAR_SURR_HP_MODE;
-                    regop.ValueType = HPSurroundValueType.ValueType_LONG;
+                case CAudioSurroundCommand.XEAR_SURR_HP_MODE:
+                    regop.Operation = CAudioSurroundFunction.KSPROPERTY_VIRTUALSURROUND_PARAMSVALUE;
+                    regop.Feature = CAudioSurroundCommand.XEAR_SURR_HP_MODE;
+                    regop.ValueType = CAudioSurroundValueType.ValueType_LONG;
                     break;
-                case HPSurroundCommand.XEAR_SURR_HP_ROOM:
-                    regop.Operation = HPSurroundFunction.KSPROPERTY_VIRTUALSURROUND_PARAMSVALUE;
-                    regop.Feature = HPSurroundCommand.XEAR_SURR_HP_ROOM;
-                    regop.ValueType = HPSurroundValueType.ValueType_LONG;
+                case CAudioSurroundCommand.XEAR_SURR_HP_ROOM:
+                    regop.Operation = CAudioSurroundFunction.KSPROPERTY_VIRTUALSURROUND_PARAMSVALUE;
+                    regop.Feature = CAudioSurroundCommand.XEAR_SURR_HP_ROOM;
+                    regop.ValueType = CAudioSurroundValueType.ValueType_LONG;
                     break;
             }
             rwData = new CAudioStructure() { JackInfo = _cmediaJackInfoRender, ApiPropertyName = CAudioAPIFunctionPoint.VirtualSurroundEffectControl.ToString(),

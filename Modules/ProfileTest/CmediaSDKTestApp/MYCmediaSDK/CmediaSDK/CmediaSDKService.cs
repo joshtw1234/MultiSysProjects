@@ -1,4 +1,5 @@
-﻿using MYCmediaSDK.CmediaSDK.Structures;
+﻿using MYCmediaSDK.CmediaSDK.Enums;
+using MYCmediaSDK.CmediaSDK.Structures;
 using System;
 using System.Runtime.InteropServices;
 

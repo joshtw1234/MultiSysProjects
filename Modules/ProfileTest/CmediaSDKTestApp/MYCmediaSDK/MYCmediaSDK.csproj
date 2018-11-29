@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CmediaSDK\CmediaSDKService.cs" />
+    <Compile Include="CmediaSDK\Enums\CmediaAPIFunctionPoint.cs" />
     <Compile Include="CmediaSDK\NativeMethods.cs" />
     <Compile Include="CmediaSDK\Structures\ZazuReadWriteStructure.cs" />
     <Compile Include="MYSDK\CmediaSDKHelper.cs" />

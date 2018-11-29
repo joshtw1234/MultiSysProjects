@@ -1,4 +1,5 @@
 ﻿using MYCmediaSDK.CmediaSDK;
+using MYCmediaSDK.CmediaSDK.Enums;
 using MYCmediaSDK.CmediaSDK.Structures;
 using MYCmediaSDK.MYSDK.Structures;
 using System.Collections.Generic;

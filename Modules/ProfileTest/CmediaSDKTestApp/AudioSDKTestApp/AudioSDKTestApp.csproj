@@ -141,9 +141,9 @@
     <Resource Include="Assets\TestAsset1.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MYCmediaSDK\MYCmediaSDK.csproj">
+    <ProjectReference Include="..\MYCmediaSDK\MYAudioSDK.csproj">
       <Project>{99508ec3-2513-4410-a5ce-301c61eb8653}</Project>
-      <Name>MYCmediaSDK</Name>
+      <Name>MYAudioSDK</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

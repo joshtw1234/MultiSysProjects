@@ -7,8 +7,8 @@
     <ProjectGuid>{99508EC3-2513-4410-A5CE-301C61EB8653}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MYCmediaSDK</RootNamespace>
-    <AssemblyName>MYCmediaSDK</AssemblyName>
+    <RootNamespace>MYAudioSDK</RootNamespace>
+    <AssemblyName>MYAudioSDK</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

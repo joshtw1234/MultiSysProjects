@@ -1,8 +1,8 @@
-﻿using MYCmediaSDK.MYSDK.Structures;
+﻿using MYAudioSDK.MYSDK.Structures;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace MYCmediaSDK.MYSDK
+namespace MYAudioSDK.MYSDK
 {
     /// <summary>
     /// The Client API for OMEN

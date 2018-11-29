@@ -1,10 +1,10 @@
-﻿using MYCmediaSDK.CmediaSDK;
-using MYCmediaSDK.CmediaSDK.Enums;
-using MYCmediaSDK.CmediaSDK.Structures;
-using MYCmediaSDK.MYSDK.Structures;
+﻿using MYAudioSDK.CmediaSDK;
+using MYAudioSDK.CmediaSDK.Enums;
+using MYAudioSDK.CmediaSDK.Structures;
+using MYAudioSDK.MYSDK.Structures;
 using System.Collections.Generic;
 
-namespace MYCmediaSDK.MYSDK
+namespace MYAudioSDK.MYSDK
 {
     /// <summary>
     /// Internal Class for OMEN logic

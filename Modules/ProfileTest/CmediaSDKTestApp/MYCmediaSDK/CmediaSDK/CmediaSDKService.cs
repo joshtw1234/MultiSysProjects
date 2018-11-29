@@ -1,9 +1,9 @@
-﻿using MYCmediaSDK.CmediaSDK.Enums;
-using MYCmediaSDK.CmediaSDK.Structures;
+﻿using MYAudioSDK.CmediaSDK.Enums;
+using MYAudioSDK.CmediaSDK.Structures;
 using System;
 using System.Runtime.InteropServices;
 
-namespace MYCmediaSDK.CmediaSDK
+namespace MYAudioSDK.CmediaSDK
 {
     /// <summary>
     /// Implement Cmedia SDK sample code as service

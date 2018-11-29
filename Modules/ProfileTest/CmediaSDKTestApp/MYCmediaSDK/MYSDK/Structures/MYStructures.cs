@@ -4,7 +4,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace MYCmediaSDK.MYSDK.Structures
+namespace MYAudioSDK.MYSDK.Structures
 {
     class MYStructures
     {

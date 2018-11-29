@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2048
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MYCmediaSDK", "MYCmediaSDK\MYCmediaSDK.csproj", "{99508EC3-2513-4410-A5CE-301C61EB8653}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MYAudioSDK", "MYCmediaSDK\MYAudioSDK.csproj", "{99508EC3-2513-4410-A5CE-301C61EB8653}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioSDKTestApp", "AudioSDKTestApp\AudioSDKTestApp.csproj", "{029BBFEF-EEBA-4FC9-AA48-AFB8D0C6393E}"
 EndProject

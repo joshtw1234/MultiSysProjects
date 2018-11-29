@@ -4,8 +4,8 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
 using AudioSDKTestApp.BaseModels;
-using MYCmediaSDK.MYSDK;
-using MYCmediaSDK.MYSDK.Structures;
+using MYAudioSDK.MYSDK;
+using MYAudioSDK.MYSDK.Structures;
 
 namespace AudioSDKTestApp.Models
 {

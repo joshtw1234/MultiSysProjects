@@ -1,8 +1,8 @@
-﻿using MYCmediaSDK.CmediaSDK.Structures;
+﻿using MYAudioSDK.CmediaSDK.Structures;
 using System;
 using System.Runtime.InteropServices;
 
-namespace MYCmediaSDK.CmediaSDK
+namespace MYAudioSDK.CmediaSDK
 {
     class NativeMethods
     {

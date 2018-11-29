@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2048
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MYAudioSDK", "MYCmediaSDK\MYAudioSDK.csproj", "{99508EC3-2513-4410-A5CE-301C61EB8653}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioSDKTestApp", "AudioSDKTestApp\AudioSDKTestApp.csproj", "{029BBFEF-EEBA-4FC9-AA48-AFB8D0C6393E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MYAudioSDK", "MYAudioSDK\MYAudioSDK.csproj", "{99508EC3-2513-4410-A5CE-301C61EB8653}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,14 +15,6 @@ Global
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{99508EC3-2513-4410-A5CE-301C61EB8653}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{99508EC3-2513-4410-A5CE-301C61EB8653}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{99508EC3-2513-4410-A5CE-301C61EB8653}.Debug|x64.ActiveCfg = Debug|x64
-		{99508EC3-2513-4410-A5CE-301C61EB8653}.Debug|x64.Build.0 = Debug|x64
-		{99508EC3-2513-4410-A5CE-301C61EB8653}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{99508EC3-2513-4410-A5CE-301C61EB8653}.Release|Any CPU.Build.0 = Release|Any CPU
-		{99508EC3-2513-4410-A5CE-301C61EB8653}.Release|x64.ActiveCfg = Release|Any CPU
-		{99508EC3-2513-4410-A5CE-301C61EB8653}.Release|x64.Build.0 = Release|Any CPU
 		{029BBFEF-EEBA-4FC9-AA48-AFB8D0C6393E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{029BBFEF-EEBA-4FC9-AA48-AFB8D0C6393E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{029BBFEF-EEBA-4FC9-AA48-AFB8D0C6393E}.Debug|x64.ActiveCfg = Debug|x64
@@ -31,6 +23,14 @@ Global
 		{029BBFEF-EEBA-4FC9-AA48-AFB8D0C6393E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{029BBFEF-EEBA-4FC9-AA48-AFB8D0C6393E}.Release|x64.ActiveCfg = Release|x64
 		{029BBFEF-EEBA-4FC9-AA48-AFB8D0C6393E}.Release|x64.Build.0 = Release|x64
+		{99508EC3-2513-4410-A5CE-301C61EB8653}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99508EC3-2513-4410-A5CE-301C61EB8653}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99508EC3-2513-4410-A5CE-301C61EB8653}.Debug|x64.ActiveCfg = Debug|x64
+		{99508EC3-2513-4410-A5CE-301C61EB8653}.Debug|x64.Build.0 = Debug|x64
+		{99508EC3-2513-4410-A5CE-301C61EB8653}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99508EC3-2513-4410-A5CE-301C61EB8653}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99508EC3-2513-4410-A5CE-301C61EB8653}.Release|x64.ActiveCfg = Release|x64
+		{99508EC3-2513-4410-A5CE-301C61EB8653}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

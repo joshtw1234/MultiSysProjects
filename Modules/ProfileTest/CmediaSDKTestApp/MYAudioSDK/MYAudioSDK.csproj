@@ -81,11 +81,14 @@
     <Compile Include="MYSDK\CAudioSDKHelper.cs" />
     <Compile Include="MYSDK\Enums\OMENDataFlow.cs" />
     <Compile Include="MYSDK\Enums\OMENVolumeChannel.cs" />
+    <Compile Include="MYSDK\Enums\VendorList.cs" />
+    <Compile Include="MYSDK\MyErrorCode.cs" />
     <Compile Include="MYSDK\Structures\BaseVolumeControlStructure.cs" />
     <Compile Include="MYSDK\MYSDKHelper.cs" />
     <Compile Include="MYSDK\Structures\OMENReturnValue.cs" />
     <Compile Include="MYSDK\Structures\VolumeChannelSturcture.cs" />
     <Compile Include="MYSDK\Structures\VolumeControlStructure.cs" />
+    <Compile Include="MYSDK\Vendors\IBaseVendor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

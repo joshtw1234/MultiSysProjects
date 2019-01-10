@@ -4,11 +4,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace UnitTestModuleProject
 {
     [TestClass]
-    public class UnitTest1
+    public class UnitTestHID
     {
         [TestMethod]
-        public void TestMethod1()
+        public void TestBrowseHID()
         {
+            var result = HIDLib.HIDAPIs.BrowseHID();
+            Assert.IsNotNull(result);
         }
     }
 }

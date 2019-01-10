@@ -22,7 +22,7 @@ namespace HIDLib
 
         IntPtr hidInfoSet;
         /* allocate mem for interface descriptor */
-        HIDAPIs.DeviceInterfaceData iface;
+        DeviceInterfaceData iface;
 
         private HIDInfoStruct hidInfoStruct;
 
@@ -31,7 +31,7 @@ namespace HIDLib
             get { return hidInfoStruct; }
         }
 
-        public HIDInfo(IntPtr _hidInfoSet, HIDAPIs.DeviceInterfaceData _iface, out bool isWork)
+        public HIDInfo(IntPtr _hidInfoSet, DeviceInterfaceData _iface, out bool isWork)
         {
             hidInfoSet = _hidInfoSet;
             iface = _iface;
@@ -51,7 +51,7 @@ namespace HIDLib
                     HIDFullPath = devPath,
                 };
                 hidInfoStruct.HIDCompareStr = devPath.Split('&')[2];
-                HIDAPIs.HiddAttributtes hidAttr = new HIDAPIs.HiddAttributtes();
+                HiddAttributtes hidAttr = new HiddAttributtes();
                 try
                 {
                     hidAttr = GetVidPid(hidHWDev.HIDHandel);
@@ -71,10 +71,10 @@ namespace HIDLib
 
         #region Get Base Info
         /* get device path */
-        private string GetPath(IntPtr hInfoSet, ref HIDAPIs.DeviceInterfaceData iface)
+        private string GetPath(IntPtr hInfoSet, ref DeviceInterfaceData iface)
         {
             /* detailed interface information */
-            var detIface = new HIDAPIs.DeviceInterfaceDetailData();
+            var detIface = new DeviceInterfaceDetailData();
             /* required size */
             uint reqSize = (uint)Marshal.SizeOf(detIface);
 
@@ -85,7 +85,7 @@ namespace HIDLib
             detIface.Size = Marshal.SizeOf(typeof(IntPtr)) == 8 ? 8 : 5;
 
             /* get device path */
-            bool status = HIDAPIs.SetupDiGetDeviceInterfaceDetail(hInfoSet, ref iface, ref detIface, reqSize, ref reqSize, IntPtr.Zero);
+            bool status = HIDNativeAPIs.SetupDiGetDeviceInterfaceDetail(hInfoSet, ref iface, ref detIface, reqSize, ref reqSize, IntPtr.Zero);
 
             /* whops */
             if (!status)
@@ -107,7 +107,7 @@ namespace HIDLib
             string rc = String.Empty;
 
             /* get string */
-            if (HIDAPIs.HidD_GetManufacturerString(handle.DangerousGetHandle(), s, s.Capacity))
+            if (HIDNativeAPIs.HidD_GetManufacturerString(handle.DangerousGetHandle(), s, s.Capacity))
             {
                 rc = s.ToString();
             }
@@ -125,7 +125,7 @@ namespace HIDLib
             string rc = String.Empty;
 
             /* get string */
-            if (HIDAPIs.HidD_GetProductString(handle.DangerousGetHandle(), s, s.Capacity))
+            if (HIDNativeAPIs.HidD_GetProductString(handle.DangerousGetHandle(), s, s.Capacity))
             {
                 rc = s.ToString();
             }
@@ -143,7 +143,7 @@ namespace HIDLib
             string rc = String.Empty;
 
             /* get string */
-            if (HIDAPIs.HidD_GetSerialNumberString(handle.DangerousGetHandle(), s, s.Capacity))
+            if (HIDNativeAPIs.HidD_GetSerialNumberString(handle.DangerousGetHandle(), s, s.Capacity))
             {
                 rc = s.ToString();
             }
@@ -153,15 +153,15 @@ namespace HIDLib
         }
 
         /* get vid and pid */
-        private HIDAPIs.HiddAttributtes GetVidPid(SafeFileHandle handle)
+        private HiddAttributtes GetVidPid(SafeFileHandle handle)
         {
             /* attributes structure */
-            var attr = new HIDAPIs.HiddAttributtes();
+            var attr = new HiddAttributtes();
             /* set size */
             attr.Size = Marshal.SizeOf(attr);
 
             /* get attributes */
-            if (HIDAPIs.HidD_GetAttributes(handle.DangerousGetHandle(), ref attr) == false)
+            if (HIDNativeAPIs.HidD_GetAttributes(handle.DangerousGetHandle(), ref attr) == false)
             {
                 /* fail! */
                 throw new Win32Exception();

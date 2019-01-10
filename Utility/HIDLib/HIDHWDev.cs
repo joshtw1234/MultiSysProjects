@@ -12,7 +12,7 @@ using UtilityUILib;
 
 namespace HIDLib
 {
-    public class HIDHWDev : IDisposable
+    class HIDHWDev : IDisposable
     {
         const int DefBUfferSize = 64;
        
@@ -48,7 +48,7 @@ namespace HIDLib
             if (!HIDHandel.IsClosed)
             {
                 /* close handle */
-                HIDAPIs.CloseHandle(HIDHandel);
+                HIDNativeAPIs.CloseHandle(HIDHandel);
             }
         }
 
@@ -56,10 +56,10 @@ namespace HIDLib
         public bool Open()
         {
             /* opens hid device file */
-            HIDHandel = HIDAPIs.CreateFile(HWFullPath,
-                HIDAPIs.GENERIC_READ | HIDAPIs.GENERIC_WRITE,
-                HIDAPIs.FILE_SHARE_READ | HIDAPIs.FILE_SHARE_WRITE,
-                IntPtr.Zero, HIDAPIs.OPEN_EXISTING, 0, IntPtr.Zero);
+            HIDHandel = HIDNativeAPIs.CreateFile(HWFullPath,
+                HIDNativeAPIs.GENERIC_READ | HIDNativeAPIs.GENERIC_WRITE,
+                HIDNativeAPIs.FILE_SHARE_READ | HIDNativeAPIs.FILE_SHARE_WRITE,
+                IntPtr.Zero, HIDNativeAPIs.OPEN_EXISTING, 0, IntPtr.Zero);
 
             /* whops */
             if (HIDHandel.IsInvalid)
@@ -82,10 +82,10 @@ namespace HIDLib
         public bool OpenAsync()
         {
             /* opens hid device file */
-            HIDHandel = HIDAPIs.CreateFile(HWFullPath,
-                HIDAPIs.GENERIC_READ | HIDAPIs.GENERIC_WRITE,
-                HIDAPIs.FILE_SHARE_READ | HIDAPIs.FILE_SHARE_WRITE,
-                IntPtr.Zero, HIDAPIs.OPEN_EXISTING, HIDAPIs.FILE_FLAG_OVERLAPPED, IntPtr.Zero);
+            HIDHandel = HIDNativeAPIs.CreateFile(HWFullPath,
+                HIDNativeAPIs.GENERIC_READ | HIDNativeAPIs.GENERIC_WRITE,
+                HIDNativeAPIs.FILE_SHARE_READ | HIDNativeAPIs.FILE_SHARE_WRITE,
+                IntPtr.Zero, HIDNativeAPIs.OPEN_EXISTING, HIDNativeAPIs.FILE_FLAG_OVERLAPPED, IntPtr.Zero);
 
             /* whops */
             if (HIDHandel.IsInvalid)
@@ -110,14 +110,14 @@ namespace HIDLib
             //get capabilities - use getPreParsedData, and getCaps
             //store the report lengths
             IntPtr ptrToPreParsedData = new IntPtr();
-            bool ppdSucsess = HIDAPIs.HidD_GetPreparsedData(HIDHandel, ref ptrToPreParsedData);
+            bool ppdSucsess = HIDNativeAPIs.HidD_GetPreparsedData(HIDHandel, ref ptrToPreParsedData);
             HIDP_CAPS capabilities = new HIDP_CAPS();
-            int hidCapsSucsess = HIDAPIs.HidP_GetCaps(ptrToPreParsedData, ref capabilities);
+            int hidCapsSucsess = HIDNativeAPIs.HidP_GetCaps(ptrToPreParsedData, ref capabilities);
             //Save buff size
             OutputBuffSize = capabilities.OutputReportByteLength;
             InputBuffSize = capabilities.InputReportByteLength;
             //Call freePreParsedData to release some stuff
-            HIDAPIs.HidD_FreePreparsedData(ref ptrToPreParsedData);
+            HIDNativeAPIs.HidD_FreePreparsedData(ref ptrToPreParsedData);
         }
 
         /* write record */

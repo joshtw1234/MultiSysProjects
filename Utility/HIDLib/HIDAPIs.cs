@@ -30,20 +30,20 @@ namespace HIDLib
             List<HIDInfo> info = new List<HIDInfo>();
 
             /* obtain hid guid */
-            HIDAPIs.HidD_GetHidGuid(out gHid);
+            HIDNativeAPIs.HidD_GetHidGuid(out gHid);
             /* get list of present hid devices */
-            var hInfoSet = HIDAPIs.SetupDiGetClassDevs(ref gHid, null, IntPtr.Zero,
-                HIDAPIs.DIGCF_DEVICEINTERFACE | HIDAPIs.DIGCF_PRESENT);
+            var hInfoSet = HIDNativeAPIs.SetupDiGetClassDevs(ref gHid, null, IntPtr.Zero,
+                HIDNativeAPIs.DIGCF_DEVICEINTERFACE | HIDNativeAPIs.DIGCF_PRESENT);
 
             /* allocate mem for interface descriptor */
-            var iface = new HIDAPIs.DeviceInterfaceData();
+            var iface = new DeviceInterfaceData();
             /* set size field */
             iface.Size = Marshal.SizeOf(iface);
             /* interface index */
             uint index = 0;
 
             /* iterate through all interfaces */
-            while (HIDAPIs.SetupDiEnumDeviceInterfaces(hInfoSet, 0, ref gHid, index, ref iface))
+            while (HIDNativeAPIs.SetupDiEnumDeviceInterfaces(hInfoSet, 0, ref gHid, index, ref iface))
             {
                 bool isWork = false;
                 HIDInfo hidInfo = new HIDInfo(hInfoSet, iface, out isWork);
@@ -56,7 +56,7 @@ namespace HIDLib
             }
 
             /* clean up */
-            if (HIDAPIs.SetupDiDestroyDeviceInfoList(hInfoSet) == false)
+            if (HIDNativeAPIs.SetupDiDestroyDeviceInfoList(hInfoSet) == false)
             {
                 /* fail! */
                 throw new Win32Exception();
@@ -65,7 +65,10 @@ namespace HIDLib
             /* return list */
             return info;
         }
+    }
 
+    class HIDNativeAPIs
+    {
         #region kernel32.dll
         /* read access */
         public const uint GENERIC_READ = 0x80000000;
@@ -97,20 +100,7 @@ namespace HIDLib
         #endregion
 
         #region hid.dll
-        /* The HIDD_ATTRIBUTES structure contains vendor information about a 
-         * HIDClass device.*/
-        [StructLayout(LayoutKind.Sequential)]
-        public struct HiddAttributtes
-        {
-            /* size in bytes */
-            public Int32 Size;
-            /* vendor id */
-            public Int16 VendorID;
-            /* product id */
-            public UInt16 ProductID;
-            /* hid vesion number */
-            public Int16 VersionNumber;
-        }
+        
 
         [DllImport("hid.dll", SetLastError = true)]
         /* gets HID class Guid */
@@ -159,30 +149,8 @@ namespace HIDLib
         /* Return devices that support device interfaces for the specified 
          * device interface classes. */
         public const int DIGCF_DEVICEINTERFACE = 0x10;
-        /* structure returned by SetupDiEnumDeviceInterfaces */
-        [StructLayout(LayoutKind.Sequential, Pack = 1)]
-        public struct DeviceInterfaceData
-        {
-            /* size of fixed part of structure */
-            public int Size;
-            /* The GUID for the class to which the device interface belongs. */
-            public Guid InterfaceClassGuid;
-            /* Can be one or more of the following: SPINT_ACTIVE, 
-             * SPINT_DEFAULT, SPINT_REMOVED */
-            public int Flags;
-            /* do not use */
-            public IntPtr Reserved;
-        }
-        /* A structure contains the path for a device interface.*/
-        [StructLayout(LayoutKind.Sequential, Pack = 1)]
-        public struct DeviceInterfaceDetailData
-        {
-            /* size of fixed part of structure */
-            public int Size;
-            /* device path, as to be used by CreateFile */
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 512)]
-            public string DevicePath;
-        }
+        
+        
 
         /* function returns a handle to a device information set that contains
          * requested device information elements for a local computer */
@@ -211,6 +179,47 @@ namespace HIDLib
         [DllImport("setupapi.dll", SetLastError = true)]
         public static extern bool SetupDiDestroyDeviceInfoList(IntPtr lpInfoSet);
         #endregion
+    }
+
+    /* The HIDD_ATTRIBUTES structure contains vendor information about a 
+         * HIDClass device.*/
+    [StructLayout(LayoutKind.Sequential)]
+    public struct HiddAttributtes
+    {
+        /* size in bytes */
+        public Int32 Size;
+        /* vendor id */
+        public Int16 VendorID;
+        /* product id */
+        public UInt16 ProductID;
+        /* hid vesion number */
+        public Int16 VersionNumber;
+    }
+
+    /* structure returned by SetupDiEnumDeviceInterfaces */
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    public struct DeviceInterfaceData
+    {
+        /* size of fixed part of structure */
+        public int Size;
+        /* The GUID for the class to which the device interface belongs. */
+        public Guid InterfaceClassGuid;
+        /* Can be one or more of the following: SPINT_ACTIVE, 
+         * SPINT_DEFAULT, SPINT_REMOVED */
+        public int Flags;
+        /* do not use */
+        public IntPtr Reserved;
+    }
+
+    /* A structure contains the path for a device interface.*/
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    public struct DeviceInterfaceDetailData
+    {
+        /* size of fixed part of structure */
+        public int Size;
+        /* device path, as to be used by CreateFile */
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 512)]
+        public string DevicePath;
     }
 
     // HIDP_CAPS

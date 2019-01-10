@@ -8,6 +8,7 @@ namespace HIDDemo.Models
 {
     public class BaseHID
     {
+#if false
         /* browse all HID class devices */
         public List<HIDInfo> BrowseHID()
         {
@@ -52,5 +53,6 @@ namespace HIDDemo.Models
             /* return list */
             return info;
         }
+#endif
     }
 }

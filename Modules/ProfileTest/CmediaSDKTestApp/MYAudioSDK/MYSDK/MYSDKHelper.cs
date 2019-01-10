@@ -1,6 +1,7 @@
 ﻿using MYAudioSDK.MYSDK.CallBacks;
 using MYAudioSDK.MYSDK.Enums;
 using MYAudioSDK.MYSDK.Structures;
+using MYAudioSDK.MYSDK.Vendors;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -11,6 +12,8 @@ namespace MYAudioSDK.MYSDK
     /// </summary>
     public class MYSDKHelper
     {
+        private List<IBaseVendor> vendorList;
+
         public static async Task<int> InitializeSDKAsync()
         {
             return await Task.Run(() =>

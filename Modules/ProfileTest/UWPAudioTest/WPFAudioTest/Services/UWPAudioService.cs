@@ -1,16 +1,19 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Windows.Devices.Enumeration;
 using Windows.Media.Audio;
-using Windows.Media.Render;
-//using System;
-using Windows.Media.Capture;
 using Windows.Media.MediaProperties;
+using Windows.Media.Render;
 using Windows.Storage;
 using Windows.Media.Devices;
+using Windows.Media.Capture;
 
-namespace DirectShowDemo.Models
+namespace MyStandardDLL.UWPAudio
 {
-    class UWPAudioService
+    /// <summary>
+    /// The service use UWP Audio APIs
+    /// </summary>
+    public class UWPAudioService
     {
         private const string OMENHeadset = "OMEN Mindframe";
         private AudioGraph uwpAudioGraph;
@@ -38,14 +41,14 @@ namespace DirectShowDemo.Models
             AudioGraphSettings settings = new AudioGraphSettings(AudioRenderCategory.Media);
             settings.QuantumSizeSelectionMode = QuantumSizeSelectionMode.LowestLatency;
             outputDevices = await DeviceInformation.FindAllAsync(MediaDevice.GetAudioRenderSelector());
-            foreach(DeviceInformation dev in outputDevices)
+            foreach (DeviceInformation dev in outputDevices)
             {
                 if (dev.Name.Contains(OMENHeadset))
                 {
                     settings.PrimaryRenderDevice = dev;
                 }
             }
-            
+
 
             CreateAudioGraphResult result = await AudioGraph.CreateAsync(settings);
 

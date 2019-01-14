@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UWPAudioTest.Models
+namespace WPFAudioTest.Models
 {
-    interface IAudioTestModel
+    interface IMainWindowModel
     {
     }
 }

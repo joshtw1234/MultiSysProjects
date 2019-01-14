@@ -8,7 +8,7 @@ using Windows.Storage;
 using Windows.Media.Devices;
 using Windows.Media.Capture;
 
-namespace MyStandardDLL.UWPAudio
+namespace WPFAudioTest.Services
 {
     /// <summary>
     /// The service use UWP Audio APIs

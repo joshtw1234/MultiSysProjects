@@ -12,5 +12,7 @@ namespace WPFAudioTest.Models
     {
         IViewItem GetDisplayMenuItem { get; }
         ObservableCollection<IViewItem> GetCommonButtons { get; }
+
+        void InitializeAudio();
     }
 }

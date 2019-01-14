@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using MyStandardDLL.MVVMUtility;
+using WPFAudioTest.Services;
 
 namespace WPFAudioTest.Models
 {
@@ -65,7 +66,20 @@ namespace WPFAudioTest.Models
 
         private void OnCommonButtonClick(string obj)
         {
-            throw new NotImplementedException();
+            if (obj.Equals("Apply"))
+            {
+                UWPAudioService.Instence.StartAudio();
+            }
+            else
+            {
+                UWPAudioService.Instence.StopAudio();
+            }
+        }
+
+        public void InitializeAudio()
+        {
+            var result = UWPAudioService.Instence.InitializeUWPAudio();
+            _displayMenuItem.MenuName += $"\nInitialize Done";
         }
     }
 }

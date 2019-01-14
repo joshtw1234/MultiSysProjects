@@ -12,6 +12,7 @@ namespace WPFAudioTest.ViewModels
             _model = model;
             DisplayMenuItem = _model.GetDisplayMenuItem;
             CommonButtons = _model.GetCommonButtons;
+            _model.InitializeAudio();
         }
 
         public IViewItem DisplayMenuItem { get; set; }

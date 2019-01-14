@@ -14,6 +14,7 @@ namespace DirectShowDemo.Models
 {
     class UWPAudioService
     {
+        private const string OMENHeadset = "OMEN Mindframe";
         private AudioGraph uwpAudioGraph;
         //private AudioFileOutputNode fileOutputNode;//for File not use now.
         private AudioDeviceOutputNode deviceOutputNode;
@@ -39,7 +40,14 @@ namespace DirectShowDemo.Models
             AudioGraphSettings settings = new AudioGraphSettings(AudioRenderCategory.Media);
             settings.QuantumSizeSelectionMode = QuantumSizeSelectionMode.LowestLatency;
             outputDevices = await DeviceInformation.FindAllAsync(MediaDevice.GetAudioRenderSelector());
-            settings.PrimaryRenderDevice = outputDevices[0];
+            foreach(DeviceInformation dev in outputDevices)
+            {
+                if (dev.Name.Contains(OMENHeadset))
+                {
+                    settings.PrimaryRenderDevice = dev;
+                }
+            }
+            
 
             CreateAudioGraphResult result = await AudioGraph.CreateAsync(settings);
 

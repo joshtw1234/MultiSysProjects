@@ -1,6 +1,4 @@
-﻿using Windows.UI.Xaml;
-
-namespace MyStandardDLL.MVVMUtility
+﻿namespace MyStandardDLL.MVVMUtility
 {
     /// <summary>
     /// This is the implement class of IViewItem
@@ -11,7 +9,6 @@ namespace MyStandardDLL.MVVMUtility
         public string MenuImage { get; set; }
         public string MenuImagePressed { get; set; }
         public string MenuData { get; set; }
-        public Style MenuStyle { get; set; }
         public bool MenuEnabled { get; set; }
         public bool MenuChecked { get; set; }
         public bool MenuVisibility { get; set; }

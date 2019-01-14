@@ -37,8 +37,9 @@ namespace MyStandardDLL.MVVMUtility
 
         /// <summary>
         /// MenuStyle is the styling applied to a particular menu item
+        /// Style only in WPF
         /// </summary>
-        Style MenuStyle { get; set; }
+        //Style MenuStyle { get; set; }
 
         /// <summary>
         /// MenuEnabled sets whether a particular menu item is enabled or disabled

@@ -69,9 +69,21 @@ namespace WPFAudioTest.Services
             }
 
             deviceOutputNode = deviceOutputNodeResult.DeviceOutputNode;
-
+            //Get Mindframe Microphone
+            var inputDevices = await DeviceInformation.FindAllAsync(MediaDevice.GetAudioCaptureSelector());
+            DeviceInformation mindframInput = null;
+            foreach (DeviceInformation devMic in inputDevices)
+            {
+                if (devMic.Name.Contains(OMENHeadset))
+                {
+                    mindframInput = devMic;
+                }
+            }
+            //mindframInput.
             // Create a device input node using the default audio input device
             CreateAudioDeviceInputNodeResult deviceInputNodeResult = await uwpAudioGraph.CreateDeviceInputNodeAsync(MediaCategory.Other);
+            //Create a device input node using specific  device.
+            deviceInputNodeResult = await uwpAudioGraph.CreateDeviceInputNodeAsync(MediaCategory.Communications, null, mindframInput);
 
             if (deviceInputNodeResult.Status != AudioDeviceNodeCreationStatus.Success)
             {

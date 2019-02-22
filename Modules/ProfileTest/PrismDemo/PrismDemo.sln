@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrismDemo", "PrismDemo\Pris
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioControlLib", "Libraries\AudioControlLib\AudioControlLib.csproj", "{249CC344-74AE-44B4-A6B2-4E108206F0BE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{2192270D-7EFB-4539-8F16-DC5D315A5E6F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MenuModule", "MenuModule\MenuModule.csproj", "{D09EC73A-253C-4ECE-ABDF-B0CAECE65F53}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,9 +35,20 @@ Global
 		{249CC344-74AE-44B4-A6B2-4E108206F0BE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{249CC344-74AE-44B4-A6B2-4E108206F0BE}.Release|x64.ActiveCfg = Release|x64
 		{249CC344-74AE-44B4-A6B2-4E108206F0BE}.Release|x64.Build.0 = Release|x64
+		{D09EC73A-253C-4ECE-ABDF-B0CAECE65F53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D09EC73A-253C-4ECE-ABDF-B0CAECE65F53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D09EC73A-253C-4ECE-ABDF-B0CAECE65F53}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D09EC73A-253C-4ECE-ABDF-B0CAECE65F53}.Debug|x64.Build.0 = Debug|Any CPU
+		{D09EC73A-253C-4ECE-ABDF-B0CAECE65F53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D09EC73A-253C-4ECE-ABDF-B0CAECE65F53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D09EC73A-253C-4ECE-ABDF-B0CAECE65F53}.Release|x64.ActiveCfg = Release|Any CPU
+		{D09EC73A-253C-4ECE-ABDF-B0CAECE65F53}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D09EC73A-253C-4ECE-ABDF-B0CAECE65F53} = {2192270D-7EFB-4539-8F16-DC5D315A5E6F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {60217D94-DFCD-4C7C-8A11-C5880BC9EAE9}

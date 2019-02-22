@@ -1,0 +1,232 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="AudioControlLib.AudioControl">
+    <Position X="0.5" Y="0.5" Width="3" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAjQAIIAQhAABABAJAAJQAAIAAAYogAACSEACUqAYAA=</HashCode>
+      <FileName>AudioControl.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AudioControlLib.AudioMethods.AudioBandsConfig" Collapsed="true">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAEAAAAAAAAAAEAAAAQAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>AudioMethods\AudioBandsConfig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AudioControlLib.Structures.EQSTATE" Collapsed="true">
+    <Position X="11" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAYw8AAAAAAAeAAAAAAAAABYAAAAAAAA=</HashCode>
+      <FileName>Structures\EQSTATE.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AudioControlLib.Structures.MarshalHelpers" Collapsed="true">
+    <Position X="12.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAEA=</HashCode>
+      <FileName>Structures\MarshalHelpers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AudioControlLib.Structures.MMDeviceEnumeratorFactory" Collapsed="true">
+    <Position X="7.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Structures\MMDeviceEnumeratorFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AudioControlLib.Structures.MMNotificationClient" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgBAAIAgAAEAAAAAAAA=</HashCode>
+      <FileName>Structures\MMNotificationClient.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="AudioControlLib.Structures.PropVariantNative" Collapsed="true">
+    <Position X="11" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Structures\PropVariantNative.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AudioControlLib.Structures.WAVEFORMATEX" Collapsed="true">
+    <Position X="12.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAACAgAABAAAAAAAAAAIAAAQAAAAAQAAA=</HashCode>
+      <FileName>Structures\WAVEFORMATEX.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AudioControlLib.Structures.WAVEFORMATEXTENSION" Collapsed="true">
+    <Position X="7.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEIICAAAGAgAABAAAAAAAAAEKAAARCIAAAQCAA=</HashCode>
+      <FileName>Structures\WAVEFORMATEXTENSION.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="AudioControlLib.Structures.Blob" Collapsed="true">
+    <Position X="7.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAABAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Structures\Blob.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="AudioControlLib.Structures.PropertyKey" Collapsed="true">
+    <Position X="9.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAABAAAAAAAAA=</HashCode>
+      <FileName>Structures\PropertyKey.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="AudioControlLib.Structures.PropVariant" Collapsed="true">
+    <Position X="11" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAIAQMAAIABAAAEACAAwIECAAAhBABAAIwABFAAIA=</HashCode>
+      <FileName>Structures\PropVariant.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Interface Name="AudioControlLib.IMMDeviceEnumerator" Collapsed="true">
+    <Position X="9.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ARAAAAAAAAAgAAgAAAAAAAAAAAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>CoreAudioAPIs.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="AudioControlLib.IMMNotificationClient" Collapsed="true">
+    <Position X="11" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgBAAIAgAAEAAAAAAAA=</HashCode>
+      <FileName>CoreAudioAPIs.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="AudioControlLib.IAudioCaptureClient" Collapsed="true">
+    <Position X="7.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAQAAAACAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CoreAudioAPIs.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="AudioControlLib.IMMDeviceCollection" Collapsed="true">
+    <Position X="7.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CoreAudioAPIs.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="AudioControlLib.IMMDevice" Collapsed="true">
+    <Position X="12.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAIBAAA=</HashCode>
+      <FileName>CoreAudioAPIs.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="AudioControlLib.IPropertyStore" Collapsed="true">
+    <Position X="12.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAEAAIAAAAgAAAAAAAAAAAAIAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CoreAudioAPIs.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="AudioControlLib.IAudioMeterInformation" Collapsed="true">
+    <Position X="11" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJCAA=</HashCode>
+      <FileName>CoreAudioAPIs.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="AudioControlLib.IAudioClient" Collapsed="true">
+    <Position X="9.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAADAABQAEACgAAABAACAAAAAAIAAAAAAAAEA=</HashCode>
+      <FileName>CoreAudioAPIs.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="AudioControlLib.Enums.AudioClientBufferFlags" Collapsed="true">
+    <Position X="7.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAACAAAAAAAAAAAAAAAACAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Enums\AudioClientBufferFlags.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="AudioControlLib.Enums.AudioClientMode" Collapsed="true">
+    <Position X="9.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Enums\AudioClientMode.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="AudioControlLib.Enums.AudioClientStreamFlags" Collapsed="true">
+    <Position X="11" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAACAQAEBAAA=</HashCode>
+      <FileName>Enums\AudioClientStreamFlags.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="AudioControlLib.Enums.AudioDataFlow" Collapsed="true">
+    <Position X="12.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAQAAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>Enums\AudioDataFlow.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="AudioControlLib.Enums.AudioDeviceState" Collapsed="true">
+    <Position X="7.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAACQAAAAAAAAAAAAAAAAEAAAAAAAAAAAQAA=</HashCode>
+      <FileName>Enums\AudioDeviceState.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="AudioControlLib.Enums.ClsCtx" Collapsed="true">
+    <Position X="9.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>wEgIAADAgAAAAAAAUBAAEAAgAwQAEBQAAAAAQAAAAAA=</HashCode>
+      <FileName>Enums\ClsCtx.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="AudioControlLib.Enums.COMResult" Collapsed="true">
+    <Position X="11" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQIAIAEAQAAAAAAAAgABAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>Enums\COMResult.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="AudioControlLib.Enums.EndPointRole" Collapsed="true">
+    <Position X="12.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAACAAAAAAAQAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Enums\EndPointRole.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="AudioControlLib.Enums.StorageAccessMode" Collapsed="true">
+    <Position X="7.5" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAAIAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Enums\StorageAccessMode.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="AudioControlLib.Enums.WaveFormat" Collapsed="true">
+    <Position X="9.25" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>d0pi1CGIp6GqnDxs5xGaChTkE9M/Hx8Qh0SCVAH1iHI=</HashCode>
+      <FileName>Enums\WaveFormat.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Delegate Name="AudioControlLib.CallBacks.AudioVolumeCallBack" Collapsed="true">
+    <Position X="9.25" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>CallBacks\AudioCallBacks.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="AudioControlLib.CallBacks.AudioPluseCallBack" Collapsed="true">
+    <Position X="7.5" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAQAAAA=</HashCode>
+      <FileName>CallBacks\AudioCallBacks.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

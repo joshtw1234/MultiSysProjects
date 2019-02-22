@@ -8,9 +8,11 @@ namespace PrismDemo
     class Bootstrapper : UnityBootstrapper
     {
         #region Base Bootstrapper.
+#if true
         protected override DependencyObject CreateShell()
         {
             return base.CreateShell();
+            //return Container.Resolve<MainWindow>();
         }
 
         protected override void ConfigureContainer()
@@ -28,6 +30,8 @@ namespace PrismDemo
         {
             base.InitializeModules();
         }
+
+#endif
         #endregion
     }
 }

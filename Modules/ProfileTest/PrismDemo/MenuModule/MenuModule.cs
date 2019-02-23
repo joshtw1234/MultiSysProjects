@@ -1,23 +1,29 @@
-﻿using Prism.Ioc;
+﻿using MenuModule.Views;
 using Prism.Modularity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Prism.Regions;
 
 namespace MenuModule
 {
-    class MenuModule : IModule
+    public class MenuModule : IModule
     {
-        public void OnInitialized(IContainerProvider containerProvider)
+        /// <summary>
+        /// The _region manager.
+        /// </summary>
+        private readonly IRegionManager _regionManager;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MenuModule"/> class.
+        /// </summary>
+        /// <param name="regionManager">
+        /// The region manager.
+        /// </param>
+        public MenuModule(IRegionManager regionManager)
         {
-            throw new NotImplementedException();
+            _regionManager = regionManager;
         }
 
-        public void RegisterTypes(IContainerRegistry containerRegistry)
+        public void Initialize()
         {
-            throw new NotImplementedException();
+            _regionManager.RegisterViewWithRegion("MenuRegion", typeof(MenuControl));
         }
     }
 }

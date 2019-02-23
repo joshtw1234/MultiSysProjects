@@ -145,6 +145,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Libraries\CommonUILib\CommonUILib.csproj">
+      <Project>{fe476d8c-ecb3-42bf-b4a1-e952e275c9b5}</Project>
+      <Name>CommonUILib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Modules\AudioDemoModule\AudioDemoModule.csproj">
       <Project>{a8403894-ea96-4f52-8211-bee042237698}</Project>
       <Name>AudioDemoModule</Name>

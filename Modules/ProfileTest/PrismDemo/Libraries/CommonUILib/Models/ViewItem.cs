@@ -4,7 +4,7 @@ using System.Windows;
 
 namespace CommonUILib.Models
 {
-    class ViewItem : IViewItem
+    public class ViewItem : IViewItem
     {
         public string MenuName { get; set; }
         public string MenuImage { get; set; }

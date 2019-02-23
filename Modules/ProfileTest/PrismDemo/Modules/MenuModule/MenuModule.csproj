@@ -114,6 +114,11 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\CommonUILib\CommonUILib.csproj">
+      <Project>{fe476d8c-ecb3-42bf-b4a1-e952e275c9b5}</Project>
+      <Name>CommonUILib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

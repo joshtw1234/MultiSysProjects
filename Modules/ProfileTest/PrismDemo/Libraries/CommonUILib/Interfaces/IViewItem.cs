@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace CommonUILib.Interfaces
 {
-    interface IViewItem
+    public interface IViewItem
     {
         /// <summary>
         /// MenuName is the name associated to a particular menu item

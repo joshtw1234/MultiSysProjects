@@ -8,7 +8,7 @@
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" Background="{x:Null}" WindowStartupLocation="CenterScreen">
-    <Grid Background="{StaticResource DefaulBackground}">
+    <Grid>
         <DockPanel>
             <ContentControl DockPanel.Dock="Top" prism:RegionManager.RegionName="TitleRegion" Background="Green"/>
             <ContentControl DockPanel.Dock="Left" prism:RegionManager.RegionName="MenuRegion" Background="Red"/>

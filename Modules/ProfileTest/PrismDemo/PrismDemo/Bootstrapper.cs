@@ -16,6 +16,7 @@ namespace PrismDemo
         protected override void ConfigureContainer()
         {
             base.ConfigureContainer();
+            //Register the UI model here.
             this.RegisterTypeIfMissing(typeof(IMainWindowModel), typeof(MainWindowModel), true);
             this.RegisterTypeIfMissing(typeof(IMenuControlModel), typeof(MenuControlModel), true);
             this.RegisterTypeIfMissing(typeof(IAudioDemoControlModel), typeof(AudioDemoControlModel), true);

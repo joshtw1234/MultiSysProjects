@@ -25,7 +25,6 @@ namespace PrismDemo
             var moduleCatalog = this.ModuleCatalog as ModuleCatalog;
 
             // Register the UI modules here.
-            // TODO:  Look into loading modules based on a package manifest.
             if (moduleCatalog != null)
             {
                 moduleCatalog.AddModule(typeof(MenuModule.MenuModule));

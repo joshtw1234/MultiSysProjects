@@ -145,6 +145,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Modules\AudioDemoModule\AudioDemoModule.csproj">
+      <Project>{a8403894-ea96-4f52-8211-bee042237698}</Project>
+      <Name>AudioDemoModule</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Modules\MenuModule\MenuModule.csproj">
       <Project>{d09ec73a-253c-4ece-abdf-b0caece65f53}</Project>
       <Name>MenuModule</Name>

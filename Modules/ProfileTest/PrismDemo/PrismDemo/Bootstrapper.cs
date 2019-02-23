@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using AudioDemoModule.Models;
 using MenuModule.Interfaces;
 using MenuModule.Models;
 using Prism.Modularity;
@@ -17,6 +18,7 @@ namespace PrismDemo
             base.ConfigureContainer();
             this.RegisterTypeIfMissing(typeof(IMainWindowModel), typeof(MainWindowModel), true);
             this.RegisterTypeIfMissing(typeof(IMenuControlModel), typeof(MenuControlModel), true);
+            this.RegisterTypeIfMissing(typeof(IAudioDemoControlModel), typeof(AudioDemoControlModel), true);
         }
 
         protected override void ConfigureModuleCatalog()
@@ -28,6 +30,7 @@ namespace PrismDemo
             if (moduleCatalog != null)
             {
                 moduleCatalog.AddModule(typeof(MenuModule.MenuModule));
+                moduleCatalog.AddModule(typeof(AudioDemoModule.AudioDemoModule));
             }
         }
         #endregion

@@ -60,6 +60,16 @@ namespace CommonUILib
         /// </summary>
         public DelegateCommand<string> NavigateToCommand => _navigateToCommand ?? (_navigateToCommand = new DelegateCommand<string>(ExecuteNavigateToCommand));
 
+        public DelegateCommand<string> NavigateToFullScreenCommand => _navigateToFullScreenCommand ?? (_navigateToFullScreenCommand = new DelegateCommand<string>(ExcuteNavigateToFullScreenCommand));
+        private void ExcuteNavigateToFullScreenCommand(string obj)
+        {
+            if (string.IsNullOrEmpty(obj))
+            {
+                return;
+            }
+            this._regionManager.RequestNavigate("EntireRegion", new Uri(obj, UriKind.Relative));
+        }
+
         private void ExecuteNavigateToCommand(string obj)
         {
             if (string.IsNullOrEmpty(obj))

@@ -9,4 +9,14 @@
     <ItemsPanelTemplate x:Key="MenuButtonPanel">
         <StackPanel/>
     </ItemsPanelTemplate>
+
+    <DataTemplate x:Key="EQBandTemplate">
+        <ContentControl Style="{StaticResource VerticalBandStyle}"/>
+    </DataTemplate>
+    <DataTemplate x:Key="HBandTemplate">
+        <ContentControl Style="{StaticResource HorizeBandStyle}"/>
+    </DataTemplate>
+    <DataTemplate x:Key="EQBandsTemplate">
+        <RadioButton Style="{Binding MenuStyle}"/>
+    </DataTemplate>
 </ResourceDictionary>

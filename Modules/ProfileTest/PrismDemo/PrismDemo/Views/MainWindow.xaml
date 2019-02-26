@@ -10,10 +10,10 @@
         Title="MainWindow" Height="450" Width="800" Background="{x:Null}" WindowStartupLocation="CenterScreen">
     <Grid>
         <DockPanel>
-            <ContentControl DockPanel.Dock="Top" prism:RegionManager.RegionName="TitleRegion" Background="Green"/>
-            <ContentControl DockPanel.Dock="Left" prism:RegionManager.RegionName="MenuRegion" Background="Red"/>
+            <ContentControl DockPanel.Dock="Top" prism:RegionManager.RegionName="TitleRegion"/>
+            <ContentControl DockPanel.Dock="Left" prism:RegionManager.RegionName="MenuRegion"/>
             <ContentControl prism:RegionManager.RegionName="FeatureRegion"/>
         </DockPanel>
-        <ContentControl DockPanel.Dock="Top" prism:RegionManager.RegionName="EntireRegion" Background="Blue"/>
+        <ContentControl DockPanel.Dock="Top" prism:RegionManager.RegionName="EntireRegion"/>
     </Grid>
 </Window>

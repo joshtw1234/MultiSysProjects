@@ -2,7 +2,9 @@
 using CommonUILib.Interfaces;
 using CommonUILib.Models;
 using MenuModule.Interfaces;
+using Microsoft.Practices.ServiceLocation;
 using Prism.Commands;
+using Prism.Regions;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows;
@@ -12,21 +14,6 @@ namespace MenuModule.ViewModels
     class MenuControlViewModel
     {
         IMenuControlModel _model;
-        /// <summary>
-        /// The second level menu item command.
-        /// </summary>
-        private DelegateCommand<string> _menuButtonClickEvent = null;
-
-        /// <summary>
-        /// DelegateCommand which executes when a second level menu item is clicked .
-        /// </summary>
-        public DelegateCommand<string> MenuButtonClickEvent
-            => _menuButtonClickEvent ?? (_menuButtonClickEvent = new DelegateCommand<string>(OnMenuButtonClick));
-
-        private void OnMenuButtonClick(string obj)
-        {
-            throw new NotImplementedException();
-        }
 
         public ObservableCollection<IViewItem> MenuButtonCollection { get; set; }
         public MenuControlViewModel(IMenuControlModel model)
@@ -43,15 +30,15 @@ namespace MenuModule.ViewModels
                 {
                     MenuName = "Audio Demo",
                     MenuStyle = Application.Current.Resources["BaseToggleButtonStyle"] as Style,
-                    MenuCommand = MenuButtonClickEvent,
-                    MenuData = Module.Audio.ToString()
+                    MenuCommand = CommonUILib.CommonUIHelper.Instance.NavigateToCommand,
+                    MenuData = Module.AudioDemoControl.ToString()
                 },
                 new ViewItem()
                 {
                     MenuName = "HID Demo",
                     MenuStyle = Application.Current.Resources["BaseToggleButtonStyle"] as Style,
-                    MenuCommand = MenuButtonClickEvent,
-                    MenuData = Module.HID.ToString()
+                    MenuCommand = CommonUILib.CommonUIHelper.Instance.NavigateToCommand,
+                    MenuData = Module.HIDDemoControl.ToString()
                 },
             };
         }

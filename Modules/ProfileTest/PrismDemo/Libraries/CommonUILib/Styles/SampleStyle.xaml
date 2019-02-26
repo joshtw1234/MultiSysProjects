@@ -11,5 +11,7 @@
         <Setter Property="Content" Value="{Binding MenuName}"/>
         <Setter Property="FontSize" Value="18"/>
         <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Command" Value="{Binding MenuCommand}"/>
+        <Setter Property="CommandParameter" Value="{Binding MenuData}"/>
     </Style>
 </ResourceDictionary>

@@ -8,7 +8,7 @@ namespace CommonUILib.Enums
 {
     public enum Module
     {
-        HID,
-        Audio
+        HIDDemoControl,
+        AudioDemoControl
     }
 }

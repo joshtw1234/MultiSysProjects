@@ -2,4 +2,21 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:CommonUILib.Styles">
 
+
+    <ControlTemplate x:Key="TipControlTemplate" TargetType="{x:Type ContentControl}">
+        <Grid>
+            <Button x:Name="TipButton" DataContext="{Binding TipButton}" Style="{Binding MenuStyle}"/>
+            <Canvas>
+                <ContentControl DataContext="{Binding TipInfo}" Style="{Binding MenuStyle}"/>
+            </Canvas>
+        </Grid>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="TextBoxTipTemplate" TargetType="ContentControl">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock DataContext="{Binding TitleText}" Style="{Binding MenuStyle}"/>
+            <ContentControl DataContext="{Binding TipItem}" Visibility="{Binding TipViewItemVisibility, Converter={StaticResource BoolToVisibility}}" 
+                            Template="{StaticResource TipControlTemplate}" Margin="10, 0, 10, 0" VerticalAlignment="Top"/>
+        </StackPanel>
+    </ControlTemplate>
 </ResourceDictionary>

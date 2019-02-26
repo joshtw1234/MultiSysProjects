@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CommonUILib.Enums
 {
-    public enum Module
+    public enum ModuleViewName
     {
         HIDDemoControl,
         AudioDemoControl

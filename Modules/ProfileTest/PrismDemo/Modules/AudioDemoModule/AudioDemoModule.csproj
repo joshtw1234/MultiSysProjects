@@ -79,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AudioDemoModule.cs" />
+    <Compile Include="Enums\SubControls.cs" />
     <Compile Include="Models\AudioDemoControlModel.cs" />
     <Compile Include="Models\IAudioDemoControlModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -94,9 +95,15 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="ViewModels\AdvanceControlViewModel.cs" />
+    <Compile Include="ViewModels\AudioControlViewModel.cs" />
     <Compile Include="ViewModels\AudioDemoControlViewModel.cs" />
-    <Compile Include="Views\AudioControls.xaml.cs">
-      <DependentUpon>AudioControls.xaml</DependentUpon>
+    <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="Views\AdvanceControl.xaml.cs">
+      <DependentUpon>AdvanceControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AudioControl.xaml.cs">
+      <DependentUpon>AudioControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AudioDemoControl.xaml.cs">
       <DependentUpon>AudioDemoControl.xaml</DependentUpon>
@@ -122,7 +129,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\AudioControls.xaml">
+    <Page Include="Views\AdvanceControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AudioControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

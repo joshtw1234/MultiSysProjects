@@ -80,7 +80,7 @@
   <ItemGroup>
     <Compile Include="CommonUIHelper.cs" />
     <Compile Include="Constants\Constants.cs" />
-    <Compile Include="Enums\Module.cs" />
+    <Compile Include="Enums\ModuleViewName.cs" />
     <Compile Include="Enums\SampleEnum.cs" />
     <Compile Include="Interfaces\IViewItem.cs" />
     <Compile Include="Interfaces\SampleInterface.cs" />

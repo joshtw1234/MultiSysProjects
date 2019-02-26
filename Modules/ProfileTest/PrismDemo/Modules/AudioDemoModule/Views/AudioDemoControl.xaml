@@ -24,7 +24,8 @@
                       ItemTemplate="{StaticResource MenuButtonTemplate}"
                       ItemsPanel="{StaticResource ButtonPanelTemplate}"/>
             <Grid>
-                <local:AudioControls DataContext="{Binding AudioControlsDataContext}"/>
+                <local:AudioControl DataContext="{Binding AudioControlsDataContext}"/>
+                <local:AdvanceControl DataContext="{Binding AdvanceControlDataContext}"/>
             </Grid>
         </DockPanel>
     </Grid>

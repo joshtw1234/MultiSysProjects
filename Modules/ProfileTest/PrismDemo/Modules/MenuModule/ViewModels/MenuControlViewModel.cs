@@ -31,14 +31,14 @@ namespace MenuModule.ViewModels
                     MenuName = "Audio Demo",
                     MenuStyle = Application.Current.Resources["BaseToggleButtonStyle"] as Style,
                     MenuCommand = CommonUILib.CommonUIHelper.Instance.NavigateToCommand,
-                    MenuData = Module.AudioDemoControl.ToString()
+                    MenuData = ModuleViewName.AudioDemoControl.ToString()
                 },
                 new ViewItem()
                 {
                     MenuName = "HID Demo",
                     MenuStyle = Application.Current.Resources["BaseToggleButtonStyle"] as Style,
                     MenuCommand = CommonUILib.CommonUIHelper.Instance.NavigateToCommand,
-                    MenuData = Module.HIDDemoControl.ToString()
+                    MenuData = ModuleViewName.HIDDemoControl.ToString()
                 },
             };
         }

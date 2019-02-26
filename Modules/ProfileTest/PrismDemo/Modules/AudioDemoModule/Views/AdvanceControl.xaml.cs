@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace AudioDemoModule.Views
 {
     /// <summary>
-    /// Interaction logic for AudioControls.xaml
+    /// Interaction logic for AdvanceControl.xaml
     /// </summary>
-    public partial class AudioControls : UserControl
+    public partial class AdvanceControl : UserControl
     {
-        public AudioControls()
+        public AdvanceControl()
         {
             InitializeComponent();
         }

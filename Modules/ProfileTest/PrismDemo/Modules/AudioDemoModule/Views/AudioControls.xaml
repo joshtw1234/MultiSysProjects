@@ -1,11 +1,9 @@
-﻿<UserControl x:Class="AudioDemoModule.Views.AudioDemoControl"
+﻿<UserControl x:Class="AudioDemoModule.Views.AudioControls"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AudioDemoModule.Views"
-             xmlns:prism="http://prismlibrary.com/"
-             prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -15,17 +13,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
-        <DockPanel>
-            <ItemsControl DockPanel.Dock="Top" ItemsSource="{Binding PageButtons}"
-                      ItemTemplate="{StaticResource MenuButtonTemplate}"
-                      ItemsPanel="{StaticResource ButtonPanelTemplate}"/>
-            <ItemsControl DockPanel.Dock="Bottom" ItemsSource="{Binding CommonButtons}"
-                      ItemTemplate="{StaticResource MenuButtonTemplate}"
-                      ItemsPanel="{StaticResource ButtonPanelTemplate}"/>
-            <Grid>
-                <local:AudioControls DataContext="{Binding AudioControlsDataContext}"/>
-            </Grid>
-        </DockPanel>
+    <Grid Visibility="{Binding IsControlVisible, Converter={StaticResource BoolToVisibility}}">
+            
     </Grid>
 </UserControl>

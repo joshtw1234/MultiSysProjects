@@ -95,6 +95,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ViewModels\AudioDemoControlViewModel.cs" />
+    <Compile Include="Views\AudioControls.xaml.cs">
+      <DependentUpon>AudioControls.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\AudioDemoControl.xaml.cs">
       <DependentUpon>AudioDemoControl.xaml</DependentUpon>
     </Compile>
@@ -116,6 +119,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Styles\AudioDemoStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AudioControls.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

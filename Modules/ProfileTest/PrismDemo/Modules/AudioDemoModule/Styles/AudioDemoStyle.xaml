@@ -2,7 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:prism="http://prismlibrary.com/"
                     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-                    xmlns:CommonV="clr-namespace:CommonUILib.Views;assembly=CommonUILib"
                     xmlns:System="clr-namespace:System;assembly=mscorlib"
                     xmlns:local="clr-namespace:AudioDemoModule.Styles">
 
@@ -10,8 +9,7 @@
     <SolidColorBrush x:Key="DefaultForeground" Color="White"/>
     <SolidColorBrush x:Key="WarmGreyColor" Color="#FF757575"/>
     <SolidColorBrush x:Key="BrownishGreyColor" Color="#FF616161"/>
-    <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
-    <CommonV:BoolToColorConverter x:Key="BoolToColorConverter"/>
+    
     <System:Double x:Key="ToolTipWidth">260</System:Double>
     <System:Double x:Key="ToolTipTextHeight">120</System:Double>
 
@@ -167,17 +165,13 @@
         <StackPanel/>
     </ItemsPanelTemplate>
 
-    <DataTemplate x:Key="ButtonTemplate">
-        <Button Style="{Binding ButtonStyle}"/>
-    </DataTemplate>
+    
 
     <DataTemplate x:Key="EQModeButtonTemplate">
         <Button Style="{Binding MenuStyle}"/>
     </DataTemplate>
 
-    <ItemsPanelTemplate x:Key="ButtonPanelTemplate">
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"/>
-    </ItemsPanelTemplate>
+    
 
     <ItemsPanelTemplate x:Key="DefButtonPanelTemplate">
         <StackPanel Orientation="Horizontal"/>

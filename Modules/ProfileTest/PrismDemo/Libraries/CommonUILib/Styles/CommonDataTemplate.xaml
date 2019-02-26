@@ -10,6 +10,10 @@
         <StackPanel/>
     </ItemsPanelTemplate>
 
+    <ItemsPanelTemplate x:Key="ButtonPanelTemplate">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"/>
+    </ItemsPanelTemplate>
+
     <DataTemplate x:Key="EQBandTemplate">
         <ContentControl Style="{StaticResource VerticalBandStyle}"/>
     </DataTemplate>

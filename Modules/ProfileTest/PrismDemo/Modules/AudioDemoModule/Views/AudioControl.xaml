@@ -13,7 +13,24 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid Visibility="{Binding IsControlVisible, Converter={StaticResource BoolToVisibility}}" Background="{StaticResource SliderThumb.Disabled.Border}">
-            
+    <Grid Visibility="{Binding IsControlVisible, Converter={StaticResource BoolToVisibility}}">
+        <StackPanel Orientation="Horizontal">
+            <Border Width="50"/>
+            <StackPanel>
+                <Border Height="100"/>
+                <ContentControl DataContext="{Binding AudioTitle}" Template="{StaticResource TextBoxTipTemplate}"/>
+                <ItemsControl ItemTemplate="{StaticResource AudioControlTemplate}"
+                      ItemsSource="{Binding AudioControlsCollection}"
+                      ItemsPanel="{StaticResource FeatureSupportPanel}"/>
+            </StackPanel>
+            <Border Width="20"/>
+            <StackPanel>
+                <Border Height="100"/>
+                <ContentControl DataContext="{Binding MonitorTitle}" Template="{StaticResource TextBoxTipTemplate}"/>
+                <ItemsControl ItemTemplate="{StaticResource MonitorAudioControlTemplate}"
+                      ItemsSource="{Binding MonitorAudioControlsCollection}"
+                      ItemsPanel="{StaticResource FeatureSupportPanel}"/>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </UserControl>

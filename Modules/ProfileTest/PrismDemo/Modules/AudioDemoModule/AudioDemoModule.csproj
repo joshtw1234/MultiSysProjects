@@ -79,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AudioDemoModule.cs" />
+    <Compile Include="Enums\AudioControlStrings.cs" />
     <Compile Include="Enums\SubControls.cs" />
     <Compile Include="Models\AudioDemoControlModel.cs" />
     <Compile Include="Interfaces\IAudioDemoControlModel.cs" />

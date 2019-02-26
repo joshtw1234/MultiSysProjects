@@ -99,6 +99,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Structures\SampleStructure.cs" />
+    <Compile Include="Structures\TextBoxTip.cs" />
+    <Compile Include="Structures\TipMessageItem.cs" />
+    <Compile Include="Structures\TipViewItem.cs" />
     <Compile Include="ViewModels\SampleViewModel.cs" />
     <Compile Include="Views\BoolToColorConverter.cs" />
     <Compile Include="Views\SampleControl.xaml.cs">

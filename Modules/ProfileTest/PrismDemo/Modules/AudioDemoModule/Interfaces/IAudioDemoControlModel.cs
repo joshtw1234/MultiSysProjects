@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AudioDemoModule.Models
+namespace AudioDemoModule.Interfaces
 {
     public interface IAudioDemoControlModel
     {

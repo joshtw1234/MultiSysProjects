@@ -12,7 +12,7 @@ using Prism.Modularity;
 using Prism.Unity;
 //Add This Line for using unity extension.
 using Microsoft.Practices.Unity;
-
+using AudioDemoModule.Interfaces;
 
 namespace PrismDemo
 {

@@ -1,14 +1,11 @@
 ﻿using AudioDemoModule.Enums;
-using AudioDemoModule.Models;
+using AudioDemoModule.Interfaces;
 using CommonUILib.Interfaces;
 using CommonUILib.Models;
 using Prism.Commands;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace AudioDemoModule.ViewModels

@@ -78,6 +78,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommonUIHelper.cs" />
     <Compile Include="Constants\Constants.cs" />
     <Compile Include="Enums\Module.cs" />
     <Compile Include="Enums\SampleEnum.cs" />

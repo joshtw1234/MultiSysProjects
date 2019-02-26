@@ -1,5 +1,7 @@
 ﻿using System.Windows;
 using AudioDemoModule.Models;
+using HIDDemoModule.Interfaces;
+using HIDDemoModule.Models;
 using MenuModule.Interfaces;
 using MenuModule.Models;
 using Prism.Modularity;
@@ -20,6 +22,7 @@ namespace PrismDemo
             this.RegisterTypeIfMissing(typeof(IMainWindowModel), typeof(MainWindowModel), true);
             this.RegisterTypeIfMissing(typeof(IMenuControlModel), typeof(MenuControlModel), true);
             this.RegisterTypeIfMissing(typeof(IAudioDemoControlModel), typeof(AudioDemoControlModel), true);
+            this.RegisterTypeIfMissing(typeof(IHIDDemoControlModel), typeof(HIDDemoControlModel), true);
         }
 
         protected override void ConfigureModuleCatalog()
@@ -32,6 +35,7 @@ namespace PrismDemo
             {
                 moduleCatalog.AddModule(typeof(MenuModule.MenuModule));
                 moduleCatalog.AddModule(typeof(AudioDemoModule.AudioDemoModule));
+                moduleCatalog.AddModule(typeof(HIDDemoModule.HIDDemoModule));
             }
         }
         #endregion

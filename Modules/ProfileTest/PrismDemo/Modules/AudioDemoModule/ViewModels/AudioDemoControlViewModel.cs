@@ -32,7 +32,7 @@ namespace AudioDemoModule.ViewModels
             PageButtons = GetPageButtons();
 
             AudioControlsDataContext = new AudioControlViewModel() { ViewModelName = SubControls.Audio.ToString() };
-            AdvanceControlDataContext = new AdvanceControlViewModel() { ViewModelName = SubControls.Advance.ToString() };
+            AdvanceControlDataContext = new AdvanceControlViewModel(model) { ViewModelName = SubControls.Advance.ToString() };
 
             _listViewModels = new List<BaseViewModel>()
             {

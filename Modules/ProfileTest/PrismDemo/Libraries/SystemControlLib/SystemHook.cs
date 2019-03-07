@@ -1,7 +1,8 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
 using System.Windows.Interop;
+using SystemControlLib.CallBacks;
 using SystemControlLib.Enums;
+using SystemControlLib.Structures;
 
 namespace SystemControlLib
 {
@@ -39,6 +40,31 @@ namespace SystemControlLib
         {
             switch ((WinProc_Message)msg)
             {
+                case WinProc_Message.WM_MOUSEHOVER:
+                case WinProc_Message.WM_MOUSELEAVE:
+                case WinProc_Message.WM_MOUSEMOVE:
+                case WinProc_Message.WM_MOUSEWHEEL:
+                    //In Client Area
+                case WinProc_Message.WM_LBUTTONDBLCLK:
+                case WinProc_Message.WM_LBUTTONDOWN:
+                case WinProc_Message.WM_LBUTTONUP:
+                case WinProc_Message.WM_RBUTTONDBLCLK:
+                case WinProc_Message.WM_RBUTTONDOWN:
+                case WinProc_Message.WM_RBUTTONUP:
+                    //In None Client Area
+                case WinProc_Message.WM_NCLBUTTONDBLCLK:
+                case WinProc_Message.WM_NCLBUTTONDOWN:
+                case WinProc_Message.WM_NCLBUTTONUP:
+                case WinProc_Message.WM_NCRBUTTONDBLCLK:
+                case WinProc_Message.WM_NCRBUTTONDOWN:
+                case WinProc_Message.WM_NCRBUTTONUP:
+                    //Keyboard
+                case WinProc_Message.WM_IME_KEYDOWN:
+                case WinProc_Message.WM_IME_KEYUP:
+                case WinProc_Message.WM_KEYDOWN:
+                case WinProc_Message.WM_KEYUP:
+                case WinProc_Message.WM_SYSKEYDOWN:
+                case WinProc_Message.WM_SYSKEYUP:
                 // For power event
                 case WinProc_Message.WM_POWERBROADCAST:
                 // For user session change event
@@ -63,14 +89,5 @@ namespace SystemControlLib
         }
     }
 
-    public delegate void WinMessageCallback(WinMessage winMessage);
-
-    public struct WinMessage
-    {
-        public WinProc_Message Message;
-        public IntPtr WParam;
-        public IntPtr LParam;
-        public bool IsHandled;
-    }
-
+    
 }

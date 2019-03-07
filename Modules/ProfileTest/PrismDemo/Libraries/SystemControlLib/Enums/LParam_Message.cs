@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SystemControlLib.Enums
+﻿namespace SystemControlLib.Enums
 {
     public enum LParam_Message : ulong
     {

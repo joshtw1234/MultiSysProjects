@@ -1,15 +1,11 @@
 ﻿using AudioDemoModule.Interfaces;
 using CommonUILib.Interfaces;
 using CommonUILib.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
 using SystemControlLib;
 using SystemControlLib.Enums;
+using SystemControlLib.Structures;
 
 namespace AudioDemoModule.Models
 {

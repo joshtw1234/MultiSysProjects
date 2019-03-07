@@ -4,10 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AudioDemoModule.Views"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:commonV="clr-namespace:CommonUILib.Views;assembly=CommonUILib"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Visibility="{Binding IsControlVisible, Converter={StaticResource BoolToVisibility}}">
         <ScrollViewer>
+            <i:Interaction.Behaviors>
+                <commonV:AutoScrollBehavior/>
+            </i:Interaction.Behaviors>
             <TextBlock DataContext="{Binding MessgeBox}" Style="{Binding MenuStyle}"/>
         </ScrollViewer>
     </Grid>

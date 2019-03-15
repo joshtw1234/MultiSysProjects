@@ -13,6 +13,8 @@ using Prism.Unity;
 //Add This Line for using unity extension.
 using Microsoft.Practices.Unity;
 using AudioDemoModule.Interfaces;
+using PokeGameModule.Interfaces;
+using PokeGameModule.Models;
 
 namespace PrismDemo
 {
@@ -44,6 +46,7 @@ namespace PrismDemo
             this.RegisterTypeIfMissing(typeof(IMenuControlModel), typeof(MenuControlModel), true);
             this.RegisterTypeIfMissing(typeof(IAudioDemoControlModel), typeof(AudioDemoControlModel), true);
             this.RegisterTypeIfMissing(typeof(IHIDDemoControlModel), typeof(HIDDemoControlModel), true);
+            this.RegisterTypeIfMissing(typeof(IPokeGameModel), typeof(PokeGameModel), true);
         }
 
         protected override void ConfigureModuleCatalog()
@@ -57,6 +60,7 @@ namespace PrismDemo
                 moduleCatalog.AddModule(typeof(MenuModule.MenuModule));
                 moduleCatalog.AddModule(typeof(AudioDemoModule.AudioDemoModule));
                 moduleCatalog.AddModule(typeof(HIDDemoModule.HIDDemoModule));
+                moduleCatalog.AddModule(typeof(PokeGameModule.PokeGameModule));
             }
         }
         #endregion

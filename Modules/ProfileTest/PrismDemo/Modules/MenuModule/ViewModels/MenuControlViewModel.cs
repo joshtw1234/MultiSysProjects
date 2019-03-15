@@ -24,23 +24,19 @@ namespace MenuModule.ViewModels
 
         private ObservableCollection<IViewItem> GetMenuButtons()
         {
-            return new ObservableCollection<IViewItem>()
+            var menuButtons = new ObservableCollection<IViewItem>();
+            for (int i = 0; i< Enum.GetNames(typeof(ModuleViewName)).Length; i++)
             {
-                new ViewItem()
+                var item = new ViewItem()
                 {
-                    MenuName = "Audio Demo",
+                    MenuName = ((ModuleViewName)i).ToString(),
                     MenuStyle = Application.Current.Resources["BaseToggleButtonStyle"] as Style,
                     MenuCommand = CommonUILib.CommonUIHelper.Instance.NavigateToCommand,
-                    MenuData = ModuleViewName.AudioDemoControl.ToString()
-                },
-                new ViewItem()
-                {
-                    MenuName = "HID Demo",
-                    MenuStyle = Application.Current.Resources["BaseToggleButtonStyle"] as Style,
-                    MenuCommand = CommonUILib.CommonUIHelper.Instance.NavigateToCommand,
-                    MenuData = ModuleViewName.HIDDemoControl.ToString()
-                },
-            };
+                    MenuData = ((ModuleViewName)i).ToString()
+                };
+                menuButtons.Add(item);
+            }
+            return menuButtons;
         }
     }
 }

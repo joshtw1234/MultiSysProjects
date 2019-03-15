@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CommonUILib.Enums
+namespace PokeGameModule.ViewModels
 {
-    public enum ModuleViewName
+    class PokeGameControlViewModel
     {
-        HIDDemoControl,
-        AudioDemoControl,
-        PokeGameControl
     }
 }

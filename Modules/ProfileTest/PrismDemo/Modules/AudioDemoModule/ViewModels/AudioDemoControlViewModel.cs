@@ -14,7 +14,6 @@ namespace AudioDemoModule.ViewModels
     {
         IAudioDemoControlModel _model;
 
-        private ResourceDictionary _localDictionary;
         public ObservableCollection<IViewItem> PageButtons { get; set; }
         public ObservableCollection<IViewItem> CommonButtons { get; set; }
 

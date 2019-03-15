@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace PokeGameModule.Games.Structures
 {
-    class PokeGamer
+    struct PokeGamer
     {
         public GamerID Gamer;
         public List<PokeCard> GamerCards { get; set; }

@@ -65,6 +65,7 @@ namespace SystemControlLib
                 case WinProc_Message.WM_KEYUP:
                 case WinProc_Message.WM_SYSKEYDOWN:
                 case WinProc_Message.WM_SYSKEYUP:
+                    break;
                 // For power event
                 case WinProc_Message.WM_POWERBROADCAST:
                 // For user session change event

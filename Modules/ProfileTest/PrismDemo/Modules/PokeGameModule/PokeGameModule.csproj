@@ -78,6 +78,9 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Games\Enums\PokeCardFlower.cs" />
+    <Compile Include="Games\PokeEntry.cs" />
+    <Compile Include="Games\Structures\PokeCard.cs" />
     <Compile Include="Interfaces\IPokeGameModel.cs" />
     <Compile Include="Models\PokeGameModel.cs" />
     <Compile Include="PokeGameModule.cs" />

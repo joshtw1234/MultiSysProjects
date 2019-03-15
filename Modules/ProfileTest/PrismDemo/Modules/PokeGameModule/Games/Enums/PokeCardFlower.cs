@@ -3,8 +3,8 @@
     enum PokeCardFlower
     {
         BlackPeach,
-        RedHart,
-        BlackPlum,
-        RedDiamond
+        RedHeart,
+        RedDiamond,
+        BlackPlum
     }
 }

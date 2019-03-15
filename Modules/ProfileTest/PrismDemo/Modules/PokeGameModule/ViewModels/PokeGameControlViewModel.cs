@@ -1,4 +1,5 @@
-﻿using PokeGameModule.Interfaces;
+﻿using PokeGameModule.Games;
+using PokeGameModule.Interfaces;
 
 namespace PokeGameModule.ViewModels
 {
@@ -8,6 +9,7 @@ namespace PokeGameModule.ViewModels
         public PokeGameControlViewModel(IPokeGameModel model)
         {
             _model = model;
+            PokeEntry.Instence.SpendCard();
         }
     }
 }

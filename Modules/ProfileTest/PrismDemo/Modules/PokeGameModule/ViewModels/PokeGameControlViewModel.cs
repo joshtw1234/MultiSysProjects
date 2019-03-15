@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using PokeGameModule.Interfaces;
 
 namespace PokeGameModule.ViewModels
 {
-    class PokeGameControlViewModel
+    public class PokeGameControlViewModel
     {
+        IPokeGameModel _model;
+        public PokeGameControlViewModel(IPokeGameModel model)
+        {
+            _model = model;
+        }
     }
 }

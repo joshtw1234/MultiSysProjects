@@ -82,7 +82,7 @@ namespace PokeGameModule.Games
             for (int i = 1; i <= listBaseCard.Length; i++)
             {
                 Random random = new Random();
-                int num = random.Next(0, 53);
+                int num = random.Next(1, 53);
                 PokeCard temp = listBaseCard[i - 1];
                 listBaseCard[i - 1] = listBaseCard[num - 1];
                 listBaseCard[num - 1] = temp;

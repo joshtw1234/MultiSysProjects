@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace CommonUILib
 {
@@ -35,6 +36,17 @@ namespace CommonUILib
         /// The _expand menu command.
         /// </summary>
         private DelegateCommand<string> _expandMenuCommand;
+
+        private DelegateCommand<KeyEventArgs> _wpfKeyDownEvent;
+        public DelegateCommand<KeyEventArgs> WPFKeyDownCommand => _wpfKeyDownEvent ?? (_wpfKeyDownEvent = new DelegateCommand<KeyEventArgs>(OnWPFKeyDown));
+
+        private void OnWPFKeyDown(KeyEventArgs obj)
+        {
+            if (obj.SystemKey == Key.LeftAlt && obj.Key == Key.F4)
+            {
+
+            }
+        }
 
         /// <summary>
         /// Gets the instance.

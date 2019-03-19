@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Input;
 using System.Windows.Interop;
 using SystemControlLib.CallBacks;
 using SystemControlLib.Enums;
@@ -61,10 +62,14 @@ namespace SystemControlLib
                     //Keyboard
                 case WinProc_Message.WM_IME_KEYDOWN:
                 case WinProc_Message.WM_IME_KEYUP:
+                    break;
                 case WinProc_Message.WM_KEYDOWN:
+                    _onWinMessage?.Invoke(new WinMessage() { Message = (WinProc_Message)msg, WParam = wParam, LParam = lParam, IsHandled = handled });
+                    break;
                 case WinProc_Message.WM_KEYUP:
                 case WinProc_Message.WM_SYSKEYDOWN:
                 case WinProc_Message.WM_SYSKEYUP:
+                    _onWinMessage?.Invoke(new WinMessage() { Message = (WinProc_Message)msg, WParam = wParam, LParam = lParam, IsHandled = handled });
                     break;
                 // For power event
                 case WinProc_Message.WM_POWERBROADCAST:

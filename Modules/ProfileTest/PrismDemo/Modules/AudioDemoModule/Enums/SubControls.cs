@@ -9,6 +9,7 @@ namespace AudioDemoModule.Enums
     enum SubControls
     {
         Audio,
-        Advance
+        Advance,
+        Debug
     }
 }

@@ -19,6 +19,7 @@ namespace AudioDemoModule.ViewModels
 
         public BaseViewModel AudioControlsDataContext { get; set; }
         public BaseViewModel AdvanceControlDataContext { get; set; }
+        public BaseViewModel DebugControlDataContext { get; set; }
 
         private DelegateCommand<string> _onPageButtonClickEvent;
         private DelegateCommand<string> OnPageButtonClickEvent => _onPageButtonClickEvent ?? (_onPageButtonClickEvent = new DelegateCommand<string>(OnPageButtonClick));
@@ -32,11 +33,13 @@ namespace AudioDemoModule.ViewModels
 
             AudioControlsDataContext = new AudioControlViewModel() { ViewModelName = SubControls.Audio.ToString() };
             AdvanceControlDataContext = new AdvanceControlViewModel(model) { ViewModelName = SubControls.Advance.ToString() };
+            DebugControlDataContext = new DebugControlViewModel(model) { ViewModelName = SubControls.Debug.ToString() };
 
             _listViewModels = new List<BaseViewModel>()
             {
                 AudioControlsDataContext,
-                AdvanceControlDataContext
+                AdvanceControlDataContext,
+                DebugControlDataContext
             };
         }
 
@@ -57,6 +60,13 @@ namespace AudioDemoModule.ViewModels
                     MenuStyle = Application.Current.Resources["BaseToggleButtonStyle"] as Style,
                     MenuCommand = OnPageButtonClickEvent,
                     MenuData = SubControls.Advance.ToString()
+                },
+                new ViewItem()
+                {
+                    MenuName = "Debug Control",
+                    MenuStyle = Application.Current.Resources["BaseToggleButtonStyle"] as Style,
+                    MenuCommand = OnPageButtonClickEvent,
+                    MenuData = SubControls.Debug.ToString()
                 },
             };
         }

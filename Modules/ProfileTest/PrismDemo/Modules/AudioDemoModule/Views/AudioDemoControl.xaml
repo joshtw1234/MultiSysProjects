@@ -26,6 +26,7 @@
             <Grid>
                 <local:AudioControl DataContext="{Binding AudioControlsDataContext}"/>
                 <local:AdvanceControl DataContext="{Binding AdvanceControlDataContext}"/>
+                <local:DebugControl DataContext="{Binding DebugControlDataContext}"/>
             </Grid>
         </DockPanel>
     </Grid>

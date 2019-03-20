@@ -8,7 +8,51 @@
              xmlns:commonV="clr-namespace:CommonUILib.Views;assembly=CommonUILib"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/AudioDemoModule;component/Styles/AudioDemoStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid Visibility="{Binding IsControlVisible, Converter={StaticResource BoolToVisibility}}">
-        
+        <DockPanel>
+            <ItemsControl DockPanel.Dock="Bottom" ItemTemplate="{StaticResource EQModeButtonTemplate}"
+                              ItemsSource="{Binding ControlButtonCollection}"
+                              ItemsPanel="{StaticResource ButtonPanelTemplate}"/>
+            <StackPanel>
+                <Border Height="100"/>
+                <DockPanel>
+                    <Border DockPanel.Dock="Left" Width="50"/>
+                    <StackPanel DockPanel.Dock="Left">
+                        <ContentControl DataContext="{Binding AudioTitle}" Template="{StaticResource TextBoxTipTemplate}"/>
+                        <ItemsControl ItemTemplate="{StaticResource EQModeButtonTemplate}"
+                              ItemsSource="{Binding EQModeCollection}"
+                              ItemsPanel="{StaticResource DefButtonPanelTemplate}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <ItemsControl ItemTemplate="{StaticResource EQBandTemplate}"
+                              ItemsSource="{Binding EQBandCollection}"
+                              ItemsPanel="{StaticResource ButtonPanelTemplate}"/>
+                            <ContentControl DataContext="{Binding BandClarity}" Style="{Binding EQBandName.MenuStyle}"/>
+                            <ItemsControl ItemTemplate="{StaticResource EQBandsTemplate}"
+                                  ItemsSource="{Binding EQBandsCollection}"
+                                  ItemsPanel="{StaticResource FeatureSupportPanel}"/>
+                        </StackPanel>
+                        <ContentControl DataContext="{Binding CustomEQPreset}" Template="{StaticResource TextBoxTipTemplate}"/>
+                        <DataGrid/>
+                        <Border>
+                            <StackPanel Orientation="Horizontal">
+                                <ItemsControl ItemTemplate="{StaticResource EQBandsTemplate}"
+                                  ItemsSource="{Binding PresetControlCollection}"
+                                  ItemsPanel="{StaticResource ButtonPanelTemplate}"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                    <ItemsControl ItemTemplate="{StaticResource EQModeButtonTemplate}"
+                              ItemsSource="{Binding EQPresetModeCollection}"
+                              ItemsPanel="{StaticResource WarpButtonPanelTemplate}"/>
+                </DockPanel>
+            </StackPanel>
+        </DockPanel>
     </Grid>
 </UserControl>

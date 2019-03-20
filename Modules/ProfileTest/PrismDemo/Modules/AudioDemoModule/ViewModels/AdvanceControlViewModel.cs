@@ -82,25 +82,25 @@ namespace AudioDemoModule.ViewModels
 
             AudioTitle = new TextBoxTip()
             {
-                TitleText = new ViewItem()
+                TitleText = new TipMessageItem()
                 {
                     MenuName = "Audio Mode",
-                    MenuStyle = _localResourceDictionary["BaseTextBoxStyle"] as Style
+                    MenuStyle = Application.Current.Resources["BaseTextBoxStyle"] as Style
                 },
                 TipItem = new TipViewItem()
                 {
                     TipViewItemVisibility = true,
-                    TipButton = new ViewItem()
+                    TipButton = new TipMessageItem()
                     {
                         MenuName = "I",
-                        MenuStyle = _localResourceDictionary["InfoButton"] as Style,
+                        MenuStyle = Application.Current.Resources["InfoButton"] as Style,
                         MenuCommand = OnTipButtonClickEvent,
                         MenuData = EQModesStrings.Audio_Modes.ToString()
                     },
-                    TipInfo = new ViewItem()
+                    TipInfo = new TipMessageItem()
                     {
                         MenuName = "Tip String is here",
-                        MenuStyle = _localResourceDictionary["ToolTipStyle"] as Style,
+                        MenuStyle = Application.Current.Resources["ToolTipStyle"] as Style,
                         MenuCommand = OnTipCloseClickEvent,
                         MenuData = EQModesStrings.Audio_Modes.ToString()
                     }
@@ -109,25 +109,25 @@ namespace AudioDemoModule.ViewModels
 
             CustomEQPreset = new TextBoxTip()
             {
-                TitleText = new ViewItem()
+                TitleText = new TipMessageItem()
                 {
                     MenuName = "Custom EQ Presets",
-                    MenuStyle = _localResourceDictionary["BaseTextBoxStyle"] as Style
+                    MenuStyle = Application.Current.Resources["BaseTextBoxStyle"] as Style
                 },
                 TipItem = new TipViewItem()
                 {
                     TipViewItemVisibility = true,
-                    TipButton = new ViewItem()
+                    TipButton = new TipMessageItem()
                     {
                         MenuName = "I",
-                        MenuStyle = _localResourceDictionary["InfoButton"] as Style,
+                        MenuStyle = Application.Current.Resources["InfoButton"] as Style,
                         MenuCommand = OnTipButtonClickEvent,
                         MenuData = EQModesStrings.Custom_EQ_Presets.ToString()
                     },
-                    TipInfo = new ViewItem()
+                    TipInfo = new TipMessageItem()
                     {
                         MenuName = "Custom EQ Tip String is here",
-                        MenuStyle = _localResourceDictionary["ToolTipStyle"] as Style,
+                        MenuStyle = Application.Current.Resources["ToolTipStyle"] as Style,
                         MenuCommand = OnTipCloseClickEvent,
                         MenuData = EQModesStrings.Custom_EQ_Presets.ToString()
                     }

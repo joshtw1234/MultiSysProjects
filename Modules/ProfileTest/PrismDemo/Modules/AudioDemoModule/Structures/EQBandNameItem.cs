@@ -2,7 +2,7 @@
 
 namespace AudioDemoModule.Structures
 {
-    class EQBandNameItem : ViewItem
+    class EQBandNameItem : BaseViewItem
     {
         private string _menuName;
         public override string MenuName
@@ -11,15 +11,6 @@ namespace AudioDemoModule.Structures
             set
             {
                 SetProperty(ref _menuName, value);
-            }
-        }
-        private bool _menuVisibility;
-        public override bool MenuVisibility
-        {
-            get => _menuVisibility;
-            set
-            {
-                SetProperty(ref _menuVisibility, value);
             }
         }
     }

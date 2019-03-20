@@ -17,8 +17,7 @@ namespace AudioDemoModule.Structures
             }
             set
             {
-                _sliderValue = value;
-                onPropertyChanged(this, "SliderValue");
+                SetProperty(ref _sliderValue, value);
             }
         }
         public DelegateCommand<RoutedPropertyChangedEventArgs<double>> SliderValueChanged { get; set; }
@@ -35,8 +34,7 @@ namespace AudioDemoModule.Structures
             }
             set
             {
-                _audioValue = value;
-                onPropertyChanged(this, "AudioValue");
+                SetProperty(ref _audioValue, value);
             }
         }
     }

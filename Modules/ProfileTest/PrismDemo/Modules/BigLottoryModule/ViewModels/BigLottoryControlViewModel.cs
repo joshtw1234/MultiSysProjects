@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Text.RegularExpressions;
 using BigLottoryModule.Interface;
 
 namespace BigLottoryModule.ViewModels
@@ -31,7 +32,12 @@ namespace BigLottoryModule.ViewModels
 
         private void GetLottoryHistory(string dataDir)
         {
+            const string getNumberPat = "\">[\\s]+([^\\s]*)[\\s]+</td>";
+            const string getSpecialNum = @">(&[^\r\n]*)</td>";
+            const string getFieldPat = @">([^\r\n&]*)</td>";
             var dataFiles = Directory.GetFiles(dataDir);
+            string rawFile = File.ReadAllText(dataFiles[0]);
+            var mt = Regex.Matches(rawFile, getNumberPat);
         }
 
         private void DownloadWeb(string webLink, string saveDir, string saveFile)

@@ -82,8 +82,10 @@
     <Compile Include="Constants\Constants.cs" />
     <Compile Include="Enums\ModuleViewName.cs" />
     <Compile Include="Enums\SampleEnum.cs" />
+    <Compile Include="Interfaces\IDebugOutPutControlViewModel.cs" />
     <Compile Include="Interfaces\IViewItem.cs" />
     <Compile Include="Interfaces\SampleInterface.cs" />
+    <Compile Include="Models\DebugViewItem.cs" />
     <Compile Include="Models\ViewItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -105,6 +107,9 @@
     <Compile Include="ViewModels\SampleViewModel.cs" />
     <Compile Include="Views\AutoScrollBehavior.cs" />
     <Compile Include="Views\BoolToColorConverter.cs" />
+    <Compile Include="Views\DebugOutPutControl.xaml.cs">
+      <DependentUpon>DebugOutPutControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SampleControl.xaml.cs">
       <DependentUpon>SampleControl.xaml</DependentUpon>
     </Compile>
@@ -129,6 +134,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\SampleStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DebugOutPutControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

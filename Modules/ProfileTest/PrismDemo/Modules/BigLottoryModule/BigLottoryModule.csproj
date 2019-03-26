@@ -108,7 +108,12 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\CommonUILib\CommonUILib.csproj">
+      <Project>{fe476d8c-ecb3-42bf-b4a1-e952e275c9b5}</Project>
+      <Name>CommonUILib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Page Include="Views\BigLottoryControl.xaml">
       <SubType>Designer</SubType>

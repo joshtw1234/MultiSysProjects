@@ -18,7 +18,7 @@ namespace AudioDemoModule.Models
             get
             {
                 LogTool.Logger("Set MessageBox");
-                return _messageBox = new MessageBox()
+                return _messageBox = new DebugViewItem()
                 {
                     MenuName = "Hello Word",
                     MenuStyle = Application.Current.Resources["BaseTextBoxStyle"] as Style,
@@ -95,21 +95,6 @@ namespace AudioDemoModule.Models
             }
             _messageBox.MenuName += msg;
             LogTool.Logger(msg);
-        }
-    }
-    class MessageBox : ViewItem
-    {
-        private string _menuName;
-        public override string MenuName
-        {
-            get
-            {
-                return _menuName;
-            }
-            set
-            {
-                SetProperty(ref _menuName, value);
-            }
         }
     }
 }

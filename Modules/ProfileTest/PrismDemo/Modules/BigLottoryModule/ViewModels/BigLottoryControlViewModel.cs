@@ -5,16 +5,24 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
+using System.Windows;
 using BigLottoryModule.Interface;
+using CommonUILib.Interfaces;
+using CommonUILib.Models;
 
 namespace BigLottoryModule.ViewModels
 {
-    class BigLottoryControlViewModel
+    class BigLottoryControlViewModel : IDebugOutPutControlViewModel
     {
         private IBigLottoryControlModel _model;
         public BigLottoryControlViewModel(IBigLottoryControlModel model)
         {
             _model = model;
+            DebugMessage = new DebugViewItem()
+            {
+                MenuName = "Hello Word",
+                MenuStyle = Application.Current.Resources["BaseTextBoxStyle"] as Style,
+            };
             string webLink = "https://www.pilio.idv.tw/ltobig/ServerC/list.asp?indexpage=1&orderby=new";
             string currentPath = Directory.GetCurrentDirectory();
             string lottoryDir = $"{currentPath}\\LottoryData";
@@ -40,9 +48,59 @@ namespace BigLottoryModule.ViewModels
             }
 
             GetLottoryHistory(lottoryDir);
+
+            
+            GetPacent(LottoryHistory);
+            DebugMessage.MenuName += "\nRemove 3/26 numbers";
+            LottoryHistory.RemoveAt(0);
+            GetPacent(LottoryHistory);
+            DebugMessage.MenuName += "\nRemove 3/22 numbers";
+            LottoryHistory.RemoveAt(0);
+            GetPacent(LottoryHistory);
         }
-        
+
+        private void GetPacent(List<LottoryInfo> lottoryHistory)
+        {
+            Dictionary<int, double> dicTable = new Dictionary<int, double>();
+            Dictionary<int, double> dic11Table = new Dictionary<int, double>();
+            Dictionary<int, double> dic10Table = new Dictionary<int, double>();
+            for (int i = 1; i < 50; i++)
+            {
+                var num1Cnt = lottoryHistory.Where(x => x.LottoryNumbers.Contains(i)).ToList();
+                double pacent = (double)num1Cnt.Count / (double)LottoryHistory.Count * 100;
+                //DebugMessage.MenuName += $"\n number {i} count {num1Cnt.Count} pacent {pacent.ToString("0.00")}%";
+                if (pacent < 12 && pacent > 11)
+                {
+                    dic11Table.Add(i, pacent);
+                }
+                else if (pacent < 11 && pacent > 10)
+                {
+                    dic10Table.Add(i, pacent);
+                }
+                else
+                {
+                    dicTable.Add(i, pacent);
+                }
+            }
+            PrintDicTable(11, dic11Table);
+            PrintDicTable(10, dic10Table);
+            PrintDicTable(12, dicTable);
+        }
+
+        private void PrintDicTable(int tableName, Dictionary<int, double> dicTable)
+        {
+            string tt = $"{tableName}% {dicTable.Count}";
+            foreach (var dd in dicTable)
+            {
+                tt += $" [{dd.Key}] [{dd.Value.ToString("0.00")}]";
+            }
+            DebugMessage.MenuName += $"\n {tt}";
+        }
+
         List<LottoryInfo> LottoryHistory;
+
+        public IViewItem DebugMessage { get; set; }
+
         private void GetLottoryHistory(string dataDir)
         {
             LottoryHistory = new List<LottoryInfo>();

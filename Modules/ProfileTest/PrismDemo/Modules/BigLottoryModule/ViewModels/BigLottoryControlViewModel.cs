@@ -51,11 +51,15 @@ namespace BigLottoryModule.ViewModels
 
             
             GetPacent(LottoryHistory);
-            DebugMessage.MenuName += "\nRemove 3/26 numbers";
+            
             LottoryHistory.RemoveAt(0);
+            DebugMessage.MenuName += $"\nRemove 3/26 numbers Total {LottoryHistory.Count}";
             GetPacent(LottoryHistory);
-            DebugMessage.MenuName += "\nRemove 3/22 numbers";
             LottoryHistory.RemoveAt(0);
+            DebugMessage.MenuName += $"\nRemove 3/22 numbers Total {LottoryHistory.Count}";
+            GetPacent(LottoryHistory);
+            LottoryHistory.RemoveAt(0);
+            DebugMessage.MenuName += $"\nRemove 3/19 numbers Total {LottoryHistory.Count}";
             GetPacent(LottoryHistory);
         }
 
@@ -67,7 +71,7 @@ namespace BigLottoryModule.ViewModels
             for (int i = 1; i < 50; i++)
             {
                 var num1Cnt = lottoryHistory.Where(x => x.LottoryNumbers.Contains(i)).ToList();
-                double pacent = (double)num1Cnt.Count / (double)LottoryHistory.Count * 100;
+                double pacent = (double)num1Cnt.Count / (double)lottoryHistory.Count * 100;
                 //DebugMessage.MenuName += $"\n number {i} count {num1Cnt.Count} pacent {pacent.ToString("0.00")}%";
                 if (pacent < 12 && pacent > 11)
                 {
@@ -92,7 +96,7 @@ namespace BigLottoryModule.ViewModels
             string tt = $"{tableName}% {dicTable.Count}";
             foreach (var dd in dicTable)
             {
-                tt += $" [{dd.Key}] [{dd.Value.ToString("0.00")}]";
+                tt += $" [{dd.Key}] [{dd.Value.ToString("0.000")}]";
             }
             DebugMessage.MenuName += $"\n {tt}";
         }

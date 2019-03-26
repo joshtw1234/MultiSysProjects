@@ -10,6 +10,7 @@ namespace CommonUILib.Enums
     {
         HIDDemoControl,
         AudioDemoControl,
-        PokeGameControl
+        PokeGameControl,
+        BigLottoryControl
     }
 }

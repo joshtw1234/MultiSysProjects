@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemControlLib", "Librari
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeGameModule", "Modules\PokeGameModule\PokeGameModule.csproj", "{5061A279-427A-4A29-9D95-8051E6E722BA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigLottoryModule", "Modules\BigLottoryModule\BigLottoryModule.csproj", "{BFB9D761-BAAF-48A8-A149-D00E34433DD1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -95,6 +97,14 @@ Global
 		{5061A279-427A-4A29-9D95-8051E6E722BA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5061A279-427A-4A29-9D95-8051E6E722BA}.Release|x64.ActiveCfg = Release|x64
 		{5061A279-427A-4A29-9D95-8051E6E722BA}.Release|x64.Build.0 = Release|x64
+		{BFB9D761-BAAF-48A8-A149-D00E34433DD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFB9D761-BAAF-48A8-A149-D00E34433DD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFB9D761-BAAF-48A8-A149-D00E34433DD1}.Debug|x64.ActiveCfg = Debug|x64
+		{BFB9D761-BAAF-48A8-A149-D00E34433DD1}.Debug|x64.Build.0 = Debug|x64
+		{BFB9D761-BAAF-48A8-A149-D00E34433DD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFB9D761-BAAF-48A8-A149-D00E34433DD1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFB9D761-BAAF-48A8-A149-D00E34433DD1}.Release|x64.ActiveCfg = Release|Any CPU
+		{BFB9D761-BAAF-48A8-A149-D00E34433DD1}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -107,6 +117,7 @@ Global
 		{987D809A-3257-4EBA-B6CC-F69559CCAF99} = {2192270D-7EFB-4539-8F16-DC5D315A5E6F}
 		{5F4C2D84-9E4B-4515-8408-3A42724B5709} = {379F1143-9CB9-4F60-AB71-08C544E319B7}
 		{5061A279-427A-4A29-9D95-8051E6E722BA} = {2192270D-7EFB-4539-8F16-DC5D315A5E6F}
+		{BFB9D761-BAAF-48A8-A149-D00E34433DD1} = {2192270D-7EFB-4539-8F16-DC5D315A5E6F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {60217D94-DFCD-4C7C-8A11-C5880BC9EAE9}

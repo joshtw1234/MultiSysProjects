@@ -23,9 +23,15 @@ namespace BigLottoryModule.ViewModels
             {
                 webLink = $"https://www.pilio.idv.tw/ltobig/ServerC/list.asp?indexpage={i}&orderby=new";
                 saveWebFile = $"Lottory{i}.txt";
-                DownloadWeb(webLink, lottoryDir, saveWebFile);
+                //DownloadWeb(webLink, lottoryDir, saveWebFile);
             }
-            
+
+            GetLottoryHistory(lottoryDir);
+        }
+
+        private void GetLottoryHistory(string dataDir)
+        {
+            var dataFiles = Directory.GetFiles(dataDir);
         }
 
         private void DownloadWeb(string webLink, string saveDir, string saveFile)

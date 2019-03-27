@@ -15,6 +15,10 @@
             <ProgressBar/>
         </StackPanel>
         <commonV:DebugOutPutControl>
+            <!--
+            use data trigger to control visible.
+            https://www.wpf-tutorial.com/styles/trigger-datatrigger-event-trigger/
+            -->
             <commonV:DebugOutPutControl.Style>
                 <Style>
                     <Style.Triggers>

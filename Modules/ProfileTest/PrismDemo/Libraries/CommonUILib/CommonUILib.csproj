@@ -83,6 +83,7 @@
     <Compile Include="Enums\ModuleViewName.cs" />
     <Compile Include="Enums\SampleEnum.cs" />
     <Compile Include="Interfaces\IDebugOutPutControlViewModel.cs" />
+    <Compile Include="Interfaces\IProgressBarControlViewModel.cs" />
     <Compile Include="Interfaces\IViewItem.cs" />
     <Compile Include="Interfaces\SampleInterface.cs" />
     <Compile Include="Models\DebugViewItem.cs" />

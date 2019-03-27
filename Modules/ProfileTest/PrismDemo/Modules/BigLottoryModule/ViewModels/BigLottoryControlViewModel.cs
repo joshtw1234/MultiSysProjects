@@ -14,7 +14,7 @@ using CommonUILib.Models;
 
 namespace BigLottoryModule.ViewModels
 {
-    class BigLottoryControlViewModel : IDebugOutPutControlViewModel
+    class BigLottoryControlViewModel : IDebugOutPutControlViewModel, IProgressBarControlViewModel
     {
         private IBigLottoryControlModel _model;
 

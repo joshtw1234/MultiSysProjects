@@ -10,11 +10,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <StackPanel Visibility="{Binding TextProgress.MenuVisibility, Converter={StaticResource BoolToVisibility}}"
-                    VerticalAlignment="Center" HorizontalAlignment="Center">
-            <TextBlock DataContext="{Binding TextProgress}" Style="{Binding MenuStyle}"/>
-            <ProgressBar DataContext="{Binding ViewProgressBar}" Style="{Binding MenuStyle}"/>
-        </StackPanel>
+        <ContentControl Template="{StaticResource BaseProgressBarTemplate}"/>
         <commonV:DebugOutPutControl>
             <!--
             use data trigger to control visible.

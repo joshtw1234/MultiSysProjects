@@ -5,6 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using BigLottoryModule.Interface;
 using CommonUILib.Interfaces;
@@ -31,7 +33,7 @@ namespace BigLottoryModule.ViewModels
             };
             TextProgress = new DebugViewItem()
             {
-                MenuName = "Hello Word Text progress",
+                MenuName = "Please wait processing....",
                 MenuStyle = Application.Current.Resources["BaseTextBoxStyle"] as Style,
                 MenuVisibility = true
             };
@@ -43,8 +45,17 @@ namespace BigLottoryModule.ViewModels
                 MenuMaxValue="100",
                 MenuStyle = Application.Current.Resources["CustomProgressBar"] as Style,
             };
-
-
+            Task.Factory.StartNew(() => 
+            {
+                while(true)
+                {
+                    for(int i = 0; i <= 100; i+=10)
+                    {
+                        Thread.Sleep(100);
+                        ViewProgressBar.MenuName = i.ToString();
+                    }
+                }
+            });
         }
 
         private void LottoryDataProcess()

@@ -35,7 +35,7 @@ namespace BigLottoryModule.ViewModels
             {
                 MenuName = "Please wait processing....",
                 MenuStyle = Application.Current.Resources["BaseTextBoxStyle"] as Style,
-                MenuVisibility = true
+                MenuVisibility = false
             };
 
             ViewProgressBar = new ProgressBarViewItem()
@@ -45,17 +45,7 @@ namespace BigLottoryModule.ViewModels
                 MenuMaxValue="100",
                 MenuStyle = Application.Current.Resources["CustomProgressBar"] as Style,
             };
-            Task.Factory.StartNew(() => 
-            {
-                while(true)
-                {
-                    for(int i = 0; i <= 100; i+=10)
-                    {
-                        Thread.Sleep(100);
-                        ViewProgressBar.MenuName = i.ToString();
-                    }
-                }
-            });
+            LottoryDataProcess();
         }
 
         private void LottoryDataProcess()
@@ -68,31 +58,55 @@ namespace BigLottoryModule.ViewModels
             {
                 Directory.CreateDirectory(lottoryDir);
             }
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
 
             var dataFiles = Directory.GetFiles(lottoryDir);
             if (dataFiles.Count() != 71)
             {
-                /*
-                 * 03/27/2019 has 71 page on website
-                 * use this number prevent re download files
-                 * TODO: find a way to get page numbers.
-                 */
-                for (int i = 1; i < 72; i++)
+                TextProgress.MenuVisibility = true;
+                Task.Factory.StartNew(() =>
                 {
-                    webLink = $"https://www.pilio.idv.tw/ltobig/ServerC/list.asp?indexpage={i}&orderby=new";
-                    saveWebFile = $"Lottory{i}.txt";
-                    DownloadWeb(webLink, lottoryDir, saveWebFile);
-                }
+                    while (TextProgress.MenuVisibility)
+                    {
+                        for (int i = 0; i <= 100; i += 10)
+                        {
+                            Thread.Sleep(100);
+                            ViewProgressBar.MenuName = i.ToString();
+                        }
+                    }
+                });
+                Task.Factory.StartNew(() =>
+                {
+                    Stopwatch sw = new Stopwatch();
+                    sw.Start();
+                    /*
+                     * 03/27/2019 has 71 page on website
+                     * use this number prevent re download files
+                     * TODO: find a way to get page numbers.
+                     */
+                    for (int i = 1; i < 72; i++)
+                    {
+                        webLink = $"https://www.pilio.idv.tw/ltobig/ServerC/list.asp?indexpage={i}&orderby=new";
+                        saveWebFile = $"Lottory{i}.txt";
+                        DownloadWeb(webLink, lottoryDir, saveWebFile);
+                    }
+                    sw.Stop();
+                    Console.WriteLine($"DownloadWeb done {sw.Elapsed.TotalSeconds}");
+                    LoadLottoryHistory(lottoryDir);
+                    TextProgress.MenuVisibility = false;
+                });
             }
-            sw.Stop();
-            Console.WriteLine($"DownloadWeb done {sw.Elapsed.TotalSeconds}");
-            sw.Restart();
+            else
+            {
+                LoadLottoryHistory(lottoryDir);
+            }
+            
+        }
+
+        void LoadLottoryHistory(string lottoryDir)
+        {
             GetLottoryHistory(lottoryDir);
             GetPacent(LottoryHistory);
-            sw.Stop();
-            Console.WriteLine($"GetLottoryHistory done {sw.Elapsed.TotalSeconds}");
+            //Console.WriteLine($"GetLottoryHistory done {sw.Elapsed.TotalSeconds}");
             LottoryHistory.RemoveAt(0);
             DebugMessage.MenuName += $"\nRemove 3/26 numbers Total {LottoryHistory.Count}";
             GetPacent(LottoryHistory);

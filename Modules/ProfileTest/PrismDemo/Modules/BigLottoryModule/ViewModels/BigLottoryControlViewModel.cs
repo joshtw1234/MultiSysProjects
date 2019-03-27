@@ -15,6 +15,11 @@ namespace BigLottoryModule.ViewModels
     class BigLottoryControlViewModel : IDebugOutPutControlViewModel
     {
         private IBigLottoryControlModel _model;
+
+        List<LottoryInfo> LottoryHistory;
+        public IViewItem DebugMessage { get; set; }
+        public IViewItem TextProgress { get; set; }
+
         public BigLottoryControlViewModel(IBigLottoryControlModel model)
         {
             _model = model;
@@ -23,6 +28,18 @@ namespace BigLottoryModule.ViewModels
                 MenuName = "Hello Word",
                 MenuStyle = Application.Current.Resources["BaseTextBoxStyle"] as Style,
             };
+            TextProgress = new DebugViewItem()
+            {
+                MenuName = "Hello Word Text progress",
+                MenuStyle = Application.Current.Resources["BaseTextBoxStyle"] as Style,
+                MenuVisibility = true
+            };
+
+            
+        }
+
+        private void LottoryDataProcess()
+        {
             string webLink = "https://www.pilio.idv.tw/ltobig/ServerC/list.asp?indexpage=1&orderby=new";
             string currentPath = Directory.GetCurrentDirectory();
             string lottoryDir = $"{currentPath}\\LottoryData";
@@ -31,6 +48,9 @@ namespace BigLottoryModule.ViewModels
             {
                 Directory.CreateDirectory(lottoryDir);
             }
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+
             var dataFiles = Directory.GetFiles(lottoryDir);
             if (dataFiles.Count() != 71)
             {
@@ -46,12 +66,13 @@ namespace BigLottoryModule.ViewModels
                     DownloadWeb(webLink, lottoryDir, saveWebFile);
                 }
             }
-
+            sw.Stop();
+            Console.WriteLine($"DownloadWeb done {sw.Elapsed.TotalSeconds}");
+            sw.Restart();
             GetLottoryHistory(lottoryDir);
-
-            
             GetPacent(LottoryHistory);
-            
+            sw.Stop();
+            Console.WriteLine($"GetLottoryHistory done {sw.Elapsed.TotalSeconds}");
             LottoryHistory.RemoveAt(0);
             DebugMessage.MenuName += $"\nRemove 3/26 numbers Total {LottoryHistory.Count}";
             GetPacent(LottoryHistory);
@@ -101,23 +122,19 @@ namespace BigLottoryModule.ViewModels
             DebugMessage.MenuName += $"\n {tt}";
         }
 
-        List<LottoryInfo> LottoryHistory;
-
-        public IViewItem DebugMessage { get; set; }
+       
 
         private void GetLottoryHistory(string dataDir)
         {
             LottoryHistory = new List<LottoryInfo>();
             List<LottoryInfo> rawData = new List<LottoryInfo>();
             var dataFiles = Directory.GetFiles(dataDir);
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
+           
             foreach (var dataPath in dataFiles)
             {
                 rawData.AddRange(GetLottoryData(dataPath));
             }
-            sw.Stop();
-            Console.WriteLine(sw.Elapsed.TotalSeconds);
+            
             LottoryHistory.AddRange(rawData.OrderByDescending(x => x.Date).ToList());
         }
 

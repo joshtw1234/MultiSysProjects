@@ -14,30 +14,8 @@
                 SetProperty(ref _menuName, value);
             }
         }
-
-        private string _menuMaxValue;
-        public string MenuMaxValue
-        {
-            get
-            {
-                return _menuMaxValue;
-            }
-            set
-            {
-                SetProperty(ref _menuMaxValue, value);
-            }
-        }
-        private string _menuMinValue;
-        public string MenuMinValue
-        {
-            get
-            {
-                return _menuMinValue;
-            }
-            set
-            {
-                SetProperty(ref _menuMinValue, value);
-            }
-        }
+        //No need update from model
+        public string MenuMaxValue { get; set; }
+        public string MenuMinValue { get; set; }
     }
 }

@@ -19,6 +19,7 @@ namespace BigLottoryModule.ViewModels
         List<LottoryInfo> LottoryHistory;
         public IViewItem DebugMessage { get; set; }
         public IViewItem TextProgress { get; set; }
+        public IViewItem ViewProgressBar { get; set; }
 
         public BigLottoryControlViewModel(IBigLottoryControlModel model)
         {
@@ -35,7 +36,15 @@ namespace BigLottoryModule.ViewModels
                 MenuVisibility = true
             };
 
-            
+            ViewProgressBar = new ProgressBarViewItem()
+            {
+                MenuName="50",
+                MenuMinValue="0",
+                MenuMaxValue="100",
+                MenuStyle = Application.Current.Resources["CustomProgressBar"] as Style,
+            };
+
+
         }
 
         private void LottoryDataProcess()

@@ -12,7 +12,7 @@
     <Grid>
         <StackPanel Visibility="{Binding TextProgress.MenuVisibility, Converter={StaticResource BoolToVisibility}}">
             <TextBlock DataContext="{Binding TextProgress}" Style="{Binding MenuStyle}"/>
-            <ProgressBar/>
+            <ProgressBar DataContext="{Binding ViewProgressBar}" Style="{Binding MenuStyle}"/>
         </StackPanel>
         <commonV:DebugOutPutControl>
             <!--

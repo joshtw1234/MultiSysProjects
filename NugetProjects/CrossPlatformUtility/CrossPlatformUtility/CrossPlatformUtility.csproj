@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Josh Tseng</Authors>
+    <Description>A utility project for Cross Platform</Description>
+    <PackageReleaseNotes>First release</PackageReleaseNotes>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="ReadMe.txt">
+	<Pack>true</Pack>
+    <PackagePath>\</PackagePath>
+	</Content>
+  </ItemGroup>
+
+</Project>

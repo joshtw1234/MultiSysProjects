@@ -74,7 +74,8 @@ namespace PrismDemo
 
         protected override void InitializeModules()
         {
-            //return;
+            var mainVM = Application.Current.MainWindow.DataContext as MainWindowViewModel;
+            var resu = mainVM.StartEntireProgress();
             Stopwatch sw = new Stopwatch();
             sw.Start();
             //In here to control module initialize.
@@ -97,7 +98,8 @@ namespace PrismDemo
             this.Container.Resolve<BigLottoryModule.BigLottoryModule>().Initialize();
             sw.Stop();
             Console.WriteLine($"BigLottoryModule {sw.Elapsed.TotalMilliseconds}");
-            var mainVM = Application.Current.MainWindow.DataContext as MainWindowViewModel;
+            System.Threading.Thread.Sleep(2000);
+            
             mainVM.TextProgress.MenuVisibility = false;
         }
         #endregion

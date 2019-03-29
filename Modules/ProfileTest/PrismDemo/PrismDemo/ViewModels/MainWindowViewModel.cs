@@ -1,9 +1,11 @@
 ﻿using CommonUILib.Interfaces;
 using CommonUILib.Models;
 using PrismDemo.Interfaces;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace PrismDemo.ViewModels
 {
@@ -30,18 +32,18 @@ namespace PrismDemo.ViewModels
                 MenuMaxValue = "100",
                 MenuStyle = Application.Current.Resources["CustomProgressBar"] as Style,
             };
-            StartEntireProgress();
+            //StartEntireProgress();
         }
 
-        void StartEntireProgress()
+        public async Task StartEntireProgress()
         {
-            Task.Factory.StartNew(() =>
+            await Task.Factory.StartNew(() =>
             {
                 while (TextProgress.MenuVisibility)
                 {
                     for (int i = 0; i <= 100; i += 10)
                     {
-                        Thread.Sleep(100);
+                        Thread.Sleep(10);
                         ViewProgressBar.MenuName = i.ToString();
                     }
                 }

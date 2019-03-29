@@ -29,7 +29,7 @@
                 <ContentControl DockPanel.Dock="Left" prism:RegionManager.RegionName="MenuRegion"/>
                 <ContentControl prism:RegionManager.RegionName="FeatureRegion"/>
             </DockPanel>
-            <ContentControl DockPanel.Dock="Top" prism:RegionManager.RegionName="EntireRegion"/>
+            <ContentControl prism:RegionManager.RegionName="EntireRegion"/>
         </Grid>
     </Grid>
 </Window>

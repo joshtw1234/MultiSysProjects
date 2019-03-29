@@ -45,11 +45,15 @@ namespace BigLottoryModule.ViewModels
                 MenuMaxValue="100",
                 MenuStyle = Application.Current.Resources["CustomProgressBar"] as Style,
             };
+            
             LottoryDataProcess();
         }
 
+
+
         private void LottoryDataProcess()
         {
+            const string infoFile = "info.txt";
             string webLink = "https://www.pilio.idv.tw/ltobig/ServerC/list.asp?indexpage=1&orderby=new";
             string currentPath = Directory.GetCurrentDirectory();
             string lottoryDir = $"{currentPath}\\LottoryData";
@@ -58,9 +62,12 @@ namespace BigLottoryModule.ViewModels
             {
                 Directory.CreateDirectory(lottoryDir);
             }
+            DownloadWeb(webLink, currentPath, infoFile);
+            int pageCount = GetWebPageCount(Path.Combine(currentPath, infoFile));
 
             var dataFiles = Directory.GetFiles(lottoryDir);
-            if (dataFiles.Count() != 71)
+
+            if (dataFiles.Count() != pageCount)
             {
                 TextProgress.MenuVisibility = true;
                 Task.Factory.StartNew(() =>
@@ -83,7 +90,7 @@ namespace BigLottoryModule.ViewModels
                      * use this number prevent re download files
                      * TODO: find a way to get page numbers.
                      */
-                    for (int i = 1; i < 72; i++)
+                    for (int i = 1; i < pageCount + 1; i++)
                     {
                         webLink = $"https://www.pilio.idv.tw/ltobig/ServerC/list.asp?indexpage={i}&orderby=new";
                         saveWebFile = $"Lottory{i}.txt";
@@ -99,7 +106,7 @@ namespace BigLottoryModule.ViewModels
             {
                 LoadLottoryHistory(lottoryDir);
             }
-            
+
         }
 
         void LoadLottoryHistory(string lottoryDir)
@@ -170,6 +177,17 @@ namespace BigLottoryModule.ViewModels
             }
             
             LottoryHistory.AddRange(rawData.OrderByDescending(x => x.Date).ToList());
+        }
+
+        private int GetWebPageCount(string samplePage)
+        {
+            int rev = -1;
+            const string pageCountPat = "<option[^\\r\\n]+\">([^\\s]+)</option>";
+            string rawFile = File.ReadAllText(samplePage);
+            var mcNumbers = Regex.Matches(rawFile, pageCountPat);
+            var pageList = mcNumbers.Cast<Match>().Select(m => m.Groups[1].Value).ToList();
+            rev = int.Parse(pageList.Last());
+            return rev;
         }
 
         private List<LottoryInfo> GetLottoryData(string dataFile)

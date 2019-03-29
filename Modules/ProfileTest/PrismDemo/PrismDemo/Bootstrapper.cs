@@ -17,6 +17,10 @@ using PokeGameModule.Interfaces;
 using PokeGameModule.Models;
 using BigLottoryModule.Interface;
 using BigLottoryModule.Models;
+using Microsoft.Practices.ServiceLocation;
+using System.Diagnostics;
+using System;
+using PrismDemo.ViewModels;
 
 namespace PrismDemo
 {
@@ -66,6 +70,35 @@ namespace PrismDemo
                 moduleCatalog.AddModule(typeof(PokeGameModule.PokeGameModule));
                 moduleCatalog.AddModule(typeof(BigLottoryModule.BigLottoryModule));
             }
+        }
+
+        protected override void InitializeModules()
+        {
+            //return;
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            //In here to control module initialize.
+            this.Container.Resolve<MenuModule.MenuModule>().Initialize();
+            sw.Stop();
+            Console.WriteLine($"MenuModule {sw.Elapsed.TotalMilliseconds}");
+            sw.Restart();
+            this.Container.Resolve<AudioDemoModule.AudioDemoModule>().Initialize();
+            sw.Stop();
+            Console.WriteLine($"AudioDemoModule {sw.Elapsed.TotalMilliseconds}");
+            sw.Restart();
+            this.Container.Resolve<HIDDemoModule.HIDDemoModule>().Initialize();
+            sw.Stop();
+            Console.WriteLine($"HIDDemoModule {sw.Elapsed.TotalMilliseconds}");
+            sw.Restart();
+            this.Container.Resolve<PokeGameModule.PokeGameModule>().Initialize();
+            sw.Stop();
+            Console.WriteLine($"PokeGameModule {sw.Elapsed.TotalMilliseconds}");
+            sw.Restart();
+            this.Container.Resolve<BigLottoryModule.BigLottoryModule>().Initialize();
+            sw.Stop();
+            Console.WriteLine($"BigLottoryModule {sw.Elapsed.TotalMilliseconds}");
+            var mainVM = Application.Current.MainWindow.DataContext as MainWindowViewModel;
+            mainVM.TextProgress.MenuVisibility = false;
         }
         #endregion
     }

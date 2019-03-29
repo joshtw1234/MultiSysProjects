@@ -1,20 +1,26 @@
 ﻿using CommonUILib.Interfaces;
 using CommonUILib.Models;
+using Prism.Commands;
 using PrismDemo.Interfaces;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Threading;
 
 namespace PrismDemo.ViewModels
 {
     class MainWindowViewModel : IProgressBarControlViewModel
     {
         IMainWindowModel _model;
-
         public IViewItem TextProgress { get; set; }
         public IViewItem ViewProgressBar { get; set; }
+        private DelegateCommand<RoutedEventArgs> _mainWindowLoadedEvent;
+        public DelegateCommand<RoutedEventArgs> MainWindowLoadedEvent => _mainWindowLoadedEvent ?? (_mainWindowLoadedEvent = new DelegateCommand<RoutedEventArgs>(OnMainWindowLoaded));
+
+        private void OnMainWindowLoaded(RoutedEventArgs obj)
+        {
+            var resu = StartEntireProgress();
+        }
+
         public MainWindowViewModel(IMainWindowModel model)
         {
             _model = model;
@@ -32,10 +38,9 @@ namespace PrismDemo.ViewModels
                 MenuMaxValue = "100",
                 MenuStyle = Application.Current.Resources["CustomProgressBar"] as Style,
             };
-            //StartEntireProgress();
+            
         }
-
-        public async Task StartEntireProgress()
+        private async Task StartEntireProgress()
         {
             await Task.Factory.StartNew(() =>
             {
@@ -49,5 +54,6 @@ namespace PrismDemo.ViewModels
                 }
             });
         }
+
     }
 }

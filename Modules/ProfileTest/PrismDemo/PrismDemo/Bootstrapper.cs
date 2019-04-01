@@ -64,24 +64,22 @@ namespace PrismDemo
             if (moduleCatalog != null)
             {
                 moduleCatalog.AddModule(typeof(MenuModule.MenuModule));
-                moduleCatalog.AddModule(typeof(AudioDemoModule.AudioDemoModule));
-                moduleCatalog.AddModule(typeof(HIDDemoModule.HIDDemoModule));
-                moduleCatalog.AddModule(typeof(PokeGameModule.PokeGameModule));
-                moduleCatalog.AddModule(typeof(BigLottoryModule.BigLottoryModule));
-                //moduleCatalog.AddModule(typeof(AudioDemoModule.AudioDemoModule), InitializationMode.OnDemand);
-                //moduleCatalog.AddModule(typeof(HIDDemoModule.HIDDemoModule), InitializationMode.OnDemand);
-                //moduleCatalog.AddModule(typeof(PokeGameModule.PokeGameModule), InitializationMode.OnDemand);
-                //moduleCatalog.AddModule(typeof(BigLottoryModule.BigLottoryModule), InitializationMode.OnDemand);
+                ////moduleCatalog.AddModule(typeof(AudioDemoModule.AudioDemoModule));
+                ////moduleCatalog.AddModule(typeof(HIDDemoModule.HIDDemoModule));
+                ////moduleCatalog.AddModule(typeof(PokeGameModule.PokeGameModule));
+                ////moduleCatalog.AddModule(typeof(BigLottoryModule.BigLottoryModule));
+                moduleCatalog.AddModule(typeof(AudioDemoModule.AudioDemoModule), InitializationMode.OnDemand);
+                moduleCatalog.AddModule(typeof(HIDDemoModule.HIDDemoModule), InitializationMode.OnDemand);
+                moduleCatalog.AddModule(typeof(PokeGameModule.PokeGameModule), InitializationMode.OnDemand);
+                moduleCatalog.AddModule(typeof(BigLottoryModule.BigLottoryModule), InitializationMode.OnDemand);
             }
         }
 
         protected override void InitializeModules()
         {
-            //base.InitializeModules();
-            //System.Threading.Thread.Sleep(3000);
-            //var mainVM = Application.Current.MainWindow.DataContext as MainWindowViewModel;
-            //mainVM.TextProgress.MenuVisibility = false;
+            base.InitializeModules();
         }
+
         #endregion
     }
 }

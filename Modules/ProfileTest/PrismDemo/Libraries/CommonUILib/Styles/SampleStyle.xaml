@@ -442,5 +442,6 @@
         <Setter Property="Value" Value="{Binding MenuName}"/>
         <Setter Property="Maximum" Value="{Binding MenuMaxValue}"/>
         <Setter Property="Minimum" Value="{Binding MenuMinValue}"/>
+        <Setter Property="IsIndeterminate" Value="true"/>
     </Style>
 </ResourceDictionary>

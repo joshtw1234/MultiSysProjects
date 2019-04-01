@@ -62,7 +62,7 @@ namespace BigLottoryModule.ViewModels
             {
                 Directory.CreateDirectory(lottoryDir);
             }
-            DownloadWeb(webLink, currentPath, infoFile);
+            if (!DownloadWeb(webLink, currentPath, infoFile)) return;
             int pageCount = GetWebPageCount(Path.Combine(currentPath, infoFile));
 
             var dataFiles = Directory.GetFiles(lottoryDir);
@@ -94,7 +94,7 @@ namespace BigLottoryModule.ViewModels
                     {
                         webLink = $"https://www.pilio.idv.tw/ltobig/ServerC/list.asp?indexpage={i}&orderby=new";
                         saveWebFile = $"Lottory{i}.txt";
-                        DownloadWeb(webLink, lottoryDir, saveWebFile);
+                        if (!DownloadWeb(webLink, lottoryDir, saveWebFile)) return;
                     }
                     sw.Stop();
                     Console.WriteLine($"DownloadWeb done {sw.Elapsed.TotalSeconds}");
@@ -236,10 +236,19 @@ namespace BigLottoryModule.ViewModels
             return tmpList;
         }
 
-        private void DownloadWeb(string webLink, string saveDir, string saveFile)
+        private bool DownloadWeb(string webLink, string saveDir, string saveFile)
         {
-            WebClient client = new WebClient();
-            client.DownloadFile(webLink, Path.Combine(saveDir, saveFile));
+            bool rev = true;
+            try
+            {
+                WebClient client = new WebClient();
+                client.DownloadFile(webLink, Path.Combine(saveDir, saveFile));
+            }catch(Exception ex)
+            {
+                DebugMessage.MenuName += $"\nDownloadWeb exception [{ex.Message}]";
+                rev = false;
+            }
+            return rev;
         }
     }
     class LottoryInfo

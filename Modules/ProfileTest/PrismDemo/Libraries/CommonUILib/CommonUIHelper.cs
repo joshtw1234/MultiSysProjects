@@ -1,11 +1,8 @@
 ﻿using Microsoft.Practices.ServiceLocation;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Regions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace CommonUILib
@@ -101,6 +98,36 @@ namespace CommonUILib
                 this._regionManager.RequestNavigate("FeatureRegion", new Uri(obj, UriKind.Relative));
             }
 #endif
+        }
+    }
+
+    public class PrismDemoPubSubEvent<T> : PubSubEvent<T>
+    {
+        /// <summary>
+        /// The EventAggregator
+        /// </summary>
+        private static readonly EventAggregator _eventAggregator;
+
+        /// <summary>
+        /// The Event type
+        /// </summary>
+        private static readonly PrismDemoPubSubEvent<T> _event;
+
+        /// <summary>
+        /// The Event class constructor 
+        /// </summary>
+        static PrismDemoPubSubEvent()
+        {
+            _eventAggregator = new EventAggregator();
+            _event = _eventAggregator.GetEvent<PrismDemoPubSubEvent<T>>();
+        }
+
+        /// <summary>
+        /// The Instance of Event class
+        /// </summary>
+        public static PrismDemoPubSubEvent<T> Instance
+        {
+            get { return _event; }
         }
     }
 }

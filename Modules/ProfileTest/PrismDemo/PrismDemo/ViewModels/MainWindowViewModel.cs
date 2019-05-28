@@ -99,6 +99,10 @@ namespace PrismDemo.ViewModels
             });
         }
 
+        /// <summary>
+        /// Reference 
+        /// https://www.infragistics.com/community/blogs/b/blagunas/posts/prism-dynamically-discover-and-load-modules-at-runtime
+        /// </summary>
         private void StartLoadModuel()
         {
             var disp = Application.Current.Dispatcher;

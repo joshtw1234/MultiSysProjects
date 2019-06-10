@@ -10,6 +10,7 @@ namespace HIDHeadSet.Models
         void CloseHID();
         void SetColorData(string ledMode, List<Brush> lstBrush, ushort colorInterval);
         void SetFanData(HeadSetFanModes fMode);
+        void GetFWInfo();
     }
 
     class HeadSetConstants
@@ -22,6 +23,7 @@ namespace HIDHeadSet.Models
         public const uint HeadSetPIDPro = 0x8824;
         public const uint HeadSetVIDPro = 0x0D8C;
         public const uint HeadSetPID = 0x2841;
+        public const uint HeadSetZazuPID = 0x3241;
         public const uint HeadSetVID = 0x03F0;
         public const uint HeadSetBufferSize = 16;
         public const string LEDStatic = "Static";
@@ -40,11 +42,15 @@ namespace HIDHeadSet.Models
 
     enum HeadSetCmds
     {
+        Read = 0x00,
         LEDOn = 0x01,
         LEDOff,
         LEDCfg,
         LEDColorArray,
-        Fan
+        Fan,
+        UserData = 0x50,
+        ProductNumber = 0x51,
+        SerialNumber = 0x52
     }
 
     enum HeadSetLEDModes

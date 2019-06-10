@@ -109,6 +109,8 @@ namespace HIDHeadSet.Models
                 case HeadSetCmds.Fan:
                     revbuf[2] = (byte)fanMode;
                     break;
+                case HeadSetCmds.UserData:
+                    break;
             }
             return revbuf;
         }

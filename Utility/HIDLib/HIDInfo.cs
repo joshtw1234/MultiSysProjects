@@ -14,6 +14,7 @@ namespace HIDLib
     public class HIDInfo
     {
         const int InfomationBuffer = 256;
+        byte _ReportID = 0x00;
 
         /// <summary>
         /// HID HW Device class
@@ -41,7 +42,7 @@ namespace HIDLib
             //Open HID HW
             hidHWDev = new HIDHWDev(devPath);
             isWork = false;
-            if (hidHWDev.Open())
+            if (hidHWDev.OpenAsync())
             {
                 hidInfoStruct = new HIDInfoStruct()
                 {
@@ -203,6 +204,18 @@ namespace HIDLib
         public void HIDClose()
         {
             hidHWDev.Dispose();
+        }
+
+        public bool HIDSetOutputReport(bool isDataWithReportID, byte[] data)
+        {
+            if (isDataWithReportID) _ReportID = data[0];
+            return hidHWDev.SetOutPutReport(data);
+        }
+
+        public byte[] HIDGetReport(byte reportID)
+        {
+            _ReportID = reportID;
+            return hidHWDev.GetInputReport(_ReportID);
         }
     }
 }

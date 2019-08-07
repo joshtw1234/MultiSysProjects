@@ -1,6 +1,6 @@
-﻿using BigLottoryModule.Interface;
+﻿using CentralModule.Interface;
 
-namespace BigLottoryModule.Models
+namespace CentralModule.Models
 {
     public class BigLottoryControlModel : IBigLottoryControlModel
     {

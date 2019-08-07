@@ -1,8 +1,8 @@
-﻿using BigLottoryModule.Views;
+﻿using CentralModule.Views;
 using Prism.Modularity;
 using Prism.Regions;
 
-namespace BigLottoryModule
+namespace CentralModule.PrismModules
 {
     public class BigLottoryModule : IModule
     {

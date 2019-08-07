@@ -8,11 +8,11 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using BigLottoryModule.Interface;
+using CentralModule.Interface;
 using CommonUILib.Interfaces;
 using CommonUILib.Models;
 
-namespace BigLottoryModule.ViewModels
+namespace CentralModule.ViewModels
 {
     class BigLottoryControlViewModel : IDebugOutPutControlViewModel, IProgressBarControlViewModel
     {

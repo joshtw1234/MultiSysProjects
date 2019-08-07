@@ -1,4 +1,4 @@
-﻿namespace BigLottoryModule.Interface
+﻿namespace CentralModule.Interface
 {
     public interface IBigLottoryControlModel
     {

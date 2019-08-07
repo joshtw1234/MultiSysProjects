@@ -221,4 +221,13 @@
         DBT_QUERYCHANGECONFIG = 0x0017,
         DBT_USERDEFINED = 0xFFFF
     }
+
+    public enum WM_DeviceType
+    {
+        DBT_DEVTYP_OEM = 0x00000000,
+        DBT_DEVTYP_VOLUME = 0x00000002,
+        DBT_DEVTYP_PORT = 0x00000003,
+        DBT_DEVTYP_DEVICEINTERFACE = 0x00000005,
+        DBT_DEVTYP_HANDLE = 0x00000006,
+    }
 }

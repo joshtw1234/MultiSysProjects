@@ -118,6 +118,10 @@
       <Project>{fe476d8c-ecb3-42bf-b4a1-e952e275c9b5}</Project>
       <Name>CommonUILib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\SystemControlLib\SystemControlLib.csproj">
+      <Project>{5f4c2d84-9e4b-4515-8408-3a42724b5709}</Project>
+      <Name>SystemControlLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\BigLottoryControl.xaml">

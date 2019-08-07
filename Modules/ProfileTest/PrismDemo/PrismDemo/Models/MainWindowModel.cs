@@ -1,9 +1,4 @@
 ﻿using PrismDemo.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
@@ -18,6 +13,7 @@ namespace PrismDemo.Models
         public void InitializeSystemHook()
         {
             SystemHook.Instence.Initialize(HwndSource.FromHwnd(new WindowInteropHelper(Application.Current.MainWindow).Handle));
+            
             //SystemHook.Instence.RegisterWindowMessageCallback(OnWinMessageCallBack);
             //Application.Current.Exit += Current_Exit;
             //Application.Current.MainWindow.Closing += MainWindow_Closing;

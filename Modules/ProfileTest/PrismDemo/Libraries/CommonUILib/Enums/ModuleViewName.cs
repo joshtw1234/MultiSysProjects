@@ -11,6 +11,7 @@ namespace CommonUILib.Enums
         HIDDemoControl,
         AudioDemoControl,
         PokeGameControl,
-        BigLottoryControl
+        BigLottoryControl,
+        SysHookClientControl
     }
 }

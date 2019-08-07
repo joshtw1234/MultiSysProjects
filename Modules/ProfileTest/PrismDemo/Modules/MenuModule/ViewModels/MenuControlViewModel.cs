@@ -31,6 +31,7 @@ namespace MenuModule.ViewModels
                     MenuCommand = CommonUILib.CommonUIHelper.Instance.NavigateToCommand,
                     MenuData = ((ModuleViewName)i).ToString()
                 };
+                if (item.MenuName.Equals(ModuleViewName.SysHookClientControl.ToString())) item.MenuData = ModuleViewName.BigLottoryControl.ToString();
                 menuButtons.Add(item);
             }
             return menuButtons;

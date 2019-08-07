@@ -13,7 +13,7 @@ namespace CentralModule.PrismModules
         }
         public void Initialize()
         {
-            _regionManager.RegisterViewWithRegion("FeatureRegion", typeof(BigLottoryControl));
+            _regionManager.RegisterViewWithRegion("FeatureRegion", typeof(SysHookClientControl));
         }
     }
 }

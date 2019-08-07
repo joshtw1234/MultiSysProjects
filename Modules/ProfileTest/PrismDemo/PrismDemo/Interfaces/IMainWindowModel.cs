@@ -8,5 +8,6 @@ namespace PrismDemo.Interfaces
 {
     interface IMainWindowModel
     {
+        void InitializeSystemHook();
     }
 }

@@ -10,7 +10,5 @@ namespace AudioDemoModule.Interfaces
     public interface IAudioDemoControlModel
     {
         IViewItem GetMessageBoxVM { get; }
-
-        void InitializeSystemHook();
     }
 }

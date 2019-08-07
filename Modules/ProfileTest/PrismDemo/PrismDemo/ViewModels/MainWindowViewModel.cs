@@ -61,7 +61,7 @@ namespace PrismDemo.ViewModels
                 MenuStyle = Application.Current.Resources["CustomProgressBar"] as Style,
             };
             var resu = StartEntireProgress();
-
+            _model.InitializeSystemHook();
             CommonUILib.PrismDemoPubSubEvent<bool>.Instance.Subscribe(OnModuleLoaded);
         }
 

@@ -23,7 +23,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemControlLib", "Librari
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeGameModule", "Modules\PokeGameModule\PokeGameModule.csproj", "{5061A279-427A-4A29-9D95-8051E6E722BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CentralModule", "Modules\BigLottoryModule\CentralModule.csproj", "{BFB9D761-BAAF-48A8-A149-D00E34433DD1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CentralModule", "Modules\CentralModule\CentralModule.csproj", "{BFB9D761-BAAF-48A8-A149-D00E34433DD1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -103,8 +103,8 @@ Global
 		{BFB9D761-BAAF-48A8-A149-D00E34433DD1}.Debug|x64.Build.0 = Debug|x64
 		{BFB9D761-BAAF-48A8-A149-D00E34433DD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BFB9D761-BAAF-48A8-A149-D00E34433DD1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BFB9D761-BAAF-48A8-A149-D00E34433DD1}.Release|x64.ActiveCfg = Release|Any CPU
-		{BFB9D761-BAAF-48A8-A149-D00E34433DD1}.Release|x64.Build.0 = Release|Any CPU
+		{BFB9D761-BAAF-48A8-A149-D00E34433DD1}.Release|x64.ActiveCfg = Release|x64
+		{BFB9D761-BAAF-48A8-A149-D00E34433DD1}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

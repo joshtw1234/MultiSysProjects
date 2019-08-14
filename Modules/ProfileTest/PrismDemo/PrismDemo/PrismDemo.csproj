@@ -157,7 +157,7 @@
       <Project>{a8403894-ea96-4f52-8211-bee042237698}</Project>
       <Name>AudioDemoModule</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Modules\BigLottoryModule\CentralModule.csproj">
+    <ProjectReference Include="..\Modules\CentralModule\CentralModule.csproj">
       <Project>{bfb9d761-baaf-48a8-a149-d00e34433dd1}</Project>
       <Name>CentralModule</Name>
     </ProjectReference>

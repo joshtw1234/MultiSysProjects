@@ -30,9 +30,9 @@ namespace SystemControlLib
                 _winHandle = windowHandle;
                 _winHandle.AddHook(WndProc);
                 _notificationHandles = new List<IntPtr>();
-                SetDeviceNotification(new BroadcastDeviceinterface()
-                { DeviceType = WM_DeviceType.DBT_DEVTYP_DEVICEINTERFACE, ClassGuid = new Guid(SystemControlLibConsts.GUID_DEVINTERFACE_USB_DEVICE) });
                 //SetDeviceNotification(new BroadcastDeviceinterface()
+                //{ DeviceType = WM_DeviceType.DBT_DEVTYP_DEVICEINTERFACE, ClassGuid = new Guid(SystemControlLibConsts.GUID_DEVINTERFACE_USB_DEVICE) });
+                ////SetDeviceNotification(new BroadcastDeviceinterface()
                 //{ DeviceType = WM_DeviceType.DBT_DEVTYP_DEVICEINTERFACE, ClassGuid = new Guid(SystemControlLibConsts.KSCATEGORY_AUDIO) });
                 return true;
             }
@@ -124,7 +124,15 @@ namespace SystemControlLib
                     {
                         case WM_DeviceChange.DBT_DEVICEARRIVAL:
                         case WM_DeviceChange.DBT_DEVICEREMOVECOMPLETE:
-                            _onDeviceCallback?.Invoke(new DeviceMessage() { Message = (WM_DeviceChange)wParam, LParam = lParam, IsHandled = handled });
+                            DEV_BROADCAST_HDR devHDR = (DEV_BROADCAST_HDR)Marshal.PtrToStructure(lParam, typeof(DEV_BROADCAST_HDR));
+                            switch(devHDR.dbch_DeviceType)
+                            {
+                                case WM_DeviceType.DBT_DEVTYP_DEVICEINTERFACE:
+                                    _onDeviceCallback?.Invoke(new DeviceMessage() { Message = (WM_DeviceChange)wParam, LParam = lParam, IsHandled = handled });
+                                    break;
+                                default:
+                                    break;
+                            }
                             break;
                     }
                     break;

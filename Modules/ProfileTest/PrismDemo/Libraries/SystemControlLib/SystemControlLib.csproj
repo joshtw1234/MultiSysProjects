@@ -66,8 +66,10 @@
     <Compile Include="Enums\WinProc_Message.cs" />
     <Compile Include="Enums\WParam_Message.cs" />
     <Compile Include="LogTool.cs" />
+    <Compile Include="NativeImportMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Structures\WinMessage.cs" />
+    <Compile Include="SystemControlLibConsts.cs" />
     <Compile Include="SystemHook.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -249,6 +249,9 @@ namespace HIDHeadSet.ViewModels
             }
             if (obj.Equals(FanCmd))
             {
+#if true
+                headSetModel.GetFWInfo();
+#else
                 //Fan Control
                 foreach (var subItem in mainItems[1].SubItems)
                 {
@@ -263,6 +266,7 @@ namespace HIDHeadSet.ViewModels
                     HeadSetFanModes fMode = (HeadSetFanModes)Enum.Parse(typeof(HeadSetFanModes), FanMode);
                     headSetModel.SetFanData(fMode);
                 }
+#endif
             }
         }
     }

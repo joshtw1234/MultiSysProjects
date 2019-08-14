@@ -10,19 +10,34 @@
         mc:Ignorable="d"
         Title="MainWindow" MinHeight="450" MinWidth="800" Background="{x:Null}" WindowStartupLocation="CenterScreen">
     <i:Interaction.Triggers>
-        <i:EventTrigger EventName="PreviewKeyDown">
-            <prism:InvokeCommandAction Command="{Binding KeyDownEvent}"/>
+        <i:EventTrigger EventName="ContentRendered">
+            <prism:InvokeCommandAction Command="{Binding WindowSourceInitializedEvent}"/>
         </i:EventTrigger>
-        <i:EventTrigger EventName="Closing">
-            <prism:InvokeCommandAction Command="{Binding ClosingEvent}"/>
+        <i:EventTrigger EventName="Loaded">
+            <prism:InvokeCommandAction Command="{Binding WindowLoadedEvent}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <Grid>
-        <DockPanel>
-            <ContentControl DockPanel.Dock="Top" prism:RegionManager.RegionName="TitleRegion"/>
-            <ContentControl DockPanel.Dock="Left" prism:RegionManager.RegionName="MenuRegion"/>
-            <ContentControl prism:RegionManager.RegionName="FeatureRegion"/>
-        </DockPanel>
-        <ContentControl DockPanel.Dock="Top" prism:RegionManager.RegionName="EntireRegion"/>
+        <ContentControl Template="{StaticResource BaseProgressBarTemplate}"/>
+        <Grid>
+            <Grid.Style>
+                <Style>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding TextProgress.MenuVisibility}" Value="true">
+                            <Setter Property="Grid.Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding TextProgress.MenuVisibility}" Value="false">
+                            <Setter Property="Grid.Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <DockPanel>
+                <ContentControl DockPanel.Dock="Top" prism:RegionManager.RegionName="TitleRegion"/>
+                <ContentControl DockPanel.Dock="Left" prism:RegionManager.RegionName="MenuRegion"/>
+                <ContentControl prism:RegionManager.RegionName="FeatureRegion"/>
+            </DockPanel>
+            <ContentControl prism:RegionManager.RegionName="EntireRegion"/>
+        </Grid>
     </Grid>
 </Window>

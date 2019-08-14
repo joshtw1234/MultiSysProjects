@@ -2,9 +2,6 @@
 using CommonUILib.Interfaces;
 using CommonUILib.Models;
 using MenuModule.Interfaces;
-using Microsoft.Practices.ServiceLocation;
-using Prism.Commands;
-using Prism.Regions;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows;

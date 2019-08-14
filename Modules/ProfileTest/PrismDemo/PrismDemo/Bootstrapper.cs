@@ -15,6 +15,8 @@ using Microsoft.Practices.Unity;
 using AudioDemoModule.Interfaces;
 using PokeGameModule.Interfaces;
 using PokeGameModule.Models;
+using CentralModule.Interface;
+using CentralModule.Models;
 
 namespace PrismDemo
 {
@@ -47,6 +49,7 @@ namespace PrismDemo
             this.RegisterTypeIfMissing(typeof(IAudioDemoControlModel), typeof(AudioDemoControlModel), true);
             this.RegisterTypeIfMissing(typeof(IHIDDemoControlModel), typeof(HIDDemoControlModel), true);
             this.RegisterTypeIfMissing(typeof(IPokeGameModel), typeof(PokeGameModel), true);
+            this.RegisterTypeIfMissing(typeof(IBigLottoryControlModel), typeof(BigLottoryControlModel), false);
         }
 
         protected override void ConfigureModuleCatalog()
@@ -58,11 +61,23 @@ namespace PrismDemo
             if (moduleCatalog != null)
             {
                 moduleCatalog.AddModule(typeof(MenuModule.MenuModule));
-                moduleCatalog.AddModule(typeof(AudioDemoModule.AudioDemoModule));
-                moduleCatalog.AddModule(typeof(HIDDemoModule.HIDDemoModule));
-                moduleCatalog.AddModule(typeof(PokeGameModule.PokeGameModule));
+                ////moduleCatalog.AddModule(typeof(AudioDemoModule.AudioDemoModule));
+                ////moduleCatalog.AddModule(typeof(HIDDemoModule.HIDDemoModule));
+                ////moduleCatalog.AddModule(typeof(PokeGameModule.PokeGameModule));
+                ////moduleCatalog.AddModule(typeof(BigLottoryModule.BigLottoryModule));
+                moduleCatalog.AddModule(typeof(AudioDemoModule.AudioDemoModule), InitializationMode.OnDemand);
+                moduleCatalog.AddModule(typeof(HIDDemoModule.HIDDemoModule), InitializationMode.OnDemand);
+                moduleCatalog.AddModule(typeof(PokeGameModule.PokeGameModule), InitializationMode.OnDemand);
+                moduleCatalog.AddModule(typeof(CentralModule.PrismModules.BigLottoryModule), InitializationMode.OnDemand);
+                moduleCatalog.AddModule(typeof(CentralModule.PrismModules.SysHookClientModule), InitializationMode.OnDemand);
             }
         }
+
+        protected override void InitializeModules()
+        {
+            base.InitializeModules();
+        }
+
         #endregion
     }
 }

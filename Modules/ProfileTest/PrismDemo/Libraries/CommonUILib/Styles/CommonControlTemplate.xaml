@@ -22,4 +22,11 @@
                             Template="{StaticResource TipControlTemplate}" Margin="10, 0, 10, 0" VerticalAlignment="Top"/>
         </StackPanel>
     </ControlTemplate>
+    <ControlTemplate x:Key="BaseProgressBarTemplate" TargetType="ContentControl">
+        <StackPanel Visibility="{Binding TextProgress.MenuVisibility, Converter={StaticResource BoolToVisibility}}"
+                    VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock DataContext="{Binding TextProgress}" Style="{Binding MenuStyle}"/>
+            <ProgressBar DataContext="{Binding ViewProgressBar}" Style="{Binding MenuStyle}"/>
+        </StackPanel>
+    </ControlTemplate>
 </ResourceDictionary>

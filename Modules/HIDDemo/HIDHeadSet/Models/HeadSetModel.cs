@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows.Media;
 using HIDLib;
 using UtilityUILib;
@@ -98,7 +99,8 @@ namespace HIDHeadSet.Models
         public bool Initialize()
         {
             var hidLst = HIDAPIs.BrowseHID();
-            hidDev = hidLst.Find(x => x.HIDInfoStruct.Pid == HeadSetConstants.HeadSetPID && x.HIDInfoStruct.Vid == HeadSetConstants.HeadSetVID);
+            //hidDev = hidLst.Find(x => x.HIDInfoStruct.Pid == HeadSetConstants.HeadSetPID && x.HIDInfoStruct.Vid == HeadSetConstants.HeadSetVID);
+            hidDev = hidLst.Find(x => x.HIDInfoStruct.Pid == HeadSetConstants.HeadSetZazuPID && x.HIDInfoStruct.Vid == HeadSetConstants.HeadSetVID);
             if (hidDev == null)
             {
                 Utilities.Logger(HeadSetConstants.LogHeadSet, $"{HeadSetConstants.HeadSetPID} {HeadSetConstants.HeadSetVID} not found!");
@@ -148,6 +150,39 @@ namespace HIDHeadSet.Models
 #endif
         }
 
+        public void GetFWInfo()
+        {
+            WriteHID(new HPLouieHeadSetCmd(HeadSetCmds.UserData).ToByteArry());
+            //WriteHID(new HPLouieHeadSetCmd(HeadSetCmds.Read).ToByteArry());
+            //WriteHID(new HPLouieHeadSetCmd(HeadSetCmds.ProductNumber).ToByteArry());
+            //WriteHID(new HPLouieHeadSetCmd(HeadSetCmds.SerialNumber).ToByteArry());
+            //ReadHID(new byte[16]);
+            //if (hidDev.HIDSetOutputReport(true, new HPLouieHeadSetCmd(HeadSetCmds.UserData).ToByteArry()))
+            //{
+            var data = ReadHID();
+            //}
+            //if (hidDev.HIDSetOutputReport(true, new HPLouieHeadSetCmd(HeadSetCmds.SerialNumber).ToByteArry()))
+            //{
+            //    var str = System.Text.Encoding.ASCII.GetString(ReadHID());
+            //}
+            //if (hidDev.HIDSetOutputReport(true, new HPLouieHeadSetCmd(HeadSetCmds.ProductNumber).ToByteArry()))
+            //{
+            //    var str = System.Text.Encoding.ASCII.GetString(ReadHID());
+            //}
 
+        }
+
+        private byte[] ReadHID()
+        {
+            //return hidDev.HIDRead();
+            //return hidDev.HIDReadAsync();
+
+            var rev = hidDev.HIDGetReport(0x01);
+            PrintByteToString(rev);
+            byte[] newData = new byte[16];
+            Array.Copy(rev, 1, newData, 0, 15);
+            return newData;
+
+        }
     }
 }

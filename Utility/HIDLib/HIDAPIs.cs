@@ -21,6 +21,10 @@ namespace HIDLib
         /* invalid handle value */
         public static IntPtr INVALID_HANDLE_VALUE = new IntPtr(-1);
 
+        static IntPtr GetClassDevs(Guid guid, uint flags)
+        {
+            return HIDNativeAPIs.SetupDiGetClassDevs(ref guid, null, IntPtr.Zero, flags);
+        }
         /* browse all HID class devices */
         public static List<HIDInfo> BrowseHID()
         {
@@ -32,8 +36,8 @@ namespace HIDLib
             /* obtain hid guid */
             HIDNativeAPIs.HidD_GetHidGuid(out gHid);
             /* get list of present hid devices */
-            var hInfoSet = HIDNativeAPIs.SetupDiGetClassDevs(ref gHid, null, IntPtr.Zero,
-                HIDNativeAPIs.DIGCF_DEVICEINTERFACE | HIDNativeAPIs.DIGCF_PRESENT);
+            //var hInfoSet = GetClassDevs(gHid, (uint)DIGCF.DIGCF_PRESENT | (uint)DIGCF.DIGCF_DEVICEINTERFACE);
+            var hInfoSet = GetClassDevs(Guid.Empty, (uint)DIGCF.DIGCF_ALLCLASSES | (uint)DIGCF.DIGCF_DEVICEINTERFACE);
 
             /* allocate mem for interface descriptor */
             var iface = new DeviceInterfaceData();
@@ -59,7 +63,7 @@ namespace HIDLib
             if (HIDNativeAPIs.SetupDiDestroyDeviceInfoList(hInfoSet) == false)
             {
                 /* fail! */
-                throw new Win32Exception();
+                //throw new Win32Exception();
             }
 
             /* return list */
@@ -83,6 +87,8 @@ namespace HIDLib
         /* The file or device is being opened or created for asynchronous I/O. */
         public const uint FILE_FLAG_OVERLAPPED = 0x40000000;
         /* Opens a file or device, only if it exists. */
+        public const uint FILE_CREATE_NEW = 1;
+        /* Opens a file or device, only if it exists. */
         public const uint OPEN_EXISTING = 3;
         /* Opens a file, always. */
         public const uint OPEN_ALWAYS = 4;
@@ -94,13 +100,33 @@ namespace HIDLib
             uint nAccess, uint nShareMode, IntPtr lpSecurity,
             uint nCreationFlags, uint nAttributes, IntPtr lpTemplate);
 
+        [DllImport("kernel32", SetLastError = true)]
+        public static extern bool ReadFile(
+            IntPtr hFile,      // handle to file
+            byte[] pBuffer,            // data buffer
+            int NumberOfBytesToRead,  // number of bytes to read
+            int pNumberOfBytesRead,  // number of bytes read
+            int Overlapped            // overlapped buffer
+            );
+
         [DllImport("kernel32.dll", SetLastError = true)]
         /* closes file */
         public static extern bool CloseHandle(SafeFileHandle hObject);
+
+        [DllImport("Kernel32.dll")]
+        public extern static int FormatMessage(int flag, ref IntPtr source, int msgid, int langid, ref string buf, int size, ref IntPtr args);
+
+        public static string GetSysErrMsg(int errCode)
+        {
+            IntPtr tempptr = IntPtr.Zero;
+            string msg = null;
+            FormatMessage(0x1300, ref tempptr, errCode, 0, ref msg, 255, ref tempptr);
+            return msg;
+        }
         #endregion
 
         #region hid.dll
-        
+
 
         [DllImport("hid.dll", SetLastError = true)]
         /* gets HID class Guid */
@@ -140,7 +166,11 @@ namespace HIDLib
             ref HIDP_CAPS myPHIDP_CAPS);				// OUT PHIDP_CAPS  Capabilities
 
         [DllImport("hid.dll", SetLastError = true)]
-        public static extern bool HidD_SetOutputReport(IntPtr hidDeviceObject, byte[] lpReportBuffer, int reportBufferLength);
+        public static extern bool HidD_SetOutputReport(SafeFileHandle hidDeviceObject, byte[] lpReportBuffer, uint reportBufferLength);
+
+        [DllImport("hid.dll", SetLastError = true)]
+        public static extern bool HidD_GetInputReport(SafeFileHandle hidDeviceObject, byte[] reportBuffer, uint reportBufferLength);
+
         #endregion
 
         #region setupapi.dll
@@ -149,8 +179,8 @@ namespace HIDLib
         /* Return devices that support device interfaces for the specified 
          * device interface classes. */
         public const int DIGCF_DEVICEINTERFACE = 0x10;
-        
-        
+
+
 
         /* function returns a handle to a device information set that contains
          * requested device information elements for a local computer */
@@ -269,4 +299,16 @@ namespace HIDLib
         public uint InputBuffSize { get; set; }
     }
 
+    /// <summary>
+    /// Flags controlling what is included in the device information set built by SetupDiGetClassDevs
+    /// </summary>
+    [Flags]
+    public enum DIGCF : uint
+    {
+        DIGCF_DEFAULT = 0x00000001,    // only valid with DIGCF_DEVICEINTERFACE
+        DIGCF_PRESENT = 0x00000002,
+        DIGCF_ALLCLASSES = 0x00000004,
+        DIGCF_PROFILE = 0x00000008,
+        DIGCF_DEVICEINTERFACE = 0x00000010,
+    }
 }

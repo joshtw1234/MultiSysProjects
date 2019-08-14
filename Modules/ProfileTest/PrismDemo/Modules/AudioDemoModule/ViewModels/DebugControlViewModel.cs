@@ -11,7 +11,7 @@ namespace AudioDemoModule.ViewModels
         {
             _model = model;
             MessgeBox = _model.GetMessageBoxVM;
-            _model.InitializeSystemHook();
+            //_model.InitializeSystemHook();
         }
     }
 }

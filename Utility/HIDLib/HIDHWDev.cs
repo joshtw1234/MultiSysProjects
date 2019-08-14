@@ -81,15 +81,25 @@ namespace HIDLib
 
         public bool OpenAsync()
         {
+            if (HWFullPath.Contains("28559b57"))
+            {
+                int my = -1;
+            }
             /* opens hid device file */
             HIDHandel = HIDNativeAPIs.CreateFile(HWFullPath,
                 HIDNativeAPIs.GENERIC_READ | HIDNativeAPIs.GENERIC_WRITE,
                 HIDNativeAPIs.FILE_SHARE_READ | HIDNativeAPIs.FILE_SHARE_WRITE,
-                IntPtr.Zero, HIDNativeAPIs.OPEN_EXISTING, HIDNativeAPIs.FILE_FLAG_OVERLAPPED, IntPtr.Zero);
+                IntPtr.Zero,
+                //HIDNativeAPIs.OPEN_EXISTING, 
+                HIDNativeAPIs.FILE_CREATE_NEW,
+                HIDNativeAPIs.FILE_FLAG_OVERLAPPED, 
+                IntPtr.Zero);
 
             /* whops */
             if (HIDHandel.IsInvalid)
             {
+                int error = Marshal.GetLastWin32Error();
+                string rev = HIDNativeAPIs.GetSysErrMsg(error);
                 return false;
             }
 
@@ -187,6 +197,7 @@ namespace HIDLib
         {
 #if true
             byte[] revbyte = new byte[InputBuffSize];
+            revbyte[0] = 0x01;
             try
             {
                 _fileStream.Read(revbyte, 0, revbyte.Length);
@@ -217,6 +228,7 @@ namespace HIDLib
 #if true
             
             byte[] revbyte = new byte[InputBuffSize];
+            revbyte[0] = 0x01;
             var revsu = Task.Run(async () =>
             {
                 try
@@ -243,6 +255,19 @@ namespace HIDLib
                 n += rc;
             }
 #endif
+        }
+
+        public bool SetOutPutReport(byte[] data)
+        {
+            return HIDNativeAPIs.HidD_SetOutputReport(HIDHandel, data, (uint)data.Length);
+        }
+
+        public byte[] GetInputReport(byte reportID)
+        {
+            byte[] revbuf = new byte[16];
+            revbuf[0] = reportID;
+            if (!HIDNativeAPIs.HidD_GetInputReport(HIDHandel, revbuf, (uint)revbuf.Length)) revbuf = null;
+            return revbuf;
         }
     }
 }

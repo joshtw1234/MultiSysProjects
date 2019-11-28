@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AudioControl.cs" />
+    <Compile Include="AudioDeviceController.cs" />
     <Compile Include="AudioMethods\AudioBandsConfig.cs" />
     <Compile Include="CallBacks\AudioCallBacks.cs" />
     <Compile Include="CoreAudioAPIs.cs" />
@@ -74,7 +75,11 @@
     <Compile Include="Enums\StorageAccessMode.cs" />
     <Compile Include="Enums\WaveFormat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Structures\AudioDeviceChangeData.cs" />
+    <Compile Include="Structures\AudioVolumeNotificationData.cs" />
+    <Compile Include="Structures\BigBinObject.cs" />
     <Compile Include="Structures\Blob.cs" />
+    <Compile Include="Structures\ClassAudioEndPointVolumeCallBack.cs" />
     <Compile Include="Structures\EQSTATE.cs" />
     <Compile Include="Structures\MarshalHelpers.cs" />
     <Compile Include="Structures\MMDeviceEnumeratorFactory.cs" />
@@ -84,9 +89,6 @@
     <Compile Include="Structures\PropVariantNative.cs" />
     <Compile Include="Structures\WAVEFORMATEX.cs" />
     <Compile Include="Structures\WAVEFORMATEXTENSION.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

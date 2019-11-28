@@ -1,71 +1,148 @@
-﻿using AudioControlLib.AudioMethods;
-using AudioControlLib.CallBacks;
+﻿using AudioControlLib.CallBacks;
 using AudioControlLib.Enums;
 using AudioControlLib.Structures;
 using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace AudioControlLib
 {
-    public class AudioControl
+    /// <summary>
+    /// The AudioControl
+    /// </summary>
+    class AudioControl
     {
         // REFERENCE_TIME time units per second and per millisecond
         private const int REFTIMES_PER_SEC = 10000000;
         private const int REFTIMES_PER_MILLISEC = 10000;
-        private bool isAudioMonitoring = false;
-        private bool isAudioPluseMonitor;
+        private bool isAudioPeekMonitoring = false;
+
         #region Core API structures
+        /// <summary>
+        /// MSFT Core API structures
+        /// </summary>
         IMMDevice _audioDevice;
         IAudioClient _audioClient;
-        IAudioCaptureClient _audioCaptureClient;
         IAudioMeterInformation _audioMeter;
         AudioDataFlow _audioDataFlow;
-        MMNotificationClient _notifyClient;
+        IAudioEndpointVolume _audioEndpointVolume;
+        ClassAudioEndPointVolumeCallBack classCallBack;
         WAVEFORMATEXTENSION waveFormat;
         #endregion
-        Guid _sessionGuid;
-        AudioVolumeCallBack _audioCallBack;
-        AudioPluseCallBack _audiopluseCallBack;
 
-        public AudioControl(AudioDataFlow audioFlow)
+        uint _channelCount = 0;
+
+        /// <summary>
+        /// Guid for Audio Client
+        /// </summary>
+        Guid _sessionGuid;
+
+        /// <summary>
+        /// The Audio Call Back
+        /// </summary>
+        AudioVolumePeekCallBack _audioCallBack;
+
+        /// <summary>
+        /// The Audio pulse Call back
+        /// </summary>
+        AudioPulseCallBack _audiopulseCallBack;
+
+        /// <summary>
+        /// The Constructor
+        /// </summary>
+        /// <param name="audioFlow"></param>
+        public AudioControl(IMMDevice audioDevice, AudioDataFlow audioFlow)
         {
             _audioDataFlow = audioFlow;
-            //Create Instance
-            IMMDeviceEnumerator deviceEnumerator = MMDeviceEnumeratorFactory.CreateInstance();
-            InitializeAudio(audioFlow, deviceEnumerator);
+            _audioDevice = audioDevice;
+            //Initialize Call Back
+            classCallBack = new ClassAudioEndPointVolumeCallBack();
+            InitializeAudioClasses();
         }
-
-        private void InitializeAudio(AudioDataFlow audioFlow, IMMDeviceEnumerator deviceEnumerator)
+        /// <summary>
+        /// Initialize Audio Classes
+        /// </summary>
+        private void InitializeAudioClasses()
         {
-            //Get Audio Device
-            COMResult result = deviceEnumerator.GetDefaultAudioEndpoint(audioFlow, EndPointRole.eMultimedia, out _audioDevice);
-            //Register End point notification
-            _notifyClient = new MMNotificationClient();
-            result = deviceEnumerator.RegisterEndpointNotificationCallback(_notifyClient);
             //Get Audio Client from device
-            result = _audioDevice.Activate(typeof(IAudioClient).GUID, 0, IntPtr.Zero, out object obj);
+            COMResult result = _audioDevice.Activate(typeof(IAudioClient).GUID, 0, IntPtr.Zero, out object obj);
             _audioClient = (IAudioClient)obj;
             //Get Audio Meter from device
             result = _audioDevice.Activate(typeof(IAudioMeterInformation).GUID, 0, IntPtr.Zero, out obj);
             _audioMeter = (IAudioMeterInformation)obj;
+            //Get Audio End Point
+            result = _audioDevice.Activate(typeof(IAudioEndpointVolume).GUID, 0, IntPtr.Zero, out obj);
+            _audioEndpointVolume = (IAudioEndpointVolume)obj;
+            _audioEndpointVolume.RegisterControlChangeNotify(classCallBack);
+            /*
+             * TODO:Add end point check logic here for make sure the audio device setting is correct.
+             * like _audioEndpointVolume.QueryHardwareSupport(out uint mask);
+             */
+            InitializeAudioClient();
+        }
+
+     
+
+        /// <summary>
+        /// The Initialize Audio Client
+        /// </summary>
+        /// <param name="audioFlow"></param>
+        /// <param name="_deviceEnumerator"></param>
+        private void InitializeAudioClient()
+        {
             //Initialize Audio Client.
             _sessionGuid = new Guid();
-            result = _audioClient.GetMixFormat(out waveFormat);
+            var result = _audioClient.GetMixFormat(out waveFormat);
             AudioClientStreamFlags streamFlag = AudioClientStreamFlags.None;
-            if (audioFlow == AudioDataFlow.eRender) streamFlag = AudioClientStreamFlags.Loopback;
+            if (_audioDataFlow == AudioDataFlow.eRender) streamFlag = AudioClientStreamFlags.Loopback;
             result = _audioClient.Initialize(AudioClientMode.Shared, streamFlag, 10000000, 0, waveFormat, ref _sessionGuid);
-            //Get Capture Client.
-            result = _audioClient.GetService(typeof(IAudioCaptureClient).GUID, out obj);
-            Marshal.ThrowExceptionForHR((int)result);
-            _audioCaptureClient = (IAudioCaptureClient)obj;
             result = _audioClient.Start();
             //Change wave format here
             SetupWaveFormat(waveFormat);
+            
+            result = _audioEndpointVolume.GetChannelCount(out _channelCount);
         }
 
+
+        /// <summary>
+        /// The UnInitialize Audio
+        /// </summary>
+        public void UninitializeAudio()
+        {
+            if (null != _audioEndpointVolume)  _audioEndpointVolume.UnregisterControlChangeNotify(classCallBack);
+            if (null != _audioClient) _audioClient.Stop();
+            if (null != _audioMeter)
+            {
+                Marshal.ReleaseComObject(_audioMeter);
+                _audioMeter = null;
+            }
+            if (null != _audioClient)
+            {
+                Marshal.ReleaseComObject(_audioClient);
+                _audioClient = null;
+            }
+            if (null != _audioEndpointVolume)
+            {
+                Marshal.ReleaseComObject(_audioEndpointVolume);
+                _audioEndpointVolume = null;
+            }
+            if (null != _audioDevice)
+            {
+                Marshal.ReleaseComObject(_audioDevice);
+                _audioDevice = null;
+            }
+            if (null != waveFormat)
+            {
+                waveFormat = null;
+            }
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// The Setup Wave Format
+        /// </summary>
+        /// <param name="_waveFormat"></param>
         private void SetupWaveFormat(WAVEFORMATEXTENSION _waveFormat)
         {
             switch (_waveFormat.WFormatTag)
@@ -78,220 +155,160 @@ namespace AudioControlLib
             }
         }
 
-        public void RegisterAudioVolumeCallBack(AudioVolumeCallBack callBack)
-        {
-            _audioCallBack += callBack;
-        }
-        public void RegisterAudioPluseCallBack(AudioPluseCallBack callBack)
-        {
-            _audiopluseCallBack += callBack;
-        }
+     
 
-        public void StartMonitor()
+        /// <summary>
+        /// The start monitor
+        /// </summary>
+        public void StartPeekMonitor()
         {
-            if (!isAudioMonitoring)
+            if (!isAudioPeekMonitoring)
             {
-                isAudioMonitoring = true;
-                Task.Factory.StartNew(()=>{ AudioMonitorWork(); });
-            }
-        }
-
-        public void StopMonitor()
-        {
-            if (isAudioMonitoring)
-            {
-                isAudioMonitoring =false;
-            }
-        }
-
-        public void StartAudioPluse()
-        {
-            if (!isAudioPluseMonitor)
-            {
-                isAudioPluseMonitor = true;
-                Task.Factory.StartNew(() => { AudioPluseMonitorWork(); });
-            }
-        }
-
-        
-
-        public void StopAudioPluse()
-        {
-            if (isAudioPluseMonitor)
-            {
-                isAudioPluseMonitor = false;
-            }
-        }
-
-        private void AudioPluseMonitorWork()
-        {
-            uint bufferCount = 0;
-            int packageSize = -1;
-            int numberFramToRead = -1;
-            long devicePosition = 0;
-            long qpcPosition = 0;
-            AudioClientBufferFlags bufferFlag;
-            IntPtr packageBuffer = IntPtr.Zero;
-            var blockAlign = waveFormat.NBlockAlign;
-            var result = _audioClient.GetBufferSize(ref bufferCount);
-            // Calculate the actual duration of the allocated buffer.
-            var hnsActualDuration = (double)REFTIMES_PER_SEC *
-                             bufferCount / waveFormat.NSamplesPerSec;
-
-            while (isAudioPluseMonitor)
-            {
-                Thread.Sleep((int)(hnsActualDuration / REFTIMES_PER_MILLISEC / 2));
-                result = _audioCaptureClient.GetNextPacketSize(out packageSize);
-                if (result == 0 && packageSize > 0)
+                try
                 {
-                    while (packageSize > 0)
-                    {
-                        _audioCaptureClient.GetBuffer(out packageBuffer, out numberFramToRead, out bufferFlag, out devicePosition, out qpcPosition);
-                        if (0 == numberFramToRead) continue;
-                        long lBytesToWrite = numberFramToRead * blockAlign;
-
-                        if (AudioClientBufferFlags.Silent == bufferFlag)
-                        {
-                            _audiopluseCallBack(0, 0);
-                        }
-                        else
-                        {
-                            var pkgData = StructureToByteArray(packageBuffer);
-                            ComputeDo3Band(pkgData, lBytesToWrite, waveFormat);
-                        }
-                        _audioCaptureClient.ReleaseBuffer(numberFramToRead);
-                        result = _audioCaptureClient.GetNextPacketSize(out packageSize);
-                    }
+                    isAudioPeekMonitoring = true;
+                    Task.Factory.StartNew(() => { AudioVolumePeekMonitorWork(); });
                 }
-                else
+                catch(Exception ex)
                 {
-                    _audiopluseCallBack(0, 0);
+                    Console.WriteLine($"StartMonitor Error {ex.Message}");
                 }
             }
         }
 
-        private void AudioMonitorWork()
+        /// <summary>
+        /// The stop monitor
+        /// </summary>
+        public void StopPeekMonitor()
         {
-            while(isAudioMonitoring)
+            if (isAudioPeekMonitoring) isAudioPeekMonitoring = false;
+        }
+        /// <summary>
+        /// The Audio Monitor work
+        /// </summary>
+        private void AudioVolumePeekMonitorWork()
+        {
+            while(isAudioPeekMonitoring)
             {
-                Thread.Sleep(100);
                 _audioMeter.GetPeakValue(out float peak);
                 _audioCallBack?.Invoke(_audioDataFlow, peak);
+                Thread.Sleep(100);
             }
             _audioCallBack?.Invoke(_audioDataFlow, 0);
         }
-
-        private void ComputeDo3Band(byte[] pkgData, long lBytesToWrite, WAVEFORMATEXTENSION _waveFormat)
+        /// <summary>
+        /// Get Mute.
+        /// </summary>
+        /// <returns></returns>
+        public bool GetMuted()
         {
-            if (GetAudioData(pkgData, lBytesToWrite, _waveFormat))
+            bool isMute = false;
+            var result =  _audioEndpointVolume.GetMute(out isMute);
+            return isMute;
+        }
+        /// <summary>
+        /// Set Mute
+        /// </summary>
+        /// <param name="v"></param>
+        public void SetMuted(bool v)
+        {
+            _audioEndpointVolume.SetMute(v, Guid.Empty);
+        }
+        /// <summary>
+        /// Get Master Volume
+        /// </summary>
+        /// <returns></returns>
+        public double GetMasterVolume()
+        {
+            float level = 0.0f;
+            if (_audioEndpointVolume != null)
             {
-                EQSTATE eqs = new EQSTATE();
-                AudioBandsConfig.init_3band_state(eqs, LowFrequence, HighFrequence, (int)_waveFormat.NSamplesPerSec);
-                //for (int i = 0; i < m_nNumSamples; i++)
-                for (int i = 0; i < m_RealIn_RT.Count; i++)
-                {
-                    m_Band_arr.Add(AudioBandsConfig.do_3band(eqs, m_RealIn_RT[i]));
-                    m_BandLow_arr.Add(AudioBandsConfig.do_3bandLow(eqs, m_RealIn_LT[i]));
-                }
-                double A2, dSum = 0, A2Low, dSumLow = 0;
-                for (int i = 0; i < m_Band_arr.Count; i++)
-                {
-                    A2 = m_Band_arr[i] * m_Band_arr[i];
-                    dSum += A2;
-                    A2Low = m_BandLow_arr[i] * m_BandLow_arr[i];
-                    dSumLow += A2Low;
-                }
-                double dAvg = dSum / m_nNumSamples;
-                double dAvgLow = dSumLow / m_nNumSamples;
-
-                double dFinal = Math.Sqrt(dAvg);
-                double dFinalLow = Math.Sqrt(dAvgLow);
-
-                double dOutput = dFinal * Math.Sqrt(2) / 32768 * 100;
-                double dOutputLow = dFinalLow * Math.Sqrt(2) / 32768 * 100;
-                _audiopluseCallBack(dOutput, dOutputLow);
+                _audioEndpointVolume.GetMasterVolumeLevelScalar(out level);
                 
             }
+            return (double)level;
         }
-        List<float> m_RealIn_RT = new List<float>();
-        List<float> m_RealIn_LT = new List<float>();
-        List<double> m_Band_arr = new List<double>();
-        List<double> m_BandLow_arr = new List<double>();
-        //threadArgs.iHighFr = 5000;			// 16.May.30 --------------------------
-        //threadArgs.iLowFr = 880;			// as suggested by David Chu ----------
-        const int HighFrequence = 5000;
-        const int LowFrequence = 880;
-        int m_nNumSamples = -1;
-
-
-
-        private bool GetAudioData(byte[] pkgData, long lBytesToWrite, WAVEFORMATEXTENSION waveFormat)
+        /// <summary>
+        /// Set Master Volume
+        /// </summary>
+        /// <param name="newValue"></param>
+        public void SetMasterVolumeScalar(double newValue)
         {
-            const double FFT_SPEED = 0.006;
-            var m_nBufferSize = AudioBandsConfig.NextPowerOfTwo((int)(waveFormat.NAvgBytesPerSec * FFT_SPEED));
-            m_nNumSamples = m_nBufferSize / waveFormat.NBlockAlign;
-            //m_RealIn_RT.Clear();
-            //m_RealIn_LT.Clear();
-            //m_Band_arr.Clear();
-            //m_BandLow_arr.Clear();
-            switch (waveFormat.WBitsPerSample)
-            {
-                case 8:
-                    break;
-                case 16:
-                    if (waveFormat.NChannels == 1) // mono
-                    {
-                        int Samples = m_nNumSamples >> 1;
-                        for (int i = 0; i < Samples; ++i)
-                        {
-                            m_RealIn_RT[i] = (float)(pkgData[i]);
-                            m_RealIn_LT[i] = m_RealIn_RT[i];
-                        }
-                        m_nNumSamples = Samples;
-                    }
-                    //else if (waveFormat.NChannels == 2) // stereo
-                    else
-                    {
-                        // Stereo has Left+Right channels
-                        int Samples = m_nNumSamples >> 2;
-                        //for (int i = 0, j = 0; i < Samples; ++i, j += 2)
-                        for (int i = 0, j = 0; i < pkgData.Length; ++i, j += 2)
-                        {
-                            if (j >= pkgData.Length) continue;
-                            if (pkgData[j] == 0)
-                            {
-                                m_RealIn_RT.Add(0);
-                                if (pkgData[j + 1] == 0)
-                                    m_RealIn_LT.Add(0);
-                                else if (pkgData[j + 1] != 0)
-                                    m_RealIn_LT.Add((float)(pkgData[j + 1]));
-
-                            }
-                            else
-                            {
-                                m_RealIn_RT.Add((float)(pkgData[j]));
-                                m_RealIn_LT.Add((float)(pkgData[j + 1]));
-                            }
-                            m_nNumSamples = Samples;
-                        }
-
-                    }
-                    break;
-            }
-            return true;
+            if (_audioEndpointVolume == null) return;
+            _audioEndpointVolume.SetMasterVolumeLevelScalar((float)newValue, Guid.Empty);
         }
-
-        byte[] StructureToByteArray<T>(T obj)
+        /// <summary>
+        /// Get Channel Value
+        /// </summary>
+        /// <param name="channelName"></param>
+        /// <returns></returns>
+        public float GetChannelValue(uint channelName)
         {
-            int length = Marshal.SizeOf(obj);
-            byte[] array = new byte[length];
-
-            IntPtr ptr = Marshal.AllocHGlobal(length);
-            Marshal.StructureToPtr(obj, ptr, true);
-            Marshal.Copy(ptr, array, 0, length);
-            Marshal.FreeHGlobal(ptr);
-
-            return array;
+            if (channelName >= _channelCount) return 0;
+            _audioEndpointVolume.GetChannelVolumeLevelScalar(channelName, out float level);
+            return level;
         }
+        /// <summary>
+        /// Set Channel Value
+        /// </summary>
+        /// <param name="channelName"></param>
+        /// <param name="v"></param>
+        public void SetChannelValue(uint channelName, float v)
+        {
+            if (channelName >= _channelCount) return;
+            _audioEndpointVolume.SetChannelVolumeLevelScalar(channelName, v, Guid.Empty);
+        }
+
+        #region Register Call Backs
+        /// <summary>
+        /// The register Audio Call back
+        /// </summary>
+        /// <param name="callBack"></param>
+        public void RegisterAudioVolumePeekCallBack(AudioVolumePeekCallBack callBack)
+        {
+            _audioCallBack += callBack;
+        }
+        /// <summary>
+        /// UnRegister Audio Peek Call Back
+        /// </summary>
+        /// <param name="callBack"></param>
+        public void UnRegisterAudioVolumePeekCallBack(AudioVolumePeekCallBack callBack)
+        {
+            _audioCallBack -= callBack;
+        }
+
+        /// <summary>
+        /// The register Audio Pulse Call back
+        /// </summary>
+        /// <param name="callBack"></param>
+        public void RegisterAudioPulseCallBack(AudioPulseCallBack callBack)
+        {
+            _audiopulseCallBack += callBack;
+        }
+        /// <summary>
+        /// The register Audio Pulse Call back
+        /// </summary>
+        /// <param name="callBack"></param>
+        public void UnRegisterAudioPulseCallBack(AudioPulseCallBack callBack)
+        {
+            _audiopulseCallBack -= callBack;
+        }
+        /// <summary>
+        /// The Volume Change call back
+        /// </summary>
+        /// <param name="_callBack"></param>
+        public void RegisterVolumeChangeCallBack(AudioVolumeChangeCallBack _callBack)
+        {
+            classCallBack.RegisterVolumeChangeCallBack(_callBack);
+        }
+        /// <summary>
+        /// UnRegister Volume Change Call back
+        /// </summary>
+        /// <param name="_callBack"></param>
+        public void UnRegisterVolumeChangeCallBack(AudioVolumeChangeCallBack _callBack)
+        {
+            classCallBack.UnRegisterVolumeChangeCallBack(_callBack);
+        }
+        #endregion
     }
 }

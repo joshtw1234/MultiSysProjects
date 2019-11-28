@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AudioControlLib.Enums
 {
     [Flags]
-    enum AudioDeviceState
+    public enum AudioDeviceState
     {
         DEVICE_STATE_ACTIVE = 0x00000001,
         DEVICE_STATE_DISABLED = 0x00000002,

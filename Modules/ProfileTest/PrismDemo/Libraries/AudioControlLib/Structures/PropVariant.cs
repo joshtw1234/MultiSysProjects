@@ -93,7 +93,7 @@ namespace AudioControlLib.Structures
         /// <summary>
         /// Binary large object.
         /// </summary>
-        [FieldOffset(8)] public Blob blobVal;
+        [FieldOffset(8)] public BigBinObject blobVal;
         //LPSTR pszVal;
         /// <summary>
         /// Pointer value.

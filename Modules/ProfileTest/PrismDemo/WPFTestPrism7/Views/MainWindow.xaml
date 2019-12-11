@@ -1,0 +1,19 @@
+﻿<Window x:Class="WPFTestPrism7.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:prism="http://prismlibrary.com/"
+        prism:ViewModelLocator.AutoWireViewModel="True"
+        xmlns:local="clr-namespace:WPFTestPrism7.Views"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <DockPanel>
+            <ContentControl DockPanel.Dock="Top" prism:RegionManager.RegionName="TitleRegion"/>
+            <ContentControl DockPanel.Dock="Left" prism:RegionManager.RegionName="MenuRegion"/>
+            <ContentControl prism:RegionManager.RegionName="FeatureRegion"/>
+        </DockPanel>
+        <ContentControl prism:RegionManager.RegionName="EntireRegion"/>
+    </Grid>
+</Window>

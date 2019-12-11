@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeGameModule", "Modules\P
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CentralModule", "Modules\CentralModule\CentralModule.csproj", "{BFB9D761-BAAF-48A8-A149-D00E34433DD1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFTestPrism7", "WPFTestPrism7\WPFTestPrism7.csproj", "{B2223628-6312-42BD-94D4-FC244823440C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -105,6 +107,14 @@ Global
 		{BFB9D761-BAAF-48A8-A149-D00E34433DD1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BFB9D761-BAAF-48A8-A149-D00E34433DD1}.Release|x64.ActiveCfg = Release|x64
 		{BFB9D761-BAAF-48A8-A149-D00E34433DD1}.Release|x64.Build.0 = Release|x64
+		{B2223628-6312-42BD-94D4-FC244823440C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2223628-6312-42BD-94D4-FC244823440C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2223628-6312-42BD-94D4-FC244823440C}.Debug|x64.ActiveCfg = Debug|x64
+		{B2223628-6312-42BD-94D4-FC244823440C}.Debug|x64.Build.0 = Debug|x64
+		{B2223628-6312-42BD-94D4-FC244823440C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2223628-6312-42BD-94D4-FC244823440C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2223628-6312-42BD-94D4-FC244823440C}.Release|x64.ActiveCfg = Release|x64
+		{B2223628-6312-42BD-94D4-FC244823440C}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

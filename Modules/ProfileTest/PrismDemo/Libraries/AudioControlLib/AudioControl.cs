@@ -114,6 +114,8 @@ namespace AudioControlLib
             if (null != _audioClient) _audioClient.Stop();
             if (null != _audioMeter)
             {
+                //For wait audio meter thread stop. then release memory
+                Thread.Sleep(100);
                 Marshal.ReleaseComObject(_audioMeter);
                 _audioMeter = null;
             }

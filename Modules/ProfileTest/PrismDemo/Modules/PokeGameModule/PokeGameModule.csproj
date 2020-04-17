@@ -85,6 +85,7 @@
     <Compile Include="Games\Structures\PokeGamer.cs" />
     <Compile Include="Interfaces\IPokeGameModel.cs" />
     <Compile Include="Models\PokeGameModel.cs" />
+    <Compile Include="Models\TextValidationRules.cs" />
     <Compile Include="PokeGameModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -103,6 +104,7 @@
     <Compile Include="Views\PokeGameControl.xaml.cs">
       <DependentUpon>PokeGameControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\TextConverter.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -113,7 +115,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Page Include="Views\PokeGameControl.xaml">
       <SubType>Designer</SubType>

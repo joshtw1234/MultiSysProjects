@@ -134,15 +134,139 @@ namespace AudioControlLib
         }
         #region Audio Control
         /// <summary>
+        /// Get HID Audio Device UUID
+        /// </summary>
+        /// <param name="dataFlow"></param>
+        /// <param name="pid"></param>
+        /// <param name="vid"></param>
+        /// <returns></returns>
+        private string GetHIDAudioDeviceUUID(AudioDataFlow dataFlow, string pid, string vid)
+        {
+            COMResult result = COMResult.E_FAIL;
+           
+            PropertyKey proKey;
+            PropVariant proVar;
+            result = _deviceEnumerator.EnumAudioEndpoints(dataFlow, AudioDeviceState.DEVICE_STATE_ACTIVE, out IMMDeviceCollection devCollect);
+            result = devCollect.GetCount(out int devCnt);
+            for (int i = 0; i < devCnt; i++)
+            {
+                result = devCollect.Item(i, out IMMDevice tDev);
+                tDev.GetId(out string devID);
+                tDev.OpenPropertyStore(StorageAccessMode.STGM_READ, out IPropertyStore ppt);
+                ppt.GetCount(out int ppCnt);
+                for (int j = 0; j < ppCnt; j++)
+                {
+                    result = ppt.GetAt(j, out proKey);
+                    result = ppt.GetValue(ref proKey, out proVar);
+                    if (proVar.DataType == System.Runtime.InteropServices.VarEnum.VT_LPWSTR ||
+                          proVar.DataType == System.Runtime.InteropServices.VarEnum.VT_LPSTR)
+                    {
+                        if (proKey.formatId.ToString().Equals(PKEY_AUDIOENDPOINT_HWID.formatId.ToString()) &&
+                               proKey.propertyId == PKEY_AUDIOENDPOINT_HWID.propertyId)
+                        {
+                            string hwID = proVar.Value.ToString();
+                            if (!GetPIDVIDFromHWIDString(hwID, out string hwPid, out string hwVid))
+                            {
+                                continue;
+                            }
+                            if (vid.Equals(hwVid, StringComparison.CurrentCultureIgnoreCase) && 
+                                pid.Equals(hwPid, StringComparison.CurrentCultureIgnoreCase))
+                            {
+                                return devID;
+                            }
+                        }
+                    }
+                }
+            }
+            return string.Empty;
+        }
+
+        /// <summary>
+        /// Get PID VID from HW ID string
+        /// </summary>
+        /// <param name="hwID">HW ID</param>
+        /// <param name="hwPid">out Pid</param>
+        /// <param name="hwVid">out Vid</param>
+        /// <returns>true for success</returns>
+        private bool GetPIDVIDFromHWIDString(string hwID, out string hwPid, out string hwVid)
+        {
+            /*
+            * update pattern to follow standard USB format
+            * https://docs.microsoft.com/en-us/windows-hardware/drivers/install/standard-usb-identifiers
+            * PCI device format
+            * https://docs.microsoft.com/zh-tw/windows-hardware/drivers/install/identifiers-for-pci-devices
+            */
+            const string hidPattern = @"([\w]{3})_([\w]{4})&";
+            const string hwPidString = "pid";
+            const string hwVidString = "vid";
+            bool isGetPIDVID = false;
+            hwPid = string.Empty;
+            hwVid = string.Empty;
+            MatchCollection mt = Regex.Matches(hwID, hidPattern, RegexOptions.IgnoreCase);
+            var matchPid = mt.Cast<Match>().FirstOrDefault(x => x.Groups[1].Value.Equals(hwPidString, StringComparison.CurrentCultureIgnoreCase));
+            var matchVid = mt.Cast<Match>().FirstOrDefault(x => x.Groups[1].Value.Equals(hwVidString, StringComparison.CurrentCultureIgnoreCase));
+            if (null == matchPid || null == matchVid)
+            {
+                return isGetPIDVID;
+            }
+            isGetPIDVID = true;
+            hwPid = matchPid.Groups[2].Value;
+            hwVid = matchVid.Groups[2].Value;
+            return isGetPIDVID;
+        }
+
+        /// <summary>
+        /// Get IMMDevice
+        /// </summary>
+        /// <param name="initFlow"></param>
+        /// <param name="pid"></param>
+        /// <param name="vid"></param>
+        /// <returns>Null means Failed</returns>
+        private IMMDevice GetIMMDevice(AudioDataFlow initFlow, string pid, string vid)
+        {
+            COMResult result = COMResult.E_FAIL;
+            IMMDevice _device = null;
+            if (initFlow == AudioDataFlow.eAll)
+            {
+                //Not support get both render and capture.
+                return _device;
+            }
+            string devUUID = GetHIDAudioDeviceUUID(initFlow, pid, vid);
+            if (string.IsNullOrEmpty(devUUID))
+            {
+                //Failed to get UUID, Get Default Endpoint
+                result = _deviceEnumerator.GetDefaultAudioEndpoint(initFlow, EndPointRole.eCommunications, out _device);
+            }
+            else
+            {
+                result = _deviceEnumerator.GetDevice(devUUID, out _device);
+            }
+            return _device;
+        }
+        /// <summary>
         /// The Initialize Audio Controls
         /// </summary>
-        public void InitializeAudioControls()
+        public void InitializeAudioControls(AudioDataFlow initFlow, string pid, string vid)
         {
+            IMMDevice _audioDevice = null;
             //Get Audio Device
-            COMResult result = _deviceEnumerator.GetDefaultAudioEndpoint(AudioDataFlow.eRender, EndPointRole.eMultimedia, out IMMDevice _audioDevice);
-            _speakerControl = new AudioControl(_audioDevice, AudioDataFlow.eRender);
-            result = _deviceEnumerator.GetDefaultAudioEndpoint(AudioDataFlow.eCapture, EndPointRole.eMultimedia, out _audioDevice);
-            _microphoneControl = new AudioControl(_audioDevice, AudioDataFlow.eCapture);
+            switch (initFlow)
+            {
+                case AudioDataFlow.eAll:
+                    _audioDevice = GetIMMDevice(AudioDataFlow.eRender, pid, vid);
+                    _speakerControl = new AudioControl(_audioDevice, AudioDataFlow.eRender);
+                    _audioDevice = GetIMMDevice(AudioDataFlow.eCapture, pid, vid);
+                    _microphoneControl = new AudioControl(_audioDevice, AudioDataFlow.eCapture);
+                    break;
+                case AudioDataFlow.eRender:
+                    _audioDevice = GetIMMDevice(initFlow, pid, vid);
+                    _speakerControl = new AudioControl(_audioDevice, initFlow);
+                    break;
+                case AudioDataFlow.eCapture:
+                    _audioDevice = GetIMMDevice(initFlow, pid, vid);
+                    _microphoneControl = new AudioControl(_audioDevice, initFlow);
+                    break;
+            }
         }
         /// <summary>
         /// The UnIntialize Audio Controls
@@ -166,6 +290,8 @@ namespace AudioControlLib
         /// <returns></returns>
         public bool GetSpeakerIsMuted()
         {
+            if (null == _speakerControl) return false;
+
             return _speakerControl.GetMuted();
         }
         /// <summary>
@@ -174,7 +300,7 @@ namespace AudioControlLib
         /// <param name="v"></param>
         public void SetSpeakerMute(bool v)
         {
-            _speakerControl.SetMuted(v);
+            if (null != _speakerControl) _speakerControl.SetMuted(v);
         }
         /// <summary>
         /// Get Speaker Volume
@@ -182,6 +308,8 @@ namespace AudioControlLib
         /// <returns></returns>
         public double GetSpeakerVolumeValue()
         {
+            if (null == _speakerControl) return 0.0;
+
             return _speakerControl.GetMasterVolume();
         }
         /// <summary>
@@ -190,7 +318,7 @@ namespace AudioControlLib
         /// <param name="newValue"></param>
         public void SetSpeakerVolumeValue(double newValue)
         {
-            _speakerControl.SetMasterVolumeScalar(newValue);
+           if (null != _speakerControl) _speakerControl.SetMasterVolumeScalar(newValue);
         }
         /// <summary>
         /// Get Speaker Channel Value
@@ -199,6 +327,8 @@ namespace AudioControlLib
         /// <returns></returns>
         public float GetSpeakerChannelValue(uint channelName)
         {
+            if (null == _speakerControl) return 0;
+
             return _speakerControl.GetChannelValue(channelName);
         }
         /// <summary>
@@ -208,7 +338,7 @@ namespace AudioControlLib
         /// <param name="v"></param>
         public void SetSpeakerChannelValue(uint channelName, double v)
         {
-            _speakerControl.SetChannelValue(channelName, (float)v);
+            if (null != _speakerControl) _speakerControl.SetChannelValue(channelName, (float)v);
         }
         /// <summary>
         /// Get Microphone Muted
@@ -216,6 +346,8 @@ namespace AudioControlLib
         /// <returns></returns>
         public bool GetMicrophoneIsMuted()
         {
+            if (null == _microphoneControl) return false;
+
             return _microphoneControl.GetMuted();
         }
         /// <summary>
@@ -224,7 +356,7 @@ namespace AudioControlLib
         /// <param name="v"></param>
         public void SetMicrophoneMute(bool v)
         {
-            _microphoneControl.SetMuted(v);
+            if (null != _microphoneControl) _microphoneControl.SetMuted(v);
         }
         /// <summary>
         /// Get Microphone Volume
@@ -232,6 +364,8 @@ namespace AudioControlLib
         /// <returns></returns>
         public double GetMicrophoneVolumeValue()
         {
+            if (null == _microphoneControl) return 0;
+
             return _microphoneControl.GetMasterVolume();
         }
         /// <summary>
@@ -240,7 +374,7 @@ namespace AudioControlLib
         /// <param name="newValue"></param>
         public void SetMicrophoneVolumeValue(double newValue)
         {
-            _microphoneControl.SetMasterVolumeScalar(newValue);
+            if (null != _microphoneControl) _microphoneControl.SetMasterVolumeScalar(newValue);
         }
         /// <summary>
         /// Get Microphone Channel Value
@@ -249,6 +383,8 @@ namespace AudioControlLib
         /// <returns></returns>
         public float GetMicrophoneChannelValue(uint channelName)
         {
+            if (null == _microphoneControl) return 0;
+
             return _microphoneControl.GetChannelValue(channelName);
         }
         /// <summary>
@@ -258,7 +394,7 @@ namespace AudioControlLib
         /// <param name="v"></param>
         public void SetMicrophoneChannelValue(uint channelName, double v)
         {
-            _microphoneControl.SetChannelValue(channelName, (float)v);
+            if (null != _microphoneControl) _microphoneControl.SetChannelValue(channelName, (float)v);
         }
 
         #region Register Audio Control CallBacks
@@ -268,6 +404,8 @@ namespace AudioControlLib
         /// <param name="callBack"></param>
         public void RegisterSpeakerVolumeCallBack(CallBacks.AudioVolumeChangeCallBack callBack)
         {
+            if (null == _speakerControl) return;
+
             _speakerControl.RegisterVolumeChangeCallBack(callBack);
         }
         /// <summary>
@@ -285,6 +423,8 @@ namespace AudioControlLib
         /// <param name="callBack"></param>
         public void RegisterMicrophoneVolumeCallBack(CallBacks.AudioVolumeChangeCallBack callBack)
         {
+            if (null == _microphoneControl) return;
+
             _microphoneControl.RegisterVolumeChangeCallBack(callBack);
         }
         /// <summary>
@@ -302,6 +442,7 @@ namespace AudioControlLib
         /// <param name="callBack"></param>
         public void RegisterSpeakerPeekMeterCallBack(CallBacks.AudioVolumePeekCallBack callBack)
         {
+            if (null == _speakerControl) return;
             _speakerControl.StartPeekMonitor();
             _speakerControl.RegisterAudioVolumePeekCallBack(callBack);
         }
@@ -321,6 +462,8 @@ namespace AudioControlLib
         /// <param name="callBack"></param>
         public void RegisterMicrophonePeekMeterCallBack(CallBacks.AudioVolumePeekCallBack callBack)
         {
+            if (null == _microphoneControl) return;
+
             _microphoneControl.StartPeekMonitor();
             _microphoneControl.RegisterAudioVolumePeekCallBack(callBack);
         }

@@ -11,6 +11,8 @@
 using AudioControlLib.Enums;
 using AudioControlLib.Structures;
 using System;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace AudioControlLib
 {

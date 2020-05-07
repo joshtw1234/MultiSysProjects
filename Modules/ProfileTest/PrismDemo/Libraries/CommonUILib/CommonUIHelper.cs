@@ -1,4 +1,4 @@
-﻿using Microsoft.Practices.ServiceLocation;
+﻿//using Microsoft.Practices.ServiceLocation;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
@@ -61,7 +61,7 @@ namespace CommonUILib
         /// </summary>
         private CommonUIHelper()
         {
-            this._regionManager = ServiceLocator.Current.GetInstance<RegionManager>();
+            this._regionManager = CommonServiceLocator.ServiceLocator.Current.GetInstance<RegionManager>();
         }
 
         /// <summary>

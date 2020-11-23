@@ -114,6 +114,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="AppGUIModules\Views\Features\SysHookClientControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AppGUIModules\Views\MenuModuleControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -132,15 +136,21 @@
     <Compile Include="AppGUIModules\Models\HIDDemoControlModel.cs" />
     <Compile Include="AppGUIModules\Models\Interfaces\IHIDDemoControlModel.cs" />
     <Compile Include="AppGUIModules\Models\Interfaces\IMenuModuleControlModel.cs" />
+    <Compile Include="AppGUIModules\Models\Interfaces\ISysHookClientControlModel.cs" />
     <Compile Include="AppGUIModules\Models\MenuModuleControlModel.cs" />
+    <Compile Include="AppGUIModules\Models\SysHookClientControlModel.cs" />
     <Compile Include="AppGUIModules\ViewModels\Features\AudioLabModuleControlViewModel.cs" />
     <Compile Include="AppGUIModules\ViewModels\Features\HIDDemoControlViewModel.cs" />
+    <Compile Include="AppGUIModules\ViewModels\Features\SysHookClientControlViewModel.cs" />
     <Compile Include="AppGUIModules\ViewModels\MenuModuleControlViewModel.cs" />
     <Compile Include="AppGUIModules\Views\Features\AudioLabModuleControl.xaml.cs">
       <DependentUpon>AudioLabModuleControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppGUIModules\Views\Features\HIDDemoControl.xaml.cs">
       <DependentUpon>HIDDemoControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppGUIModules\Views\Features\SysHookClientControl.xaml.cs">
+      <DependentUpon>SysHookClientControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppGUIModules\Views\MenuModuleControl.xaml.cs">
       <DependentUpon>MenuModuleControl.xaml</DependentUpon>

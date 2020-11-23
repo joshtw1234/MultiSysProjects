@@ -15,6 +15,7 @@ namespace WPFTestPrism7.AppGUIModules.AppModules
             //Register View
             _regionManager.RegisterViewWithRegion("MenuRegion", typeof(Views.MenuModuleControl));
             _regionManager.RegisterViewWithRegion("FeatureRegion", typeof(Views.Features.HIDDemoControl));
+            _regionManager.RegisterViewWithRegion("FeatureRegion", typeof(Views.Features.SysHookClientControl));
         }
 
         public override void RegisterTypes(IContainerRegistry containerRegistry)
@@ -22,6 +23,7 @@ namespace WPFTestPrism7.AppGUIModules.AppModules
             //Register Model first, not singleton
             containerRegistry.Register(typeof(Models.Interfaces.IMenuModuleControlModel), typeof(Models.MenuModuleControlModel));
             containerRegistry.Register(typeof(Models.Interfaces.IHIDDemoControlModel), typeof(Models.HIDDemoControlModel));
+            containerRegistry.Register(typeof(Models.Interfaces.ISysHookClientControlModel), typeof(Models.SysHookClientControlModel));
         }
     }
 }

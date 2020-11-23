@@ -113,6 +113,7 @@ namespace AudioControlLib
                     catch (Exception ex)
                     {
                         //Some reason Microphone will occur exception.
+                        string exstr = ex.Message;
                     }
                 }
             });

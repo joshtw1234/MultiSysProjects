@@ -62,6 +62,12 @@
     <Compile Include="AudioControl.cs" />
     <Compile Include="AudioDeviceController.cs" />
     <Compile Include="AudioMethods\AudioBandsConfig.cs" />
+    <Compile Include="AudioMixerControl.cs" />
+    <Compile Include="AudioMixer\Enums\Mixer_ObjectFlag.cs" />
+    <Compile Include="AudioMixer\Enums\MMResult.cs" />
+    <Compile Include="AudioMixer\MixerAPIs.cs" />
+    <Compile Include="AudioMixer\MixerConstants.cs" />
+    <Compile Include="AudioMixer\Structures\MixerCaps.cs" />
     <Compile Include="CallBacks\AudioCallBacks.cs" />
     <Compile Include="CoreAudioAPIs.cs" />
     <Compile Include="Enums\AudioClientBufferFlags.cs" />

@@ -106,6 +106,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="AppGUIModules\Views\Features\AudioLabModuleControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppGUIModules\Views\Features\HIDDemoControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="AppGUIModules\Views\MenuModuleControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -118,10 +126,22 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="AppGUIModules\AppModules\BaseModule.cs" />
+    <Compile Include="AppGUIModules\AppModules\Features\AudioLabModule.cs" />
     <Compile Include="AppGUIModules\AppModules\MenuModule.cs" />
+    <Compile Include="AppGUIModules\Models\HIDDemoControlModel.cs" />
+    <Compile Include="AppGUIModules\Models\Interfaces\IHIDDemoControlModel.cs" />
     <Compile Include="AppGUIModules\Models\Interfaces\IMenuModuleControlModel.cs" />
     <Compile Include="AppGUIModules\Models\MenuModuleControlModel.cs" />
+    <Compile Include="AppGUIModules\ViewModels\Features\AudioLabModuleControlViewModel.cs" />
+    <Compile Include="AppGUIModules\ViewModels\Features\HIDDemoControlViewModel.cs" />
     <Compile Include="AppGUIModules\ViewModels\MenuModuleControlViewModel.cs" />
+    <Compile Include="AppGUIModules\Views\Features\AudioLabModuleControl.xaml.cs">
+      <DependentUpon>AudioLabModuleControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppGUIModules\Views\Features\HIDDemoControl.xaml.cs">
+      <DependentUpon>HIDDemoControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AppGUIModules\Views\MenuModuleControl.xaml.cs">
       <DependentUpon>MenuModuleControl.xaml</DependentUpon>
     </Compile>
@@ -166,5 +186,6 @@
       <Name>CommonUILib</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -7,7 +7,7 @@
         prism:ViewModelLocator.AutoWireViewModel="True"
         xmlns:local="clr-namespace:WPFTestPrism7.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" Background="{x:Null}">
     <Grid>
         <DockPanel>
             <ContentControl DockPanel.Dock="Top" prism:RegionManager.RegionName="TitleRegion"/>

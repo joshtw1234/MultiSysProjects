@@ -26,6 +26,7 @@ namespace WPFTestPrism7
         {
             base.ConfigureModuleCatalog(moduleCatalog);
             moduleCatalog.AddModule(typeof(AppGUIModules.AppModules.MenuModule), InitializationMode.WhenAvailable);
+            moduleCatalog.AddModule(typeof(AppGUIModules.AppModules.Features.AudioLabModule), InitializationMode.WhenAvailable);
         }
     }
 }

@@ -16,9 +16,9 @@ namespace WPFTestPrism7.AppGUIModules.ViewModels.Features
         bool isPass = false;
         public void ConfirmNavigationRequest(NavigationContext navigationContext, Action<bool> continuationCallback)
         {
-            MessageBox.Show($"isPass {isPass}");
-            continuationCallback(isPass);
-            isPass = !isPass;
+            //MessageBox.Show($"isPass {isPass}");
+            continuationCallback(true);
+            //isPass = !isPass;
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

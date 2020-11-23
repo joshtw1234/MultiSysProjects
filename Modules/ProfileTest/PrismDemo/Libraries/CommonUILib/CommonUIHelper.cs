@@ -61,7 +61,7 @@ namespace CommonUILib
         /// </summary>
         private CommonUIHelper()
         {
-            this._regionManager = CommonServiceLocator.ServiceLocator.Current.GetInstance<RegionManager>();
+            this._regionManager = CommonServiceLocator.ServiceLocator.Current.GetInstance<IRegionManager>();
         }
 
         /// <summary>

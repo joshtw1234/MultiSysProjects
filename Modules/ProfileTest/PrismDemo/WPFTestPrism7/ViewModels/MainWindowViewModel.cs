@@ -16,6 +16,7 @@ namespace WPFTestPrism7.ViewModels
         private void OnWindowSourceInitialized(EventArgs obj)
         {
             SystemControlLib.SystemHook.Instence.Initialize(System.Windows.Interop.HwndSource.FromHwnd(new System.Windows.Interop.WindowInteropHelper(Application.Current.MainWindow).Handle));
+            SystemControlLib.SystemHook.Instence.SetLowLevelHook();
         }
     }
 }

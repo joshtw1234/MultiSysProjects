@@ -4,11 +4,22 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPFTestPrism7.AppGUIModules.Views.Features"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:common="clr-namespace:CommonUILib.Views;assembly=CommonUILib"
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <TextBlock DataContext="{Binding MessageBox}" Text="{Binding MenuName}" Foreground="White" TextWrapping="Wrap"/>
+        <DockPanel>
+            <Button DataContext="{Binding HookButton}" Content="{Binding MenuName}" Command="{Binding MenuCommand}" CommandParameter="{Binding MenuData}" DockPanel.Dock="Bottom" Height="30"/>
+            <ScrollViewer>
+                <i:Interaction.Behaviors>
+                    <common:AutoScrollBehavior/>
+                </i:Interaction.Behaviors>
+                <TextBlock DataContext="{Binding MessageBox}" Text="{Binding MenuName}" Foreground="White" TextWrapping="Wrap"
+                   ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+            </ScrollViewer>
+        </DockPanel>
     </Grid>
 </UserControl>

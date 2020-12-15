@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using SystemControlLib.CallBacks;
@@ -10,11 +11,16 @@ namespace SystemControlLib
 {
     public class SystemHook
     {
+        const int WH_KEYBOARD_LL = 13;
+        const int WH_MOUSE_LL = 14;
         private static SystemHook _instance = null;
         private HwndSource _winHandle;
         private List<IntPtr> _notificationHandles;
         private WinMessageCallback _onWinMessage;
+        private WinMessageCallback _onLLMessage;
         private DeviceChangeCallBack _onDeviceCallback;
+        IntPtr s_MouseHookHandle;
+        NativeImportMethods.LowLevelHookProc llHookProc;
         public static SystemHook Instence
         {
             get
@@ -34,6 +40,8 @@ namespace SystemControlLib
                 { DeviceType = WM_DeviceType.DBT_DEVTYP_DEVICEINTERFACE, ClassGuid = new Guid(SystemControlLibConsts.GUID_DEVINTERFACE_USB_DEVICE) });
                 SetDeviceNotification(new BroadcastDeviceinterface()
                 { DeviceType = WM_DeviceType.DBT_DEVTYP_DEVICEINTERFACE, ClassGuid = new Guid(SystemControlLibConsts.KSCATEGORY_AUDIO) });
+
+
                 return true;
             }
             return false;
@@ -42,12 +50,41 @@ namespace SystemControlLib
         public void RegisterWindowMessageCallback(WinMessageCallback _callBack)
         {
             _onWinMessage += _callBack;
-            
+
         }
 
         public void RegisterDeviceChangeCallBack(DeviceChangeCallBack _callBack)
         {
             _onDeviceCallback += _callBack;
+        }
+
+        public void RegisterLowLevelMessageCallBack(WinMessageCallback _callBack)
+        {
+            _onLLMessage += _callBack;
+        }
+
+        public void SetLowLevelHook()
+        {
+            llHookProc = OnLowLevelHookProc;
+            using (Process curProcess = Process.GetCurrentProcess())
+            {
+                using (ProcessModule curModule = curProcess.MainModule)
+                {
+                    s_MouseHookHandle = NativeImportMethods.SetWindowsHookEx(
+                    WH_MOUSE_LL,
+                    llHookProc,
+                    NativeImportMethods.GetModuleHandle(curModule.ModuleName),
+                    0);
+                }
+            }
+        }
+        public void RemoveLowLevelHook()
+        {
+            if (s_MouseHookHandle != IntPtr.Zero)
+            {
+                NativeImportMethods.UnhookWindowsHookEx(s_MouseHookHandle);
+                s_MouseHookHandle = IntPtr.Zero;
+            }
         }
 
         /// <summary>
@@ -87,21 +124,21 @@ namespace SystemControlLib
                 case WinProc_Message.WM_MOUSELEAVE:
                 case WinProc_Message.WM_MOUSEMOVE:
                 case WinProc_Message.WM_MOUSEWHEEL:
-                    //In Client Area
+                //In Client Area
                 case WinProc_Message.WM_LBUTTONDBLCLK:
                 case WinProc_Message.WM_LBUTTONDOWN:
                 case WinProc_Message.WM_LBUTTONUP:
                 case WinProc_Message.WM_RBUTTONDBLCLK:
                 case WinProc_Message.WM_RBUTTONDOWN:
                 case WinProc_Message.WM_RBUTTONUP:
-                    //In None Client Area
+                //In None Client Area
                 case WinProc_Message.WM_NCLBUTTONDBLCLK:
                 case WinProc_Message.WM_NCLBUTTONDOWN:
                 case WinProc_Message.WM_NCLBUTTONUP:
                 case WinProc_Message.WM_NCRBUTTONDBLCLK:
                 case WinProc_Message.WM_NCRBUTTONDOWN:
                 case WinProc_Message.WM_NCRBUTTONUP:
-                    //Keyboard
+                //Keyboard
                 case WinProc_Message.WM_IME_KEYDOWN:
                 case WinProc_Message.WM_IME_KEYUP:
                     break;
@@ -117,7 +154,7 @@ namespace SystemControlLib
                 case WinProc_Message.WM_POWERBROADCAST:
                 // For user session change event
                 case WinProc_Message.WM_WTSSESSION_CHANGE:
-                
+
                 // For device detection event
                 case WinProc_Message.WM_DEVICECHANGE:
                     switch ((WM_DeviceChange)wParam)
@@ -125,7 +162,7 @@ namespace SystemControlLib
                         case WM_DeviceChange.DBT_DEVICEARRIVAL:
                         case WM_DeviceChange.DBT_DEVICEREMOVECOMPLETE:
                             DEV_BROADCAST_HDR devHDR = (DEV_BROADCAST_HDR)Marshal.PtrToStructure(lParam, typeof(DEV_BROADCAST_HDR));
-                            switch(devHDR.dbch_DeviceType)
+                            switch (devHDR.dbch_DeviceType)
                             {
                                 case WM_DeviceType.DBT_DEVTYP_DEVICEINTERFACE:
                                     _onDeviceCallback?.Invoke(new DeviceMessage() { Message = (WM_DeviceChange)wParam, LParam = lParam, IsHandled = handled });
@@ -151,7 +188,40 @@ namespace SystemControlLib
             }
             return IntPtr.Zero;
         }
-    }
 
-    
+        IntPtr OnLowLevelHookProc(int nCode, IntPtr wParam, IntPtr lParam)
+        {
+            if (nCode < 0)
+            {
+                _onLLMessage?.Invoke(new WinMessage() { Message = (WinProc_Message)wParam, WParam = wParam, LParam = lParam, IsHandled = false });
+                return NativeImportMethods.CallNextHookEx(s_MouseHookHandle, nCode, wParam, lParam);
+            }
+
+            _onLLMessage?.Invoke(new WinMessage() { Message = (WinProc_Message)wParam, WParam = wParam, LParam = lParam, IsHandled = true });
+            switch ((WinProc_Message)wParam)
+            {
+                case WinProc_Message.WM_MOUSEHOVER:
+                case WinProc_Message.WM_MOUSELEAVE:
+                case WinProc_Message.WM_MOUSEMOVE:
+                case WinProc_Message.WM_MOUSEWHEEL:
+                //In Client Area
+                case WinProc_Message.WM_LBUTTONDBLCLK:
+                case WinProc_Message.WM_LBUTTONDOWN:
+                case WinProc_Message.WM_LBUTTONUP:
+                case WinProc_Message.WM_RBUTTONDBLCLK:
+                case WinProc_Message.WM_RBUTTONDOWN:
+                case WinProc_Message.WM_RBUTTONUP:
+                //In None Client Area
+                case WinProc_Message.WM_NCLBUTTONDBLCLK:
+                case WinProc_Message.WM_NCLBUTTONDOWN:
+                case WinProc_Message.WM_NCLBUTTONUP:
+                case WinProc_Message.WM_NCRBUTTONDBLCLK:
+                case WinProc_Message.WM_NCRBUTTONDOWN:
+                case WinProc_Message.WM_NCRBUTTONUP:
+                    break;
+            }
+            return NativeImportMethods.CallNextHookEx(s_MouseHookHandle, nCode, wParam, lParam);
+
+        }
+    }
 }

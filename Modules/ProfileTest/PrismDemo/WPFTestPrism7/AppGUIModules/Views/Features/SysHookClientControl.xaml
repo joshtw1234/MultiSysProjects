@@ -8,7 +8,7 @@
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="Pink">
-            
+    <Grid>
+        <TextBlock DataContext="{Binding MessageBox}" Text="{Binding MenuName}" Foreground="White" TextWrapping="Wrap"/>
     </Grid>
 </UserControl>

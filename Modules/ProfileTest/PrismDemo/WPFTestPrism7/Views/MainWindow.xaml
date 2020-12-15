@@ -5,9 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:local="clr-namespace:WPFTestPrism7.Views"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" Background="{x:Null}">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="ContentRendered">
+            <prism:InvokeCommandAction Command="{Binding WindowSourceInitializedEvent}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
         <DockPanel>
             <ContentControl DockPanel.Dock="Top" prism:RegionManager.RegionName="TitleRegion"/>

@@ -30,10 +30,10 @@ namespace SystemControlLib
                 _winHandle = windowHandle;
                 _winHandle.AddHook(WndProc);
                 _notificationHandles = new List<IntPtr>();
-                //SetDeviceNotification(new BroadcastDeviceinterface()
-                //{ DeviceType = WM_DeviceType.DBT_DEVTYP_DEVICEINTERFACE, ClassGuid = new Guid(SystemControlLibConsts.GUID_DEVINTERFACE_USB_DEVICE) });
-                ////SetDeviceNotification(new BroadcastDeviceinterface()
-                //{ DeviceType = WM_DeviceType.DBT_DEVTYP_DEVICEINTERFACE, ClassGuid = new Guid(SystemControlLibConsts.KSCATEGORY_AUDIO) });
+                SetDeviceNotification(new BroadcastDeviceinterface()
+                { DeviceType = WM_DeviceType.DBT_DEVTYP_DEVICEINTERFACE, ClassGuid = new Guid(SystemControlLibConsts.GUID_DEVINTERFACE_USB_DEVICE) });
+                SetDeviceNotification(new BroadcastDeviceinterface()
+                { DeviceType = WM_DeviceType.DBT_DEVTYP_DEVICEINTERFACE, ClassGuid = new Guid(SystemControlLibConsts.KSCATEGORY_AUDIO) });
                 return true;
             }
             return false;

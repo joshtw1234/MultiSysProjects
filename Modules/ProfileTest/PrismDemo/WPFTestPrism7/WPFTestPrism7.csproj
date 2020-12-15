@@ -195,6 +195,10 @@
       <Project>{fe476d8c-ecb3-42bf-b4a1-e952e275c9b5}</Project>
       <Name>CommonUILib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Libraries\SystemControlLib\SystemControlLib.csproj">
+      <Project>{5F4C2D84-9E4B-4515-8408-3A42724B5709}</Project>
+      <Name>SystemControlLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

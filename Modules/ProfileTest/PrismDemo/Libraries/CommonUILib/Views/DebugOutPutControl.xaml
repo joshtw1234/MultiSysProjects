@@ -12,7 +12,7 @@
             <i:Interaction.Behaviors>
                 <local:AutoScrollBehavior/>
             </i:Interaction.Behaviors>
-            <TextBlock DataContext="{Binding DebugMessage}" Style="{Binding MenuStyle}"/>
+            <TextBlock DataContext="{Binding DebugMessage}" Style="{Binding MenuStyle}" TextWrapping="Wrap"/>
         </ScrollViewer>
     </Grid>
 </UserControl>

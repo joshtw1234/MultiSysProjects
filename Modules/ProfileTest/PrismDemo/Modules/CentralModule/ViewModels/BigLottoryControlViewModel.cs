@@ -19,6 +19,7 @@ namespace CentralModule.ViewModels
         private IBigLottoryControlModel _model;
 
         List<LottoryInfo> LottoryHistory;
+        Dictionary<int, List<int>> ResultNumbers;
         public IViewItem DebugMessage { get; set; }
         public IViewItem TextProgress { get; set; }
         public IViewItem ViewProgressBar { get; set; }
@@ -28,7 +29,7 @@ namespace CentralModule.ViewModels
             _model = model;
             DebugMessage = new DebugViewItem()
             {
-                MenuName = "Hello Word",
+                MenuName = "Hello Word\n",
                 MenuStyle = Application.Current.Resources["BaseTextBoxStyle"] as Style,
             };
             TextProgress = new DebugViewItem()
@@ -45,7 +46,7 @@ namespace CentralModule.ViewModels
                 MenuMaxValue="100",
                 MenuStyle = Application.Current.Resources["CustomProgressBar"] as Style,
             };
-            
+            ResultNumbers = new Dictionary<int, List<int>>();
             LottoryDataProcess();
         }
 
@@ -108,11 +109,70 @@ namespace CentralModule.ViewModels
             }
 
         }
-
+        int hisCount = 0;
         void LoadLottoryHistory(string lottoryDir)
         {
             GetLottoryHistory(lottoryDir);
-            GetPacent(LottoryHistory);
+#if true
+            hisCount = LottoryHistory.Count;
+            GetRecentNewNumbers(LottoryHistory);
+            var newHis = GetNewHistory(LottoryHistory.Count);
+            GetRecentNewNumbers(newHis);
+            while(newHis.Count > 50)
+            {
+                newHis = GetNewHistory(newHis.Count);
+                GetRecentNewNumbers(newHis);
+            }
+            List<int> bigList = new List<int>();
+            foreach(var rall in ResultNumbers)
+            {
+                DebugMessage.MenuName += $"Count {rall.Key} || ";
+                bigList.AddRange(rall.Value);
+                foreach (var rnum in rall.Value)
+                {
+                    DebugMessage.MenuName += $"{rnum.ToString()} ";
+                }
+                DebugMessage.MenuName += "\n";
+            }
+           var gg = bigList.GroupBy(x => x)
+              .Where(g => g.Count() > 1)
+              .Select(y => y.Key)
+              .ToList();
+            foreach (var vv in gg)
+            {
+                var cc = bigList.Where(x => x.Equals(vv));
+                DebugMessage.MenuName += $"[{vv.ToString("00")}] ";
+            }
+            DebugMessage.MenuName += "\n";
+            foreach (var vv in gg)
+            {
+                var cc = bigList.Where(x => x.Equals(vv));
+                DebugMessage.MenuName += $"[{cc.Count().ToString("00")}] ";
+            }
+            DebugMessage.MenuName += "\n";
+
+            var ddd = bigList.Where(x => !gg.Contains(x));
+            foreach (var vv in ddd)
+            {
+                var cc = bigList.Where(x => x.Equals(vv));
+                DebugMessage.MenuName += $"[{vv.ToString("00")}] ";
+            }
+            DebugMessage.MenuName += "\n";
+            foreach (var vv in ddd)
+            {
+                var cc = bigList.Where(x => x.Equals(vv));
+                DebugMessage.MenuName += $"[{cc.Count().ToString("00")}] ";
+            }
+            DebugMessage.MenuName += "\n";
+            File.WriteAllText($"{Directory.GetCurrentDirectory()}\\Lottory{DateTime.Now.ToString("yyyyMMddHHmm")}.txt", DebugMessage.MenuName);
+            //newHis = GetNewHistory(newHis.Count);
+            //GetRecentNewNumbers(newHis);
+            //newHis = GetNewHistory(newHis.Count);
+            //GetRecentNewNumbers(newHis);
+            //newHis = GetNewHistory(newHis.Count);
+            //GetRecentNewNumbers(newHis);
+#else
+            
             //Console.WriteLine($"GetLottoryHistory done {sw.Elapsed.TotalSeconds}");
             LottoryHistory.RemoveAt(0);
             DebugMessage.MenuName += $"\nRemove 3/26 numbers Total {LottoryHistory.Count}";
@@ -123,17 +183,56 @@ namespace CentralModule.ViewModels
             LottoryHistory.RemoveAt(0);
             DebugMessage.MenuName += $"\nRemove 3/19 numbers Total {LottoryHistory.Count}";
             GetPacent(LottoryHistory);
+#endif
         }
 
-        private void GetPacent(List<LottoryInfo> lottoryHistory)
+        private List<LottoryInfo> GetNewHistory(int count)
+        {
+            int cnt = GetHistoryCount(count);
+            hisCount = cnt;
+            return LottoryHistory.GetRange(0, cnt);
+        }
+
+        private void GetRecentNewNumbers(List<LottoryInfo> lottoryHistory)
+        {
+            var allTable = GetPacent(lottoryHistory);
+            GetNewNumber(allTable);
+        }
+
+        private int GetHistoryCount(int count)
+        {
+            if (count % 2 != 0)
+            {
+                count -= 1;
+            }
+            int rev = count / 2;
+            DebugMessage.MenuName += $"New History {rev}\n";
+            return rev;
+        }
+
+        private void GetNewNumber(Dictionary<int, double> allTable)
+        {
+            var ddd = allTable.OrderByDescending(x => x.Value).ToDictionary(x=>x.Key, x=>x.Value).Keys.ToList().GetRange(43, 6);
+            ResultNumbers.Add(hisCount, ddd);
+            DebugMessage.MenuName += "New Number \n";
+            foreach (var vv in ddd)
+            {
+                DebugMessage.MenuName += $"{vv.ToString()} ";
+            }
+            DebugMessage.MenuName += "\n";
+        }
+
+        private Dictionary<int, double> GetPacent(List<LottoryInfo> lottoryHistory)
         {
             Dictionary<int, double> dicTable = new Dictionary<int, double>();
             Dictionary<int, double> dic11Table = new Dictionary<int, double>();
             Dictionary<int, double> dic10Table = new Dictionary<int, double>();
+            Dictionary<int, double> dicAllTable = new Dictionary<int, double>();
             for (int i = 1; i < 50; i++)
             {
                 var num1Cnt = lottoryHistory.Where(x => x.LottoryNumbers.Contains(i)).ToList();
                 double pacent = (double)num1Cnt.Count / (double)lottoryHistory.Count * 100;
+                dicAllTable.Add(i, pacent);
                 //DebugMessage.MenuName += $"\n number {i} count {num1Cnt.Count} pacent {pacent.ToString("0.00")}%";
                 if (pacent < 12 && pacent > 11)
                 {
@@ -148,19 +247,22 @@ namespace CentralModule.ViewModels
                     dicTable.Add(i, pacent);
                 }
             }
-            PrintDicTable(11, dic11Table);
-            PrintDicTable(10, dic10Table);
-            PrintDicTable(12, dicTable);
+            //PrintDicTable(11, dic11Table);
+            //PrintDicTable(10, dic10Table);
+            //PrintDicTable(12, dicTable);
+            PrintDicTable(99, dicAllTable);
+            return dicAllTable;
         }
 
         private void PrintDicTable(int tableName, Dictionary<int, double> dicTable)
         {
-            string tt = $"{tableName}% {dicTable.Count}";
-            foreach (var dd in dicTable)
+            string tt = $"{tableName}% Cnt {dicTable.Count} \n";
+            var ddd = dicTable.OrderByDescending(x => x.Value);
+            foreach (var dd in ddd)
             {
-                tt += $" [{dd.Key}] [{dd.Value.ToString("0.000")}]";
+                tt += $" [{dd.Key}] <{dd.Value.ToString("0.000")}>";
             }
-            DebugMessage.MenuName += $"\n {tt}";
+            DebugMessage.MenuName += $"\n {tt}\n";
         }
 
        
@@ -177,6 +279,7 @@ namespace CentralModule.ViewModels
             }
             
             LottoryHistory.AddRange(rawData.OrderByDescending(x => x.Date).ToList());
+            DebugMessage.MenuName += $"Files {dataFiles.Length} History Length {LottoryHistory.Count}\n";
         }
 
         private int GetWebPageCount(string samplePage)
@@ -194,9 +297,9 @@ namespace CentralModule.ViewModels
         {
             const string getNumberPat = "\">[\\s]+([^\\s]*)[\\s]+</td>";
             const string numberKey = ",&nbsp;";
-            const string getSpecialNum = @">(&[^\r\n]*)</td>";
+            const string getSpecialNum = @">([\d]{2})</td>";
             const string spcialNumberKey = "&nbsp;";
-            const string getFieldPat = "\">([^\\r\\n&]*)</td>";
+            const string getFieldPat = "\">([\\d/]*)<br>";
             const string dateKey = "<br />";
 
             List<LottoryInfo> tmpList = new List<LottoryInfo>();
@@ -224,12 +327,14 @@ namespace CentralModule.ViewModels
             foreach (Match mt in mcDate)
             {
                 var strDate = mt.Groups[1].Value;
+#if false
                 if (!strDate.Contains(dateKey)) continue;
                 int dateIdx = strDate.LastIndexOf('>');
                 strDate = strDate.Remove(dateIdx + 1);
                 strDate = strDate.Replace(dateKey, ":");
                 var dd = strDate.Split(':');
                 strDate = $"{dd[1]}/{dd[0]}";
+#endif
                 tmpList[listCnt].Date = Convert.ToDateTime(strDate);
                 listCnt++;
             }

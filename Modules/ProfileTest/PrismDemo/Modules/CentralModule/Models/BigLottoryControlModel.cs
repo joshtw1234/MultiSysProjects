@@ -188,7 +188,12 @@ namespace CentralModule.Models
                 debugMessage.MenuName += $"[{cc.Count().ToString("00")}] ";
             }
             debugMessage.MenuName += "\n";
-            File.WriteAllText($"{Directory.GetCurrentDirectory()}\\Lottory{DateTime.Now.ToString("yyyyMMddHHmm")}.txt", debugMessage.MenuName);
+            string infoPath = $"{Directory.GetCurrentDirectory()}\\LottoryInfo";
+            if (!Directory.Exists(infoPath))
+            {
+                Directory.CreateDirectory(infoPath);
+            }
+            File.WriteAllText($"{infoPath}\\Lottory{DateTime.Now.ToString("yyyyMMddHHmm")}.txt", debugMessage.MenuName);
             //newHis = GetNewHistory(newHis.Count);
             //GetRecentNewNumbers(newHis);
             //newHis = GetNewHistory(newHis.Count);
@@ -351,6 +356,63 @@ namespace CentralModule.Models
                 tt += $" [{dd.Key}] <{dd.Value.ToString("0.000")}>";
             }
             debugMessage.MenuName += $"\n {tt}\n";
+        }
+
+        public async void LottoryDataByOpen()
+        {
+#if true
+            string openLott = File.ReadAllText(@"D:\z-JoshCodeWork\TestLottary\大樂透落球順序開獎號碼查詢 - 樂透堂.html");
+            var newLott = new List<LottoryInfo>();
+            const string ppt = @"<td align[^\r\n]+>([\d]{6})<[^\r\n]+[\s]+<[^\r\n]+([\d-]{10})[^\r\n]+[\s]+[^\r\n]+>[\s]+([^\r\n]+)</[^\r\n]+([\d]{2})";
+            const string dirtyw = "&nbsp;";
+            MatchCollection mt = Regex.Matches(openLott, ppt);
+            foreach(Match mm in mt)
+            {
+                var uuW = Array.ConvertAll(mm.Groups[3].Value.Replace(dirtyw, ",").Split(','), s=>int.Parse(s)).ToList();
+                
+                newLott.Add(new LottoryInfo() { 
+                    Date = Convert.ToDateTime(mm.Groups[2].Value), 
+                    LottoryNumbers = uuW,
+                    SpecialNumber = Convert.ToInt32(mm.Groups[4].Value) });
+            }
+
+#else
+            const string infoFile = "infoOpen.txt";
+            string webLink = "https://www.taiwanlottery.com.tw/lotto/lotto649/history.aspx";
+            string currentPath = Directory.GetCurrentDirectory();
+            string lottoryDir = $"{currentPath}\\LottoryDataByOpen";
+            string saveWebFile = "Lottory";
+            if (!Directory.Exists(lottoryDir))
+            {
+                Directory.CreateDirectory(lottoryDir);
+            }
+            if (!DownloadWeb(webLink, currentPath, infoFile)) return;
+
+            HttpClient client = new HttpClient();
+            var values = new Dictionary<string, string>
+            {
+               //{"forma", "請選擇遊戲"},
+               {"Lotto649Control_history$txtNO","" },
+               {"Lotto649Control_history$chk", "radYM"},
+               {"Lotto649Control_history$dropYear", "103"},
+               {"Lotto649Control_history$dropMonth", "3"},
+               {"Lotto649Control_history$btnSubmit", "查詢"},
+            };
+
+            var content = new FormUrlEncodedContent(values);
+
+            var response = await client.PostAsync(webLink, content);
+
+            var responseString = await response.Content.ReadAsStringAsync();
+
+            var responseStringbb = await client.GetStringAsync(webLink);
+
+            string filePath = $"{lottoryDir}\\{saveWebFile}3.txt";
+            File.WriteAllText(filePath, responseStringbb);
+
+            int josh = 111;
+#endif
+
         }
     }
 

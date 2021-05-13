@@ -9,5 +9,6 @@ namespace CentralModule.Interface
         IViewItem GetDebugMessage();
         IViewItem GetTextProgress();
         IViewItem GetViewProgressBar();
+        void LottoryDataByOpen();
     }
 }

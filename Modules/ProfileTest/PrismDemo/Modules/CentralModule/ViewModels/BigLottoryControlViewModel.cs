@@ -22,8 +22,7 @@ namespace CentralModule.ViewModels
             TextProgress = model.GetTextProgress();
             ViewProgressBar = model.GetViewProgressBar();
             model.LottoryDataProcess();
-            //LottoryDataProcess();
-            //LottoryDataByOpen();
+            model.LottoryDataByOpen();
         }
 
      

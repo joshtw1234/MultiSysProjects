@@ -19,12 +19,12 @@ namespace CentralModule.Models
         int hisCount = 0;
         List<LottoryInfo> lottoryHistory;
         Dictionary<int, List<int>> resultNumbers;
-        private IViewItem debugMessage;
-        private IViewItem textProgress;
-        public IViewItem viewProgressBar { get; set; }
+
+        private DebugControlModel _lottoryNumMessage;
+        private DebugControlModel _lottoryOpenMessage;
         public IViewItem GetDebugMessage()
         {
-            return debugMessage = new DebugViewItem()
+            return new DebugViewItem()
             {
                 MenuName = "Hello Word\n",
                 MenuStyle = Application.Current.Resources["BaseTextBoxStyle"] as Style,
@@ -32,7 +32,7 @@ namespace CentralModule.Models
         }
         public IViewItem GetTextProgress()
         {
-            return textProgress = new DebugViewItem()
+            return new DebugViewItem()
             {
                 MenuName = "Please wait processing....",
                 MenuStyle = Application.Current.Resources["BaseTextBoxStyle"] as Style,
@@ -41,7 +41,7 @@ namespace CentralModule.Models
         }
         public IViewItem GetViewProgressBar()
         {
-           return viewProgressBar = new ProgressBarViewItem()
+           return new ProgressBarViewItem()
             {
                 MenuName = "50",
                 MenuMinValue = "0",
@@ -69,15 +69,15 @@ namespace CentralModule.Models
 
             if (dataFiles.Count() != pageCount)
             {
-                textProgress.MenuVisibility = true;
+                _lottoryNumMessage.TextProgress.MenuVisibility = true;
                 Task.Factory.StartNew(() =>
                 {
-                    while (textProgress.MenuVisibility)
+                    while (_lottoryNumMessage.TextProgress.MenuVisibility)
                     {
                         for (int i = 0; i <= 100; i += 10)
                         {
                             Thread.Sleep(100);
-                            viewProgressBar.MenuName = i.ToString();
+                            _lottoryNumMessage.ViewProgressBar.MenuName = i.ToString();
                         }
                     }
                 });
@@ -99,7 +99,7 @@ namespace CentralModule.Models
                     sw.Stop();
                     Console.WriteLine($"DownloadWeb done {sw.Elapsed.TotalSeconds}");
                     LoadLottoryHistory(lottoryDir);
-                    textProgress.MenuVisibility = false;
+                    _lottoryNumMessage.TextProgress.MenuVisibility = false;
                 });
             }
             else
@@ -128,7 +128,7 @@ namespace CentralModule.Models
             }
             catch (Exception ex)
             {
-                debugMessage.MenuName += $"\nDownloadWeb exception [{ex.Message}]";
+                _lottoryNumMessage.DebugMessage.MenuName += $"\nDownloadWeb exception [{ex.Message}]";
                 rev = false;
             }
             return rev;
@@ -150,13 +150,13 @@ namespace CentralModule.Models
             List<int> bigList = new List<int>();
             foreach (var rall in resultNumbers)
             {
-                debugMessage.MenuName += $"Count {rall.Key} || ";
+                _lottoryNumMessage.DebugMessage.MenuName += $"Count {rall.Key} || ";
                 bigList.AddRange(rall.Value);
                 foreach (var rnum in rall.Value)
                 {
-                    debugMessage.MenuName += $"{rnum.ToString()} ";
+                    _lottoryNumMessage.DebugMessage.MenuName += $"{rnum.ToString()} ";
                 }
-                debugMessage.MenuName += "\n";
+                _lottoryNumMessage.DebugMessage.MenuName += "\n";
             }
             var gg = bigList.GroupBy(x => x)
                .Where(g => g.Count() > 1)
@@ -165,35 +165,35 @@ namespace CentralModule.Models
             foreach (var vv in gg)
             {
                 var cc = bigList.Where(x => x.Equals(vv));
-                debugMessage.MenuName += $"[{vv.ToString("00")}] ";
+                _lottoryNumMessage.DebugMessage.MenuName += $"[{vv.ToString("00")}] ";
             }
-            debugMessage.MenuName += "\n";
+            _lottoryNumMessage.DebugMessage.MenuName += "\n";
             foreach (var vv in gg)
             {
                 var cc = bigList.Where(x => x.Equals(vv));
-                debugMessage.MenuName += $"[{cc.Count().ToString("00")}] ";
+                _lottoryNumMessage.DebugMessage.MenuName += $"[{cc.Count().ToString("00")}] ";
             }
-            debugMessage.MenuName += "\n";
+            _lottoryNumMessage.DebugMessage.MenuName += "\n";
 
             var ddd = bigList.Where(x => !gg.Contains(x));
             foreach (var vv in ddd)
             {
                 var cc = bigList.Where(x => x.Equals(vv));
-                debugMessage.MenuName += $"[{vv.ToString("00")}] ";
+                _lottoryNumMessage.DebugMessage.MenuName += $"[{vv.ToString("00")}] ";
             }
-            debugMessage.MenuName += "\n";
+            _lottoryNumMessage.DebugMessage.MenuName += "\n";
             foreach (var vv in ddd)
             {
                 var cc = bigList.Where(x => x.Equals(vv));
-                debugMessage.MenuName += $"[{cc.Count().ToString("00")}] ";
+                _lottoryNumMessage.DebugMessage.MenuName += $"[{cc.Count().ToString("00")}] ";
             }
-            debugMessage.MenuName += "\n";
+            _lottoryNumMessage.DebugMessage.MenuName += "\n";
             string infoPath = $"{Directory.GetCurrentDirectory()}\\LottoryInfo";
             if (!Directory.Exists(infoPath))
             {
                 Directory.CreateDirectory(infoPath);
             }
-            File.WriteAllText($"{infoPath}\\Lottory{DateTime.Now.ToString("yyyyMMddHHmm")}.txt", debugMessage.MenuName);
+            File.WriteAllText($"{infoPath}\\Lottory{DateTime.Now.ToString("yyyyMMddHHmm")}.txt", _lottoryNumMessage.DebugMessage.MenuName);
             //newHis = GetNewHistory(newHis.Count);
             //GetRecentNewNumbers(newHis);
             //newHis = GetNewHistory(newHis.Count);
@@ -226,7 +226,7 @@ namespace CentralModule.Models
             }
 
             lottoryHistory.AddRange(rawData.OrderByDescending(x => x.Date).ToList());
-            debugMessage.MenuName += $"Files {dataFiles.Length} History Length {lottoryHistory.Count}\n";
+            _lottoryNumMessage.DebugMessage.MenuName += $"Files {dataFiles.Length} History Length {lottoryHistory.Count}\n";
         }
 
         public List<LottoryInfo> GetListLottoryHistory()
@@ -285,12 +285,12 @@ namespace CentralModule.Models
         {
             var ddd = allTable.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value).Keys.ToList().GetRange(43, 6);
             resultNumbers.Add(hisCount, ddd);
-            debugMessage.MenuName += "New Number \n";
+            _lottoryNumMessage.DebugMessage.MenuName += "New Number \n";
             foreach (var vv in ddd)
             {
-                debugMessage.MenuName += $"{vv.ToString()} ";
+                _lottoryNumMessage.DebugMessage.MenuName += $"{vv.ToString()} ";
             }
-            debugMessage.MenuName += "\n";
+            _lottoryNumMessage.DebugMessage.MenuName += "\n";
         }
         private List<LottoryInfo> GetNewHistory(int count)
         {
@@ -312,7 +312,7 @@ namespace CentralModule.Models
                 count -= 1;
             }
             int rev = count / 2;
-            debugMessage.MenuName += $"New History {rev}\n";
+            _lottoryNumMessage.DebugMessage.MenuName += $"New History {rev}\n";
             return rev;
         }
         private Dictionary<int, double> GetPacent(List<LottoryInfo> lottoryHistory)
@@ -326,7 +326,7 @@ namespace CentralModule.Models
                 var num1Cnt = lottoryHistory.Where(x => x.LottoryNumbers.Contains(i)).ToList();
                 double pacent = (double)num1Cnt.Count / (double)lottoryHistory.Count * 100;
                 dicAllTable.Add(i, pacent);
-                //DebugMessage.MenuName += $"\n number {i} count {num1Cnt.Count} pacent {pacent.ToString("0.00")}%";
+                //_lottoryNumMessage.DebugMessage.MenuName += $"\n number {i} count {num1Cnt.Count} pacent {pacent.ToString("0.00")}%";
                 if (pacent < 12 && pacent > 11)
                 {
                     dic11Table.Add(i, pacent);
@@ -355,7 +355,7 @@ namespace CentralModule.Models
             {
                 tt += $" [{dd.Key}] <{dd.Value.ToString("0.000")}>";
             }
-            debugMessage.MenuName += $"\n {tt}\n";
+            _lottoryNumMessage.DebugMessage.MenuName += $"\n {tt}\n";
         }
 
         public async void LottoryDataByOpen()
@@ -414,12 +414,26 @@ namespace CentralModule.Models
 #endif
 
         }
+
+        public DebugControlModel GetDebugMessageModel()
+        {
+            return _lottoryNumMessage = new DebugControlModel()
+            {
+                DebugMessage = GetDebugMessage(),
+                TextProgress = GetTextProgress(),
+                ViewProgressBar = GetViewProgressBar()
+            };
+        }
+
+        public DebugControlModel GetOpenMessage()
+        {
+            return _lottoryOpenMessage = new DebugControlModel()
+            {
+                DebugMessage = GetDebugMessage(),
+                TextProgress = GetTextProgress(),
+                ViewProgressBar = GetViewProgressBar()
+            };
+        }
     }
 
-    public class LottoryInfo
-    {
-        public DateTime Date { get; set; }
-        public List<int> LottoryNumbers { get; set; }
-        public int SpecialNumber { get; set; }
-    }
 }

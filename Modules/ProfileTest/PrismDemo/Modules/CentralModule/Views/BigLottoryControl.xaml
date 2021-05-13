@@ -11,23 +11,29 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <ContentControl Template="{StaticResource BaseProgressBarTemplate}"/>
-        <commonV:DebugOutPutControl>
-            <!--
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <commonV:DebugOutPutControl Grid.Column="0" DataContext="{Binding LottoryNumMessage}">
+                <!--
             use data trigger to control visible.
             https://www.wpf-tutorial.com/styles/trigger-datatrigger-event-trigger/
             -->
-            <commonV:DebugOutPutControl.Style>
-                <Style>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding TextProgress.MenuVisibility}" Value="true">
-                            <Setter Property="UserControl.Visibility" Value="Collapsed"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding TextProgress.MenuVisibility}" Value="false">
-                            <Setter Property="UserControl.Visibility" Value="Visible"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </commonV:DebugOutPutControl.Style>
-        </commonV:DebugOutPutControl>
+                <commonV:DebugOutPutControl.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding TextProgress.MenuVisibility}" Value="true">
+                                <Setter Property="UserControl.Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding TextProgress.MenuVisibility}" Value="false">
+                                <Setter Property="UserControl.Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </commonV:DebugOutPutControl.Style>
+            </commonV:DebugOutPutControl>
+        </Grid>
     </Grid>
 </UserControl>

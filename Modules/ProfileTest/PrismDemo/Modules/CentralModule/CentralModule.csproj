@@ -78,6 +78,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\DebugControlModel.cs" />
     <Compile Include="PrismModules\BigLottoryModule.cs" />
     <Compile Include="Interface\IBigLottoryControlModel.cs" />
     <Compile Include="Models\BigLottoryControlModel.cs" />

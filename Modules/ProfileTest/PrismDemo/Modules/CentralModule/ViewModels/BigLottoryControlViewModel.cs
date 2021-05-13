@@ -5,41 +5,20 @@ using CommonUILib.Interfaces;
 
 namespace CentralModule.ViewModels
 {
-    class BigLottoryControlViewModel : IDebugOutPutControlViewModel, IProgressBarControlViewModel
+    class BigLottoryControlViewModel
     {
         private IBigLottoryControlModel _model;
 
-        List<LottoryInfo> LottoryHistory;
-        Dictionary<int, List<int>> ResultNumbers;
-        public IViewItem DebugMessage { get; set; }
-        public IViewItem TextProgress { get; set; }
-        public IViewItem ViewProgressBar { get; set; }
-
+        
+        public DebugControlModel LottoryNumMessage { get; set; }
+        public DebugControlModel LottoryOpenMessage { get; set; }
         public BigLottoryControlViewModel(IBigLottoryControlModel model)
         {
             _model = model;
-            DebugMessage = model.GetDebugMessage();
-            TextProgress = model.GetTextProgress();
-            ViewProgressBar = model.GetViewProgressBar();
+            LottoryNumMessage = _model.GetDebugMessageModel();
+            LottoryOpenMessage = _model.GetOpenMessage();
             model.LottoryDataProcess();
             model.LottoryDataByOpen();
         }
-
-     
-
-      
-
-      
-
-       
-
-   
-
-       
-
-       
-
-      
     }
-   
 }

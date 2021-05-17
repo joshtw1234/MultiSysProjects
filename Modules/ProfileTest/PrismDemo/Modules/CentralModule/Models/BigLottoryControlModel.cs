@@ -142,7 +142,7 @@ namespace CentralModule.Models
             GetRecentNewNumbers(lottoryHistory);
             var newHis = GetNewHistory(lottoryHistory.Count);
             GetRecentNewNumbers(newHis);
-            while (newHis.Count > 50)
+            while (newHis.Count > 12)
             {
                 newHis = GetNewHistory(newHis.Count);
                 GetRecentNewNumbers(newHis);
@@ -294,7 +294,7 @@ namespace CentralModule.Models
         }
         private List<LottoryInfo> GetNewHistory(int count)
         {
-            int cnt = GetHistoryCount(count);
+            int cnt = GetHistoryCount(_lottoryNumMessage, count);
             hisCount = cnt;
             return lottoryHistory.GetRange(0, cnt);
         }
@@ -305,14 +305,14 @@ namespace CentralModule.Models
             GetNewNumber(allTable);
         }
 
-        private int GetHistoryCount(int count)
+        private int GetHistoryCount(DebugControlModel _Message, int count)
         {
             if (count % 2 != 0)
             {
                 count -= 1;
             }
             int rev = count / 2;
-            _lottoryNumMessage.DebugMessage.MenuName += $"New History {rev}\n";
+            _Message.DebugMessage.MenuName += $"Get New History {rev}\n";
             return rev;
         }
         private Dictionary<int, double> GetPacent(List<LottoryInfo> lottoryHistory)
@@ -358,61 +358,113 @@ namespace CentralModule.Models
             _lottoryNumMessage.DebugMessage.MenuName += $"\n {tt}\n";
         }
 
-        public async void LottoryDataByOpen()
+        public void LottoryDataByOpen()
         {
-#if true
+            _lottoryOpenMessage.DebugMessage.MenuName = "Josh\n";
             string openLott = File.ReadAllText(@"D:\z-JoshCodeWork\TestLottary\大樂透落球順序開獎號碼查詢 - 樂透堂.html");
             var newLott = new List<LottoryInfo>();
             const string ppt = @"<td align[^\r\n]+>([\d]{6})<[^\r\n]+[\s]+<[^\r\n]+([\d-]{10})[^\r\n]+[\s]+[^\r\n]+>[\s]+([^\r\n]+)</[^\r\n]+([\d]{2})";
             const string dirtyw = "&nbsp;";
             MatchCollection mt = Regex.Matches(openLott, ppt);
-            foreach(Match mm in mt)
+            foreach (Match mm in mt)
             {
-                var uuW = Array.ConvertAll(mm.Groups[3].Value.Replace(dirtyw, ",").Split(','), s=>int.Parse(s)).ToList();
-                
-                newLott.Add(new LottoryInfo() { 
-                    Date = Convert.ToDateTime(mm.Groups[2].Value), 
+                var uuW = Array.ConvertAll(mm.Groups[3].Value.Replace(dirtyw, ",").Split(','), s => int.Parse(s)).ToList();
+
+                newLott.Add(new LottoryInfo()
+                {
+                    Date = Convert.ToDateTime(mm.Groups[2].Value),
                     LottoryNumbers = uuW,
-                    SpecialNumber = Convert.ToInt32(mm.Groups[4].Value) });
+                    SpecialNumber = Convert.ToInt32(mm.Groups[4].Value)
+                });
             }
-
-#else
-            const string infoFile = "infoOpen.txt";
-            string webLink = "https://www.taiwanlottery.com.tw/lotto/lotto649/history.aspx";
-            string currentPath = Directory.GetCurrentDirectory();
-            string lottoryDir = $"{currentPath}\\LottoryDataByOpen";
-            string saveWebFile = "Lottory";
-            if (!Directory.Exists(lottoryDir))
+            var openDicOrder = GetOpenPercent(newLott);
+            GetNewOpenNumber(openDicOrder);
+            int totalcc = newLott.Count;
+            while(totalcc > 12)
             {
-                Directory.CreateDirectory(lottoryDir);
+                var newcc = GetHistoryCount(_lottoryOpenMessage, totalcc);
+                var startIdx = newLott.Count - newcc;
+                var eeLott = newLott.GetRange(startIdx, newcc);
+                openDicOrder = GetOpenPercent(eeLott);
+                GetNewOpenNumber(openDicOrder);
+                totalcc = newcc;
             }
-            if (!DownloadWeb(webLink, currentPath, infoFile)) return;
+        }
 
-            HttpClient client = new HttpClient();
-            var values = new Dictionary<string, string>
+        private Dictionary<int, Dictionary<int, double>> GetOpenPercent(List<LottoryInfo> newLott)
+        {
+            Dictionary<int, Dictionary<int, double>> openDic = new Dictionary<int, Dictionary<int, double>>();
+            double pt = 0;
+            for (int i = 0; i < 7; i++)
             {
-               //{"forma", "請選擇遊戲"},
-               {"Lotto649Control_history$txtNO","" },
-               {"Lotto649Control_history$chk", "radYM"},
-               {"Lotto649Control_history$dropYear", "103"},
-               {"Lotto649Control_history$dropMonth", "3"},
-               {"Lotto649Control_history$btnSubmit", "查詢"},
-            };
+                int allb = 0;
+                openDic.Add(i, new Dictionary<int, double>());
+                for (int j = 1; j < 50; j++)
+                {
+                    List<LottoryInfo> oo1 = new List<LottoryInfo>();
+                    if (i < 6)
+                    {
+                        oo1.AddRange(newLott.Where(x => x.LottoryNumbers[i].Equals(j)));
+                    }
+                    else
+                    {
+                        oo1.AddRange(newLott.Where(x => x.SpecialNumber.Equals(j)));
+                    }
+                    pt = (double)oo1.Count() / (double)newLott.Count * 100;
+                    openDic[i].Add(j, pt);
+                    allb += oo1.Count();
+                }
+                //_lottoryOpenMessage.DebugMessage.MenuName += $"{i + 1}, Total {allb}\n";
+            }
+            Dictionary<int, Dictionary<int, double>> openDicOrder = new Dictionary<int, Dictionary<int, double>>();
+            foreach (var ee in openDic)
+            {
+                var gg = ee.Value.OrderByDescending(x => x.Value).ToDictionary(y => y.Key, y => y.Value);
+                openDicOrder.Add(ee.Key, gg);
+            }
+            return openDicOrder;
+        }
 
-            var content = new FormUrlEncodedContent(values);
+        private void GetNewOpenNumber(Dictionary<int, Dictionary<int, double>> openDicOrder)
+        {
+            _lottoryOpenMessage.DebugMessage.MenuName += $"New Open Numbers \n";
+            GetFinalNewOpenNum(true, openDicOrder);
+            //GetFinalNewOpenNum(false, openDicOrder);
 
-            var response = await client.PostAsync(webLink, content);
+        }
 
-            var responseString = await response.Content.ReadAsStringAsync();
+        private void GetFinalNewOpenNum(bool v, Dictionary<int, Dictionary<int, double>> openDicOrder)
+        {
+            List<int> newOpenList = new List<int>();
+            string numPrefix = $"Hight ";
+            int newNN = 0;
+            for (int i = 0; i < openDicOrder.Count; i++)
+            {
+                if (i > 0)
+                {
+                    foreach (var nn in newOpenList)
+                    {
+                        openDicOrder[i].Remove(nn);
+                    }
+                }
+                if (v)
+                {
+                    newNN = openDicOrder[i].First().Key;
+                }
+                else
+                {
+                    newNN = openDicOrder[i].Last().Key;
+                }
+                newOpenList.Add(newNN);
+            }
+            if (!v) numPrefix = $"Lowest ";
 
-            var responseStringbb = await client.GetStringAsync(webLink);
-
-            string filePath = $"{lottoryDir}\\{saveWebFile}3.txt";
-            File.WriteAllText(filePath, responseStringbb);
-
-            int josh = 111;
-#endif
-
+            _lottoryOpenMessage.DebugMessage.MenuName += numPrefix;
+            foreach (var ii in newOpenList)
+            {
+                _lottoryOpenMessage.DebugMessage.MenuName += $"{ii},";
+            }
+            _lottoryOpenMessage.DebugMessage.MenuName += $"\n";
         }
 
         public DebugControlModel GetDebugMessageModel()

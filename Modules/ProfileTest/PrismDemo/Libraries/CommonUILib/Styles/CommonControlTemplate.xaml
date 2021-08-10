@@ -31,6 +31,9 @@
     </ControlTemplate>
 
     <DataTemplate x:Key="LottoryHistoryCharts">
-        <CommonV:HistoryChartControl ItemsSource="{Binding BallHistory}"/>
+        <StackPanel MinHeight="50" Orientation="Horizontal">
+            <TextBlock Text="{Binding BallName}" Foreground="White" FontSize="20"/>
+            <CommonV:HistoryChartControl ItemsSource="{Binding BallHistory}" Background="Red"/>
+        </StackPanel>
     </DataTemplate>
 </ResourceDictionary>

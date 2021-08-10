@@ -29,4 +29,8 @@
             <ProgressBar DataContext="{Binding ViewProgressBar}" Style="{Binding MenuStyle}"/>
         </StackPanel>
     </ControlTemplate>
+
+    <DataTemplate x:Key="LottoryHistoryCharts">
+        <CommonV:HistoryChartControl ItemsSource="{Binding BallHistory}"/>
+    </DataTemplate>
 </ResourceDictionary>

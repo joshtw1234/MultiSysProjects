@@ -86,6 +86,7 @@
     <Compile Include="Interfaces\IProgressBarControlViewModel.cs" />
     <Compile Include="Interfaces\IViewItem.cs" />
     <Compile Include="Interfaces\SampleInterface.cs" />
+    <Compile Include="Models\CommonUtility.cs" />
     <Compile Include="Models\DebugViewItem.cs" />
     <Compile Include="Models\ProgressBarViewItem.cs" />
     <Compile Include="Models\ViewItem.cs" />

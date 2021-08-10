@@ -113,6 +113,9 @@
     <Compile Include="Views\DebugOutPutControl.xaml.cs">
       <DependentUpon>DebugOutPutControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\HistoryChartControl.xaml.cs">
+      <DependentUpon>HistoryChartControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SampleControl.xaml.cs">
       <DependentUpon>SampleControl.xaml</DependentUpon>
     </Compile>
@@ -141,6 +144,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\DebugOutPutControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HistoryChartControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

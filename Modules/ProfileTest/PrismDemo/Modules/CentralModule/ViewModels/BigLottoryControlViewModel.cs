@@ -18,7 +18,7 @@ namespace CentralModule.ViewModels
             LottoryNumMessage = _model.GetDebugMessageModel();
             LottoryOpenMessage = _model.GetOpenMessage();
             model.LottoryDataProcess();
-            model.LottoryDataByOpen();
+            //model.LottoryDataByOpen();
         }
     }
 }

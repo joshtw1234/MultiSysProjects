@@ -12,10 +12,10 @@
     <Grid>
         <ContentControl Template="{StaticResource BaseProgressBarTemplate}"/>
         <Grid>
-            <Grid.ColumnDefinitions>
+            <!--<Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+            </Grid.ColumnDefinitions>-->
             <commonV:DebugOutPutControl Grid.Column="0" DataContext="{Binding LottoryNumMessage}">
                 <!--
             use data trigger to control visible.
@@ -34,11 +34,11 @@
                     </Style>
                 </commonV:DebugOutPutControl.Style>
             </commonV:DebugOutPutControl>
-            <commonV:DebugOutPutControl Grid.Column="1" DataContext="{Binding LottoryOpenMessage}">
-                <!--
+            <!--<commonV:DebugOutPutControl Grid.Column="1" DataContext="{Binding LottoryOpenMessage}">
+                --><!--
             use data trigger to control visible.
             https://www.wpf-tutorial.com/styles/trigger-datatrigger-event-trigger/
-            -->
+            --><!--
                 <commonV:DebugOutPutControl.Style>
                     <Style>
                         <Style.Triggers>
@@ -51,7 +51,7 @@
                         </Style.Triggers>
                     </Style>
                 </commonV:DebugOutPutControl.Style>
-            </commonV:DebugOutPutControl>
+            </commonV:DebugOutPutControl>-->
         </Grid>
     </Grid>
 </UserControl>

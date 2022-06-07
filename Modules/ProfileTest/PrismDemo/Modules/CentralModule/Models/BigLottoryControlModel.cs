@@ -107,6 +107,63 @@ namespace CentralModule.Models
                 LoadLottoryHistory(lottoryDir);
             }
         }
+
+        public void LottoryDataByOpen()
+        {
+#if false
+            _lottoryOpenMessage.DebugMessage.MenuName = "Josh\n";
+            string openLott = File.ReadAllText(@"D:\z-JoshCodeWork\TestLottary\大樂透落球順序開獎號碼查詢 - 樂透堂.html");
+            var newLott = new List<LottoryInfo>();
+            const string ppt = @"<td align[^\r\n]+>([\d]{6})<[^\r\n]+[\s]+<[^\r\n]+([\d-]{10})[^\r\n]+[\s]+[^\r\n]+>[\s]+([^\r\n]+)</[^\r\n]+([\d]{2})";
+            const string dirtyw = "&nbsp;";
+            MatchCollection mt = Regex.Matches(openLott, ppt);
+            foreach (Match mm in mt)
+            {
+                var uuW = Array.ConvertAll(mm.Groups[3].Value.Replace(dirtyw, ",").Split(','), s => int.Parse(s)).ToList();
+
+                newLott.Add(new LottoryInfo()
+                {
+                    Date = Convert.ToDateTime(mm.Groups[2].Value),
+                    LottoryNumbers = uuW,
+                    SpecialNumber = Convert.ToInt32(mm.Groups[4].Value)
+                });
+            }
+            var openDicOrder = GetOpenPercent(newLott);
+            GetNewOpenNumber(openDicOrder);
+            int totalcc = newLott.Count;
+            while(totalcc > 12)
+            {
+                var newcc = GetHistoryCount(_lottoryOpenMessage, totalcc);
+                var startIdx = newLott.Count - newcc;
+                var eeLott = newLott.GetRange(startIdx, newcc);
+                openDicOrder = GetOpenPercent(eeLott);
+                GetNewOpenNumber(openDicOrder);
+                totalcc = newcc;
+            }
+#endif
+        }
+        
+        public DebugControlModel GetDebugMessageModel()
+        {
+            return _lottoryNumMessage = new DebugControlModel()
+            {
+                DebugMessage = GetDebugMessage(),
+                TextProgress = GetTextProgress(),
+                ViewProgressBar = GetViewProgressBar()
+            };
+        }
+
+        public DebugControlModel GetOpenMessage()
+        {
+            return _lottoryOpenMessage = new DebugControlModel()
+            {
+                DebugMessage = GetDebugMessage(),
+                TextProgress = GetTextProgress(),
+                ViewProgressBar = GetViewProgressBar()
+            };
+        }
+
+        #region Private
         private int GetWebPageCount(string samplePage)
         {
             int rev = -1;
@@ -133,11 +190,12 @@ namespace CentralModule.Models
             }
             return rev;
         }
-        
-        void LoadLottoryHistory(string lottoryDir)
+
+        private void LoadLottoryHistory(string lottoryDir)
         {
             GetLottoryHistory(lottoryDir);
-#if true
+
+#if false
             hisCount = lottoryHistory.Count;
             GetRecentNewNumbers(lottoryHistory);
             var newHis = GetNewHistory(lottoryHistory.Count);
@@ -200,7 +258,7 @@ namespace CentralModule.Models
             //GetRecentNewNumbers(newHis);
             //newHis = GetNewHistory(newHis.Count);
             //GetRecentNewNumbers(newHis);
-#else
+
             
             //Console.WriteLine($"GetLottoryHistory done {sw.Elapsed.TotalSeconds}");
             LottoryHistory.RemoveAt(0);
@@ -228,12 +286,6 @@ namespace CentralModule.Models
             lottoryHistory.AddRange(rawData.OrderByDescending(x => x.Date).ToList());
             _lottoryNumMessage.DebugMessage.MenuName += $"Files {dataFiles.Length} History Length {lottoryHistory.Count}\n";
         }
-
-        public List<LottoryInfo> GetListLottoryHistory()
-        {
-            return lottoryHistory = new List<LottoryInfo>();
-        }
-
         private List<LottoryInfo> GetLottoryData(string dataFile)
         {
             const string getNumberPat = "\">[\\s]+([^\\s]*)[\\s]+</td>";
@@ -299,11 +351,7 @@ namespace CentralModule.Models
             return lottoryHistory.GetRange(0, cnt);
         }
 
-        private void GetRecentNewNumbers(List<LottoryInfo> lottoryHistory)
-        {
-            var allTable = GetPacent(lottoryHistory);
-            GetNewNumber(allTable);
-        }
+     
 
         private int GetHistoryCount(DebugControlModel _Message, int count)
         {
@@ -314,6 +362,12 @@ namespace CentralModule.Models
             int rev = count / 2;
             _Message.DebugMessage.MenuName += $"Get New History {rev}\n";
             return rev;
+        }
+#if false
+        private void GetRecentNewNumbers(List<LottoryInfo> lottoryHistory)
+        {
+            var allTable = GetPacent(lottoryHistory);
+            GetNewNumber(allTable);
         }
         private Dictionary<int, double> GetPacent(List<LottoryInfo> lottoryHistory)
         {
@@ -356,39 +410,6 @@ namespace CentralModule.Models
                 tt += $" [{dd.Key}] <{dd.Value.ToString("0.000")}>";
             }
             _lottoryNumMessage.DebugMessage.MenuName += $"\n {tt}\n";
-        }
-
-        public void LottoryDataByOpen()
-        {
-            _lottoryOpenMessage.DebugMessage.MenuName = "Josh\n";
-            string openLott = File.ReadAllText(@"D:\z-JoshCodeWork\TestLottary\大樂透落球順序開獎號碼查詢 - 樂透堂.html");
-            var newLott = new List<LottoryInfo>();
-            const string ppt = @"<td align[^\r\n]+>([\d]{6})<[^\r\n]+[\s]+<[^\r\n]+([\d-]{10})[^\r\n]+[\s]+[^\r\n]+>[\s]+([^\r\n]+)</[^\r\n]+([\d]{2})";
-            const string dirtyw = "&nbsp;";
-            MatchCollection mt = Regex.Matches(openLott, ppt);
-            foreach (Match mm in mt)
-            {
-                var uuW = Array.ConvertAll(mm.Groups[3].Value.Replace(dirtyw, ",").Split(','), s => int.Parse(s)).ToList();
-
-                newLott.Add(new LottoryInfo()
-                {
-                    Date = Convert.ToDateTime(mm.Groups[2].Value),
-                    LottoryNumbers = uuW,
-                    SpecialNumber = Convert.ToInt32(mm.Groups[4].Value)
-                });
-            }
-            var openDicOrder = GetOpenPercent(newLott);
-            GetNewOpenNumber(openDicOrder);
-            int totalcc = newLott.Count;
-            while(totalcc > 12)
-            {
-                var newcc = GetHistoryCount(_lottoryOpenMessage, totalcc);
-                var startIdx = newLott.Count - newcc;
-                var eeLott = newLott.GetRange(startIdx, newcc);
-                openDicOrder = GetOpenPercent(eeLott);
-                GetNewOpenNumber(openDicOrder);
-                totalcc = newcc;
-            }
         }
 
         private Dictionary<int, Dictionary<int, double>> GetOpenPercent(List<LottoryInfo> newLott)
@@ -466,26 +487,8 @@ namespace CentralModule.Models
             }
             _lottoryOpenMessage.DebugMessage.MenuName += $"\n";
         }
-
-        public DebugControlModel GetDebugMessageModel()
-        {
-            return _lottoryNumMessage = new DebugControlModel()
-            {
-                DebugMessage = GetDebugMessage(),
-                TextProgress = GetTextProgress(),
-                ViewProgressBar = GetViewProgressBar()
-            };
-        }
-
-        public DebugControlModel GetOpenMessage()
-        {
-            return _lottoryOpenMessage = new DebugControlModel()
-            {
-                DebugMessage = GetDebugMessage(),
-                TextProgress = GetTextProgress(),
-                ViewProgressBar = GetViewProgressBar()
-            };
-        }
+#endif
+        #endregion
     }
 
 }

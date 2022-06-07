@@ -13,4 +13,10 @@ namespace CentralModule.Interface
         DebugControlModel GetDebugMessageModel();
         DebugControlModel GetOpenMessage();
     }
+
+    public enum LottoryArgs
+    {
+        None,
+        Args1
+    }
 }

@@ -194,6 +194,7 @@ namespace CentralModule.Models
         private void LoadLottoryHistory(string lottoryDir)
         {
             GetLottoryHistory(lottoryDir);
+            LottoryArgsClass.Instance.LottoryArgsMethods(_lottoryNumMessage, _lottoryOpenMessage, lottoryHistory, LottoryArgs.Args1);
 
 #if false
             hisCount = lottoryHistory.Count;
@@ -369,48 +370,9 @@ namespace CentralModule.Models
             var allTable = GetPacent(lottoryHistory);
             GetNewNumber(allTable);
         }
-        private Dictionary<int, double> GetPacent(List<LottoryInfo> lottoryHistory)
-        {
-            Dictionary<int, double> dicTable = new Dictionary<int, double>();
-            Dictionary<int, double> dic11Table = new Dictionary<int, double>();
-            Dictionary<int, double> dic10Table = new Dictionary<int, double>();
-            Dictionary<int, double> dicAllTable = new Dictionary<int, double>();
-            for (int i = 1; i < 50; i++)
-            {
-                var num1Cnt = lottoryHistory.Where(x => x.LottoryNumbers.Contains(i)).ToList();
-                double pacent = (double)num1Cnt.Count / (double)lottoryHistory.Count * 100;
-                dicAllTable.Add(i, pacent);
-                //_lottoryNumMessage.DebugMessage.MenuName += $"\n number {i} count {num1Cnt.Count} pacent {pacent.ToString("0.00")}%";
-                if (pacent < 12 && pacent > 11)
-                {
-                    dic11Table.Add(i, pacent);
-                }
-                else if (pacent < 11 && pacent > 10)
-                {
-                    dic10Table.Add(i, pacent);
-                }
-                else
-                {
-                    dicTable.Add(i, pacent);
-                }
-            }
-            //PrintDicTable(11, dic11Table);
-            //PrintDicTable(10, dic10Table);
-            //PrintDicTable(12, dicTable);
-            PrintDicTable(99, dicAllTable);
-            return dicAllTable;
-        }
+       
 
-        private void PrintDicTable(int tableName, Dictionary<int, double> dicTable)
-        {
-            string tt = $"{tableName}% Cnt {dicTable.Count} \n";
-            var ddd = dicTable.OrderByDescending(x => x.Value);
-            foreach (var dd in ddd)
-            {
-                tt += $" [{dd.Key}] <{dd.Value.ToString("0.000")}>";
-            }
-            _lottoryNumMessage.DebugMessage.MenuName += $"\n {tt}\n";
-        }
+       
 
         private Dictionary<int, Dictionary<int, double>> GetOpenPercent(List<LottoryInfo> newLott)
         {

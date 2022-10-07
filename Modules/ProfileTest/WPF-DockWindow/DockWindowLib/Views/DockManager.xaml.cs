@@ -23,6 +23,7 @@ namespace DockWindowLib.Views
         public DockManager()
         {
             InitializeComponent();
+            this.DataContext = new ViewModels.DockManagerViewModel();
         }
     }
 }

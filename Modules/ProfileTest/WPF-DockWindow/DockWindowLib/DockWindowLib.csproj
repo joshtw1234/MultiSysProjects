@@ -48,9 +48,18 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\DockManagerModel.cs" />
+    <Compile Include="Models\DragWindowService.cs" />
+    <Compile Include="Models\FloatingWindowModel.cs" />
+    <Compile Include="Models\IDropSurface.cs" />
+    <Compile Include="ViewModels\DockManagerViewModel.cs" />
     <Compile Include="Views\DockManager.xaml.cs">
       <DependentUpon>DockManager.xaml</DependentUpon>
     </Compile>
+    <Page Include="Styles\DockWindowLibStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\DockManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -86,9 +95,6 @@
     <Resource Include="Assets\DockRight.PNG" />
     <Resource Include="Assets\DockTop.PNG" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

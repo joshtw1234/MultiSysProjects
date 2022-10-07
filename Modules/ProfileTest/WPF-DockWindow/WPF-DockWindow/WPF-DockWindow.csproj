@@ -98,5 +98,11 @@
     <Folder Include="Models\" />
     <Folder Include="ViewModels\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DockWindowLib\DockWindowLib.csproj">
+      <Project>{9cb92fe0-7515-4f17-bc48-167da1ea7af7}</Project>
+      <Name>DockWindowLib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

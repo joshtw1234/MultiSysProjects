@@ -6,7 +6,26 @@
              xmlns:local="clr-namespace:DockWindowLib.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+    <UserControl.Resources>
+        <ResourceDictionary Source="pack://application:,,,/DockWindowLib;component/Styles/DockWindowLibStyles.xaml"/>
+    </UserControl.Resources>
+    <Grid Background="Blue">
+        <Grid Visibility="{Binding DockButtonVisble, Converter={StaticResource BoolToVisibility}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="80*"/>
+                <ColumnDefinition Width="10*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="80*"/>
+                <RowDefinition Height="10*"/>
+            </Grid.RowDefinitions>
+            <Image Grid.Row="0" Grid.ColumnSpan="3" Source="..\Assets\DockTop.PNG"/>
+            <Image Grid.Row="2" Grid.ColumnSpan="3" Source="..\Assets\DockBottom.PNG"/>
+            <Image Grid.RowSpan="3" Grid.Column="0" Source="..\Assets\DockLeft.PNG"/>
+            <Image Grid.RowSpan="3" Grid.Column="2" Source="..\Assets\DockRight.PNG"/>
+            <Image Grid.Row="1" Grid.Column="1" Source="..\Assets\DockPane.PNG"/>
+        </Grid>
     </Grid>
 </UserControl>

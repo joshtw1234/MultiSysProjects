@@ -1,5 +1,6 @@
 ﻿using CentralModule.Models;
 using CommonUILib.Interfaces;
+using System.Collections.Generic;
 
 namespace CentralModule.Interface
 {
@@ -12,5 +13,7 @@ namespace CentralModule.Interface
         void LottoryDataByOpen();
         DebugControlModel GetDebugMessageModel();
         DebugControlModel GetOpenMessage();
+        List<LottoryInfo> GetLottoryData();
+        void ProcessOpenLottoryData2024(List<LottoryInfo> lottoryData);
     }
 }

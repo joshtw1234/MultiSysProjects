@@ -53,5 +53,30 @@
                 </commonV:DebugOutPutControl.Style>
             </commonV:DebugOutPutControl>
         </Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <DataGrid Grid.Column="0" ItemsSource="{Binding LottoryData}"/>
+            <commonV:DebugOutPutControl Grid.Column="1" DataContext="{Binding LottoryOpenMessage}">
+                <!--
+use data trigger to control visible.
+https://www.wpf-tutorial.com/styles/trigger-datatrigger-event-trigger/
+-->
+                <commonV:DebugOutPutControl.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding TextProgress.MenuVisibility}" Value="true">
+                                <Setter Property="UserControl.Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding TextProgress.MenuVisibility}" Value="false">
+                                <Setter Property="UserControl.Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </commonV:DebugOutPutControl.Style>
+            </commonV:DebugOutPutControl>
+        </Grid>
     </Grid>
 </UserControl>

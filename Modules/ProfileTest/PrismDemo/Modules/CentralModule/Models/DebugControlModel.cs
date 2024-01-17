@@ -13,8 +13,10 @@ namespace CentralModule.Models
 
     public class LottoryInfo
     {
+        public string LottoryCount { get; set; }
         public DateTime Date { get; set; }
-        public List<int> LottoryNumbers { get; set; }
+        public string StrLottoryNumbers { get; set; }
         public int SpecialNumber { get; set; }
+        public List<int> LottoryNumbers { get; set; }
     }
 }

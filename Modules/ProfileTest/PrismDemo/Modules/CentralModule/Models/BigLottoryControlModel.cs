@@ -361,11 +361,12 @@ namespace CentralModule.Models
         public void LottoryDataByOpen()
         {
             _lottoryOpenMessage.DebugMessage.MenuName = "Josh\n";
-            string openLott = File.ReadAllText(@"D:\z-JoshCodeWork\TestLottary\大樂透落球順序開獎號碼查詢 - 樂透堂.html");
+            string openLott = File.ReadAllText(@"D:\Josh-Vanellope\z-JoshCodeWork\TestLottary\大樂透彩開獎號碼落球序 - 樂透堂.html");
             var newLott = new List<LottoryInfo>();
-            const string ppt = @"<td align[^\r\n]+>([\d]{6})<[^\r\n]+[\s]+<[^\r\n]+([\d-]{10})[^\r\n]+[\s]+[^\r\n]+>[\s]+([^\r\n]+)</[^\r\n]+([\d]{2})";
+            const string ppt = @">([\d]+?)<[\W\w]+?>([\d-]+?)<[\W\w]+?#FF0000"">([\W\w]+?)</font>[\W\w]+?>([\d]+)\n";//@"<td align[^\r\n]+>([\d]{6})<[^\r\n]+[\s]+<[^\r\n]+([\d-]{10})[^\r\n]+[\s]+[^\r\n]+>[\s]+([^\r\n]+)</[^\r\n]+([\d]{2})";
             const string dirtyw = "&nbsp;";
             MatchCollection mt = Regex.Matches(openLott, ppt);
+            string outMsg = string.Empty;
             foreach (Match mm in mt)
             {
                 var uuW = Array.ConvertAll(mm.Groups[3].Value.Replace(dirtyw, ",").Split(','), s => int.Parse(s)).ToList();
@@ -376,19 +377,21 @@ namespace CentralModule.Models
                     LottoryNumbers = uuW,
                     SpecialNumber = Convert.ToInt32(mm.Groups[4].Value)
                 });
+                outMsg += $"[{mm.Groups[1].Value}][{mm.Groups[2].Value}][{mm.Groups[3].Value.Replace(dirtyw, ",")}][{mm.Groups[4].Value}]\n";
             }
-            var openDicOrder = GetOpenPercent(newLott);
-            GetNewOpenNumber(openDicOrder);
-            int totalcc = newLott.Count;
-            while(totalcc > 12)
-            {
-                var newcc = GetHistoryCount(_lottoryOpenMessage, totalcc);
-                var startIdx = newLott.Count - newcc;
-                var eeLott = newLott.GetRange(startIdx, newcc);
-                openDicOrder = GetOpenPercent(eeLott);
-                GetNewOpenNumber(openDicOrder);
-                totalcc = newcc;
-            }
+            _lottoryOpenMessage.DebugMessage.MenuName += outMsg;
+            //var openDicOrder = GetOpenPercent(newLott);
+            //GetNewOpenNumber(openDicOrder);
+            //int totalcc = newLott.Count;
+            //while(totalcc > 12)
+            //{
+            //    var newcc = GetHistoryCount(_lottoryOpenMessage, totalcc);
+            //    var startIdx = newLott.Count - newcc;
+            //    var eeLott = newLott.GetRange(startIdx, newcc);
+            //    openDicOrder = GetOpenPercent(eeLott);
+            //    GetNewOpenNumber(openDicOrder);
+            //    totalcc = newcc;
+            //}
         }
 
         private Dictionary<int, Dictionary<int, double>> GetOpenPercent(List<LottoryInfo> newLott)
@@ -485,6 +488,56 @@ namespace CentralModule.Models
                 TextProgress = GetTextProgress(),
                 ViewProgressBar = GetViewProgressBar()
             };
+        }
+
+        public List<LottoryInfo> GetLottoryData()
+        {
+            //_lottoryOpenMessage.DebugMessage.MenuName = "Josh\n";
+            string openLott = File.ReadAllText(@"D:\Josh-Vanellope\z-JoshCodeWork\TestLottary\大樂透彩開獎號碼落球序 - 樂透堂.html");
+            var newLott = new List<LottoryInfo>();
+            const string ppt = @">([\d]+?)<[\W\w]+?>([\d-]+?)<[\W\w]+?#FF0000"">([\W\w]+?)</font>[\W\w]+?>([\d]+)\n";//@"<td align[^\r\n]+>([\d]{6})<[^\r\n]+[\s]+<[^\r\n]+([\d-]{10})[^\r\n]+[\s]+[^\r\n]+>[\s]+([^\r\n]+)</[^\r\n]+([\d]{2})";
+            const string dirtyw = "&nbsp;";
+            MatchCollection mt = Regex.Matches(openLott, ppt);
+            string outMsg = string.Empty;
+            foreach (Match mm in mt)
+            {
+                string lotNum = mm.Groups[3].Value.Replace(dirtyw, ",");
+                var uuW = Array.ConvertAll(lotNum.Split(','), s => int.Parse(s)).ToList();
+                
+                newLott.Add(new LottoryInfo()
+                {
+                    LottoryCount = mm.Groups[1].Value,
+                    Date = Convert.ToDateTime(mm.Groups[2].Value),
+                    StrLottoryNumbers = lotNum,
+                    LottoryNumbers = uuW,
+                    SpecialNumber = Convert.ToInt32(mm.Groups[4].Value)
+                });
+                //outMsg += $"[{mm.Groups[1].Value}][{mm.Groups[2].Value}][{mm.Groups[3].Value.Replace(dirtyw, ",")}][{mm.Groups[4].Value}]\n";
+            }
+            return newLott;
+            //_lottoryOpenMessage.DebugMessage.MenuName += outMsg;
+        }
+
+        public void ProcessOpenLottoryData2024(List<LottoryInfo> lottoryData)
+        {
+            List<int> firstOP = new List<int>();
+            List<int> secOP = new List<int>();
+            List<int> thirdOP = new List<int>();
+            List<int> forthOP = new List<int>();
+            List<int> fiveOP = new List<int>();
+            List<int> sixOP = new List<int>();
+            List<int> specOP = new List<int>();
+            foreach (var ll in lottoryData)
+            {
+                firstOP.Add(ll.LottoryNumbers.First());
+                secOP.Add(ll.LottoryNumbers[1]);
+                thirdOP.Add(ll.LottoryNumbers[2]);
+                forthOP.Add(ll.LottoryNumbers[3]);
+                fiveOP.Add(ll.LottoryNumbers[4]);
+                sixOP.Add(ll.LottoryNumbers[5]);
+                specOP.Add(ll.SpecialNumber);
+            }
+            _lottoryOpenMessage.DebugMessage.MenuName = $"[{firstOP.Count}] [{secOP.Count}] [{thirdOP.Count}] [{forthOP.Count}] [{fiveOP.Count}] [{sixOP.Count}] [{specOP.Count}]\n";
         }
     }
 
